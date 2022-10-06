@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private store: Store,
     @Inject(POLYMORPHEUS_CONTEXT)
-    readonly context: TuiDialog<LoginOptionsInterface, boolean>
+    readonly context: TuiDialog<{}, boolean>
     ) {}
 
   ngOnInit(): void {
@@ -48,15 +48,15 @@ export class LoginComponent implements OnInit {
     })
   }
 
-  onClick(response: boolean): void {
-    this.context.completeWith(response);
-  }
-
   onSubmit(): void {
     const request: LoginRequestInterface = {
       user: this.form.value,
     }
 
     this.store.dispatch(loginAction({request}))
+
+    if (this.form.valid) {
+      this.context.completeWith(true);
+    }
   }
 }

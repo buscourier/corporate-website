@@ -7,11 +7,8 @@ import {LoginComponent} from "../login.component";
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService extends AbstractTuiDialogService<LoginOptionsInterface, boolean> {
-  readonly defaultOptions = {
-    heading: `Are you sure?`,
-    buttons: [`Yes`, `No`],
-  } as const;
+export class LoginService extends AbstractTuiDialogService<{}, boolean> {
+  readonly defaultOptions = {}
 
   readonly component = new PolymorpheusComponent(LoginComponent);
 }

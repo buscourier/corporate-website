@@ -7,7 +7,7 @@ import {LoginService} from "./auth/components/login/services/login.service";
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'angular-tailwind-starter'
+  title = 'Баскурьер'
 
   constructor( @Inject(LoginService) private readonly loginService: LoginService) {}
 
