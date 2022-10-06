@@ -17,14 +17,17 @@ import {BackendErrorMessagesModule} from '../shared/components/backend-error-mes
 import {AuthGuard} from './services/auth.guard'
 import {HttpClientModule} from '@angular/common/http'
 import {PersistenceService} from '../shared/services/persistence.service'
+import { LoginModule } from './components/login/login.module'
+import { RegisterModule } from './components/register/register.module'
+import {LOGIN_PROVIDER, LoginService} from "./components/login/services/login.service";
+import {TUI_DIALOGS} from "@taiga-ui/cdk";
 
 @NgModule({
-  declarations: [RegisterComponent, LoginComponent],
+  declarations: [],
   imports: [
     CommonModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    BackendErrorMessagesModule,
+    LoginModule,
+    RegisterModule,
     StoreModule.forFeature('auth', reducers),
     EffectsModule.forFeature([
       RegisterEffect,
@@ -40,7 +43,11 @@ export class AuthModule {
   static forRoot(): ModuleWithProviders<AuthModule> {
     return {
       ngModule: AuthModule,
-      providers: [AuthService, AuthGuard, PersistenceService],
+      providers: [
+        AuthService,
+        AuthGuard,
+        PersistenceService
+      ],
     }
   }
 }

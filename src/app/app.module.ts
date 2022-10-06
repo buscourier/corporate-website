@@ -14,6 +14,8 @@ import {AuthModule} from './auth/auth.module'
 import {HTTP_INTERCEPTORS} from '@angular/common/http'
 import {AuthInterceptor} from './shared/services/auth-interceptor.service'
 import {PageHeaderModule} from './shared/components/page-header/page-header.module'
+import {TUI_DIALOGS} from "@taiga-ui/cdk";
+import {LoginService} from "./auth/components/login/services/login.service";
 
 @NgModule({
   declarations: [AppComponent],
@@ -42,7 +44,7 @@ import {PageHeaderModule} from './shared/components/page-header/page-header.modu
       useClass: AuthInterceptor,
       multi: true,
     },
-      {provide: TUI_SANITIZER, useClass: NgDompurifySanitizer}
+    {provide: TUI_SANITIZER, useClass: NgDompurifySanitizer}
 ],
   bootstrap: [AppComponent],
 })

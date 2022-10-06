@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
+import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core'
 import {FormBuilder, FormGroup, Validators} from '@angular/forms'
 import {Observable} from 'rxjs'
 import {select, Store} from '@ngrx/store'
@@ -9,6 +9,9 @@ import {
 import {LoginRequestInterface} from '../../types/login-request.interface'
 import {loginAction} from '../../store/actions/login.action'
 import {BackendErrorsInterface} from '../../../shared/types/backend-errors.interface'
+import {TuiDialog} from "@taiga-ui/cdk"
+import { LoginOptionsInterface } from './types/login-options.interface'
+import {POLYMORPHEUS_CONTEXT} from '@tinkoff/ng-polymorpheus';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +24,12 @@ export class LoginComponent implements OnInit {
   isSubmitting$!: Observable<boolean>
   backendErrors$!: Observable<BackendErrorsInterface | null>
 
-  constructor(private fb: FormBuilder, private store: Store) {}
+  constructor(
+    private fb: FormBuilder,
+    private store: Store,
+    @Inject(POLYMORPHEUS_CONTEXT)
+    readonly context: TuiDialog<LoginOptionsInterface, boolean>
+    ) {}
 
   ngOnInit(): void {
     this.initializeValues()
@@ -38,6 +46,10 @@ export class LoginComponent implements OnInit {
       email: ['', Validators.required],
       password: ['', Validators.required],
     })
+  }
+
+  onClick(response: boolean): void {
+    this.context.completeWith(response);
   }
 
   onSubmit(): void {
