@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  frontend:
+    image: angular-tailwind-starter:prod
+    build:
+      context: ./
+      dockerfile: Dockerfile.production
+    ports:
+      - '80:80'
+    # platform: linux/amd64
