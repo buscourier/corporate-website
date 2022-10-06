@@ -39,6 +39,15 @@ module.exports = {
         500: '#808080',
       },
     },
+    fontSize: {
+      sm: ['0.875rem', { lineHeight: '1.25rem' }], //14 / 20
+      base: ['1rem', { lineHeight: '1.375rem' }], // 16 / 22
+      md: ['1.125rem', { lineHeight: '1.625rem' }], // 18 / 26
+      lg: ['1.375rem', { lineHeight: '1.687rem' }], // 22 / 27
+      xl: ['1.75rem', { lineHeight: '2.1rem' }], // 28 / 33.6
+      '2xl': ['2rem', { lineHeight: '2.4rem' }], // 32 / 38.4
+      '3xl': ['2.625rem', { lineHeight: '3.25rem' }], // 42 / 52
+    },
     borderRadius: {
       none: '0px',
       sm: '0.3125rem',
