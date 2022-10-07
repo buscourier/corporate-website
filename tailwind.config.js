@@ -31,7 +31,7 @@ module.exports = {
         DEFAULT: '#50a7ff',
       },
       gray: {
-        DEFAULT: '#b3b3b3',
+        DEFAULT: '#2e2e2e',
         100: '#f2f2f2',
         200: '#e5e5e5',
         300: '#d9d9d9',
@@ -40,8 +40,9 @@ module.exports = {
       },
     },
     fontSize: {
-      sm: ['0.875rem', { lineHeight: '1.25rem' }], //14 / 20
-      base: ['1rem', { lineHeight: '1.375rem' }], // 16 / 22
+      xs: ['0.875rem', { lineHeight: '1.25rem' }], //14 / 20
+      sm: ['1rem', { lineHeight: '1.375rem' }], // 16 / 22
+      base: ['0.9375rem', { lineHeight: '1.25rem' }], //15 / 20
       md: ['1.125rem', { lineHeight: '1.625rem' }], // 18 / 26
       lg: ['1.375rem', { lineHeight: '1.687rem' }], // 22 / 27
       xl: ['1.75rem', { lineHeight: '2.1rem' }], // 28 / 33.6
