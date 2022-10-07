@@ -13,8 +13,6 @@
 @layer base {
   body {
     font: unset;
-    @apply font-sans text-base text-gray
+    @apply font-sans text-base text-gray;
   }
 }
-
-

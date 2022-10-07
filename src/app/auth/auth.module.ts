@@ -12,8 +12,8 @@ import {UpdateCurrentUserEffect} from './store/effects/update-current-user.effec
 import {LogoutEffect} from './store/effects/logout.effect'
 import {AuthGuard} from './services/auth.guard'
 import {PersistenceService} from '../shared/services/persistence.service'
-import { LoginModule } from './components/login/login.module'
-import { RegisterModule } from './components/register/register.module'
+import {LoginModule} from './components/login/login.module'
+import {RegisterModule} from './components/register/register.module'
 
 @NgModule({
   declarations: [],
@@ -36,11 +36,7 @@ export class AuthModule {
   static forRoot(): ModuleWithProviders<AuthModule> {
     return {
       ngModule: AuthModule,
-      providers: [
-        AuthService,
-        AuthGuard,
-        PersistenceService
-      ],
+      providers: [AuthService, AuthGuard, PersistenceService],
     }
   }
 }

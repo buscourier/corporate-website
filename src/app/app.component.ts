@@ -1,5 +1,5 @@
 import {Component, Inject} from '@angular/core'
-import {LoginService} from "./auth/components/login/services/login.service";
+import {LoginService} from './auth/components/login/services/login.service'
 
 @Component({
   selector: 'app-root',
@@ -9,10 +9,11 @@ import {LoginService} from "./auth/components/login/services/login.service";
 export class AppComponent {
   title = 'Баскурьер'
 
-  constructor( @Inject(LoginService) private readonly loginService: LoginService) {}
+  constructor(
+    @Inject(LoginService) private readonly loginService: LoginService
+  ) {}
 
   onClick() {
-    this.loginService.open(null)
-      .subscribe()
+    this.loginService.open(null).subscribe()
   }
 }

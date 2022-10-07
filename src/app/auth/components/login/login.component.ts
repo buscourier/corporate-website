@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core'
 import {FormBuilder, FormGroup, Validators} from '@angular/forms'
 import {Observable} from 'rxjs'
-import {select, Store} from '@ngrx/store'
+import {Store} from '@ngrx/store'
 import {
   isSubmittingSelector,
   validationErrorsSelector,
@@ -10,7 +10,6 @@ import {LoginRequestInterface} from '../../types/login-request.interface'
 import {loginAction} from '../../store/actions/login.action'
 import {BackendErrorsInterface} from '../../../shared/types/backend-errors.interface'
 import {TuiDialog} from '@taiga-ui/cdk'
-import {LoginOptionsInterface} from './types/login-options.interface'
 import {POLYMORPHEUS_CONTEXT} from '@tinkoff/ng-polymorpheus'
 
 @Component({
