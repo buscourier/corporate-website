@@ -37,6 +37,56 @@
 <!--    </div>-->
 <!--  </div>-->
 <!--</div>-->
-<article class="bg-yellow rounded-sm">
-  <h1 class="text-2xl text-bold">Авторизация</h1>
+<article class="relative bg-yellow rounded-sm p-8 min-w-[370px]">
+  <div class="absolute top-0 right-0 pt-4 pr-4">
+    <button type="button" class="rounded-md bg-transparent
+     text-gray-400 hover:text-gray-500 focus:outline-none
+     focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" (click)="onClose()">
+      <span class="sr-only">Close</span>
+      <svg class="h-8 w-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+  <h1 class="mb-4 text-2xl text-bold text-center">Авторизация</h1>
+  <form>
+    <label class="block mb-3">
+      <span class="inline-block text-xs mb-1">Email</span>
+      <tui-input
+        tuiTextfieldSize="m"
+        formControlName="email"
+        [tuiTextfieldLabelOutside]="true"
+      >
+        Email
+        <input
+          tuiTextfield
+          type="text"
+        />
+      </tui-input>
+    </label>
+    <label class="block mb-5">
+      <span class="inline-block text-xs mb-1">Пароль</span>
+      <tui-input-password
+        formControlName="testValue"
+        tuiTextfieldSize="m"
+        [tuiTextfieldLabelOutside]="true"
+      >
+        Password
+        <input
+          tuiTextfield
+          placeholder="Make it secure!"
+        />
+      </tui-input-password>
+    </label>
+    <div>
+      <button
+        tuiButton
+        type="button"
+        class="min-w-full"
+        [showLoader]="false"
+      >
+        Авторизоваться
+      </button>
+    </div>
+  </form>
 </article>

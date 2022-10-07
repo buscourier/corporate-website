@@ -9,9 +9,9 @@ import {
 import {LoginRequestInterface} from '../../types/login-request.interface'
 import {loginAction} from '../../store/actions/login.action'
 import {BackendErrorsInterface} from '../../../shared/types/backend-errors.interface'
-import {TuiDialog} from "@taiga-ui/cdk"
-import { LoginOptionsInterface } from './types/login-options.interface'
-import {POLYMORPHEUS_CONTEXT} from '@tinkoff/ng-polymorpheus';
+import {TuiDialog} from '@taiga-ui/cdk'
+import {LoginOptionsInterface} from './types/login-options.interface'
+import {POLYMORPHEUS_CONTEXT} from '@tinkoff/ng-polymorpheus'
 
 @Component({
   selector: 'app-login',
@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
     private store: Store,
     @Inject(POLYMORPHEUS_CONTEXT)
     readonly context: TuiDialog<{}, boolean>
-    ) {}
+  ) {}
 
   ngOnInit(): void {
     this.initializeValues()
@@ -56,7 +56,11 @@ export class LoginComponent implements OnInit {
     this.store.dispatch(loginAction({request}))
 
     if (this.form.valid) {
-      this.context.completeWith(true);
+      this.context.completeWith(true)
     }
+  }
+
+  onClose() {
+    this.context.completeWith(false)
   }
 }

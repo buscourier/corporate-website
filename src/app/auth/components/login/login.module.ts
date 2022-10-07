@@ -1,13 +1,17 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { LoginComponent } from './login.component';
-import {HttpClientModule} from "@angular/common/http";
-import {ReactiveFormsModule} from "@angular/forms";
+import {NgModule} from '@angular/core'
+import {CommonModule} from '@angular/common'
+import {LoginComponent} from './login.component'
+import {HttpClientModule} from '@angular/common/http'
+import {ReactiveFormsModule} from '@angular/forms'
+import {BackendErrorMessagesModule} from '../../../shared/components/backend-error-messages/backend-error-messages.module'
+import {RouterModule} from '@angular/router'
+import {LOGIN_PROVIDER} from './services/login.service'
+import {TuiInputModule, TuiInputPasswordModule} from '@taiga-ui/kit'
 import {
-  BackendErrorMessagesModule
-} from "../../../shared/components/backend-error-messages/backend-error-messages.module";
-import { RouterModule } from '@angular/router';
-import {LOGIN_PROVIDER} from "./services/login.service";
+  TuiButtonModule,
+  TuiLabelModule,
+  TuiTextfieldControllerModule,
+} from '@taiga-ui/core'
 
 @NgModule({
   declarations: [LoginComponent],
@@ -15,12 +19,15 @@ import {LOGIN_PROVIDER} from "./services/login.service";
     CommonModule,
     HttpClientModule,
     ReactiveFormsModule,
+    TuiInputModule,
+    TuiLabelModule,
+    TuiButtonModule,
+    TuiInputPasswordModule,
+    TuiTextfieldControllerModule,
     BackendErrorMessagesModule,
     RouterModule,
   ],
-  exports: [
-    LoginComponent
-  ],
-  providers: [LOGIN_PROVIDER]
+  exports: [LoginComponent],
+  providers: [LOGIN_PROVIDER],
 })
-export class LoginModule { }
+export class LoginModule {}
