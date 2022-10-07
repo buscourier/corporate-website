@@ -64,7 +64,7 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        heading: ['TT Norms Pro', ...defaultTheme.fontFamily.sans],
+        heading: ['Kelson Sans', ...defaultTheme.fontFamily.sans],
         base: ['TT Norms Pro', ...defaultTheme.fontFamily.sans],
       },
     },

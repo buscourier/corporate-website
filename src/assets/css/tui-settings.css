@@ -1,5 +1,5 @@
 :root {
-  --tui-heading-font: 'TT Norms Pro', -apple-system, 'BlinkMacSystemFont', system-ui, 'Roboto', 'Segoe UI', 'Helvetica Neue', sans-serif;
+  --tui-heading-font: 'Kelson Sans', -apple-system, 'BlinkMacSystemFont', system-ui, 'Roboto', 'Segoe UI', 'Helvetica Neue', sans-serif;
   --tui-text-font: 'TT Norms Pro', -apple-system, 'BlinkMacSystemFont', system-ui, 'Roboto', 'Segoe UI', 'Helvetica Neue', sans-serif;
   --tui-font-heading: var(--tui-heading-font);
   /*--tui-font-heading-1: bold 3.125rem/3.5rem var(--tui-font-heading);*/
