@@ -1,18 +1,10 @@
+@import "./assets/css/tui-settings.css";
+
 /* You can add global styles to this file, and also import other style files */
-@tailwind base;
-@tailwind components;
+@import "tailwindcss/base";
+@import "./assets/css/base.css";
 
-.t-dialog {
-  display: flex;
-  justify-content: center;
-  align-items: center !important;
-}
+@import "tailwindcss/components";
+@import "./assets/css/components/t-dialog.css";
 
-@tailwind utilities;
-
-@layer base {
-  body {
-    font: unset;
-    @apply font-sans text-base text-gray;
-  }
-}
+@import "tailwindcss/utilities";

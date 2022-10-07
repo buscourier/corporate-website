@@ -1,0 +1,5 @@
+.t-dialog {
+  display: flex;
+  justify-content: center;
+  align-items: center !important;
+}
