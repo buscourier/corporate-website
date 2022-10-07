@@ -51,10 +51,10 @@ module.exports = {
     },
     borderRadius: {
       none: '0px',
-      sm: '0.3125rem',
-      md: '0.625rem',
-      lg: '1.4375rem',
-      xl: '1.875rem',
+      xs: 'var(--tui-radius-xs)',
+      sm: 'var(--tui-radius-sm)',
+      md: 'var(--tui-radius-md)',
+      lg: 'var(--tui-radius-lg)',
       full: '9999px',
     },
     boxShadow: {
@@ -64,7 +64,8 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        sans: ['TT Norms Pro', ...defaultTheme.fontFamily.sans],
+        heading: ['TT Norms Pro', ...defaultTheme.fontFamily.sans],
+        base: ['TT Norms Pro', ...defaultTheme.fontFamily.sans],
       },
     },
   },
