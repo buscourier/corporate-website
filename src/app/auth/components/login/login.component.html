@@ -1,46 +1,7 @@
-<!--<div class="auth-page">-->
-<!--  <div class="container page">-->
-<!--    <div class="row">-->
-<!--      <div class="col-md-6 offset-md-3 col-xs-12">-->
-<!--        <h1 class="text-xs-center">Sign Up</h1>-->
-<!--        <p class="text-xs-center">-->
-<!--          <a [routerLink]="['/login']">Have an account?</a>-->
-<!--        </p>-->
-<!--        <app-backend-error-messages-->
-<!--          *ngIf="backendErrors$ | async"-->
-<!--          [backendErrors]="backendErrors$ | async"-->
-<!--        ></app-backend-error-messages>-->
-<!--        <form [formGroup]="form" (ngSubmit)="onSubmit()">-->
-<!--          <fieldset>-->
-<!--            <fieldset class="form-group">-->
-<!--              <input-->
-<!--                type="text"-->
-<!--                class="form-control form-control-lg"-->
-<!--                placeholder="Email"-->
-<!--                formControlName="email"-->
-<!--              />-->
-<!--            </fieldset>-->
-<!--            <fieldset class="form-group">-->
-<!--              <input-->
-<!--                type="password"-->
-<!--                class="form-control form-control-lg"-->
-<!--                placeholder="Password"-->
-<!--                formControlName="password"-->
-<!--              />-->
-<!--            </fieldset>-->
-<!--            <button class="p-4 px-8 bg-blue rounded" type="submit" [disabled]="isSubmitting$ | async">-->
-<!--              Sign up-->
-<!--            </button>-->
-<!--          </fieldset>-->
-<!--        </form>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
 <article class="relative bg-yellow rounded-sm p-8 min-w-[370px]">
   <div class="absolute top-0 right-0 pt-2 pr-2">
     <button type="button" class="rounded-md bg-transparent
-     text-gray-400 hover:text-gray-500 focus:outline-none
+     text-gray-600 hover:text-gray-900 focus:outline-none
      focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" (click)="onClose()">
       <span class="sr-only">Close</span>
       <svg class="h-8 w-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
@@ -49,7 +10,7 @@
     </button>
   </div>
   <h1 class="mb-4 font-heading text-2xl text-bold text-center">Авторизация</h1>
-  <form>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <label class="block mb-3">
       <span class="inline-block text-xs mb-1">Email</span>
       <tui-input
@@ -67,7 +28,7 @@
     <label class="block mb-5">
       <span class="inline-block text-xs mb-1">Пароль</span>
       <tui-input-password
-        formControlName="testValue"
+        formControlName="password"
         tuiTextfieldSize="m"
         [tuiTextfieldLabelOutside]="true"
       >
@@ -81,7 +42,7 @@
     <div>
       <button
         tuiButton
-        type="button"
+        type="submit"
         class="min-w-full"
         [showLoader]="false"
         size="m"

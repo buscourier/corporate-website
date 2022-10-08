@@ -52,6 +52,8 @@ export class LoginComponent implements OnInit {
       user: this.form.value,
     }
 
+    console.log('auth', request);
+
     this.store.dispatch(loginAction({request}))
 
     if (this.form.valid) {
