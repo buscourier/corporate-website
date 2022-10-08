@@ -58,6 +58,7 @@ const authReducer = createReducer(
     loginAction,
     (state): AuthStateInterface => ({
       ...state,
+      isLoading: true,
       isSubmitting: true,
       validationErrors: null,
     })
@@ -66,6 +67,7 @@ const authReducer = createReducer(
     loginSuccessAction,
     (state, action): AuthStateInterface => ({
       ...state,
+      isLoading: false,
       isSubmitting: false,
       isLoggedIn: true,
       currentUser: action.currentUser,
@@ -75,6 +77,7 @@ const authReducer = createReducer(
     loginFailureAction,
     (state, action): AuthStateInterface => ({
       ...state,
+      isLoading: false,
       isSubmitting: false,
       validationErrors: action.errors,
     })

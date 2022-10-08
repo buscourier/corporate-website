@@ -14,6 +14,8 @@ import {AuthGuard} from './services/auth.guard'
 import {PersistenceService} from '../shared/services/persistence.service'
 import {LoginModule} from './components/login/login.module'
 import {RegisterModule} from './components/register/register.module'
+import {HTTP_INTERCEPTORS} from '@angular/common/http'
+import {AuthInterceptor} from './services/auth-interceptor.service'
 
 @NgModule({
   declarations: [],
@@ -36,7 +38,16 @@ export class AuthModule {
   static forRoot(): ModuleWithProviders<AuthModule> {
     return {
       ngModule: AuthModule,
-      providers: [AuthService, AuthGuard, PersistenceService],
+      providers: [
+        AuthService,
+        AuthGuard,
+        PersistenceService,
+        {
+          provide: HTTP_INTERCEPTORS,
+          useClass: AuthInterceptor,
+          multi: true,
+        },
+      ],
     }
   }
 }

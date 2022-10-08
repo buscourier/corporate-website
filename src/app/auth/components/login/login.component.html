@@ -10,6 +10,10 @@
     </button>
   </div>
   <h1 class="mb-4 font-heading text-2xl text-bold text-center">Авторизация</h1>
+  <app-backend-error-messages
+    *ngIf="backendErrors$ | async"
+    [backendErrors]="backendErrors$ | async"
+  ></app-backend-error-messages>
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <label class="block mb-3">
       <span class="inline-block text-xs mb-1">Email</span>
@@ -44,7 +48,7 @@
         tuiButton
         type="submit"
         class="min-w-full"
-        [showLoader]="false"
+        [showLoader]="isLoading$ | async"
         size="m"
       >
         Авторизоваться

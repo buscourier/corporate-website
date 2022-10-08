@@ -11,6 +11,11 @@ export const isSubmittingSelector = createSelector(
   (authState: AuthStateInterface) => authState.isSubmitting
 )
 
+export const isLoadingSelector = createSelector(
+  authFeatureSelector,
+  (authState: AuthStateInterface) => authState.isLoading
+)
+
 export const isLoggedInSelector = createSelector(
   authFeatureSelector,
   (authState: AuthStateInterface) => authState.isLoggedIn
