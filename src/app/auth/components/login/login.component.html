@@ -28,7 +28,7 @@
         <input
           tuiTextfield
           type="text"
-          (input)="clearValidationErrors()"
+          (focus)="clearValidationErrors()"
         />
       </tui-input>
       <tui-error
@@ -47,7 +47,7 @@
         <input
           tuiTextfield
           placeholder="Make it secure!"
-          (input)="clearValidationErrors()"
+          (focus)="clearValidationErrors()"
         />
       </tui-input-password>
       <tui-error
