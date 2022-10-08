@@ -11,24 +11,25 @@
   --tui-font-text: var(--tui-text-font);
   /*--tui-font-text-xl: normal 1.1875rem/1.75rem var(--tui-font-text);*/
   /*--tui-font-text-l: normal 1.0625rem/1.5rem var(--tui-font-text);*/
-  /*--tui-font-text-m: normal 0.9375rem/1.5rem var(--tui-font-text);*/
-  /*--tui-font-text-s: normal 0.8125rem/1.25rem var(--tui-font-text);*/
-  /*--tui-font-text-xs: normal 0.6875rem/1rem var(--tui-font-text);*/
+  --tui-font-text-m: normal 1.125rem/1.25rem var(--tui-font-text);
+  --tui-font-text-s: normal 1rem/1.25rem var(--tui-font-text);
+  --tui-font-text-xs: normal 0.6875rem/1rem var(--tui-font-text);
 
-  --tui-radius-xs: 0.3125rem;
-  --tui-radius-s: 0.625rem;
-  --tui-radius-m: 1.4375rem;
-  --tui-radius-l: 1.875rem;
+  --tui-radius-xs: 0.25rem;
+  --tui-radius-s: 0.5rem;
+  --tui-radius-m: 0.3125rem;
+  --tui-radius-l: 0.625rem;
   --tui-height-xs: 1.5rem;
   --tui-height-s: 2rem;
-  --tui-height-m: 2.75rem;
+  --tui-height-m: 3.125rem;
   --tui-height-l: 3.5rem;
   --tui-padding-s: 0.75rem;
   --tui-padding-m: 0.75rem;
   --tui-padding-l: 1rem;
   --tui-duration: 0.3s;
   --tui-disabled-opacity: 0.56;
-  --tui-autofill: #fff5c0;
+  /*--tui-autofill: #fff5c0;*/
+  --tui-autofill: #ffffff;
 
   --tui-base-01: #fff;
   --tui-base-02: #f2f2f2;
@@ -40,8 +41,8 @@
   --tui-base-08: #2e2e2e;
   --tui-base-09: #000000;
   --tui-primary: #000000;
-  --tui-primary-hover: #282828;
-  --tui-primary-active: #424242;
+  --tui-primary-hover: #333333;
+  --tui-primary-active: #ffdc00;
   --tui-primary-text: #fff;
   --tui-secondary: #ebefff;
   --tui-secondary-hover: #dfe3f3;
@@ -51,7 +52,7 @@
   --tui-accent-active: #e7716a;
   --tui-accent-text: #fff;
   --tui-selection: rgba(112, 182, 246, 0.12);
-  --tui-focus: rgba(51, 51, 51, 0.64);
+  --tui-focus: #ffdc00;
   --tui-clear: rgba(0, 0, 0, 0.08);
   --tui-clear-disabled: rgba(0, 0, 0, 0.04);
   --tui-clear-hover: rgba(0, 0, 0, 0.16);
@@ -76,7 +77,7 @@
   --tui-neutral-fill: #79818c;
   --tui-neutral-bg: rgba(121, 129, 140, 0.12);
   --tui-neutral-bg-hover: rgba(121, 129, 140, 0.24);
-  --tui-text-01: #1b1f3b;
+  --tui-text-01: #b3b3b3;
   --tui-text-02: rgba(27, 31, 59, 0.65);
   --tui-text-03: rgba(27, 31, 59, 0.4);
   --tui-link: #526ed3;

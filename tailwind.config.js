@@ -51,10 +51,10 @@ module.exports = {
     },
     borderRadius: {
       none: '0px',
-      xs: 'var(--tui-radius-xs)',
-      sm: 'var(--tui-radius-sm)',
-      md: 'var(--tui-radius-md)',
-      lg: 'var(--tui-radius-lg)',
+      sm: '0.3125rem',
+      md: '0.625rem',
+      lg: '1.4375rem',
+      xl: '1.875rem',
       full: '9999px',
     },
     boxShadow: {

@@ -1,0 +1,9 @@
+[tuiWrapper][data-appearance='textfield'] {
+  box-shadow: none;
+}
+
+[tuiWrapper][data-appearance='textfield']._focused._focused {
+  /*box-shadow: none;*/
+  --tui-focus: var(--tui-primary);
+  /*--tui-focus: yellow;*/
+}
