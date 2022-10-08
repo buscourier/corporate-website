@@ -18,14 +18,7 @@ import {
 } from './actions/get-current-user.action'
 import {updateCurrentUserSuccessAction} from './actions/update-current-user.action'
 import {logoutAction} from './actions/sync.action'
-
-const initialState: AuthStateInterface = {
-  isSubmitting: false,
-  isLoading: false,
-  currentUser: null,
-  isLoggedIn: null,
-  validationErrors: null,
-}
+import {initialState} from './state'
 
 const authReducer = createReducer(
   initialState,
