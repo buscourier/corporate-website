@@ -3,6 +3,7 @@ import {LoginService} from './auth/components/login/services/login.service'
 import {Store} from '@ngrx/store'
 import {isLoggedInSelector} from './auth/store/selectors'
 import {Observable} from 'rxjs'
+import {getCurrentUserAction} from './auth/store/actions/get-current-user.action'
 
 @Component({
   selector: 'app-root',
@@ -20,6 +21,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoggedIn$ = this.store.select(isLoggedInSelector)
+    this.store.dispatch(getCurrentUserAction())
   }
 
   onClick() {
