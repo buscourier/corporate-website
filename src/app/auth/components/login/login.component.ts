@@ -99,5 +99,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   onClose() {
     this.context.completeWith(false)
+    this.clearValidationErrors()
   }
 }
