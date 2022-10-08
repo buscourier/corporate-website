@@ -6,7 +6,8 @@ import {HttpClient} from '@angular/common/http'
 import {AuthResponseInterface} from '../types/auth-response.interface'
 import {LoginRequestInterface} from '../types/login-request.interface'
 import {CurrentUserInputInterface} from '../../shared/types/current-user-input.interface'
-import {environment} from "../../../environments/environment.prod";
+import {environment} from '../../../environments/environment.prod'
+import {tap} from 'rxjs/operators'
 
 @Injectable()
 export class AuthService {
@@ -24,12 +25,17 @@ export class AuthService {
       .pipe(map(this.getUser))
   }
 
-  login(data: LoginRequestInterface): Observable<CurrentUserInterface> {
-    const url = `${environment.apiUrl}/users/login`
+  login({user}: LoginRequestInterface): Observable<CurrentUserInterface> {
+    const url = `/api/account/login`
 
-    return this.http
-      .post<AuthResponseInterface>(url, data)
-      .pipe(map(this.getUser))
+    return this.http.post<CurrentUserInterface>(
+      url,
+      JSON.stringify({
+        'api-key': environment.apiKey,
+        login: user.email,
+        password: user.password,
+      })
+    )
   }
 
   getCurrentUser(): Observable<CurrentUserInterface> {

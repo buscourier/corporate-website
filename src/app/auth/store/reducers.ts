@@ -73,7 +73,7 @@ const authReducer = createReducer(
       ...state,
       isLoading: false,
       isSubmitting: false,
-      validationErrors: action.errors,
+      // validationErrors: action.errors,
     })
   ),
   on(

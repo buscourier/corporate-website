@@ -27,11 +27,12 @@ export class LoginEffect {
       switchMap(({request}) =>
         this.authService.login(request).pipe(
           map((currentUser: CurrentUserInterface) => {
-            this.persistenceService.set('accessToken', currentUser.token)
+            this.persistenceService.set('accessToken', currentUser.auth_key)
             return loginSuccessAction({currentUser})
           }),
           catchError((errorResponse: HttpErrorResponse) =>
-            of(loginFailureAction({errors: errorResponse.error.errors}))
+            // of(loginFailureAction({errors: errorResponse.error.errors}))
+            of(loginFailureAction())
           )
         )
       )

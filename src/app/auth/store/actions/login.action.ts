@@ -15,6 +15,6 @@ export const loginSuccessAction = createAction(
 )
 
 export const loginFailureAction = createAction(
-  ActionTypes.LOGIN_FAILURE,
-  props<{errors: BackendErrorsInterface}>()
+  ActionTypes.LOGIN_FAILURE
+  // props<{errors: BackendErrorsInterface}>()
 )
