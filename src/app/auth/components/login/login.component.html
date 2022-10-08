@@ -60,7 +60,8 @@
         tuiButton
         type="submit"
         class="min-w-full"
-        [disabled]="(isSubmitting$ | async) || !!(backendErrors$ | async)"
+        [ngClass]="((isSubmitting$ | async) || (form.invalid && form.touched)) ? 'cursor-not-allowed' : ''"
+        [disabled]="(isSubmitting$ | async) || (form.invalid && form.touched)"
         [showLoader]="isSubmitting$ | async"
         size="m"
       >
