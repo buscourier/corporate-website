@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoggedIn$ = this.store.select(isLoggedInSelector)
-    this.store.dispatch(getCurrentUserAction())
+    // this.store.dispatch(getCurrentUserAction())
   }
 
   onClick() {
