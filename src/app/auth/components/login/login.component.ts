@@ -20,12 +20,23 @@ import {BackendErrorsInterface} from '../../../shared/types/backend-errors.inter
 import {TuiDialog} from '@taiga-ui/cdk'
 import {POLYMORPHEUS_CONTEXT} from '@tinkoff/ng-polymorpheus'
 import {tap} from 'rxjs/operators'
+import {clearValidationErrorsAction} from '../../store/actions/clear-validation-errors'
+import {TUI_VALIDATION_ERRORS} from '@taiga-ui/kit'
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    {
+      provide: TUI_VALIDATION_ERRORS,
+      useValue: {
+        required: `Поле обязательно для заполнения`,
+        email: `Укажите корректный email`,
+      },
+    },
+  ],
 })
 export class LoginComponent implements OnInit, OnDestroy {
   form: FormGroup
@@ -69,9 +80,13 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   initializeForm(): void {
     this.form = this.fb.group({
-      email: ['', Validators.required],
-      password: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]],
     })
+  }
+
+  clearValidationErrors(): void {
+    this.store.dispatch(clearValidationErrorsAction())
   }
 
   onSubmit(): void {

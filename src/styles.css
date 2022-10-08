@@ -7,5 +7,6 @@
 @import "tailwindcss/components";
 @import "./assets/css/components/t-dialog.css";
 @import "./assets/css/components/t-wrapper.css";
+@import "./assets/css/components/input.css";
 
 @import "tailwindcss/utilities";

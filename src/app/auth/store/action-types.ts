@@ -16,4 +16,5 @@ export enum ActionTypes {
   UPDATE_CURRENT_USER_FAILURE = ' [Auth] Update current user failure',
 
   LOGOUT = '[Auth] Logout',
+  CLEAR_VALIDATION_ERRORS = '[Auth] Clear validation errors',
 }

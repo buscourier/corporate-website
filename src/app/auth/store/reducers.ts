@@ -19,6 +19,7 @@ import {
 import {updateCurrentUserSuccessAction} from './actions/update-current-user.action'
 import {logoutAction} from './actions/sync.action'
 import {initialState} from './state'
+import {clearValidationErrorsAction} from './actions/clear-validation-errors'
 
 const authReducer = createReducer(
   initialState,
@@ -112,6 +113,13 @@ const authReducer = createReducer(
     (state): AuthStateInterface => ({
       ...initialState,
       isLoggedIn: false,
+    })
+  ),
+  on(
+    clearValidationErrorsAction,
+    (state): AuthStateInterface => ({
+      ...initialState,
+      validationErrors: null,
     })
   )
 )
