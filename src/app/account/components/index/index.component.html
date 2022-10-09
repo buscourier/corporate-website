@@ -1,4 +1,81 @@
-<tui-svg
-  src="icons::catalog"
-  class="!w-[68px] !h-[53px]"
-></tui-svg>
+<div class="mt-16 mx-auto max-w-[1170px]">
+  <h1 class="mb-10 text-3xl font-bold">Личный кабинет</h1>
+  <div class="flex space-x-13">
+    <div>
+      <div class="flex mb-2 py-9 pr-10 pl-13 border border-gray-200 hover:border-yellow hover:cursor-pointer rounded-sm space-x-13">
+        <div>
+          <tui-svg
+            src="icons::catalog"
+            class="!w-[68px] !h-[53px]"
+          ></tui-svg>
+        </div>
+        <div class="basis-full">
+          <h2 class="mb-2 font-bold text-lg">Мои заявки</h2>
+          <p>Вы еще не создали ни одного отправления<br class="md:hidden" />Посмотрите историю ваших отправлений.</p>
+        </div>
+        <div class="flex items-center">
+          <tui-svg
+            src="icons::caret-right"
+            class="!w-[13px] !h-[26px]"
+          ></tui-svg>
+        </div>
+      </div>
+      <div class="flex mb-2 py-9 pr-10 pl-13 border border-gray-200 hover:border-yellow hover:cursor-pointer rounded-sm space-x-13">
+        <div>
+          <tui-svg
+            src="icons::catalog"
+            class="!w-[68px] !h-[53px]"
+          ></tui-svg>
+        </div>
+        <div class="basis-full">
+          <h2 class="mb-2 font-bold text-lg">Персональные данные</h2>
+          <p>Данные вашего личного кабинета и платежного лица.</p>
+        </div>
+        <div class="flex items-center">
+          <tui-svg
+            src="icons::caret-right"
+            class="!w-[13px] !h-[26px]"
+          ></tui-svg>
+        </div>
+      </div>
+      <div class="flex mb-2 py-9 pr-10 pl-13 border border-gray-200 hover:border-yellow hover:cursor-pointer rounded-sm space-x-13">
+        <div>
+          <tui-svg
+            src="icons::catalog"
+            class="!w-[68px] !h-[53px]"
+          ></tui-svg>
+        </div>
+        <div class="basis-full">
+          <h2 class="mb-2 font-bold text-lg">Сформировать отчет</h2>
+          <p>Удобное формирование отчета с применением фильтров.</p>
+        </div>
+        <div class="flex items-center">
+          <tui-svg
+            src="icons::caret-right"
+            class="!w-[13px] !h-[26px]"
+          ></tui-svg>
+        </div>
+      </div>
+    </div>
+    <div class="w-[270px]">
+      <button
+        tuiButton
+        type="button"
+        appearance="accent"
+        class="min-w-full mb-7"
+        size="m"
+      >
+        Оформить заказ
+      </button>
+      <a href="#" class="space-x-1">
+        <span>
+          Выйти из личного кабинета
+        </span>
+        <tui-svg
+          src="icons::logout"
+          class="!w-[27px] !h-[27px]"
+        ></tui-svg>
+      </a>
+    </div>
+  </div>
+</div>

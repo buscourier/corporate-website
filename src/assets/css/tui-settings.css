@@ -47,10 +47,10 @@
   --tui-secondary: #ebefff;
   --tui-secondary-hover: #dfe3f3;
   --tui-secondary-active: #d8ddf2;
-  --tui-accent: #ff7043;
-  --tui-accent-hover: #ff9a94;
-  --tui-accent-active: #e7716a;
-  --tui-accent-text: #fff;
+  --tui-accent: #ffdc00;
+  --tui-accent-hover: #f5e375;
+  --tui-accent-active: #d2c36c;
+  --tui-accent-text: #000000;
   --tui-selection: rgba(112, 182, 246, 0.12);
   --tui-focus: #ffdc00;
   --tui-clear: rgba(0, 0, 0, 0.08);

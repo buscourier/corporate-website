@@ -22,6 +22,31 @@ import {TUI_SVG_SRC_PROCESSOR} from '@taiga-ui/core'
   ],
 })
 export class IndexComponent implements OnInit {
+  sections = [
+    {
+      icon: 'icons::catalog',
+      title: 'Мои заявки',
+      text: '',
+      route: '',
+    },
+    {
+      icon: 'icons::catalog',
+      title: 'Мои заявки',
+      text:
+        'Вы еще не создали ни одного отправления<br class="md:hidden" />\n' +
+        '    Посмотрите историю ваших отправлений.',
+      route: '',
+    },
+    {
+      icon: 'icons::catalog',
+      title: 'Мои заявки',
+      text:
+        'Вы еще не создали ни одного отправления<br class="md:hidden" />\n' +
+        '    Посмотрите историю ваших отправлений.',
+      route: '',
+    },
+  ]
+
   constructor() {}
 
   ngOnInit(): void {}

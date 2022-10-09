@@ -33,10 +33,11 @@ module.exports = {
       gray: {
         DEFAULT: '#2e2e2e',
         100: '#f2f2f2',
-        200: '#e5e5e5',
-        300: '#d9d9d9',
-        400: '#b3b3b3',
-        500: '#808080',
+        200: '#eaeaea',
+        300: '#e5e5e5',
+        400: '#d9d9d9',
+        500: '#b3b3b3',
+        600: '#808080',
       },
     },
     fontSize: {
@@ -66,6 +67,9 @@ module.exports = {
       fontFamily: {
         heading: ['Kelson Sans', ...defaultTheme.fontFamily.sans],
         base: ['TT Norms Pro', ...defaultTheme.fontFamily.sans],
+      },
+      spacing: {
+        13: '3.25rem',
       },
     },
   },
