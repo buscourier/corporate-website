@@ -1,12 +1,12 @@
 import {NgModule} from '@angular/core'
 import {RouterModule, Routes} from '@angular/router'
 import {PersonalEditComponent} from './components/personal-edit/personal-edit.component'
-import {PersonalComponent} from './components/personal/personal.component'
+import {PersonalViewComponent} from './components/personal-view/personal-view.component'
 
 const routes: Routes = [
   {
     path: '',
-    component: PersonalComponent,
+    component: PersonalViewComponent,
   },
   {
     path: 'edit',

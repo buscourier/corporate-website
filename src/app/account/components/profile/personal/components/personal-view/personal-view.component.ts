@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-personal',
-  templateUrl: './personal.component.html',
-  styleUrls: ['./personal.component.css'],
+  selector: 'app-personal-view',
+  templateUrl: './personal-view.component.html',
+  styleUrls: ['./personal-view.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PersonalComponent implements OnInit {
+export class PersonalViewComponent implements OnInit {
 
   constructor() { }
 
