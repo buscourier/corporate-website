@@ -7,5 +7,6 @@ import {TuiSvgModule} from '@taiga-ui/core'
 @NgModule({
   declarations: [ProfileComponent],
   imports: [CommonModule, ProfileRoutingModule, TuiSvgModule],
+  providers: [],
 })
 export class ProfileModule {}
