@@ -13,19 +13,13 @@ const routes: Routes = [
     children: [
       {
         path: 'entity',
-        component: EntityComponent,
-      },
-      {
-        path: 'entity/edit',
-        component: EntityEditComponent,
+        loadChildren: () =>
+          import('./entity/entity.module').then((m) => m.EntityModule),
       },
       {
         path: 'personal',
-        component: PersonalComponent,
-      },
-      {
-        path: 'personal/edit',
-        component: PersonalEditComponent,
+        loadChildren: () =>
+          import('./personal/personal.module').then((m) => m.PersonalModule),
       },
     ],
   },
