@@ -1,2 +1,29 @@
-<p>{{(profile$ | async) | json}}</p>
-<p>{{isLoading$ | async}}</p>
+<div class="max-w-[520px]">
+  <tui-loader [showLoader]="isLoading$ | async">
+    <ng-container *ngIf="(profile$ | async) as profile">
+      <ul class="mb-8 space-y-2">
+        <li class="flex justify-between items-baseline gap-1
+   after:basis-full after:h-1 after:border-b after:border-gray-500 after:order-2 after:border-dotted">
+          <span class="order-1 flex-shrink-0">ФИО:</span>
+          <span class="order-3 flex-shrink-0">{{profile.contactperson.value}}</span>
+        </li>
+        <li class="flex justify-between items-baseline gap-1
+   after:basis-full after:h-1 after:border-b after:border-gray-500 after:order-2 after:border-dotted">
+          <span class="order-1 flex-shrink-0">Email:</span>
+          <span class="order-3 flex-shrink-0">{{profile.email.value}}</span>
+        </li>
+        <li class="flex justify-between items-baseline gap-1
+   after:basis-full after:h-1 after:border-b after:border-gray-500 after:order-2 after:border-dotted">
+          <span class="order-1 flex-shrink-0">Телефон:</span>
+          <span class="order-3 flex-shrink-0">{{profile.phone.value}}</span>
+        </li>
+        <li class="flex justify-between items-baseline gap-1
+   after:basis-full after:h-1 after:border-b after:border-gray-500 after:order-2 after:border-dotted">
+          <span class="order-1 flex-shrink-0">Паспортные данные:</span>
+          <span class="order-3 flex-shrink-0">{{profile.passport.value || 'Не указаны' }}</span>
+        </li>
+      </ul>
+      <button tuiButton type="button" appearance="accent" size="m">Изменить данные</button>
+    </ng-container>
+  </tui-loader>
+</div>

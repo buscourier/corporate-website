@@ -5,12 +5,21 @@ import {getPersonalProfileAction} from './store/actions/get-personal-profile.act
 import {currentUserSelector} from '../../../../../../auth/store/selectors'
 import {CurrentUserInterface} from '../../../../../../shared/types/current-user.interface'
 import {isLoadingSelector, personalProfileSelector} from './store/selectors'
+import {tuiLoaderOptionsProvider} from '@taiga-ui/core'
+import {tap} from 'rxjs/operators'
 
 @Component({
   selector: 'app-personal-view',
   templateUrl: './personal-view.component.html',
   styleUrls: ['./personal-view.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    tuiLoaderOptionsProvider({
+      size: 'l',
+      inheritColor: false,
+      overlay: false,
+    }),
+  ],
 })
 export class PersonalViewComponent implements OnInit {
   isLoading$: Observable<boolean>
@@ -26,9 +35,12 @@ export class PersonalViewComponent implements OnInit {
 
   initializeValues(): void {
     this.isLoading$ = this.store.select(isLoadingSelector)
-    this.profile$ = this.store
-      .select(personalProfileSelector)
-      .pipe(filter(Boolean))
+    this.profile$ = this.store.select(personalProfileSelector).pipe(
+      filter(Boolean),
+      tap((profile) => {
+        console.log('profile', profile)
+      })
+    )
   }
 
   fetchData(): void {
