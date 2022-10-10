@@ -24,6 +24,6 @@ const personalProfileReducer = createReducer(
   }))
 )
 
-export function reducers(state: PersonalProfileStateInterface, action: Action) {
+export function reducer(state: PersonalProfileStateInterface, action: Action) {
   return personalProfileReducer(state, action)
 }

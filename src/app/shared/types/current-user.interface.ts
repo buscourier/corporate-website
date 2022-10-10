@@ -1,5 +1,5 @@
 export interface CurrentUserInterface {
-  id: number
+  id: string
   auth_key: string
   // user_type: boolean
 }

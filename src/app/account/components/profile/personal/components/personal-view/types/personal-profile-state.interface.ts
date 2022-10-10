@@ -3,5 +3,5 @@ import {PersonalProfileInterface} from '../../../types/personal-profile.interfac
 export interface PersonalProfileStateInterface {
   isLoading: boolean
   backendErrors: string | null
-  data: PersonalProfileInterface | null
+  data: null | PersonalProfileInterface
 }
