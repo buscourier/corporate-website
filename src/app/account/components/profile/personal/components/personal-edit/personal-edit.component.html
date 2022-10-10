@@ -1,4 +1,4 @@
-<form [formGroup]="form" class="max-w-[570px] grid grid-cols-2 gap-x-8 gap-y-4">
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="max-w-[570px] grid grid-cols-2 gap-x-8 gap-y-4">
   <label class="block">
     <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >ФИО</span>
     <tui-input
@@ -7,7 +7,7 @@
       [tuiTextfieldLabelOutside]="true"
       [class.tui-skeleton]="isLoading$ | async"
     >
-      ФИО
+      Нет данных
       <input
         tuiTextfield
         type="text"
@@ -26,7 +26,7 @@
       [tuiTextfieldLabelOutside]="true"
       [class.tui-skeleton]="isLoading$ | async"
     >
-      Email
+      Нет данных
       <input
         tuiTextfield
         type="text"
@@ -45,7 +45,7 @@
       [tuiTextfieldLabelOutside]="true"
       [class.tui-skeleton]="isLoading$ | async"
     >
-      Email
+      Нет данных
       <input
         tuiTextfield
         type="text"
@@ -64,7 +64,7 @@
       [tuiTextfieldLabelOutside]="true"
       [class.tui-skeleton]="isLoading$ | async"
     >
-      Email
+      Нет данных
       <input
         tuiTextfield
         type="text"
@@ -75,5 +75,5 @@
       [error]="[] | tuiFieldError | async"
     ></tui-error>
   </label>
-  <button tuiButton type="button" [class.tui-skeleton]="isLoading$ | async" appearance="accent" size="m">Сохранить изменения</button>
+  <button tuiButton type="submit" [class.tui-skeleton]="isLoading$ | async" appearance="accent" size="m">Сохранить изменения</button>
 </form>

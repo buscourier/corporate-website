@@ -10,6 +10,7 @@ import {
   TuiButtonModule,
   TuiErrorModule,
   TuiLabelModule,
+  TuiNotificationModule,
   TuiTextfieldControllerModule,
 } from '@taiga-ui/core'
 import {TuiFieldErrorPipeModule, TuiInputModule} from '@taiga-ui/kit'
@@ -24,6 +25,7 @@ import {TuiFieldErrorPipeModule, TuiInputModule} from '@taiga-ui/kit'
     TuiTextfieldControllerModule,
     TuiErrorModule,
     TuiButtonModule,
+    TuiNotificationModule,
     StoreModule.forFeature('editPersonalProfile', reducer),
     EffectsModule.forFeature([GetPersonalProfileEffect]),
     TuiFieldErrorPipeModule,
