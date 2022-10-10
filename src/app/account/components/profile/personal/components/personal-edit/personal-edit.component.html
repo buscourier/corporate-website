@@ -1,1 +1,79 @@
-<p>personal-edit works!</p>
+<form [formGroup]="form" class="max-w-[570px] grid grid-cols-2 gap-x-8 gap-y-4">
+  <label class="block">
+    <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >ФИО</span>
+    <tui-input
+      tuiTextfieldSize="m"
+      formControlName="email"
+      [tuiTextfieldLabelOutside]="true"
+      [class.tui-skeleton]="isLoading$ | async"
+    >
+      ФИО
+      <input
+        tuiTextfield
+        type="text"
+      />
+    </tui-input>
+    <tui-error
+      formControlName="email"
+      [error]="[] | tuiFieldError | async"
+    ></tui-error>
+  </label>
+  <label class="block">
+    <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >Email</span>
+    <tui-input
+      tuiTextfieldSize="m"
+      formControlName="email"
+      [tuiTextfieldLabelOutside]="true"
+      [class.tui-skeleton]="isLoading$ | async"
+    >
+      Email
+      <input
+        tuiTextfield
+        type="text"
+      />
+    </tui-input>
+    <tui-error
+      formControlName="email"
+      [error]="[] | tuiFieldError | async"
+    ></tui-error>
+  </label>
+  <label class="block mb-3">
+    <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >Телефон</span>
+    <tui-input
+      tuiTextfieldSize="m"
+      formControlName="phone"
+      [tuiTextfieldLabelOutside]="true"
+      [class.tui-skeleton]="isLoading$ | async"
+    >
+      Email
+      <input
+        tuiTextfield
+        type="text"
+      />
+    </tui-input>
+    <tui-error
+      formControlName="phone"
+      [error]="[] | tuiFieldError | async"
+    ></tui-error>
+  </label>
+  <label class="block mb-3">
+    <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >Паспорт</span>
+    <tui-input
+      tuiTextfieldSize="m"
+      formControlName="passport"
+      [tuiTextfieldLabelOutside]="true"
+      [class.tui-skeleton]="isLoading$ | async"
+    >
+      Email
+      <input
+        tuiTextfield
+        type="text"
+      />
+    </tui-input>
+    <tui-error
+      formControlName="passport"
+      [error]="[] | tuiFieldError | async"
+    ></tui-error>
+  </label>
+  <button tuiButton type="button" [class.tui-skeleton]="isLoading$ | async" appearance="accent" size="m">Сохранить изменения</button>
+</form>
