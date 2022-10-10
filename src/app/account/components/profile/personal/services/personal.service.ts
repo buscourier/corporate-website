@@ -5,7 +5,7 @@ import {environment} from '../../../../../../environments/environment.prod'
 import {PersonalProfileInterface} from '../types/personal-profile.interface'
 
 @Injectable()
-export class ProfileService {
+export class PersonalService {
   constructor(private http: HttpClient) {}
 
   getProfile(currentUserId: string): Observable<PersonalProfileInterface> {
