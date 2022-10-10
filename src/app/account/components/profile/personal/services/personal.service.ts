@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core'
 import {HttpClient} from '@angular/common/http'
-import {Observable} from 'rxjs'
+import {filter, map, Observable} from 'rxjs'
 import {environment} from '../../../../../../environments/environment.prod'
 import {PersonalProfileInterface} from '../types/personal-profile.interface'
+import {ProfileInterface} from '../../shared/types/profile.interface'
 
 @Injectable()
 export class PersonalService {
@@ -11,9 +12,19 @@ export class PersonalService {
   getProfile(currentUserId: string): Observable<PersonalProfileInterface> {
     const url = '/api/account/details/'
 
-    return this.http.get<PersonalProfileInterface>(
-      `${url}/${environment.apiKey}/${currentUserId}`
-    )
+    return this.http
+      .get<ProfileInterface[]>(`${url}/${environment.apiKey}/${currentUserId}`)
+      .pipe(
+        filter(Boolean),
+        map((profile: ProfileInterface[]) => {
+          return [...profile].reduce((obj, item: ProfileInterface) => {
+            return {
+              ...obj,
+              [item.alias]: item,
+            }
+          }, {})
+        })
+      )
   }
 
   updateProfile(

@@ -1,12 +1,10 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
-import {concatAll, filter, map, Observable, of, switchMap, toArray} from 'rxjs'
-import {PersonalProfileInterface} from '../../types/personal-profile.interface'
+import {filter, map, Observable} from 'rxjs'
 import {Store} from '@ngrx/store'
 import {getPersonalProfileAction} from './store/actions/get-personal-profile.action'
 import {currentUserSelector} from '../../../../../../auth/store/selectors'
 import {CurrentUserInterface} from '../../../../../../shared/types/current-user.interface'
 import {isLoadingSelector, personalProfileSelector} from './store/selectors'
-import {ProfileInterface} from '../../../shared/types/profile.interface'
 
 @Component({
   selector: 'app-personal-view',
@@ -17,7 +15,7 @@ import {ProfileInterface} from '../../../shared/types/profile.interface'
 export class PersonalViewComponent implements OnInit {
   isLoading$: Observable<boolean>
   backendErrors$: Observable<null | string>
-  profile$: Observable<null | PersonalProfileInterface>
+  profile$: Observable<null | any>
 
   constructor(private store: Store) {}
 
@@ -28,19 +26,9 @@ export class PersonalViewComponent implements OnInit {
 
   initializeValues(): void {
     this.isLoading$ = this.store.select(isLoadingSelector)
-    this.profile$ = this.store.select(personalProfileSelector).pipe(
-      filter(Boolean),
-      map((profile: PersonalProfileInterface) => {
-        console.log('profile', profile)
-        return [...profile].reduce((arr, item) => {
-          return item.alias === 'login' ||
-            item.alias === 'email' ||
-            item.alias === 'phone'
-            ? arr.concat(item)
-            : arr.concat(null)
-        }, [])
-      })
-    )
+    this.profile$ = this.store
+      .select(personalProfileSelector)
+      .pipe(filter(Boolean))
   }
 
   fetchData(): void {
