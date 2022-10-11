@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-entity',
-  templateUrl: './entity.component.html',
-  styleUrls: ['./entity.component.css'],
+  selector: 'app-entity-view',
+  templateUrl: './entity-view.component.html',
+  styleUrls: ['./entity-view.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EntityComponent implements OnInit {
+export class EntityViewComponent implements OnInit {
 
   constructor() { }
 

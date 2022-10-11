@@ -1,12 +1,12 @@
 import {NgModule} from '@angular/core'
 import {RouterModule, Routes} from '@angular/router'
-import {EntityComponent} from './components/entity/entity.component'
 import {EntityEditComponent} from './components/entity-edit/entity-edit.component'
+import {EntityViewComponent} from './components/entity-view/entity-view.component'
 
 const routes: Routes = [
   {
     path: '',
-    component: EntityComponent,
+    component: EntityViewComponent,
   },
   {
     path: 'edit',

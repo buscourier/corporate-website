@@ -1,11 +1,16 @@
 import {NgModule} from '@angular/core'
 import {CommonModule} from '@angular/common'
-import {EntityComponent} from './components/entity/entity.component'
-import {EntityEditComponent} from './components/entity-edit/entity-edit.component'
 import {EntityRoutingModule} from './entity-routing.module'
+import {EntityEditModule} from './components/entity-edit/entity-edit.module'
+import {EntityViewModule} from './components/entity-view/entity-view.module'
 
 @NgModule({
-  declarations: [EntityComponent, EntityEditComponent],
-  imports: [CommonModule, EntityRoutingModule],
+  declarations: [],
+  imports: [
+    CommonModule,
+    EntityRoutingModule,
+    EntityViewModule,
+    EntityEditModule,
+  ],
 })
 export class EntityModule {}
