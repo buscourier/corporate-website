@@ -7,6 +7,7 @@ import {ENTITY_PROFILE_FEATURE} from './store/state'
 import {reducer} from './store/reducer'
 import {GetEntityProfileEffect} from './store/effects/get-entity-profile.effect'
 import {TuiButtonModule, TuiLoaderModule} from '@taiga-ui/core'
+import {RouterModule} from '@angular/router'
 
 @NgModule({
   declarations: [EntityViewComponent],
@@ -14,6 +15,7 @@ import {TuiButtonModule, TuiLoaderModule} from '@taiga-ui/core'
     CommonModule,
     TuiLoaderModule,
     TuiButtonModule,
+    RouterModule,
     StoreModule.forFeature(ENTITY_PROFILE_FEATURE, reducer),
     EffectsModule.forFeature([GetEntityProfileEffect]),
   ],
