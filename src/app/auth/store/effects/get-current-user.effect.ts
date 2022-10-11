@@ -28,7 +28,7 @@ export class GetCurrentUserEffect {
           return of(getCurrentUserFailureAction())
         }
 
-        return this.authService.getCurrentUser().pipe(
+        return this.authService.getCurrentUser(token).pipe(
           map((currentUser: CurrentUserInterface) =>
             getCurrentUserSuccessAction({currentUser})
           ),

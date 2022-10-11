@@ -61,7 +61,7 @@
     </label>
 
 
-    <label class="block mb-3">
+    <label class="block">
       <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >Телефон</span>
       <tui-input
         tuiTextfieldSize="m"
@@ -82,7 +82,7 @@
     </label>
 
 
-    <label class="block mb-3">
+    <label class="block">
       <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >ИНН</span>
       <tui-input
         tuiTextfieldSize="m"
@@ -103,7 +103,7 @@
     </label>
 
 
-    <label class="block mb-3">
+    <label class="block">
       <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >КПП</span>
       <tui-input
         tuiTextfieldSize="m"
@@ -123,7 +123,7 @@
       ></tui-error>
     </label>
 
-    <label class="block mb-3">
+    <label class="block">
       <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >ОГРН</span>
       <tui-input
         tuiTextfieldSize="m"
@@ -143,7 +143,7 @@
       ></tui-error>
     </label>
 
-    <label class="block mb-3">
+    <label class="block">
       <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >Банк</span>
       <tui-input
         tuiTextfieldSize="m"
@@ -163,7 +163,7 @@
       ></tui-error>
     </label>
 
-    <label class="block mb-3">
+    <label class="block">
       <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >Р/с</span>
       <tui-input
         tuiTextfieldSize="m"
@@ -183,7 +183,7 @@
       ></tui-error>
     </label>
 
-    <label class="block mb-3">
+    <label class="block">
       <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >К/с</span>
       <tui-input
         tuiTextfieldSize="m"
@@ -203,7 +203,7 @@
       ></tui-error>
     </label>
 
-    <label class="block mb-3">
+    <label class="block">
       <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >№ Договора</span>
       <tui-input
         tuiTextfieldSize="m"
@@ -223,7 +223,7 @@
       ></tui-error>
     </label>
 
-    <label class="block mb-3">
+    <label class="block">
       <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >Дата договора</span>
       <tui-input
         tuiTextfieldSize="m"
@@ -243,7 +243,7 @@
       ></tui-error>
     </label>
 
-    <label class="block mb-3">
+    <label class="block">
       <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >Перевозчик</span>
       <tui-input
         tuiTextfieldSize="m"
@@ -264,6 +264,12 @@
     </label>
 
     <button tuiButton type="submit" [class.tui-skeleton]="isLoading$ | async"
-            appearance="accent" size="m" [showLoader]="isSubmitting$ | async">Сохранить изменения</button>
+    appearance="accent" size="m" [showLoader]="isSubmitting$ | async" class="mt-3"
+
+    >Сохранить изменения</button>
+
+    <div class="h-[50px] flex items-center mt-3">
+      <a href="#" class="text-sm text-blue hover:text-blue-900">Отменить</a>
+    </div>
   </form>
 </div>

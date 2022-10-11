@@ -38,10 +38,11 @@ export class AuthService {
     )
   }
 
-  getCurrentUser(): Observable<CurrentUserInterface> {
-    const url = `${environment.apiUrl}/user`
+  getCurrentUser(token: string): Observable<CurrentUserInterface> {
+    const url = `/api/account/auth/${token}`
+    console.log('token', token)
 
-    return this.http.get(url).pipe(map(this.getUser))
+    return this.http.get<CurrentUserInterface>(url)
   }
 
   updateCurrentUser(
