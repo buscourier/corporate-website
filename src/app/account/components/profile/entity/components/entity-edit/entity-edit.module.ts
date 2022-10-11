@@ -15,6 +15,7 @@ import {EDIT_ENTITY_PROFILE_FEATURE} from './store/state'
 import {reducer} from './store/reducer'
 import {GetEntityProfileEffect} from './store/effects/get-entity-profile.effect'
 import {ReactiveFormsModule} from '@angular/forms'
+import {UpdatePersonalProfileEffect} from './store/effects/update-entity-profile.effect'
 
 @NgModule({
   declarations: [EntityEditComponent],
@@ -30,7 +31,7 @@ import {ReactiveFormsModule} from '@angular/forms'
     StoreModule.forFeature(EDIT_ENTITY_PROFILE_FEATURE, reducer),
     EffectsModule.forFeature([
       GetEntityProfileEffect,
-      // UpdatePersonalProfileEffect,
+      UpdatePersonalProfileEffect,
     ]),
     TuiFieldErrorPipeModule,
   ],

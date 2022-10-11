@@ -6,6 +6,11 @@ import {
   getEntityProfileFailureAction,
   getEntityProfileSuccessAction,
 } from './actions/get-entity-profile.action'
+import {
+  updateEntityProfileAction,
+  updateEntityProfileFailureAction,
+  updateEntityProfileSuccessAction,
+} from './actions/update-entity-profile.action'
 
 const editEntityProfileReducer = createReducer(
   initialState,
@@ -21,6 +26,20 @@ const editEntityProfileReducer = createReducer(
   on(getEntityProfileFailureAction, (state) => ({
     ...state,
     isLoading: false,
+  })),
+  on(updateEntityProfileAction, (state) => ({
+    ...state,
+    isSubmitting: true,
+  })),
+  on(updateEntityProfileSuccessAction, (state, action) => ({
+    ...state,
+    isSubmitting: false,
+    data: action.profile,
+  })),
+  on(updateEntityProfileFailureAction, (state, action) => ({
+    ...state,
+    isSubmitting: false,
+    backendErrors: action.errors,
   }))
 )
 

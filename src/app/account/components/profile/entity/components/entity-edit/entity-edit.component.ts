@@ -13,6 +13,7 @@ import {
   isLoadingSelector,
   isSubmittingSelector,
 } from './store/selectors'
+import {updateEntityProfileAction} from './store/actions/update-entity-profile.action'
 
 @Component({
   selector: 'app-entity-edit',
@@ -89,12 +90,12 @@ export class EntityEditComponent implements OnInit {
       ...this.form.value,
     }
 
-    // this.store.dispatch(
-    //   updatePersonalProfileAction({
-    //     currentUserId: this.currentUserId,
-    //     profileInput,
-    //   })
-    // )
+    this.store.dispatch(
+      updateEntityProfileAction({
+        currentUserId: this.currentUserId,
+        profileInput,
+      })
+    )
 
     this.alertService
       .open(`Ошибка сохранения данных`, {
