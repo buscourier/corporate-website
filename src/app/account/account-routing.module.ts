@@ -14,6 +14,11 @@ const routes: Routes = [
         (m) => m.ProfileModule
       ),
   },
+  {
+    path: 'orders',
+    loadChildren: () =>
+      import('./components/orders/orders.module').then((m) => m.OrdersModule),
+  },
 ]
 
 @NgModule({
