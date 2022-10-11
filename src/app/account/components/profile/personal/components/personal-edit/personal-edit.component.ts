@@ -6,10 +6,15 @@ import {getPersonalProfileAction} from './store/actions/get-personal-profile.act
 import {currentUserSelector} from '../../../../../../auth/store/selectors'
 import {CurrentUserInterface} from '../../../../../../shared/types/current-user.interface'
 import {tap} from 'rxjs/operators'
-import {isLoadingSelector, personalProfileSelector} from './store/selectors'
+import {
+  isLoadingSelector,
+  isSubmittingSelector,
+  personalProfileSelector,
+} from './store/selectors'
 import {FormBuilder, FormGroup} from '@angular/forms'
 import {TUI_VALIDATION_ERRORS} from '@taiga-ui/kit'
 import {TuiAlertService, TuiNotification} from '@taiga-ui/core'
+import {updatePersonalProfileAction} from './store/actions/update-personal-profile.action'
 
 @Component({
   selector: 'app-personal-edit',
@@ -28,7 +33,9 @@ import {TuiAlertService, TuiNotification} from '@taiga-ui/core'
 export class PersonalEditComponent implements OnInit {
   isLoading$: Observable<boolean>
   backendErrors$: Observable<null | string>
+  isSubmitting$: Observable<boolean>
   profile: PersonalProfileInterface
+  currentUserId: string
 
   form: FormGroup = this.fb.group({
     fio: '',
@@ -55,6 +62,7 @@ export class PersonalEditComponent implements OnInit {
       .pipe(
         filter(Boolean),
         map((user: CurrentUserInterface) => {
+          this.currentUserId = user.id
           return this.store.dispatch(
             getPersonalProfileAction({userId: user.id})
           )
@@ -65,6 +73,7 @@ export class PersonalEditComponent implements OnInit {
 
   initializeValues(): void {
     this.isLoading$ = this.store.select(isLoadingSelector)
+    this.isSubmitting$ = this.store.select(isSubmittingSelector)
     this.store
       .select(personalProfileSelector)
       .pipe(
@@ -92,12 +101,17 @@ export class PersonalEditComponent implements OnInit {
       ...this.form.value,
     }
 
-    console.log('profileInput', profileInput)
+    this.store.dispatch(
+      updatePersonalProfileAction({
+        currentUserId: this.currentUserId,
+        profileInput,
+      })
+    )
 
     this.alertService
-      .open(`Данные успешно сохранены`, {
+      .open(`Ошибка сохранения данных`, {
         label: `Изменения данных!`,
-        // status: TuiNotification.Success,
+        // status: TuiNotification.Error,
       })
       .subscribe()
   }

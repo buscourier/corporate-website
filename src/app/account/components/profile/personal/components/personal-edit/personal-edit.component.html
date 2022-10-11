@@ -75,5 +75,6 @@
       [error]="[] | tuiFieldError | async"
     ></tui-error>
   </label>
-  <button tuiButton type="submit" [class.tui-skeleton]="isLoading$ | async" appearance="accent" size="m">Сохранить изменения</button>
+  <button tuiButton type="submit" [class.tui-skeleton]="isLoading$ | async"
+          appearance="accent" size="m" [showLoader]="isSubmitting$ | async">Сохранить изменения</button>
 </form>

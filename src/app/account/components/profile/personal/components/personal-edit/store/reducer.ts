@@ -6,6 +6,11 @@ import {
   getPersonalProfileSuccessAction,
 } from './actions/get-personal-profile.action'
 import {EditPersonalProfileStateInterface} from '../types/edit-personal-profile-state.interface'
+import {
+  updatePersonalProfileAction,
+  updatePersonalProfileFailureAction,
+  updatePersonalProfileSuccessAction,
+} from './actions/update-personal-profile.action'
 
 const editPersonalProfileReducer = createReducer(
   initialState,
@@ -21,6 +26,20 @@ const editPersonalProfileReducer = createReducer(
   on(getPersonalProfileFailureAction, (state) => ({
     ...state,
     isLoading: false,
+  })),
+  on(updatePersonalProfileAction, (state) => ({
+    ...state,
+    isSubmitting: true,
+  })),
+  on(updatePersonalProfileSuccessAction, (state, action) => ({
+    ...state,
+    isSubmitting: false,
+    data: action.profile,
+  })),
+  on(updatePersonalProfileFailureAction, (state, action) => ({
+    ...state,
+    isSubmitting: false,
+    backendErrors: action.errors,
   }))
 )
 

@@ -12,6 +12,11 @@ export const isLoadingSelector = createSelector(
   (profileState: EditPersonalProfileStateInterface) => profileState.isLoading
 )
 
+export const isSubmittingSelector = createSelector(
+  EditPersonalProfileFeatureSelector,
+  (profileState: EditPersonalProfileStateInterface) => profileState.isSubmitting
+)
+
 export const personalProfileSelector = createSelector(
   EditPersonalProfileFeatureSelector,
   (profileState: EditPersonalProfileStateInterface) => profileState.data

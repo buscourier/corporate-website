@@ -29,13 +29,13 @@ export class PersonalService {
 
   updateProfile(
     currentUserId: string,
-    payload: any
+    profileInput: any
   ): Observable<PersonalProfileInterface> {
     const url = '/api/account/details/'
 
     return this.http.put<PersonalProfileInterface>(
       `${url}/${environment.apiKey}/${currentUserId}`,
-      payload
+      profileInput
     )
   }
 }

@@ -14,6 +14,7 @@ import {
   TuiTextfieldControllerModule,
 } from '@taiga-ui/core'
 import {TuiFieldErrorPipeModule, TuiInputModule} from '@taiga-ui/kit'
+import {UpdatePersonalProfileEffect} from './store/effects/update-personal-profile.effect'
 
 @NgModule({
   declarations: [PersonalEditComponent],
@@ -27,7 +28,10 @@ import {TuiFieldErrorPipeModule, TuiInputModule} from '@taiga-ui/kit'
     TuiButtonModule,
     TuiNotificationModule,
     StoreModule.forFeature('editPersonalProfile', reducer),
-    EffectsModule.forFeature([GetPersonalProfileEffect]),
+    EffectsModule.forFeature([
+      GetPersonalProfileEffect,
+      UpdatePersonalProfileEffect,
+    ]),
     TuiFieldErrorPipeModule,
   ],
   exports: [PersonalEditComponent],
