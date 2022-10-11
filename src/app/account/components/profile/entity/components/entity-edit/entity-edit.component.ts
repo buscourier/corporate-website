@@ -25,14 +25,22 @@ export class EntityEditComponent implements OnInit {
   isLoading$: Observable<boolean>
   backendErrors$: Observable<null | string>
   isSubmitting$: Observable<boolean>
-  profile: EntityProfileInterface
+  profile: any
   currentUserId: string
 
   form: FormGroup = this.fb.group({
-    fio: '',
-    email: '',
+    name: '',
+    contactperson: '',
     phone: '',
-    passport: '',
+    inn: '',
+    kpp: '',
+    ogrn: '',
+    bank: '',
+    rs: '',
+    ks: '',
+    contractNumber: '',
+    contractDate: '',
+    driver: '',
   })
 
   constructor(
@@ -77,10 +85,18 @@ export class EntityEditComponent implements OnInit {
 
   initializeForm(): void {
     this.form = this.fb.group({
-      fio: this.profile['contactperson'].value,
-      email: this.profile['email'].value,
-      phone: this.profile['phone'].value,
-      passport: this.profile['passport'].value,
+      name: this.profile.name.value,
+      contactperson: this.profile.contactperson.value,
+      phone: this.profile.phone.value,
+      inn: this.profile.inn.value,
+      kpp: this.profile.kpp.value,
+      ogrn: this.profile.ogrn.value,
+      bank: this.profile.bank.value,
+      rs: this.profile.rs.value,
+      ks: this.profile.ks.value,
+      contractNumber: this.profile.contractID.value,
+      contractDate: this.profile.contractDate.value,
+      driver: '',
     })
   }
 

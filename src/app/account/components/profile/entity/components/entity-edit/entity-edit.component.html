@@ -1,80 +1,269 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()" class="max-w-[570px] grid grid-cols-2 gap-x-8 gap-y-4">
-  <label class="block">
-    <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >ФИО</span>
-    <tui-input
-      tuiTextfieldSize="m"
-      formControlName="email"
-      [tuiTextfieldLabelOutside]="true"
-      [class.tui-skeleton]="isLoading$ | async"
-    >
-      Нет данных
-      <input
-        tuiTextfield
-        type="text"
-      />
-    </tui-input>
-    <tui-error
-      formControlName="email"
-      [error]="[] | tuiFieldError | async"
-    ></tui-error>
-  </label>
-  <label class="block">
-    <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >Email</span>
-    <tui-input
-      tuiTextfieldSize="m"
-      formControlName="email"
-      [tuiTextfieldLabelOutside]="true"
-      [class.tui-skeleton]="isLoading$ | async"
-    >
-      Нет данных
-      <input
-        tuiTextfield
-        type="text"
-      />
-    </tui-input>
-    <tui-error
-      formControlName="email"
-      [error]="[] | tuiFieldError | async"
-    ></tui-error>
-  </label>
-  <label class="block mb-3">
-    <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >Телефон</span>
-    <tui-input
-      tuiTextfieldSize="m"
-      formControlName="phone"
-      [tuiTextfieldLabelOutside]="true"
-      [class.tui-skeleton]="isLoading$ | async"
-    >
-      Нет данных
-      <input
-        tuiTextfield
-        type="text"
-      />
-    </tui-input>
-    <tui-error
-      formControlName="phone"
-      [error]="[] | tuiFieldError | async"
-    ></tui-error>
-  </label>
-  <label class="block mb-3">
-    <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >Паспорт</span>
-    <tui-input
-      tuiTextfieldSize="m"
-      formControlName="passport"
-      [tuiTextfieldLabelOutside]="true"
-      [class.tui-skeleton]="isLoading$ | async"
-    >
-      Нет данных
-      <input
-        tuiTextfield
-        type="text"
-      />
-    </tui-input>
-    <tui-error
-      formControlName="passport"
-      [error]="[] | tuiFieldError | async"
-    ></tui-error>
-  </label>
-  <button tuiButton type="submit" [class.tui-skeleton]="isLoading$ | async"
-          appearance="accent" size="m" [showLoader]="isSubmitting$ | async">Сохранить изменения</button>
-</form>
+<div class="max-w-[570px]">
+  <tui-loader [showLoader]="isLoading$ | async">
+    <ng-container *ngIf="profile">
+      <ul class="mb-8 pb-11 space-y-2 border-b border-gray-300">
+        <li class="flex justify-between items-baseline gap-1
+   after:basis-full after:h-1 after:border-b after:border-gray-500 after:order-2 after:border-dotted">
+          <span class="order-1 flex-shrink-0">Логин:</span>
+          <span class="order-3 flex-shrink-0">{{profile['email'].value}}</span>
+        </li>
+        <li class="flex justify-between items-baseline gap-1
+   after:basis-full after:h-1 after:border-b after:border-gray-500 after:order-2 after:border-dotted">
+          <span class="order-1 flex-shrink-0">Пароль:</span>
+          <span class="order-3 flex-shrink-0">*********</span>
+        </li>
+      </ul>
+    </ng-container>
+  </tui-loader>
+  <h2 class="mb-6 text-lg font-heading font-bold">Данные организации</h2>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="grid grid-cols-2 gap-x-8 gap-y-4">
+    <label class="block">
+      <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >
+        Наименование организации
+      </span>
+      <tui-input
+        tuiTextfieldSize="m"
+        formControlName="name"
+        [tuiTextfieldLabelOutside]="true"
+        [class.tui-skeleton]="isLoading$ | async"
+      >
+        Нет данных
+        <input
+          tuiTextfield
+          type="text"
+        />
+      </tui-input>
+      <tui-error
+        formControlName="name"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
+    </label>
+
+
+    <label class="block">
+      <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >Руководитель</span>
+      <tui-input
+        tuiTextfieldSize="m"
+        formControlName="contactperson"
+        [tuiTextfieldLabelOutside]="true"
+        [class.tui-skeleton]="isLoading$ | async"
+      >
+        Нет данных
+        <input
+          tuiTextfield
+          type="text"
+        />
+      </tui-input>
+      <tui-error
+        formControlName="contactperson"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
+    </label>
+
+
+    <label class="block mb-3">
+      <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >Телефон</span>
+      <tui-input
+        tuiTextfieldSize="m"
+        formControlName="phone"
+        [tuiTextfieldLabelOutside]="true"
+        [class.tui-skeleton]="isLoading$ | async"
+      >
+        Нет данных
+        <input
+          tuiTextfield
+          type="text"
+        />
+      </tui-input>
+      <tui-error
+        formControlName="phone"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
+    </label>
+
+
+    <label class="block mb-3">
+      <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >ИНН</span>
+      <tui-input
+        tuiTextfieldSize="m"
+        formControlName="inn"
+        [tuiTextfieldLabelOutside]="true"
+        [class.tui-skeleton]="isLoading$ | async"
+      >
+        Нет данных
+        <input
+          tuiTextfield
+          type="text"
+        />
+      </tui-input>
+      <tui-error
+        formControlName="inn"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
+    </label>
+
+
+    <label class="block mb-3">
+      <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >КПП</span>
+      <tui-input
+        tuiTextfieldSize="m"
+        formControlName="kpp"
+        [tuiTextfieldLabelOutside]="true"
+        [class.tui-skeleton]="isLoading$ | async"
+      >
+        Нет данных
+        <input
+          tuiTextfield
+          type="text"
+        />
+      </tui-input>
+      <tui-error
+        formControlName="kpp"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
+    </label>
+
+    <label class="block mb-3">
+      <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >ОГРН</span>
+      <tui-input
+        tuiTextfieldSize="m"
+        formControlName="ogrn"
+        [tuiTextfieldLabelOutside]="true"
+        [class.tui-skeleton]="isLoading$ | async"
+      >
+        Нет данных
+        <input
+          tuiTextfield
+          type="text"
+        />
+      </tui-input>
+      <tui-error
+        formControlName="ogrn"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
+    </label>
+
+    <label class="block mb-3">
+      <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >Банк</span>
+      <tui-input
+        tuiTextfieldSize="m"
+        formControlName="bank"
+        [tuiTextfieldLabelOutside]="true"
+        [class.tui-skeleton]="isLoading$ | async"
+      >
+        Нет данных
+        <input
+          tuiTextfield
+          type="text"
+        />
+      </tui-input>
+      <tui-error
+        formControlName="bank"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
+    </label>
+
+    <label class="block mb-3">
+      <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >Р/с</span>
+      <tui-input
+        tuiTextfieldSize="m"
+        formControlName="rs"
+        [tuiTextfieldLabelOutside]="true"
+        [class.tui-skeleton]="isLoading$ | async"
+      >
+        Нет данных
+        <input
+          tuiTextfield
+          type="text"
+        />
+      </tui-input>
+      <tui-error
+        formControlName="rs"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
+    </label>
+
+    <label class="block mb-3">
+      <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >К/с</span>
+      <tui-input
+        tuiTextfieldSize="m"
+        formControlName="ks"
+        [tuiTextfieldLabelOutside]="true"
+        [class.tui-skeleton]="isLoading$ | async"
+      >
+        Нет данных
+        <input
+          tuiTextfield
+          type="text"
+        />
+      </tui-input>
+      <tui-error
+        formControlName="ks"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
+    </label>
+
+    <label class="block mb-3">
+      <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >№ Договора</span>
+      <tui-input
+        tuiTextfieldSize="m"
+        formControlName="contractNumber"
+        [tuiTextfieldLabelOutside]="true"
+        [class.tui-skeleton]="isLoading$ | async"
+      >
+        Нет данных
+        <input
+          tuiTextfield
+          type="text"
+        />
+      </tui-input>
+      <tui-error
+        formControlName="contractNumber"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
+    </label>
+
+    <label class="block mb-3">
+      <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >Дата договора</span>
+      <tui-input
+        tuiTextfieldSize="m"
+        formControlName="contractDate"
+        [tuiTextfieldLabelOutside]="true"
+        [class.tui-skeleton]="isLoading$ | async"
+      >
+        Нет данных
+        <input
+          tuiTextfield
+          type="text"
+        />
+      </tui-input>
+      <tui-error
+        formControlName="contractDate"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
+    </label>
+
+    <label class="block mb-3">
+      <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >Перевозчик</span>
+      <tui-input
+        tuiTextfieldSize="m"
+        formControlName="driver"
+        [tuiTextfieldLabelOutside]="true"
+        [class.tui-skeleton]="isLoading$ | async"
+      >
+        Нет данных
+        <input
+          tuiTextfield
+          type="text"
+        />
+      </tui-input>
+      <tui-error
+        formControlName="driver"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
+    </label>
+
+    <button tuiButton type="submit" [class.tui-skeleton]="isLoading$ | async"
+            appearance="accent" size="m" [showLoader]="isSubmitting$ | async">Сохранить изменения</button>
+  </form>
+</div>

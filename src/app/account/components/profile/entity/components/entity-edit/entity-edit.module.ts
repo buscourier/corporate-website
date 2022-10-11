@@ -5,6 +5,7 @@ import {
   TuiButtonModule,
   TuiErrorModule,
   TuiLabelModule,
+  TuiLoaderModule,
   TuiNotificationModule,
   TuiTextfieldControllerModule,
 } from '@taiga-ui/core'
@@ -28,6 +29,7 @@ import {UpdatePersonalProfileEffect} from './store/effects/update-entity-profile
     TuiErrorModule,
     TuiButtonModule,
     TuiNotificationModule,
+    TuiLoaderModule,
     StoreModule.forFeature(EDIT_ENTITY_PROFILE_FEATURE, reducer),
     EffectsModule.forFeature([
       GetEntityProfileEffect,
