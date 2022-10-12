@@ -1,0 +1,79 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="mb-20 pt-4 pr-7 pb-9 pl-10 flex items-bottom gap-4 shadow-md">
+  <label class="flex-grow shrink-1">
+    <span class="inline-block text-xs text-gray-500 mb-1">Период:</span>
+    <tui-input-date-range
+      formControlName="dateRange"
+      tuiTextfieldSize="m"
+      [tuiTextfieldLabelOutside]="true"
+    >
+<!--      <input-->
+<!--        tuiTextfield-->
+<!--        placeholder="From - To"-->
+<!--      />-->
+    </tui-input-date-range>
+  </label>
+  <label class="basis-1/4 shrink-2" *appLet="(startCities$ | async) as startCites">
+    <span class="inline-block text-xs text-gray-500 mb-1">Город отправления:</span>
+    <tui-loader [showLoader]="isStartCitiesLoading$ | async">
+      <tui-select
+        tuiTextfieldSize="m"
+        formControlName="startCity"
+        [tuiTextfieldLabelOutside]="true"
+      >
+        Выберите город
+        <input
+          tuiTextfield
+          placeholder="Выберите город"
+        />
+        <ng-template tuiDataList>
+          <tui-data-list *ngIf="startCites">
+            <button
+              *ngFor="let city of startCites"
+              tuiOption
+              [value]="city.id"
+            >
+              {{ city.name }}
+            </button>
+          </tui-data-list>
+        </ng-template>
+      </tui-select>
+    </tui-loader>
+  </label>
+  <label class="basis-1/4 shrink-2" *appLet="(endCities$ | async) as endCites">
+    <span class="inline-block text-xs text-gray-500 mb-1">Город получения:</span>
+    <tui-loader [showLoader]="isEndCitiesLoading$ | async">
+      <tui-select
+        tuiTextfieldSize="m"
+        formControlName="endCity"
+        [tuiTextfieldLabelOutside]="true"
+      >
+        Выберите город
+        <input
+          tuiTextfield
+          placeholder="Выберите город"
+        />
+        <ng-template tuiDataList>
+          <tui-data-list *ngIf="endCites">
+            <button
+              *ngFor="let city of endCites"
+              tuiOption
+              [value]="city.id"
+            >
+              {{ city.name }}
+            </button>
+          </tui-data-list>
+        </ng-template>
+      </tui-select>
+    </tui-loader>
+  </label>
+  <button
+    tuiButton
+    type="submit"
+    [showLoader]="false"
+    size="m"
+    appearance="accent"
+    class="basis-[210px] mt-auto"
+  >
+    Показать
+  </button>
+</form>

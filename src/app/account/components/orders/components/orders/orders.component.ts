@@ -3,7 +3,7 @@ import {isLoadingSelector, ordersSelector} from '../../store/selectors'
 import {currentUserSelector} from '../../../../../auth/store/selectors'
 import {Store} from '@ngrx/store'
 import {getOrdersAction} from '../../store/actions/get-orders.action'
-import {map, Observable} from 'rxjs'
+import {filter, map, Observable} from 'rxjs'
 import {CurrentUserInterface} from '../../../../../shared/types/current-user.interface'
 
 @Component({
@@ -37,6 +37,7 @@ export class OrdersComponent implements OnInit {
     this.store
       .select(currentUserSelector)
       .pipe(
+        filter(Boolean),
         map((user: CurrentUserInterface) => {
           const ordersInput = {
             'user-id': user.id,

@@ -1,64 +1,6 @@
 <div class="max-w-[1170px] mx-auto" *appLet="(orders$ | async) as orders">
   <h1 class="mb-8 text-3xl font-heading font-bold">Cформировать отчет</h1>
-  <form class="mb-20 pt-4 pr-7 pb-9 pl-10 flex items-bottom gap-4 shadow-md">
-    <label class="flex-grow shrink-1">
-      <span class="inline-block text-xs text-gray-500 mb-1">Период:</span>
-      <tui-input-date-range
-        formControl="control"
-        tuiTextfieldSize="m"
-        [tuiTextfieldLabelOutside]="true"
-        [class.tui-skeleton]="isLoading$ | async"
-      >
-      </tui-input-date-range>
-    </label>
-    <label class="basis-1/4 shrink-2">
-      <span class="inline-block text-xs text-gray-500 mb-1">Город отправления:</span>
-      <tui-select
-        tuiTextfieldSize="m"
-        formControl="testValue"
-        [tuiTextfieldLabelOutside]="true"
-      >
-        Выберите город
-        <input
-          tuiTextfield
-          placeholder="Выберите город"
-        />
-        <tui-data-list-wrapper
-          *tuiDataList
-          [items]="[]"
-        ></tui-data-list-wrapper>
-      </tui-select>
-    </label>
-    <label class="basis-1/4 shrink-2">
-      <span class="inline-block text-xs text-gray-500 mb-1">Город получения:</span>
-      <tui-select
-        tuiTextfieldSize="m"
-        formControl="testValue"
-        [tuiTextfieldLabelOutside]="true"
-      >
-        Выберите город
-        <input
-          tuiTextfield
-          placeholder="Выберите город"
-        />
-        <tui-data-list-wrapper
-          *tuiDataList
-          [items]=""
-        ></tui-data-list-wrapper>
-      </tui-select>
-    </label>
-    <button
-      tuiButton
-      type="submit"
-      [showLoader]="false"
-      size="m"
-      appearance="accent"
-      class="basis-[210px] mt-auto"
-    >
-      Показать
-    </button>
-  </form>
-
+  <app-filter></app-filter>
   <tui-loader
     [showLoader]="isLoading$ | async"
   >
