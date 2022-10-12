@@ -1,1 +1,127 @@
-<p>{{orders$ | async | json}}</p>
+<div class="max-w-[1170px] mx-auto" *appLet="(orders$ | async) as orders">
+<!--  orders: {{orders | json}}-->
+  <tui-loader
+    [showLoader]="isLoading$ | async"
+  >
+    <table
+      *ngIf="orders"
+      tuiTable
+      [columns]="columns"
+      class="table"
+    >
+      <thead>
+      <tr tuiThGroup>
+        <th
+          *tuiHead="'order_id'"
+          tuiTh
+        >
+          № Заказа
+        </th>
+        <th
+          *tuiHead="'date'"
+          tuiTh
+        >
+          Дата заказа
+        </th>
+        <th
+          *tuiHead="'sender_name'"
+          tuiTh
+        >
+          Отправитель
+        </th>
+        <th
+          *tuiHead="'recipient_name'"
+          tuiTh
+          [sorter]="null"
+        >
+          Получатель
+        </th>
+        <th
+          *tuiHead="'start_city'"
+          tuiTh
+          [sorter]="null"
+        >
+          Город отправления
+        </th>
+        <th
+          *tuiHead="'end_city'"
+          tuiTh
+          [sorter]="null"
+        >
+          Город получения
+        </th>
+        <th
+          *tuiHead="'order_price'"
+          tuiTh
+        >
+          Цена
+        </th>
+      </tr>
+      </thead>
+      <tbody
+        tuiTbody
+        [data]="orders"
+      >
+      <tr
+        *tuiRow="let order of orders"
+        tuiTr
+      >
+        <td
+          *tuiCell="'order_id'"
+          tuiTd
+        >
+          <a href="">{{order.order_id}}</a>
+        </td>
+        <td
+          *tuiCell="'date'"
+          tuiTd
+        >
+          <a href="">{{order.date}}</a>
+        </td>
+        <td
+          *tuiCell="'sender_name'"
+          tuiTd
+        >
+          <a href="">{{order.date}}</a>
+        </td>
+        <td
+          *tuiCell="'recipient_name'"
+          tuiTd
+        >
+          <a href="">{{order.date}}</a>
+        </td>
+        <td
+          *tuiCell="'start_city'"
+          tuiTd
+        >
+          <a href="">{{order.start_city}}</a>
+        </td>
+        <td
+          *tuiCell="'end_city'"
+          tuiTd
+        >
+          <a href="">{{order.end_city}}</a>
+        </td>
+        <td
+          *tuiCell="'order_price'"
+          tuiTd
+        >
+          <a href="">{{order.order_price}}</a>
+        </td>
+      </tr>
+      </tbody>
+      <tfoot>
+      <tr>
+        <td colSpan="7">
+          <!--        <tui-table-pagination-->
+
+          <!--&lt;!&ndash;          [total]="(total$ | async) || 0"&ndash;&gt;-->
+          <!--&lt;!&ndash;          (pageChange)="onPage($event)"&ndash;&gt;-->
+          <!--&lt;!&ndash;          (sizeChange)="onSize($event)"&ndash;&gt;-->
+          <!--        ></tui-table-pagination>-->
+        </td>
+      </tr>
+      </tfoot>
+    </table>
+  </tui-loader>
+</div>

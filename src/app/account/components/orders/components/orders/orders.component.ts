@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
-import {ordersSelector} from '../../store/selectors'
+import {isLoadingSelector, ordersSelector} from '../../store/selectors'
 import {currentUserSelector} from '../../../../../auth/store/selectors'
-import {select, Store} from '@ngrx/store'
+import {Store} from '@ngrx/store'
 import {getOrdersAction} from '../../store/actions/get-orders.action'
 import {map, Observable} from 'rxjs'
 import {CurrentUserInterface} from '../../../../../shared/types/current-user.interface'
@@ -13,6 +13,17 @@ import {CurrentUserInterface} from '../../../../../shared/types/current-user.int
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrdersComponent implements OnInit {
+  columns = [
+    'order_id',
+    'date',
+    'sender_name',
+    'recipient_name',
+    'start_city',
+    'end_city',
+    'order_price',
+  ]
+
+  isLoading$: Observable<boolean>
   orders$: Observable<any>
 
   constructor(private store: Store) {}
@@ -44,6 +55,7 @@ export class OrdersComponent implements OnInit {
   }
 
   initializeValues() {
-    this.orders$ = this.store.pipe(select(ordersSelector))
+    this.isLoading$ = this.store.select(isLoadingSelector)
+    this.orders$ = this.store.select(ordersSelector)
   }
 }
