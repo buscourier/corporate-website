@@ -5,6 +5,7 @@ import {
   TuiAlertModule,
   TUI_SANITIZER,
 } from '@taiga-ui/core'
+import {TUI_LANGUAGE, TUI_RUSSIAN_LANGUAGE} from '@taiga-ui/i18n'
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
 import {NgModule} from '@angular/core'
 import {BrowserModule} from '@angular/platform-browser'
@@ -19,6 +20,7 @@ import {AuthModule} from './auth/auth.module'
 import {HTTP_INTERCEPTORS} from '@angular/common/http'
 import {AuthInterceptor} from './shared/services/auth-interceptor.service'
 import {PageHeaderModule} from './shared/components/page-header/page-header.module'
+import {of} from 'rxjs'
 
 @NgModule({
   declarations: [AppComponent],
@@ -48,6 +50,10 @@ import {PageHeaderModule} from './shared/components/page-header/page-header.modu
       multi: true,
     },
     {provide: TUI_SANITIZER, useClass: NgDompurifySanitizer},
+    {
+      provide: TUI_LANGUAGE,
+      useValue: of(TUI_RUSSIAN_LANGUAGE),
+    },
   ],
   bootstrap: [AppComponent],
 })
