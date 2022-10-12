@@ -1,9 +1,9 @@
 export interface OrdersInputInterface {
-  'user-id': string | null
-  'start-date': string | null
-  'end-date': string | null
-  'start-city': string | null
-  'end-city': string | null
-  'elements-on-page': string | null
-  'page-num': string | null
+  'user-id': string
+  'start-date'?: string
+  'end-date'?: string
+  'start-city'?: string
+  'end-city'?: string
+  'elements-on-page'?: string
+  'page-num'?: string
 }

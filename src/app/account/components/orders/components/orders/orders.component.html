@@ -1,5 +1,64 @@
 <div class="max-w-[1170px] mx-auto" *appLet="(orders$ | async) as orders">
-<!--  orders: {{orders | json}}-->
+  <h1 class="mb-8 text-3xl font-heading font-bold">Cформировать отчет</h1>
+  <form class="mb-20 pt-4 pr-7 pb-9 pl-10 flex items-bottom gap-4 shadow-md">
+    <label class="flex-grow shrink-1">
+      <span class="inline-block text-xs text-gray-500 mb-1">Период:</span>
+      <tui-input-date-range
+        formControl="control"
+        tuiTextfieldSize="m"
+        [tuiTextfieldLabelOutside]="true"
+        [class.tui-skeleton]="isLoading$ | async"
+      >
+      </tui-input-date-range>
+    </label>
+    <label class="basis-1/4 shrink-2">
+      <span class="inline-block text-xs text-gray-500 mb-1">Город отправления:</span>
+      <tui-select
+        tuiTextfieldSize="m"
+        formControl="testValue"
+        [tuiTextfieldLabelOutside]="true"
+      >
+        Выберите город
+        <input
+          tuiTextfield
+          placeholder="Выберите город"
+        />
+        <tui-data-list-wrapper
+          *tuiDataList
+          [items]="[]"
+        ></tui-data-list-wrapper>
+      </tui-select>
+    </label>
+    <label class="basis-1/4 shrink-2">
+      <span class="inline-block text-xs text-gray-500 mb-1">Город получения:</span>
+      <tui-select
+        tuiTextfieldSize="m"
+        formControl="testValue"
+        [tuiTextfieldLabelOutside]="true"
+      >
+        Выберите город
+        <input
+          tuiTextfield
+          placeholder="Выберите город"
+        />
+        <tui-data-list-wrapper
+          *tuiDataList
+          [items]=""
+        ></tui-data-list-wrapper>
+      </tui-select>
+    </label>
+    <button
+      tuiButton
+      type="submit"
+      [showLoader]="false"
+      size="m"
+      appearance="accent"
+      class="basis-[210px] mt-auto"
+    >
+      Показать
+    </button>
+  </form>
+
   <tui-loader
     [showLoader]="isLoading$ | async"
   >
@@ -7,7 +66,7 @@
       *ngIf="orders"
       tuiTable
       [columns]="columns"
-      class="table"
+      class="w-full"
     >
       <thead>
       <tr tuiThGroup>
@@ -65,6 +124,7 @@
       <tr
         *tuiRow="let order of orders"
         tuiTr
+        class="odd:bg-white even:bg-gray-500"
       >
         <td
           *tuiCell="'order_id'"
@@ -76,49 +136,47 @@
           *tuiCell="'date'"
           tuiTd
         >
-          <a href="">{{order.date}}</a>
+          {{order.date}}
         </td>
         <td
           *tuiCell="'sender_name'"
           tuiTd
         >
-          <a href="">{{order.date}}</a>
+          {{order.date}}
         </td>
         <td
           *tuiCell="'recipient_name'"
           tuiTd
         >
-          <a href="">{{order.date}}</a>
+          {{order.date}}
         </td>
         <td
           *tuiCell="'start_city'"
           tuiTd
         >
-          <a href="">{{order.start_city}}</a>
+          {{order.start_city}}
         </td>
         <td
           *tuiCell="'end_city'"
           tuiTd
         >
-          <a href="">{{order.end_city}}</a>
+          {{order.end_city}}
         </td>
         <td
           *tuiCell="'order_price'"
           tuiTd
         >
-          <a href="">{{order.order_price}}</a>
+          {{order.order_price}} {{'RUB' | tuiCurrency}}
         </td>
       </tr>
       </tbody>
       <tfoot>
       <tr>
         <td colSpan="7">
-          <!--        <tui-table-pagination-->
-
-          <!--&lt;!&ndash;          [total]="(total$ | async) || 0"&ndash;&gt;-->
-          <!--&lt;!&ndash;          (pageChange)="onPage($event)"&ndash;&gt;-->
-          <!--&lt;!&ndash;          (sizeChange)="onSize($event)"&ndash;&gt;-->
-          <!--        ></tui-table-pagination>-->
+            <tui-table-pagination
+              [total]="orders.length || 0"
+              [size]="10"
+            ></tui-table-pagination>
         </td>
       </tr>
       </tfoot>

@@ -17,9 +17,9 @@ export class OrdersService {
         'user-id': ordersInput['user-id'],
         'start-date': ordersInput['start-date'],
         'end-date': ordersInput['end-date'],
-        'start-city': ' 1',
-        'end-city': '-1',
-        'elements-on-page': '30',
+        'start-city': ordersInput['start-city'],
+        'end-city': ordersInput['end-city'],
+        'elements-on-page': '10',
         'page-num': '1',
       })
     )

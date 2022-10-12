@@ -10,7 +10,20 @@ import {EffectsModule} from '@ngrx/effects'
 import {OrdersRoutingModule} from './orders-routing.module'
 import {TuiTableModule, TuiTablePaginationModule} from '@taiga-ui/addon-table'
 import {LetModule} from 'src/app/shared/directives/let/let.module'
-import {TuiLoaderModule} from '@taiga-ui/core'
+import {
+  TuiButtonModule,
+  TuiDataListModule,
+  TuiLabelModule,
+  TuiLoaderModule,
+  TuiTextfieldControllerModule,
+} from '@taiga-ui/core'
+import {TuiCurrencyPipeModule} from '@taiga-ui/addon-commerce'
+import {
+  TuiDataListWrapperModule,
+  TuiInputDateRangeModule,
+  TuiInputModule,
+  TuiSelectModule,
+} from '@taiga-ui/kit'
 
 @NgModule({
   declarations: [OrdersComponent],
@@ -22,7 +35,15 @@ import {TuiLoaderModule} from '@taiga-ui/core'
     EffectsModule.forFeature([GetOrdersEffect]),
     TuiTableModule,
     TuiTablePaginationModule,
+    TuiInputModule,
+    TuiInputDateRangeModule,
+    TuiSelectModule,
+    TuiLabelModule,
     TuiLoaderModule,
+    TuiButtonModule,
+    TuiCurrencyPipeModule,
+    TuiTextfieldControllerModule,
+    TuiDataListWrapperModule,
   ],
   providers: [OrdersService],
 })

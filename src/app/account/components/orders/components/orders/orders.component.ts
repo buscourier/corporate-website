@@ -40,12 +40,6 @@ export class OrdersComponent implements OnInit {
         map((user: CurrentUserInterface) => {
           const ordersInput = {
             'user-id': user.id,
-            'start-date': null,
-            'end-date': null,
-            'start-city': null,
-            'end-city': null,
-            'elements-on-page': null,
-            'page-num': null,
           }
 
           return this.store.dispatch(getOrdersAction({ordersInput}))
