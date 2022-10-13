@@ -1,4 +1,10 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+} from '@angular/core'
 import {filter, Observable, pairwise} from 'rxjs'
 import {StartCityInterface} from '../../../../../../../shared/types/start-city.interface'
 import {EndCityInterface} from '../../../../../../../shared/types/end-city.interface'
@@ -14,6 +20,7 @@ import {getStartCitiesAction} from '../../store/actions/get-start-cities.action'
 import {FormBuilder} from '@angular/forms'
 import {getEndCitiesAction} from '../../store/actions/get-end-cities.action'
 import {tap} from 'rxjs/operators'
+import {FilterInterface} from '../../../../types/filter.interface'
 
 @Component({
   selector: 'app-filter',
@@ -27,6 +34,9 @@ export class FilterComponent implements OnInit {
   startCities$: Observable<StartCityInterface[]>
   endCities$: Observable<EndCityInterface[]>
   backendErrors$: Observable<null | string>
+
+  @Output('onFilterChange') onFilterChangeEvent =
+    new EventEmitter<FilterInterface>()
 
   form = this.fb.group({
     dateRange: [],
@@ -66,6 +76,6 @@ export class FilterComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('value', this.form.value)
+    this.onFilterChangeEvent.emit(this.form.value)
   }
 }

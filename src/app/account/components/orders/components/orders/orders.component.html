@@ -1,6 +1,6 @@
 <div class="max-w-[1170px] mx-auto" *appLet="(orders$ | async) as orders">
   <h1 class="mb-8 text-3xl font-heading font-bold">Cформировать отчет</h1>
-  <app-filter></app-filter>
+  <app-filter (onFilterChange)="fetchDataWithFilterParams($event)"></app-filter>
   <tui-loader
     [showLoader]="isLoading$ | async"
   >

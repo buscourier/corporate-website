@@ -10,19 +10,22 @@ export class OrdersService {
   getOrders(ordersInput: OrdersInputInterface) {
     const url = '/api/order/getorders/'
 
-    return this.http.post(
-      `${url}/getorders`,
-      JSON.stringify({
-        'api-key': environment.apiKey,
-        'user-id': ordersInput['user-id'],
-        'start-date': ordersInput['start-date'],
-        'end-date': ordersInput['end-date'],
-        'start-city': ordersInput['start-city'],
-        'end-city': ordersInput['end-city'],
-        'elements-on-page': '10',
-        'page-num': '1',
-      })
-    )
+    const payload = {
+      'api-key': environment.apiKey,
+      'user-id': null,
+      'start-date': null,
+      'end-date': null,
+      'start-city': null,
+      'end-city': null,
+      'elements-on-page': '10',
+      'page-num': '1',
+      ...ordersInput,
+    }
+
+    console.log('ordersInput', ordersInput)
+    console.log('payload', payload)
+
+    return this.http.post(`${url}/getorders`, JSON.stringify(payload))
   }
 
   getOrderDetails(id: string) {

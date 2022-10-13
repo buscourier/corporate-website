@@ -5,6 +5,7 @@ import {Store} from '@ngrx/store'
 import {getOrdersAction} from '../../store/actions/get-orders.action'
 import {filter, map, Observable} from 'rxjs'
 import {CurrentUserInterface} from '../../../../../shared/types/current-user.interface'
+import {FilterInterface} from '../../types/filter.interface'
 
 @Component({
   selector: 'app-orders',
@@ -41,6 +42,30 @@ export class OrdersComponent implements OnInit {
         map((user: CurrentUserInterface) => {
           const ordersInput = {
             'user-id': user.id,
+          }
+
+          return this.store.dispatch(getOrdersAction({ordersInput}))
+        })
+      )
+      .subscribe()
+  }
+
+  fetchDataWithFilterParams({dateRange, startCity, endCity}: FilterInterface) {
+    const params = {
+      'start-date': dateRange ? dateRange.from : null,
+      'end-date': dateRange ? dateRange.to : null,
+      'start-city': startCity,
+      'end-city': endCity,
+    }
+
+    this.store
+      .select(currentUserSelector)
+      .pipe(
+        filter(Boolean),
+        map((user: CurrentUserInterface) => {
+          const ordersInput = {
+            'user-id': user.id,
+            ...params,
           }
 
           return this.store.dispatch(getOrdersAction({ordersInput}))
