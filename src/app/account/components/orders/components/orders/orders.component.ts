@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
+import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core'
 import {isLoadingSelector, ordersSelector} from '../../store/selectors'
 import {currentUserSelector} from '../../../../../auth/store/selectors'
 import {Store} from '@ngrx/store'
@@ -6,6 +6,7 @@ import {getOrdersAction} from '../../store/actions/get-orders.action'
 import {filter, map, Observable} from 'rxjs'
 import {CurrentUserInterface} from '../../../../../shared/types/current-user.interface'
 import {FilterInterface} from '../../types/filter.interface'
+import {OrderDetailsService} from '../order-details/services/order-details.service'
 
 @Component({
   selector: 'app-orders',
@@ -27,7 +28,11 @@ export class OrdersComponent implements OnInit {
   isLoading$: Observable<boolean>
   orders$: Observable<any>
 
-  constructor(private store: Store) {}
+  constructor(
+    private store: Store,
+    @Inject(OrderDetailsService)
+    private readonly orderDetailsService: OrderDetailsService
+  ) {}
 
   ngOnInit(): void {
     this.fetchData()
@@ -77,5 +82,9 @@ export class OrdersComponent implements OnInit {
   initializeValues() {
     this.isLoading$ = this.store.select(isLoadingSelector)
     this.orders$ = this.store.select(ordersSelector)
+  }
+
+  showDetails(id: string) {
+    this.orderDetailsService.open(null).subscribe()
   }
 }

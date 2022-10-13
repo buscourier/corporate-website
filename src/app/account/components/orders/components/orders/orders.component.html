@@ -226,7 +226,7 @@
                   *tuiCell="'order_id'"
                   tuiTd
                 >
-                  <b>{{order.order_id}}</b>
+                  <b (click)="showDetails(order.order_id)">{{order.order_id}}</b>
                 </td>
                 <td
                   *tuiCell="'date'"

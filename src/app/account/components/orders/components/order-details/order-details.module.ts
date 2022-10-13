@@ -9,6 +9,7 @@ import {ORDER_DETAILS_FEATURE} from './store/state'
 import {reducer} from './store/reducer'
 import {GetOrderDetailsEffect} from './store/effects/get-order-details.effect'
 import {CancelOrderEffect} from './store/effects/cancel-order.effect'
+import {ORDER_DETAILS_PROVIDER} from './services/order-details.service'
 
 @NgModule({
   declarations: [OrderDetailsComponent],
@@ -17,5 +18,7 @@ import {CancelOrderEffect} from './store/effects/cancel-order.effect'
     StoreModule.forFeature(ORDER_DETAILS_FEATURE, reducer),
     EffectsModule.forFeature([GetOrderDetailsEffect, CancelOrderEffect]),
   ],
+  exports: [OrderDetailsComponent],
+  providers: [ORDER_DETAILS_PROVIDER],
 })
 export class OrderDetailsModule {}
