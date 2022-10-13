@@ -2,12 +2,15 @@ import {HttpClient} from '@angular/common/http'
 import {Injectable} from '@angular/core'
 import {environment} from '../../../../../environments/environment.prod'
 import {OrdersInputInterface} from '../types/orders-input.interface'
+import {concatAll, tap, toArray} from 'rxjs/operators'
+import {OrderInterface} from '../types/order.interface'
+import {map, Observable} from 'rxjs'
 
 @Injectable()
 export class OrdersService {
   constructor(private http: HttpClient) {}
 
-  getOrders(ordersInput: OrdersInputInterface) {
+  getOrders(ordersInput: OrdersInputInterface): Observable<OrderInterface[]> {
     const url = '/api/order/getorders/'
 
     const payload = {
@@ -22,10 +25,18 @@ export class OrdersService {
       ...ordersInput,
     }
 
-    console.log('ordersInput', ordersInput)
-    console.log('payload', payload)
-
-    return this.http.post(`${url}/getorders`, JSON.stringify(payload))
+    return this.http
+      .post<OrderInterface[]>(`${url}/getorders`, JSON.stringify(payload))
+      .pipe(
+        concatAll(),
+        map((order: OrderInterface) => {
+          return {
+            ...order,
+            date: order.date.split(' ')[0],
+          }
+        }),
+        toArray()
+      )
   }
 
   getOrderDetails(id: string) {

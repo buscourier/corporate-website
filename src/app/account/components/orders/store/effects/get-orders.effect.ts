@@ -7,6 +7,7 @@ import {
   getOrdersSuccessAction,
 } from '../actions/get-orders.action'
 import {OrdersService} from '../../services/orders.service'
+import {OrderInterface} from '../../types/order.interface'
 
 @Injectable()
 export class GetOrdersEffect {
@@ -20,7 +21,7 @@ export class GetOrdersEffect {
       ofType(getOrdersAction),
       switchMap(({ordersInput}) =>
         this.ordersService.getOrders(ordersInput).pipe(
-          map((orders: any) => getOrdersSuccessAction({orders})),
+          map((orders: OrderInterface[]) => getOrdersSuccessAction({orders})),
           catchError(() => of(getOrdersFailureAction()))
         )
       )

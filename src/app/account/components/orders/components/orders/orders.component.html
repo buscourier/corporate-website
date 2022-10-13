@@ -1,127 +1,135 @@
 <div class="max-w-[1170px] mx-auto" *appLet="(orders$ | async) as orders">
   <h1 class="mb-8 text-3xl font-heading font-bold">Cформировать отчет</h1>
   <app-filter (onFilterChange)="fetchDataWithFilterParams($event)"></app-filter>
-  <tui-loader
-    [showLoader]="isLoading$ | async"
-  >
-    <table
-      *ngIf="orders"
-      tuiTable
-      [columns]="columns"
-      class="w-full"
-    >
-      <thead>
-      <tr tuiThGroup>
-        <th
-          *tuiHead="'order_id'"
-          tuiTh
-        >
-          № Заказа
-        </th>
-        <th
-          *tuiHead="'date'"
-          tuiTh
-        >
-          Дата заказа
-        </th>
-        <th
-          *tuiHead="'sender_name'"
-          tuiTh
-        >
-          Отправитель
-        </th>
-        <th
-          *tuiHead="'recipient_name'"
-          tuiTh
-          [sorter]="null"
-        >
-          Получатель
-        </th>
-        <th
-          *tuiHead="'start_city'"
-          tuiTh
-          [sorter]="null"
-        >
-          Город отправления
-        </th>
-        <th
-          *tuiHead="'end_city'"
-          tuiTh
-          [sorter]="null"
-        >
-          Город получения
-        </th>
-        <th
-          *tuiHead="'order_price'"
-          tuiTh
-        >
-          Цена
-        </th>
-      </tr>
-      </thead>
-      <tbody
-        tuiTbody
-        [data]="orders"
-      >
-      <tr
-        *tuiRow="let order of orders"
-        tuiTr
-        class="odd:bg-white even:bg-gray-500"
-      >
-        <td
-          *tuiCell="'order_id'"
-          tuiTd
-        >
-          <a href="">{{order.order_id}}</a>
-        </td>
-        <td
-          *tuiCell="'date'"
-          tuiTd
-        >
-          {{order.date}}
-        </td>
-        <td
-          *tuiCell="'sender_name'"
-          tuiTd
-        >
-          {{order.date}}
-        </td>
-        <td
-          *tuiCell="'recipient_name'"
-          tuiTd
-        >
-          {{order.date}}
-        </td>
-        <td
-          *tuiCell="'start_city'"
-          tuiTd
-        >
-          {{order.start_city}}
-        </td>
-        <td
-          *tuiCell="'end_city'"
-          tuiTd
-        >
-          {{order.end_city}}
-        </td>
-        <td
-          *tuiCell="'order_price'"
-          tuiTd
-        >
-          {{order.order_price}} {{'RUB' | tuiCurrency}}
-        </td>
-      </tr>
-      </tbody>
-      <tfoot>
-      <tr>
-        <td colSpan="7">
-            <tui-table-pagination
-              [total]="orders.length || 0"
-              [size]="10"
-            ></tui-table-pagination>
-        </td>
-      </tr>
-      </tfoot>
-    </table>
-  </tui-loader>
+  <div class="flex flex-col">
+    <div class="overflow-x-auto">
+      <div class="inline-block min-w-full align-middle">
+        <div class="overflow-hidden shadow-sm ring-1 ring-black ring-opacity-5">
+          <tui-loader
+            [showLoader]="isLoading$ | async"
+          >
+            <table
+              *ngIf="orders"
+              tuiTable
+              [columns]="columns"
+              class="w-full"
+            >
+              <thead>
+              <tr tuiThGroup>
+                <th
+                  *tuiHead="'order_id'"
+                  tuiTh
+                  [sorter]="null"
+                >
+                  № Заказа
+                </th>
+                <th
+                  *tuiHead="'date'"
+                  tuiTh
+                >
+                  Дата заказа
+                </th>
+                <th
+                  *tuiHead="'sender_name'"
+                  tuiTh
+                  [sorter]="null"
+                >
+                  Отправитель
+                </th>
+                <th
+                  *tuiHead="'recipient_name'"
+                  tuiTh
+                >
+                  Получатель
+                </th>
+                <th
+                  *tuiHead="'start_city'"
+                  tuiTh
+                >
+                  Город отправления
+                </th>
+                <th
+                  *tuiHead="'end_city'"
+                  tuiTh
+                >
+                  Город получения
+                </th>
+                <th
+                  *tuiHead="'order_price'"
+                  tuiTh
+                >
+                  Цена
+                </th>
+              </tr>
+              </thead>
+              <tbody
+                tuiTbody
+                [data]="orders"
+              >
+              <tr
+                *tuiRow="let order of orders"
+                tuiTr
+              >
+                <td
+                  *tuiCell="'order_id'"
+                  tuiTd
+                >
+                  <a href="">{{order.order_id}}</a>
+                </td>
+                <td
+                  *tuiCell="'date'"
+                  tuiTd
+                >
+                  {{order.date}}
+                </td>
+                <td
+                  *tuiCell="'sender_name'"
+                  tuiTd
+                >
+                  {{order.sender_name}}
+                </td>
+                <td
+                  *tuiCell="'recipient_name'"
+                  tuiTd
+                >
+                  {{order.recipient_name}}
+                </td>
+                <td
+                  *tuiCell="'start_city'"
+                  tuiTd
+                >
+                  {{order.start_city}}
+                </td>
+                <td
+                  *tuiCell="'end_city'"
+                  tuiTd
+                >
+                  {{order.end_city}}
+                </td>
+                <td
+                  *tuiCell="'order_price'"
+                  tuiTd
+                >
+                  {{order.order_price}} {{'RUB' | tuiCurrency}}
+                </td>
+              </tr>
+              </tbody>
+              <!--      <tfoot>-->
+              <!--      <tr>-->
+              <!--        <td colSpan="7">-->
+              <!--          <div class="mg-5">-->
+              <!--            <tui-table-pagination-->
+              <!--              [total]="orders.length || 0"-->
+              <!--              [size]="10"-->
+              <!--            ></tui-table-pagination>-->
+              <!--          </div>-->
+              <!--        </td>-->
+              <!--      </tr>-->
+              <!--      </tfoot>-->
+            </table>
+          </tui-loader>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
