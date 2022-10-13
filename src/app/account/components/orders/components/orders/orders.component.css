@@ -1,4 +1,5 @@
 table th {
+  font-size: 15px;
   border: none;
   border-bottom: 3px solid var(--tui-accent);
   color: var(--tui-base-09);
@@ -6,6 +7,7 @@ table th {
 }
 
 table td {
+  font-size: 14px;
   border: none;
   white-space: nowrap;
 }
