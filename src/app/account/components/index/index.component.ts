@@ -21,7 +21,7 @@ import {TUI_SVG_SRC_PROCESSOR} from '@taiga-ui/core'
     },
   ],
 })
-export class IndexComponent implements OnInit {
+export class IndexComponent {
   sections = [
     {
       icon: 'icons::catalog',
@@ -46,8 +46,4 @@ export class IndexComponent implements OnInit {
       route: '',
     },
   ]
-
-  constructor() {}
-
-  ngOnInit(): void {}
 }

@@ -35,7 +35,7 @@ export class FilterComponent implements OnInit {
   endCities$: Observable<EndCityInterface[]>
   backendErrors$: Observable<null | string>
 
-  @Output('onFilterChange') onFilterChangeEvent =
+  @Output('filterChanged') filterChangedEvent =
     new EventEmitter<FilterInterface>()
 
   form = this.fb.group({
@@ -76,6 +76,6 @@ export class FilterComponent implements OnInit {
   }
 
   onSubmit() {
-    this.onFilterChangeEvent.emit(this.form.value)
+    this.filterChangedEvent.emit(this.form.value)
   }
 }

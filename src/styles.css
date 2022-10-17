@@ -1,12 +1,12 @@
-@import "./assets/css/tui-settings.css";
+@import './assets/css/tui-settings.css';
 
 /* You can add global styles to this file, and also import other style files */
-@import "tailwindcss/base";
-@import "./assets/css/base.css";
+@import 'tailwindcss/base';
+@import './assets/css/base.css';
 
-@import "tailwindcss/components";
-@import "./assets/css/components/t-dialog.css";
-@import "./assets/css/components/t-wrapper.css";
-@import "./assets/css/components/input.css";
+@import 'tailwindcss/components';
+@import './assets/css/components/t-dialog.css';
+@import './assets/css/components/t-wrapper.css';
+@import './assets/css/components/input.css';
 
-@import "tailwindcss/utilities";
+@import 'tailwindcss/utilities';

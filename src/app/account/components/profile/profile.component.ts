@@ -21,8 +21,4 @@ import {TUI_SVG_SRC_PROCESSOR} from '@taiga-ui/core'
     },
   ],
 })
-export class ProfileComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
-}
+export class ProfileComponent {}

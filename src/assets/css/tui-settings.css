@@ -1,6 +1,8 @@
 :root {
-  --tui-heading-font: 'Kelson Sans', -apple-system, 'BlinkMacSystemFont', system-ui, 'Roboto', 'Segoe UI', 'Helvetica Neue', sans-serif;
-  --tui-text-font: 'TT Norms Pro', -apple-system, 'BlinkMacSystemFont', system-ui, 'Roboto', 'Segoe UI', 'Helvetica Neue', sans-serif;
+  --tui-heading-font: 'Kelson Sans', -apple-system, 'BlinkMacSystemFont',
+    system-ui, 'Roboto', 'Segoe UI', 'Helvetica Neue', sans-serif;
+  --tui-text-font: 'Roboto', -apple-system, 'BlinkMacSystemFont', system-ui,
+    'Roboto', 'Segoe UI', 'Helvetica Neue', sans-serif;
   --tui-font-heading: var(--tui-heading-font);
   /*--tui-font-heading-1: bold 3.125rem/3.5rem var(--tui-font-heading);*/
   /*--tui-font-heading-2: bold 2.75rem/3rem var(--tui-font-heading);*/
@@ -67,7 +69,7 @@
   --tui-error-bg-hover: #f86d6d;
   --tui-success-fill: #2e9c3a;
   --tui-success-bg: #47704b;
-  --tui-success-bg-hover:  #589f5f;
+  --tui-success-bg-hover: #589f5f;
   --tui-warning-fill: #ffdc00;
   --tui-warning-bg: #91884d;
   --tui-warning-bg-hover: #b6aa5b;

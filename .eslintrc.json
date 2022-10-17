@@ -29,7 +29,8 @@
             "style": "kebab-case"
           }
         ],
-        "@angular-eslint/no-input-rename": 0
+        "@angular-eslint/no-input-rename": 0,
+        "@angular-eslint/no-output-rename": 0
       }
     },
     {

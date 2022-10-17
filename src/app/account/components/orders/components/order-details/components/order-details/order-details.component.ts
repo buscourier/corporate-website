@@ -8,11 +8,9 @@ import {TuiDialog} from '@taiga-ui/cdk'
   styleUrls: ['./order-details.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OrderDetailsComponent implements OnInit {
+export class OrderDetailsComponent {
   constructor(
     @Inject(POLYMORPHEUS_CONTEXT)
     readonly context: TuiDialog<{}, boolean>
   ) {}
-
-  ngOnInit(): void {}
 }
