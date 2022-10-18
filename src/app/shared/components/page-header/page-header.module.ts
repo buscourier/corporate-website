@@ -6,6 +6,7 @@ import {RouterModule} from '@angular/router'
 import {TuiActiveZoneModule, TuiLetModule} from '@taiga-ui/cdk'
 import {TuiSidebarModule} from '@taiga-ui/addon-mobile'
 import {TuiAccordionModule} from '@taiga-ui/kit'
+import {BreadcrumbsModule} from './components/breadcrumbs/breadcrumbs.module'
 
 @NgModule({
   declarations: [PageHeaderComponent],
@@ -19,6 +20,7 @@ import {TuiAccordionModule} from '@taiga-ui/kit'
     TuiActiveZoneModule,
     TuiAccordionModule,
     TuiScrollbarModule,
+    BreadcrumbsModule,
   ],
   exports: [PageHeaderComponent],
 })

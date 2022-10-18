@@ -1,0 +1,14 @@
+<!--<div *ngIf="breadcrumbs && breadcrumbs.length > 1" class="breadcrumbs">-->
+<!--  <ul class="breadcrumbs__list">-->
+<!--    <ng-template ngFor let-breadcrumb [ngForOf]="breadcrumbs" let-last = last>-->
+<!--      <li class="breadcrumbs__item" [class.breadcrumbs__item&#45;&#45;active]="last"-->
+<!--          *ngIf="(breadcrumb.label.title && breadcrumb.url.substring(breadcrumb.url.length-1) === '/') || (breadcrumb.label.title && last)"-->
+<!--          [ngClass]="{active: last}">-->
+
+<!--        <a *ngIf="!last && !breadcrumb.isStub" [routerLink]="breadcrumb.url" class="breadcrumbs__link">{{breadcrumb.label.title}}</a>-->
+<!--        <a *ngIf="!last && breadcrumb.isStub" class="breadcrumbs__link">{{breadcrumb.label.title}}</a>-->
+<!--        <span *ngIf="last" [routerLink]="breadcrumb.url" class="breadcrumbs__link">{{breadcrumb.label.title}}</span>-->
+<!--      </li>-->
+<!--    </ng-template>-->
+<!--  </ul>-->
+<!--</div>-->
