@@ -25,6 +25,7 @@ import {
 import {LoginService} from '../../../auth/components/login/services/login.service'
 import {logoutAction} from '../../../auth/store/actions/sync.action'
 import {animate, style, transition, trigger} from '@angular/animations'
+import {PersistenceService} from '../../services/persistence.service'
 
 @Component({
   selector: 'app-page-header',
@@ -73,13 +74,15 @@ export class PageHeaderComponent implements OnInit {
   activeDropdown = null
   isSticky = false
   isMobileMenuOpen = false
+  isBannerClosed = false
 
   isLoggedIn$: Observable<boolean>
   isAnonymous$: Observable<boolean>
 
   constructor(
     private store: Store,
-    @Inject(LoginService) private readonly loginService: LoginService
+    @Inject(LoginService) private readonly loginService: LoginService,
+    private persistenceService: PersistenceService
   ) {}
 
   ngOnInit(): void {
@@ -89,6 +92,7 @@ export class PageHeaderComponent implements OnInit {
   initializeValues() {
     this.isLoggedIn$ = this.store.select(isLoggedInSelector)
     this.isAnonymous$ = this.store.select(isAnonymousSelector)
+    this.isBannerClosed = !!this.persistenceService.get('bannerClosed')
   }
 
   showDropdown(dropdown) {
@@ -111,6 +115,11 @@ export class PageHeaderComponent implements OnInit {
   toggleMobileMenu(open: boolean): void {
     this.isMobileMenuOpen = open
     this.activeDropdown = null
+  }
+
+  closeBanner() {
+    this.persistenceService.set('bannerClosed', true)
+    this.isBannerClosed = true
   }
 
   @HostListener('window:scroll', ['$event'])
