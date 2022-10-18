@@ -1,9 +1,12 @@
-<div class="mt-16 mx-auto max-w-[1170px]">
-  <h1 class="mb-10 text-3xl font-bold">Личный кабинет</h1>
-  <div class="flex space-x-13">
-    <div>
-      <div class="flex mb-2 py-9 pr-10 pl-13 border border-gray-200 hover:border-yellow hover:cursor-pointer rounded-sm space-x-13">
-        <div>
+<div class="mt-16 mx-auto max-w-[1170px] md:px-4">
+  <h1 class="mb-10 px-4 md:px-0 text-2xl mg:text-3xl font-bold">Личный кабинет</h1>
+  <div class="flex flex-col md:flex-row md:space-x-10 lg:space-x-13">
+    <div class="order-2 md:order-1 flex-grow">
+      <!-- item-1-->
+      <div [routerLink]="['orders']" class="flex mb-2 border-y border-gray-200 py-5 px-4 sm:py-9 sm:px-6 sm:space-x-13
+       md:px-8 md:border-x md:space-x-0 md:rounded-sm lg:pr-10 lg:pl-13 lg:space-x-13
+       hover:border-yellow hover:cursor-pointer">
+        <div class="hidden sm:block md:hidden lg:block">
           <tui-svg
             src="icons::catalog"
             class="!w-[68px] !h-[53px]"
@@ -11,45 +14,51 @@
         </div>
         <div class="basis-full">
           <h2 class="mb-2 font-bold text-lg">Мои заявки</h2>
-          <p>Вы еще не создали ни одного отправления<br class="md:hidden" />Посмотрите историю ваших отправлений.</p>
+          <p>Вы еще не создали ни одного отправления. <br /> Посмотрите историю ваших отправлений.</p>
         </div>
-        <div class="flex items-center">
+        <div class="hidden sm:flex items-center">
           <tui-svg
             src="icons::caret-right"
             class="!w-[13px] !h-[26px]"
           ></tui-svg>
         </div>
       </div>
-      <div [routerLink]="['profile', 'entity']" class="flex mb-2 py-9 pr-10 pl-13 border border-gray-200 hover:border-yellow hover:cursor-pointer rounded-sm space-x-13">
-        <div>
+      <!-- item-2-->
+      <div [routerLink]="['profile', 'entity']" class="flex mb-2 border-y border-gray-200 py-5 px-4 sm:py-9 sm:px-6 sm:space-x-13
+       md:px-8 md:border-x md:space-x-0 md:rounded-sm lg:pr-10 lg:pl-13 lg:space-x-13
+       hover:border-yellow hover:cursor-pointer">
+        <div class="hidden sm:block md:hidden lg:block">
           <tui-svg
-            src="icons::catalog"
-            class="!w-[68px] !h-[53px]"
+            src="icons::profile"
+            class="!w-[65px] !h-[54px]"
           ></tui-svg>
         </div>
         <div class="basis-full">
           <h2 class="mb-2 font-bold text-lg">Персональные данные</h2>
           <p>Данные вашего личного кабинета и платежного лица.</p>
         </div>
-        <div class="flex items-center">
+        <div class="hidden sm:flex items-center">
           <tui-svg
             src="icons::caret-right"
             class="!w-[13px] !h-[26px]"
           ></tui-svg>
         </div>
       </div>
-      <div class="flex mb-2 py-9 pr-10 pl-13 border border-gray-200 hover:border-yellow hover:cursor-pointer rounded-sm space-x-13">
-        <div>
+      <!-- item-3-->
+      <div class="flex mb-2 border-y border-gray-200 py-5 px-4 sm:py-9 sm:px-6 sm:space-x-13
+       md:px-8 md:border-x md:space-x-0 md:rounded-sm lg:pr-10 lg:pl-13 lg:space-x-13
+       hover:border-yellow hover:cursor-pointer">
+        <div class="hidden sm:block md:hidden lg:block">
           <tui-svg
-            src="icons::catalog"
-            class="!w-[68px] !h-[53px]"
+            src="icons::report"
+            class="!w-[48px] !h-[53px]"
           ></tui-svg>
         </div>
         <div class="basis-full">
           <h2 class="mb-2 font-bold text-lg">Сформировать отчет</h2>
           <p>Удобное формирование отчета с применением фильтров.</p>
         </div>
-        <div class="flex items-center">
+        <div class="hidden sm:flex items-center">
           <tui-svg
             src="icons::caret-right"
             class="!w-[13px] !h-[26px]"
@@ -57,17 +66,18 @@
         </div>
       </div>
     </div>
-    <div class="w-[270px]">
+    <!-- aside-->
+    <div class="flex flex-col items-start flex-shrink-0 order-1 mb-8 md:mb-0 px-4 md:px-0">
       <button
         tuiButton
         type="button"
         appearance="accent"
-        class="min-w-full mb-7"
+        class="w-[270px] mb-7"
         size="m"
       >
         Оформить заказ
       </button>
-      <a href="#" class="space-x-1">
+      <a href="#" class="space-x-1 md:text-xs lg:text-base">
         <span>
           Выйти из личного кабинета
         </span>
