@@ -1,4 +1,12 @@
-<div class="max-w-[570px]">
+<a [routerLink]="['/account/profile/entity']" class="mb-6 flex items-center hover:opacity-70">
+  <tui-svg
+    src="icons::account-back"
+    class="!w-[32px] !h-[32px] mr-3"
+  ></tui-svg>
+  <span class="text-sm">Назад к личному кабинету</span>
+</a>
+<h1 class="mb-8 text-2xl sm:text-3xl font-heading font-bold">Персональные данные</h1>
+<div class="md:max-w-[570px]">
   <tui-loader [showLoader]="isLoading$ | async">
     <ng-container *ngIf="profile">
       <ul class="mb-8 pb-11 space-y-2 border-b border-gray-300">
@@ -17,7 +25,7 @@
   </tui-loader>
   <h2 class="mb-6 text-lg font-heading font-bold">Данные организации</h2>
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="grid grid-cols-2 gap-x-8 gap-y-4">
-    <label class="block">
+    <label class="block col-span-2 sm:col-span-1">
       <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >
         Наименование организации
       </span>
@@ -40,7 +48,7 @@
     </label>
 
 
-    <label class="block">
+    <label class="block col-span-2 sm:col-span-1">
       <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >Руководитель</span>
       <tui-input
         tuiTextfieldSize="m"
@@ -61,7 +69,7 @@
     </label>
 
 
-    <label class="block">
+    <label class="block col-span-2 sm:col-span-1">
       <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >Телефон</span>
       <tui-input
         tuiTextfieldSize="m"
@@ -82,7 +90,7 @@
     </label>
 
 
-    <label class="block">
+    <label class="block col-span-2 sm:col-span-1">
       <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >ИНН</span>
       <tui-input
         tuiTextfieldSize="m"
@@ -103,7 +111,7 @@
     </label>
 
 
-    <label class="block">
+    <label class="block col-span-2 sm:col-span-1">
       <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >КПП</span>
       <tui-input
         tuiTextfieldSize="m"
@@ -123,7 +131,7 @@
       ></tui-error>
     </label>
 
-    <label class="block">
+    <label class="block col-span-2 sm:col-span-1">
       <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >ОГРН</span>
       <tui-input
         tuiTextfieldSize="m"
@@ -143,7 +151,7 @@
       ></tui-error>
     </label>
 
-    <label class="block">
+    <label class="block col-span-2 sm:col-span-1">
       <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >Банк</span>
       <tui-input
         tuiTextfieldSize="m"
@@ -163,7 +171,7 @@
       ></tui-error>
     </label>
 
-    <label class="block">
+    <label class="block col-span-2 sm:col-span-1">
       <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >Р/с</span>
       <tui-input
         tuiTextfieldSize="m"
@@ -183,7 +191,7 @@
       ></tui-error>
     </label>
 
-    <label class="block">
+    <label class="block col-span-2 sm:col-span-1">
       <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >К/с</span>
       <tui-input
         tuiTextfieldSize="m"
@@ -203,7 +211,7 @@
       ></tui-error>
     </label>
 
-    <label class="block">
+    <label class="block col-span-2 sm:col-span-1">
       <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >№ Договора</span>
       <tui-input
         tuiTextfieldSize="m"
@@ -223,7 +231,7 @@
       ></tui-error>
     </label>
 
-    <label class="block">
+    <label class="block col-span-2 sm:col-span-1">
       <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >Дата договора</span>
       <tui-input
         tuiTextfieldSize="m"
@@ -243,7 +251,7 @@
       ></tui-error>
     </label>
 
-    <label class="block">
+    <label class="block col-span-2 sm:col-span-1">
       <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >Перевозчик</span>
       <tui-input
         tuiTextfieldSize="m"
@@ -264,11 +272,11 @@
     </label>
 
     <button tuiButton type="submit" [class.tui-skeleton]="isLoading$ | async"
-    appearance="accent" size="m" [showLoader]="isSubmitting$ | async" class="mt-3"
+    appearance="accent" size="m" [showLoader]="isSubmitting$ | async" class="mt-3 col-span-2 sm:col-span-1"
 
     >Сохранить изменения</button>
 
-    <div class="h-[50px] flex items-center mt-3">
+    <div class="h-[50px] flex col-span-2 sm:col-span-1 justify-center sm:justify-start sm:items-center sm:mt-3">
       <a href="#" class="text-sm text-blue hover:text-blue-900">Отменить</a>
     </div>
   </form>

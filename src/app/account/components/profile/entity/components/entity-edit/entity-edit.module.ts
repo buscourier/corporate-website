@@ -6,6 +6,7 @@ import {
   TuiErrorModule,
   TuiLabelModule,
   TuiLoaderModule,
+  TuiSvgModule,
   TuiNotificationModule,
   TuiTextfieldControllerModule,
 } from '@taiga-ui/core'
@@ -17,17 +18,20 @@ import {reducer} from './store/reducer'
 import {GetEntityProfileEffect} from './store/effects/get-entity-profile.effect'
 import {ReactiveFormsModule} from '@angular/forms'
 import {UpdatePersonalProfileEffect} from './store/effects/update-entity-profile.effect'
+import {RouterModule} from '@angular/router'
 
 @NgModule({
   declarations: [EntityEditComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    RouterModule,
     TuiLabelModule,
     TuiInputModule,
     TuiTextfieldControllerModule,
     TuiErrorModule,
     TuiButtonModule,
+    TuiSvgModule,
     TuiNotificationModule,
     TuiLoaderModule,
     StoreModule.forFeature(EDIT_ENTITY_PROFILE_FEATURE, reducer),
