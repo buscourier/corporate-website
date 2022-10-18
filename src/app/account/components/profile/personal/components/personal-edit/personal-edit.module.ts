@@ -11,16 +11,20 @@ import {
   TuiErrorModule,
   TuiLabelModule,
   TuiNotificationModule,
+  TuiSvgModule,
   TuiTextfieldControllerModule,
 } from '@taiga-ui/core'
 import {TuiFieldErrorPipeModule, TuiInputModule} from '@taiga-ui/kit'
 import {UpdatePersonalProfileEffect} from './store/effects/update-personal-profile.effect'
+import {RouterModule} from '@angular/router'
 
 @NgModule({
   declarations: [PersonalEditComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    RouterModule,
+    TuiSvgModule,
     TuiLabelModule,
     TuiInputModule,
     TuiTextfieldControllerModule,

@@ -6,7 +6,7 @@
   <span class="text-sm">Назад к личному кабинету</span>
 </a>
 <h1 class="mb-8 text-2xl sm:text-3xl font-heading font-bold">Персональные данные</h1>
-<div class="md:max-w-[520px]">
+<div class="max-w-[520px]">
   <tui-loader [showLoader]="isLoading$ | async">
     <ng-container *ngIf="(profile$ | async) as profile">
       <ul class="mb-8 pb-11 space-y-2 border-b border-gray-300">

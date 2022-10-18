@@ -39,12 +39,12 @@
   <div class="relative z-20 lg:static max-w-[1170px] sticky-header:min-h-20 mx-auto pt-4 lg:pt-7 lg:sticky-header:pt-5 pb-5 lg:pb-10
    lg:sticky-header:pb-4 px-4 flex gap-x-10 xl:gap-x-22 sticky-header:gap-x-14 xl:sticky-header:gap-x-8">
     <!--  header: logo -->
-    <div>
-      <tui-svg
+    <a routerLink="/">
+      <tui-svg *ngIf="!isMobileMenuOpen"
         src="icons::header-logo"
         class="!w-[66px] !h-[40px] lg:!w-[128px] lg:!h-[77px] sticky-header:!w-[66px] sticky-header:!h-[40px]"
       ></tui-svg>
-    </div>
+    </a>
     <!--  header: content -->
     <nav class="ml-auto lg:basis-full">
       <!--  top bar -->
@@ -132,7 +132,7 @@
             <div *ngIf="activeDropdown === 'current-user'" [@fadeInOut] class="absolute z-20 top-full left-0 w-50">
               <div class="mt-2 pt-3 pr-5 pb-2 pl-4 flex flex-col bg-white border-t-2 border-yellow shadow">
                 <a [routerLink]="['/orders', 'quick-order', 'new']" class="leading-7 text-gray-800 hover:text-black">Заказать доставку</a>
-                <a [routerLink]="['/user-profile', 'personal']" class="leading-7 text-gray-800 hover:text-black">Персональные данные</a>
+                <a [routerLink]="['/account', 'profile', 'entity']" class="leading-7 text-gray-800 hover:text-black">Персональные данные</a>
                 <button type="button" class="leading-7 text-gray-800 text-left hover:text-black" (click)="logout()">Выйти</button>
               </div>
             </div>
@@ -220,7 +220,7 @@
                bg-white border-t-2 border-yellow shadow">
                 <a [routerLink]="['/orders', 'quick-order', 'new']"
                    class="leading-7 text-gray-800 text-right lg:text-left hover:text-black">Заказать доставку</a>
-                <a [routerLink]="['/user-profile', 'personal']"
+                <a [routerLink]="['/account', 'profile', 'entity']"
                    class="leading-7 text-gray-800 text-right lg:text-left hover:text-black">Персональные данные</a>
                 <button type="button"
                    class="leading-7 text-gray-800 text-right lg:text-left hover:text-black" (click)="logout()">Выйти</button>
@@ -240,7 +240,7 @@
           <div *tuiSidebar="isMobileMenuOpen; direction: 'right'; autoWidth: true"
                class="w-[318px] h-full flex flex-col bg-gray-50">
             <!-- mobile-nav: header-->
-            <div class="relative min-h-80 pt-4 pr-4 pb-5 pl-5 border border-gray-300
+            <div class="relative h-[76px] pt-4 pr-4 pb-5 pl-5 border-b border-gray-300 box-border
              flex items-center justify-between">
               <button class="absolute -left-10 hover:text-yellow hover:mt-1" (click)="toggleMobileMenu(false)">
                 <tui-svg

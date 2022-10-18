@@ -10,7 +10,7 @@ import {EffectsModule} from '@ngrx/effects'
 import {OrdersRoutingModule} from './orders-routing.module'
 import {TuiTableModule, TuiTablePaginationModule} from '@taiga-ui/addon-table'
 import {LetModule} from 'src/app/shared/directives/let/let.module'
-import {TuiLoaderModule, TuiScrollbarModule} from '@taiga-ui/core'
+import {TuiLoaderModule, TuiScrollbarModule, TuiSvgModule} from '@taiga-ui/core'
 import {TuiCurrencyPipeModule} from '@taiga-ui/addon-commerce'
 import {FilterModule} from './components/filter/filter.module'
 import {ScrollingModule} from '@angular/cdk/scrolling'
@@ -29,6 +29,7 @@ import {ScrollingModule} from '@angular/cdk/scrolling'
     TuiLoaderModule,
     TuiCurrencyPipeModule,
     TuiScrollbarModule,
+    TuiSvgModule,
     ScrollingModule,
   ],
   providers: [OrdersService],

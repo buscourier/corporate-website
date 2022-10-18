@@ -1,5 +1,13 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()" class="max-w-[570px] grid grid-cols-2 gap-x-8 gap-y-4">
-  <label class="block">
+<a [routerLink]="['/account/profile/personal']" class="mb-6 flex items-center hover:opacity-70">
+  <tui-svg
+    src="icons::account-back"
+    class="!w-[32px] !h-[32px] mr-3"
+  ></tui-svg>
+  <span class="text-sm">Назад к личному кабинету</span>
+</a>
+<h1 class="mb-8 text-2xl sm:text-3xl font-heading font-bold">Персональные данные</h1>
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="md:max-w-[570px] grid grid-cols-2 gap-x-8 gap-y-4">
+  <label class="block col-span-2 sm:col-span-1">
     <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >ФИО</span>
     <tui-input
       tuiTextfieldSize="m"
@@ -18,7 +26,7 @@
       [error]="[] | tuiFieldError | async"
     ></tui-error>
   </label>
-  <label class="block">
+  <label class="block col-span-2 sm:col-span-1">
     <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >Email</span>
     <tui-input
       tuiTextfieldSize="m"
@@ -37,7 +45,7 @@
       [error]="[] | tuiFieldError | async"
     ></tui-error>
   </label>
-  <label class="block mb-3">
+  <label class="block mb-3 col-span-2 sm:col-span-1">
     <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >Телефон</span>
     <tui-input
       tuiTextfieldSize="m"
@@ -56,7 +64,7 @@
       [error]="[] | tuiFieldError | async"
     ></tui-error>
   </label>
-  <label class="block mb-3">
+  <label class="block mb-3 col-span-2 sm:col-span-1">
     <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >Паспорт</span>
     <tui-input
       tuiTextfieldSize="m"
@@ -76,5 +84,10 @@
     ></tui-error>
   </label>
   <button tuiButton type="submit" [class.tui-skeleton]="isLoading$ | async"
-          appearance="accent" size="m" [showLoader]="isSubmitting$ | async">Сохранить изменения</button>
+    appearance="accent" size="m" [showLoader]="isSubmitting$ | async" class="mt-3 col-span-2 sm:col-span-1">
+    Сохранить изменения</button>
+
+  <div class="h-[50px] flex col-span-2 sm:col-span-1 justify-center sm:justify-start sm:items-center sm:mt-3">
+    <a [routerLink]="['/account', 'profile', 'personal']" class="text-sm text-blue hover:text-blue-900">Отменить</a>
+  </div>
 </form>

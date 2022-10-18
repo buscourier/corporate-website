@@ -6,7 +6,8 @@ import {StoreModule} from '@ngrx/store'
 import {reducer} from './store/reducer'
 import {EffectsModule} from '@ngrx/effects'
 import {GetPersonalProfileEffect} from './store/effects/get-personal-profile.effect'
-import {TuiButtonModule, TuiLoaderModule} from '@taiga-ui/core'
+import {TuiButtonModule, TuiLoaderModule, TuiSvgModule} from '@taiga-ui/core'
+import {RouterModule} from '@angular/router'
 
 @NgModule({
   declarations: [PersonalViewComponent],
@@ -16,6 +17,8 @@ import {TuiButtonModule, TuiLoaderModule} from '@taiga-ui/core'
     EffectsModule.forFeature([GetPersonalProfileEffect]),
     TuiButtonModule,
     TuiLoaderModule,
+    TuiSvgModule,
+    RouterModule,
   ],
   exports: [PersonalViewComponent],
 })

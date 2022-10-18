@@ -1,3 +1,11 @@
+<a [routerLink]="['/account']" class="mb-6 flex items-center hover:opacity-70">
+  <tui-svg
+    src="icons::account-back"
+    class="!w-[32px] !h-[32px] mr-3"
+  ></tui-svg>
+  <span class="text-sm">Назад к личному кабинету</span>
+</a>
+<h1 class="mb-8 text-2xl sm:text-3xl font-heading font-bold">Персональные данные</h1>
 <div class="max-w-[520px]">
   <tui-loader [showLoader]="isLoading$ | async">
     <ng-container *ngIf="(profile$ | async) as profile">
@@ -23,7 +31,7 @@
           <span class="order-3 flex-shrink-0">{{profile.passport.value || 'Не указаны' }}</span>
         </li>
       </ul>
-      <button tuiButton type="button" appearance="accent" size="m">Изменить данные</button>
+      <button [routerLink]="['edit']" tuiButton type="button" appearance="accent" size="m">Изменить данные</button>
     </ng-container>
   </tui-loader>
 </div>
