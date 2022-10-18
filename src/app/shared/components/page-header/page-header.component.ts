@@ -12,6 +12,7 @@ import {
   TUI_SVG_SRC_PROCESSOR,
   TuiDurationOptions,
   tuiFadeIn,
+  tuiHeightCollapse,
 } from '@taiga-ui/core'
 import nav from './nav'
 import {tuiPure} from '@taiga-ui/cdk'
@@ -47,6 +48,7 @@ import {animate, style, transition, trigger} from '@angular/animations'
         ),
       ]),
     ]),
+    tuiHeightCollapse,
   ],
   providers: [
     {
@@ -64,12 +66,13 @@ import {animate, style, transition, trigger} from '@angular/animations'
   ],
 })
 export class PageHeaderComponent implements OnInit {
-  @Input() animationSpeed = 200
+  @Input() animationSpeed = 300
   @ViewChild('header', {read: ElementRef}) header: ElementRef
 
   nav = nav
   activeDropdown = null
   isSticky = false
+  isMobileMenuOpen = false
 
   isLoggedIn$: Observable<boolean>
   isAnonymous$: Observable<boolean>
@@ -102,6 +105,11 @@ export class PageHeaderComponent implements OnInit {
 
   logout() {
     this.store.dispatch(logoutAction())
+    this.activeDropdown = null
+  }
+
+  toggleMobileMenu(open: boolean): void {
+    this.isMobileMenuOpen = open
     this.activeDropdown = null
   }
 

@@ -15,6 +15,7 @@ module.exports = {
       },
     },
     fontSize: {
+      '2xs': ['0.8125rem', {lineHeight: '1rem'}], //13 / 16
       xs: ['0.875rem', {lineHeight: '1.25rem'}], //14 / 20
       sm: ['1rem', {lineHeight: '1.375rem'}], // 16 / 22
       base: ['0.9375rem', {lineHeight: '1.25rem'}], //15 / 20
@@ -34,6 +35,7 @@ module.exports = {
     },
     boxShadow: {
       DEFAULT: '0px 5px 40px rgba(0, 0, 0, 0.05)',
+      '2xs': '0px 2px 10px rgba(0, 0, 0, 0.05)',
       xs: '0px 10px 100px rgba(0, 0, 0, 0.1)',
       sm: '0px 4px 15px rgba(0, 0, 0, 0.05);',
       md: '0px 24px 54px rgba(0, 0, 0, 0.04)',
@@ -61,6 +63,7 @@ module.exports = {
         },
         gray: {
           DEFAULT: '#2e2e2e',
+          50: '#fafafa',
           100: '#f2f2f2',
           200: '#eaeaea',
           300: '#e5e5e5',

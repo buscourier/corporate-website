@@ -193,11 +193,87 @@
           </div>
         </ng-container>
         <!--  mobile menu: burger -->
-        <button type="button" class="lg:hidden">
+        <button type="button" class="lg:hidden text-gray-800"
+            (click)="toggleMobileMenu(true)"
+            (tuiActiveZoneChange)="toggleMobileMenu($event)"
+        >
           <tui-svg
             src="tuiIconMenuLarge"
             class="!w-6 !h-6">
           </tui-svg>
+          <div *tuiSidebar="isMobileMenuOpen; direction: 'right'; autoWidth: true"
+               class="w-[318px] h-full flex flex-col bg-gray-50">
+            <!-- mobile-nav: header-->
+            <div class="relative min-h-80 pt-4 pr-4 pb-5 pl-5 border border-gray-300
+             flex items-center justify-between">
+              <button class="absolute -left-10 hover:text-yellow hover:mt-1" (click)="toggleMobileMenu(false)">
+                <tui-svg
+                  src="icons::close"
+                  class="!w-6 !h-6"
+                ></tui-svg>
+              </button>
+              <tui-svg
+                src="icons::header-logo"
+                class="!w-[66px] !h-[40px]"
+              ></tui-svg>
+              <!--  mobile [phone] -->
+              <a href="tel: 84232026532" class="relative w-11 h-11 flex items-center justify-center
+                bg-white rounded-full transition-shadow shadow-xs hover:shadow-sm active:top-0.5">
+                <tui-svg
+                  src="icons::phone"
+                  class="!w-[15px] !h-[15px]"
+                ></tui-svg>
+              </a>
+            </div>
+            <tui-scrollbar class="h-full">
+              <div class="flex flex-col">
+                <ng-container *ngFor="let item of nav">
+                  <div *ngIf="item.dropdown; else link" class="relative">
+                    <!--  mobile-nav: link -->
+                    <button type="button"
+                            class="w-full p-4 pl-5 flex items-center justify-between text-[18px] leading-6 text-gray-800
+                            hover:text-black border-t border-gray-300" [class.bg-white]="activeDropdown === item"
+                            [class.shadow-2xs]="activeDropdown === item"
+                            (click)="showDropdown(item)">
+                      <span>{{item.name}}</span>
+                      <tui-svg
+                        src="tuiIconChevronDownLarge"
+                        class="mt-0.5 ml-0.5 !w-4 !h-4 transition-transform"
+                        [class.rotate-180]="activeDropdown === item"
+                      ></tui-svg>
+                    </button>
+                    <!--  mobile-nav: dropdown -->
+                    <div *ngIf="activeDropdown === item" [@tuiHeightCollapse]="getAnimation(animationSpeed)" class="bg-gray-[#f7f7f7]">
+                      <div class="pt-6 pr-8 pb-4 pl-5 flex flex-col">
+                        <a *ngFor="let item of item.dropdown" [routerLink]='item.link'
+                           class="mb-4 last-of-type:mb-0 text-sm text-gray-800 hover:text-black transition-colors
+                            active:bg-white leading-6"
+                           routerLinkActive="active" (click)="closeDropdown()">
+                          {{item.name}}
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <ng-template #link>
+                    <!--  main-nav: link -->
+                    <a [routerLink]='item.link' class="p-4 pl-5 text-[18px] leading-6 text-gray-800 hover:text-black
+                       border-t first-of-type:border-none border-gray-300"
+                       routerLinkActive="active">
+                      {{item.name}}
+                    </a>
+                  </ng-template>
+                </ng-container>
+                <div class="mt-auto p-6 pr-4 pl-5 pb-7 border-t border-gray-300">
+                  <a [routerLink]="" class="mb-5 inline-block text-sm leading-6 text-black hover:text-gray-900 font-bold">inbox@busbox.guru</a>
+                  <div class="text-2xs text-gray-700 space-y-2">
+                    <p>Политика конфиденциальности</p>
+                    <p>2013-2022 © ООО «Приморье»</p>
+                    <p>Идея и дизайн сайта: <a href="" class="text-black active:text-gray-900">LEAD WAVE</a></p>
+                  </div>
+                </div>
+              </div>
+            </tui-scrollbar>
+          </div>
         </button>
       </div>
     </nav>
