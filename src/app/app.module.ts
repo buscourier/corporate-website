@@ -55,11 +55,11 @@ import {BaseUrlInterceptor} from './shared/interceptors/base-url/base-url.interc
       provide: TUI_LANGUAGE,
       useValue: of(TUI_RUSSIAN_LANGUAGE),
     },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: BaseUrlInterceptor,
-      multi: true,
-    },
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: BaseUrlInterceptor,
+    //   multi: true,
+    // },
   ],
   bootstrap: [AppComponent],
 })

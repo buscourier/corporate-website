@@ -1,7 +1,7 @@
 {
   "/api/": {
     "target": "https://api.busbox.guru",
-    "secure": false,
+    "secure": true,
     "pathRewrite": {
       "^/api": "https://api.busbox.guru/v1/"
     },

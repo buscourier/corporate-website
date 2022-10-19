@@ -6,7 +6,7 @@ import {HttpClient} from '@angular/common/http'
 import {AuthResponseInterface} from '../types/auth-response.interface'
 import {LoginRequestInterface} from '../types/login-request.interface'
 import {CurrentUserInputInterface} from '../../shared/types/current-user-input.interface'
-import {environment} from '../../../environments/environment.prod'
+import {environment} from '../../../environments/environment'
 
 @Injectable()
 export class AuthService {
@@ -25,7 +25,7 @@ export class AuthService {
   }
 
   login({user}: LoginRequestInterface): Observable<CurrentUserInterface> {
-    const url = `/account/login`
+    const url = `${environment.api_url}/account/login`
 
     return this.http.post<CurrentUserInterface>(
       url,
@@ -38,8 +38,7 @@ export class AuthService {
   }
 
   getCurrentUser(token: string): Observable<CurrentUserInterface> {
-    const url = `/account/auth/${token}`
-    console.log('token', token)
+    const url = `${environment.api_url}/account/auth/${token}`
 
     return this.http.get<CurrentUserInterface>(url)
   }

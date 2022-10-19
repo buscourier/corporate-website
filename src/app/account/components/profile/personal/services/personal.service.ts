@@ -1,16 +1,16 @@
 import {Injectable} from '@angular/core'
 import {HttpClient} from '@angular/common/http'
 import {filter, map, Observable} from 'rxjs'
-import {environment} from '../../../../../../environments/environment.prod'
 import {PersonalProfileInterface} from '../types/personal-profile.interface'
 import {ProfileInterface} from '../../shared/types/profile.interface'
+import {environment} from '../../../../../../environments/environment'
 
 @Injectable()
 export class PersonalService {
   constructor(private http: HttpClient) {}
 
   getProfile(currentUserId: string): Observable<PersonalProfileInterface> {
-    const url = '/account/details/'
+    const url = `/api/account/details`
 
     return this.http
       .get<ProfileInterface[]>(`${url}/${environment.apiKey}/${currentUserId}`)
@@ -31,7 +31,7 @@ export class PersonalService {
     currentUserId: string,
     profileInput: any
   ): Observable<PersonalProfileInterface> {
-    const url = '/account/details/'
+    const url = `${environment.api_url}/account/details`
 
     return this.http.put<PersonalProfileInterface>(
       `${url}/${environment.apiKey}/${currentUserId}`,

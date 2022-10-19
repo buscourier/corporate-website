@@ -14,6 +14,8 @@ import {TuiLoaderModule, TuiScrollbarModule, TuiSvgModule} from '@taiga-ui/core'
 import {TuiCurrencyPipeModule} from '@taiga-ui/addon-commerce'
 import {FilterModule} from './components/filter/filter.module'
 import {ScrollingModule} from '@angular/cdk/scrolling'
+import {HTTP_INTERCEPTORS} from '@angular/common/http'
+import {BaseUrlInterceptor} from '../../../shared/interceptors/base-url/base-url.interceptor'
 
 @NgModule({
   declarations: [OrdersComponent],
