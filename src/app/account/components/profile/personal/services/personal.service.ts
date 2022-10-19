@@ -10,7 +10,7 @@ export class PersonalService {
   constructor(private http: HttpClient) {}
 
   getProfile(currentUserId: string): Observable<PersonalProfileInterface> {
-    const url = '/api/account/details/'
+    const url = '/account/details/'
 
     return this.http
       .get<ProfileInterface[]>(`${url}/${environment.apiKey}/${currentUserId}`)
@@ -31,7 +31,7 @@ export class PersonalService {
     currentUserId: string,
     profileInput: any
   ): Observable<PersonalProfileInterface> {
-    const url = '/api/account/details/'
+    const url = '/account/details/'
 
     return this.http.put<PersonalProfileInterface>(
       `${url}/${environment.apiKey}/${currentUserId}`,

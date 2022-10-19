@@ -42,11 +42,11 @@ export class AuthModule {
         AuthService,
         AuthGuard,
         PersistenceService,
-        {
-          provide: HTTP_INTERCEPTORS,
-          useClass: AuthInterceptor,
-          multi: true,
-        },
+        // {
+        //   provide: HTTP_INTERCEPTORS,
+        //   useClass: AuthInterceptor,
+        //   multi: true,
+        // },
       ],
     }
   }

@@ -9,13 +9,13 @@ export class FilterService {
   constructor(private http: HttpClient) {}
 
   getStartCities(): Observable<StartCityInterface[]> {
-    const url = `/api/calc/getcitiesfrom`
+    const url = `/calc/getcitiesfrom`
 
     return this.http.get<StartCityInterface[]>(url)
   }
 
   getEndCities(cityId: string): Observable<EndCityInterface[]> {
-    const url = `/api/calc/getcitiesto`
+    const url = `/calc/getcitiesto`
 
     return this.http.get<EndCityInterface[]>(`${url}/${cityId}/0`)
   }

@@ -76,12 +76,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "angular-tailwind-starter:build:production",
-              "proxyConfig": "src/proxy.conf.json"
+              "browserTarget": "angular-tailwind-starter:build:production"
             },
             "development": {
-              "browserTarget": "angular-tailwind-starter:build:development",
-              "proxyConfig": "src/proxy.conf.json"
+              "browserTarget": "angular-tailwind-starter:build:development"
             }
           },
           "defaultConfiguration": "development"

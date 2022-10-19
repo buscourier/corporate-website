@@ -21,6 +21,7 @@ import {HTTP_INTERCEPTORS} from '@angular/common/http'
 import {AuthInterceptor} from './shared/services/auth-interceptor.service'
 import {PageHeaderModule} from './shared/components/page-header/page-header.module'
 import {of} from 'rxjs'
+import {BaseUrlInterceptor} from './shared/interceptors/base-url/base-url.interceptor'
 
 @NgModule({
   declarations: [AppComponent],
@@ -44,15 +45,20 @@ import {of} from 'rxjs'
     TuiAlertModule,
   ],
   providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true,
-    },
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: AuthInterceptor,
+    //   multi: true,
+    // },
     {provide: TUI_SANITIZER, useClass: NgDompurifySanitizer},
     {
       provide: TUI_LANGUAGE,
       useValue: of(TUI_RUSSIAN_LANGUAGE),
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: BaseUrlInterceptor,
+      multi: true,
     },
   ],
   bootstrap: [AppComponent],

@@ -7,7 +7,6 @@ import {AuthResponseInterface} from '../types/auth-response.interface'
 import {LoginRequestInterface} from '../types/login-request.interface'
 import {CurrentUserInputInterface} from '../../shared/types/current-user-input.interface'
 import {environment} from '../../../environments/environment.prod'
-import {tap} from 'rxjs/operators'
 
 @Injectable()
 export class AuthService {
@@ -18,7 +17,7 @@ export class AuthService {
   }
 
   register(data: RegisterRequestInterface): Observable<CurrentUserInterface> {
-    const url = `${environment.apiUrl}/users`
+    const url = `${environment.api_url}/users`
 
     return this.http
       .post<AuthResponseInterface>(url, data)
@@ -26,7 +25,7 @@ export class AuthService {
   }
 
   login({user}: LoginRequestInterface): Observable<CurrentUserInterface> {
-    const url = `/api/account/login`
+    const url = `/account/login`
 
     return this.http.post<CurrentUserInterface>(
       url,
@@ -39,7 +38,7 @@ export class AuthService {
   }
 
   getCurrentUser(token: string): Observable<CurrentUserInterface> {
-    const url = `/api/account/auth/${token}`
+    const url = `/account/auth/${token}`
     console.log('token', token)
 
     return this.http.get<CurrentUserInterface>(url)
@@ -48,7 +47,7 @@ export class AuthService {
   updateCurrentUser(
     currentUserInput: CurrentUserInputInterface
   ): Observable<CurrentUserInterface> {
-    const url = `${environment.apiUrl}/user`
+    const url = `${environment.api_url}/user`
     return this.http
       .put<AuthResponseInterface>(url, currentUserInput)
       .pipe(map(this.getUser))
