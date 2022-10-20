@@ -17,7 +17,7 @@ export class AuthService {
   }
 
   register(data: RegisterRequestInterface): Observable<CurrentUserInterface> {
-    const url = `${environment.api_url}/users`
+    const url = `${environment.apiUrl}/users`
 
     return this.http
       .post<AuthResponseInterface>(url, data)
@@ -25,7 +25,7 @@ export class AuthService {
   }
 
   login({user}: LoginRequestInterface): Observable<CurrentUserInterface> {
-    const url = `${environment.api_url}/account/login`
+    const url = `${environment.apiUrl}/account/login`
 
     return this.http.post<CurrentUserInterface>(
       url,
@@ -38,7 +38,7 @@ export class AuthService {
   }
 
   getCurrentUser(token: string): Observable<CurrentUserInterface> {
-    const url = `${environment.api_url}/account/auth/${token}`
+    const url = `${environment.apiUrl}/account/auth/${token}`
 
     return this.http.get<CurrentUserInterface>(url)
   }
@@ -46,7 +46,7 @@ export class AuthService {
   updateCurrentUser(
     currentUserInput: CurrentUserInputInterface
   ): Observable<CurrentUserInterface> {
-    const url = `${environment.api_url}/user`
+    const url = `${environment.apiUrl}/user`
     return this.http
       .put<AuthResponseInterface>(url, currentUserInput)
       .pipe(map(this.getUser))

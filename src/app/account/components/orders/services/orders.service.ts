@@ -11,7 +11,7 @@ export class OrdersService {
   constructor(private http: HttpClient) {}
 
   getOrders(ordersInput: OrdersInputInterface): Observable<OrderInterface[]> {
-    const url = `${environment.api_url}/order/getorders/`
+    const url = `${environment.apiUrl}/order/getorders/`
 
     const payload = {
       'api-key': environment.apiKey,
@@ -40,13 +40,13 @@ export class OrdersService {
   }
 
   getOrderDetails(id: string): Observable<any> {
-    const url = `${environment.api_url}/order/getdetails/`
+    const url = `${environment.apiUrl}/order/getdetails/`
 
     return this.http.get(`${url}/${environment.apiKey}/${id}`)
   }
 
   cancelOrder(order: OrderInterface) {
-    const url = `${environment.api_url}/order/ordercancel/`
+    const url = `${environment.apiUrl}/order/ordercancel/`
 
     return this.http.post(`${url}`, JSON.stringify(order))
   }

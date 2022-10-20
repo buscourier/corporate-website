@@ -31,7 +31,7 @@ export class PersonalService {
     currentUserId: string,
     profileInput: any
   ): Observable<PersonalProfileInterface> {
-    const url = `${environment.api_url}/account/details`
+    const url = `${environment.apiUrl}/account/details`
 
     return this.http.put<PersonalProfileInterface>(
       `${url}/${environment.apiKey}/${currentUserId}`,
