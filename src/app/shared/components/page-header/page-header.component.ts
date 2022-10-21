@@ -9,7 +9,6 @@ import {
   ViewChild,
 } from '@angular/core'
 import {
-  TUI_ICONS,
   TUI_ICONS_PATH,
   TUI_SVG_SRC_PROCESSOR,
   TuiDurationOptions,
@@ -55,14 +54,10 @@ export function iconsPath(name: string): string {
         }
       },
     },
-    {
-      provide: TUI_ICONS,
-      useValue: MAPPER,
-    },
-    {
-      provide: TUI_ICONS_PATH,
-      useValue: iconsPath,
-    },
+    // {
+    //   provide: TUI_ICONS_PATH,
+    //   useValue: iconsPath,
+    // },
   ],
 })
 export class PageHeaderComponent implements OnInit {
