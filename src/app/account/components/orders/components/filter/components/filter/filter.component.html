@@ -22,21 +22,10 @@
         [tuiTextfieldLabelOutside]="true"
       >
         Выберите город
-        <input
-          tuiTextfield
-          placeholder="Выберите город"
-        />
-        <ng-template tuiDataList>
-          <tui-data-list *ngIf="startCites">
-            <button
-              *ngFor="let city of startCites"
-              tuiOption
-              [value]="city.id"
-            >
-              {{ city.name }}
-            </button>
-          </tui-data-list>
-        </ng-template>
+        <tui-data-list-wrapper
+          *tuiDataList
+          [items]="startCites"
+        ></tui-data-list-wrapper>
       </tui-select>
     </tui-loader>
   </label>
@@ -49,21 +38,10 @@
         [tuiTextfieldLabelOutside]="true"
       >
         Выберите город
-        <input
-          tuiTextfield
-          placeholder="Выберите город"
-        />
-        <ng-template tuiDataList>
-          <tui-data-list *ngIf="endCites">
-            <button
-              *ngFor="let city of endCites"
-              tuiOption
-              [value]="city.id"
-            >
-              {{ city.name }}
-            </button>
-          </tui-data-list>
-        </ng-template>
+        <tui-data-list-wrapper
+          *tuiDataList
+          [items]="endCites"
+        ></tui-data-list-wrapper>
       </tui-select>
     </tui-loader>
   </label>

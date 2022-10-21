@@ -21,11 +21,14 @@ import {FormBuilder} from '@angular/forms'
 import {getEndCitiesAction} from '../../store/actions/get-end-cities.action'
 import {tap} from 'rxjs/operators'
 import {FilterInterface} from '../../../../types/filter.interface'
+import {tuiItemsHandlersProvider} from '@taiga-ui/kit'
+import {STRINGIFY_CITIES} from '../../../../../../../shared/handlers/string-handlers'
 
 @Component({
   selector: 'app-filter',
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.css'],
+  providers: [tuiItemsHandlersProvider({stringify: STRINGIFY_CITIES})],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FilterComponent implements OnInit {
@@ -40,8 +43,8 @@ export class FilterComponent implements OnInit {
 
   form = this.fb.group({
     dateRange: [],
-    startCity: '',
-    endCity: {value: '', disabled: true},
+    startCity: null,
+    endCity: {value: null, disabled: true},
   })
 
   constructor(private fb: FormBuilder, private store: Store) {}
@@ -61,10 +64,9 @@ export class FilterComponent implements OnInit {
     this.form
       .get('startCity')
       .valueChanges.pipe(
-        tap((id: string) => {
+        tap(({id}: StartCityInterface) => {
           this.form.get('endCity').patchValue('')
           this.form.get('endCity').enable()
-
           this.store.dispatch(getEndCitiesAction({cityId: id}))
         })
       )
@@ -76,6 +78,7 @@ export class FilterComponent implements OnInit {
   }
 
   onSubmit() {
-    this.filterChangedEvent.emit(this.form.value)
+    console.log('this.form.value', this.form.value)
+    // this.filterChangedEvent.emit(this.form.value)
   }
 }
