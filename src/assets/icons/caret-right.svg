@@ -1,3 +1,8 @@
-<svg width="15" height="28" viewBox="0 0 15 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg xmlns="http://www.w3.org/2000/svg" width="0.9375em" height="1.75em"><g id="caret-right" xmlns="http://www.w3.org/2000/svg">
+            <svg x="50%" y="50%" width="0.9375em" height="1.75em" overflow="visible" viewBox="0 0 15 28">
+                <svg x="-7.5" y="-14"><svg width="15" height="28" viewBox="0 0 15 28" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M1 1L14 14L1 27" stroke="#B3B3B3"/>
 </svg>
+</svg>
+            </svg>
+        </g></svg>

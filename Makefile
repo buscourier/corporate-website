@@ -7,3 +7,6 @@ prod:
 
 down:
 	docker-compose down
+
+icons:
+  node ./process-icons.js

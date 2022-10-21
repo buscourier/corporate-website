@@ -11,7 +11,6 @@ import {
 import {
   TUI_SVG_SRC_PROCESSOR,
   TuiDurationOptions,
-  tuiFadeIn,
   tuiHeightCollapse,
 } from '@taiga-ui/core'
 import nav from './nav'
@@ -26,31 +25,22 @@ import {LoginService} from '../../../auth/components/login/services/login.servic
 import {logoutAction} from '../../../auth/store/actions/sync.action'
 import {animate, style, transition, trigger} from '@angular/animations'
 import {PersistenceService} from '../../services/persistence.service'
+import {fadeIn} from '../../animations/fade'
+
+const MAPPER: Record<string, string> = {
+  customIconPhone: 'phone',
+}
+
+export function iconsPath(name: string): string {
+  return `assets/icons/${MAPPER[name]}.svg#${MAPPER[name]}`
+}
 
 @Component({
   selector: 'app-page-header',
   templateUrl: './page-header.component.html',
   styleUrls: ['./page-header.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: [
-    trigger('fadeInOut', [
-      transition(':enter', [
-        style({opacity: 0, transform: 'translateY(0.25rem)'}),
-        animate(
-          '100ms ease-out',
-          style({opacity: 1, transform: 'translateY(0)'})
-        ),
-      ]),
-      transition(':leave', [
-        // :leave is alias to '* => void'
-        animate(
-          '150ms ease-in',
-          style({opacity: 0, transform: 'translateY(0.25rem)'})
-        ),
-      ]),
-    ]),
-    tuiHeightCollapse,
-  ],
+  animations: [fadeIn, tuiHeightCollapse],
   providers: [
     {
       provide: TUI_SVG_SRC_PROCESSOR,
@@ -64,6 +54,10 @@ import {PersistenceService} from '../../services/persistence.service'
         }
       },
     },
+    // {
+    //   provide: TUI_ICONS_PATH,
+    //   useValue: iconsPath,
+    // },
   ],
 })
 export class PageHeaderComponent implements OnInit {
