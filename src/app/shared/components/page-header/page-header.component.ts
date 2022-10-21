@@ -9,6 +9,8 @@ import {
   ViewChild,
 } from '@angular/core'
 import {
+  TUI_ICONS,
+  TUI_ICONS_PATH,
   TUI_SVG_SRC_PROCESSOR,
   TuiDurationOptions,
   tuiHeightCollapse,
@@ -23,12 +25,11 @@ import {
 } from '../../../auth/store/selectors'
 import {LoginService} from '../../../auth/components/login/services/login.service'
 import {logoutAction} from '../../../auth/store/actions/sync.action'
-import {animate, style, transition, trigger} from '@angular/animations'
 import {PersistenceService} from '../../services/persistence.service'
 import {fadeIn} from '../../animations/fade'
 
 const MAPPER: Record<string, string> = {
-  customIconPhone: 'phone',
+  customPhoneIcon: 'phone',
 }
 
 export function iconsPath(name: string): string {
@@ -54,10 +55,14 @@ export function iconsPath(name: string): string {
         }
       },
     },
-    // {
-    //   provide: TUI_ICONS_PATH,
-    //   useValue: iconsPath,
-    // },
+    {
+      provide: TUI_ICONS,
+      useValue: MAPPER,
+    },
+    {
+      provide: TUI_ICONS_PATH,
+      useValue: iconsPath,
+    },
   ],
 })
 export class PageHeaderComponent implements OnInit {
