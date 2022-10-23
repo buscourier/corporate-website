@@ -21,14 +21,33 @@ import {FormBuilder} from '@angular/forms'
 import {getEndCitiesAction} from '../../store/actions/get-end-cities.action'
 import {tap} from 'rxjs/operators'
 import {FilterInterface} from '../../../../types/filter.interface'
-import {tuiItemsHandlersProvider} from '@taiga-ui/kit'
+import {
+  TUI_DATE_RANGE_VALUE_TRANSFORMER,
+  TUI_DATE_VALUE_TRANSFORMER,
+  tuiItemsHandlersProvider,
+} from '@taiga-ui/kit'
 import {STRINGIFY_CITIES} from '../../../../../../../shared/handlers/string-handlers'
+import {
+  DateTransformer,
+  getDateRangeTransformer,
+} from '../../../../../../../shared/handlers/date-transformers'
 
 @Component({
   selector: 'app-filter',
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.css'],
-  providers: [tuiItemsHandlersProvider({stringify: STRINGIFY_CITIES})],
+  providers: [
+    tuiItemsHandlersProvider({stringify: STRINGIFY_CITIES}),
+    {
+      provide: TUI_DATE_VALUE_TRANSFORMER,
+      useClass: DateTransformer,
+    },
+    {
+      provide: TUI_DATE_RANGE_VALUE_TRANSFORMER,
+      deps: [TUI_DATE_VALUE_TRANSFORMER],
+      useFactory: getDateRangeTransformer,
+    },
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FilterComponent implements OnInit {
@@ -42,7 +61,7 @@ export class FilterComponent implements OnInit {
     new EventEmitter<FilterInterface>()
 
   form = this.fb.group({
-    dateRange: [],
+    range: [],
     startCity: null,
     endCity: {value: null, disabled: true},
   })

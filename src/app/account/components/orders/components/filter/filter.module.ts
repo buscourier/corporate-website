@@ -21,7 +21,7 @@ import {
   TuiTextfieldControllerModule,
 } from '@taiga-ui/core'
 import {FilterService} from './services/filter.service'
-import {ReactiveFormsModule} from '@angular/forms'
+import {FormsModule, ReactiveFormsModule} from '@angular/forms'
 import {HttpClientModule} from '@angular/common/http'
 import {LetModule} from 'src/app/shared/directives/let/let.module'
 import {DisableControlModule} from 'src/app/shared/directives/disable-control/disable-control.module'
@@ -31,6 +31,7 @@ import {DisableControlModule} from 'src/app/shared/directives/disable-control/di
   imports: [
     CommonModule,
     HttpClientModule,
+    FormsModule,
     ReactiveFormsModule,
     TuiInputDateRangeModule,
     TuiInputModule,
