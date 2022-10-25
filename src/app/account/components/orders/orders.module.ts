@@ -16,6 +16,7 @@ import {FilterModule} from './components/filter/filter.module'
 import {ScrollingModule} from '@angular/cdk/scrolling'
 import {HTTP_INTERCEPTORS} from '@angular/common/http'
 import {BaseUrlInterceptor} from '../../../shared/interceptors/base-url/base-url.interceptor'
+import {TuiPaginationModule} from '@taiga-ui/kit'
 
 @NgModule({
   declarations: [OrdersComponent],
@@ -32,6 +33,7 @@ import {BaseUrlInterceptor} from '../../../shared/interceptors/base-url/base-url
     TuiCurrencyPipeModule,
     TuiScrollbarModule,
     TuiSvgModule,
+    TuiPaginationModule,
     ScrollingModule,
   ],
   providers: [OrdersService],

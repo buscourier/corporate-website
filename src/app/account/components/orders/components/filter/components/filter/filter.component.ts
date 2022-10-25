@@ -20,12 +20,7 @@ import {getStartCitiesAction} from '../../store/actions/get-start-cities.action'
 import {FormBuilder} from '@angular/forms'
 import {getEndCitiesAction} from '../../store/actions/get-end-cities.action'
 import {tap} from 'rxjs/operators'
-import {FilterInterface} from '../../../../types/filter.interface'
-import {
-  TUI_DATE_RANGE_VALUE_TRANSFORMER,
-  TUI_DATE_VALUE_TRANSFORMER,
-  tuiItemsHandlersProvider,
-} from '@taiga-ui/kit'
+import {tuiItemsHandlersProvider} from '@taiga-ui/kit'
 import {STRINGIFY_CITIES} from '../../../../../../../shared/handlers/string-handlers'
 
 @Component({
@@ -42,8 +37,7 @@ export class FilterComponent implements OnInit {
   endCities$: Observable<EndCityInterface[]>
   backendErrors$: Observable<null | string>
 
-  @Output('filterChanged') filterChangedEvent =
-    new EventEmitter<FilterInterface>()
+  @Output('filterChanged') filterChangedEvent = new EventEmitter<any>()
 
   form = this.fb.group({
     range: [],
@@ -83,6 +77,6 @@ export class FilterComponent implements OnInit {
 
   onSubmit() {
     console.log('this.form.value', this.form.value)
-    // this.filterChangedEvent.emit(this.form.value)
+    this.filterChangedEvent.emit(this.form.value)
   }
 }

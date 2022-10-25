@@ -5,155 +5,10 @@
   ></tui-svg>
   <span class="text-sm">Назад к личному кабинету</span>
 </a>
-<div class="max-w-[1170px] mx-auto" *appLet="(orders$ | async) as orders">
+<div class="pb-10 max-w-[1170px] mx-auto">
   <h1 class="mb-8 px-4 text-2xl lg:text-3xl font-heading font-bold">Cформировать отчет</h1>
   <app-filter (filterChanged)="fetchDataWithFilterParams($event)"></app-filter>
-<!--  <div class="flex flex-col">-->
-<!--    <div class="overflow-x-auto">-->
-<!--      <div class="inline-block min-w-full align-middle">-->
-<!--        <div class="overflow-hidden shadow-sm ring-1 ring-black ring-opacity-5">-->
-<!--          <tui-scrollbar>-->
-<!--            <cdk-virtual-scroll-viewport-->
-<!--              #viewport-->
-<!--              tuiScrollable-->
-<!--              class="viewport tui-zero-scrollbar"-->
-<!--              [itemSize]="45"-->
-<!--              [maxBufferPx]="500"-->
-<!--              [minBufferPx]="400"-->
-<!--            >-->
-<!--              <tui-loader-->
-<!--                [showLoader]="isLoading$ | async"-->
-<!--              >-->
-<!--                <table-->
-<!--                  *ngIf="orders"-->
-<!--                  tuiTable-->
-<!--                  [columns]="columns"-->
-<!--                  class="w-full"-->
-<!--                >-->
-<!--                  <thead>-->
-<!--                  <tr tuiThGroup>-->
-<!--                    <th-->
-<!--                      *tuiHead="'order_id'"-->
-<!--                      tuiTh-->
-<!--                      [sorter]="null"-->
-<!--                      [sticky]="true"-->
-<!--                      [style.top.px]="-viewport['_renderedContentOffset']"-->
-<!--                    >-->
-<!--                      № Заказа-->
-<!--                    </th>-->
-<!--                    <th-->
-<!--                      *tuiHead="'date'"-->
-<!--                      tuiTh-->
-<!--                      [sticky]="true"-->
-<!--                      [style.top.px]="-viewport['_renderedContentOffset']"-->
-<!--                    >-->
-<!--                      Дата заказа-->
-<!--                    </th>-->
-<!--                    <th-->
-<!--                      *tuiHead="'sender_name'"-->
-<!--                      tuiTh-->
-<!--                      [sorter]="null"-->
-<!--                      [sticky]="true"-->
-<!--                      [style.top.px]="-viewport['_renderedContentOffset']"-->
-<!--                    >-->
-<!--                      Отправитель-->
-<!--                    </th>-->
-<!--                    <th-->
-<!--                      *tuiHead="'recipient_name'"-->
-<!--                      tuiTh-->
-<!--                      [sticky]="true"-->
-<!--                      [style.top.px]="-viewport['_renderedContentOffset']"-->
-<!--                    >-->
-<!--                      Получатель-->
-<!--                    </th>-->
-<!--                    <th-->
-<!--                      *tuiHead="'start_city'"-->
-<!--                      tuiTh-->
-<!--                      [sticky]="true"-->
-<!--                      [style.top.px]="-viewport['_renderedContentOffset']"-->
-<!--                    >-->
-<!--                      Город отправления-->
-<!--                    </th>-->
-<!--                    <th-->
-<!--                      *tuiHead="'end_city'"-->
-<!--                      tuiTh-->
-<!--                      [sticky]="true"-->
-<!--                      [style.top.px]="-viewport['_renderedContentOffset']"-->
-<!--                    >-->
-<!--                      Город получения-->
-<!--                    </th>-->
-<!--                    <th-->
-<!--                      *tuiHead="'order_price'"-->
-<!--                      tuiTh-->
-<!--                      [sticky]="true"-->
-<!--                      [style.top.px]="-viewport['_renderedContentOffset']"-->
-<!--                    >-->
-<!--                      Цена-->
-<!--                    </th>-->
-<!--                  </tr>-->
-<!--                  </thead>-->
-<!--                  <tbody-->
-<!--                    tuiTbody-->
-<!--                    [data]="orders"-->
-<!--                  >-->
-<!--                  <tr-->
-<!--                    *cdkVirtualFor="let order of orders | tuiTableSort"-->
-<!--                    tuiTr-->
-<!--                  >-->
-<!--                    <td-->
-<!--                      *tuiCell="'order_id'"-->
-<!--                      tuiTd-->
-<!--                    >-->
-<!--                      <a href="">{{order.order_id}}</a>-->
-<!--                    </td>-->
-<!--                    <td-->
-<!--                      *tuiCell="'date'"-->
-<!--                      tuiTd-->
-<!--                    >-->
-<!--                      {{order.date}}-->
-<!--                    </td>-->
-<!--                    <td-->
-<!--                      *tuiCell="'sender_name'"-->
-<!--                      tuiTd-->
-<!--                    >-->
-<!--                      {{order.sender_name}}-->
-<!--                    </td>-->
-<!--                    <td-->
-<!--                      *tuiCell="'recipient_name'"-->
-<!--                      tuiTd-->
-<!--                    >-->
-<!--                      {{order.recipient_name}}-->
-<!--                    </td>-->
-<!--                    <td-->
-<!--                      *tuiCell="'start_city'"-->
-<!--                      tuiTd-->
-<!--                    >-->
-<!--                      {{order.start_city}}-->
-<!--                    </td>-->
-<!--                    <td-->
-<!--                      *tuiCell="'end_city'"-->
-<!--                      tuiTd-->
-<!--                    >-->
-<!--                      {{order.end_city}}-->
-<!--                    </td>-->
-<!--                    <td-->
-<!--                      *tuiCell="'order_price'"-->
-<!--                      tuiTd-->
-<!--                    >-->
-<!--                      {{order.order_price}} {{'RUB' | tuiCurrency}}-->
-<!--                    </td>-->
-<!--                  </tr>-->
-<!--                  </tbody>-->
-<!--                </table>-->
-<!--              </tui-loader>-->
-<!--            </cdk-virtual-scroll-viewport>-->
-<!--          </tui-scrollbar>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-
-  <div class="flex flex-col">
+  <div class="flex flex-col" *appLet="(orders$ | async) as orders">
     <div class="overflow-x-auto">
       <div class="inline-block min-w-full align-middle">
         <div class="overflow-hidden shadow-sm ring-1 ring-black ring-opacity-5">
@@ -279,4 +134,11 @@
       </div>
     </div>
   </div>
+  <tui-pagination
+    *ngIf="(orders$ | async)"
+    [length]="length"
+    [index]="pageIndex"
+    (indexChange)="goToPage($event)"
+    class="mt-7"
+  ></tui-pagination>
 </div>

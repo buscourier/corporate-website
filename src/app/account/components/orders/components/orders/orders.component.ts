@@ -27,6 +27,8 @@ export class OrdersComponent implements OnInit {
 
   isLoading$: Observable<boolean>
   orders$: Observable<any>
+  length = 8
+  pageIndex = 0
 
   constructor(
     private store: Store,
@@ -37,6 +39,7 @@ export class OrdersComponent implements OnInit {
   ngOnInit(): void {
     this.fetchData()
     this.initializeValues()
+    console.log('init orders')
   }
 
   fetchData() {
@@ -47,6 +50,7 @@ export class OrdersComponent implements OnInit {
         map((user: CurrentUserInterface) => {
           const ordersInput = {
             'user-id': user.id,
+            'page-num': (this.pageIndex + 1).toString(),
           }
 
           return this.store.dispatch(getOrdersAction({ordersInput}))
@@ -55,12 +59,12 @@ export class OrdersComponent implements OnInit {
       .subscribe()
   }
 
-  fetchDataWithFilterParams({dateRange, startCity, endCity}: FilterInterface) {
+  fetchDataWithFilterParams({range, startCity, endCity}: FilterInterface) {
     const params = {
-      'start-date': dateRange ? dateRange.from : null,
-      'end-date': dateRange ? dateRange.to : null,
-      'start-city': startCity,
-      'end-city': endCity,
+      'start-date': range ? range[0] : null,
+      'end-date': range ? range[1] : null,
+      'start-city': startCity ? startCity.id : null,
+      'end-city': endCity ? endCity.id : null,
     }
 
     this.store
@@ -86,5 +90,10 @@ export class OrdersComponent implements OnInit {
 
   showDetails(id: string) {
     this.orderDetailsService.open(null).subscribe()
+  }
+
+  goToPage(index: number): void {
+    this.pageIndex = index
+    this.fetchData()
   }
 }

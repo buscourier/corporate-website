@@ -10,6 +10,6 @@ export class DateTransformer
   }
 
   toControlValue(componentValue: TuiDay | null): String | null {
-    return componentValue?.getFormattedDay(`YMD`, `*`) || null
+    return componentValue?.getFormattedDay(`YMD`, `.`) || null
   }
 }

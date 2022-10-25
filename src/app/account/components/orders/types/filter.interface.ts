@@ -1,5 +1,8 @@
+import {EndCityInterface} from 'src/app/shared/types/end-city.interface'
+import {StartCityInterface} from '../../../../shared/types/start-city.interface'
+
 export interface FilterInterface {
-  dateRange?: any
-  startCity?: string
-  endCity?: string
+  range?: [string, string]
+  startCity: StartCityInterface | null
+  endCity: EndCityInterface | null
 }
