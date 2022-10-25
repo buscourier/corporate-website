@@ -27,6 +27,12 @@ export class OrdersComponent implements OnInit {
 
   isLoading$: Observable<boolean>
   orders$: Observable<any>
+  filterParams: {
+    'start-date': string | null
+    'end-date': string | null
+    'start-city': string | null
+    'end-city': string | null
+  }
   length = 8
   pageIndex = 0
 
@@ -39,7 +45,6 @@ export class OrdersComponent implements OnInit {
   ngOnInit(): void {
     this.fetchData()
     this.initializeValues()
-    console.log('init orders')
   }
 
   fetchData() {
@@ -51,6 +56,7 @@ export class OrdersComponent implements OnInit {
           const ordersInput = {
             'user-id': user.id,
             'page-num': (this.pageIndex + 1).toString(),
+            ...this.filterParams,
           }
 
           return this.store.dispatch(getOrdersAction({ordersInput}))
@@ -60,27 +66,13 @@ export class OrdersComponent implements OnInit {
   }
 
   fetchDataWithFilterParams({range, startCity, endCity}: FilterInterface) {
-    const params = {
+    this.filterParams = {
       'start-date': range ? range[0] : null,
       'end-date': range ? range[1] : null,
       'start-city': startCity ? startCity.id : null,
       'end-city': endCity ? endCity.id : null,
     }
-
-    this.store
-      .select(currentUserSelector)
-      .pipe(
-        filter(Boolean),
-        map((user: CurrentUserInterface) => {
-          const ordersInput = {
-            'user-id': user.id,
-            ...params,
-          }
-
-          return this.store.dispatch(getOrdersAction({ordersInput}))
-        })
-      )
-      .subscribe()
+    this.fetchData()
   }
 
   initializeValues() {

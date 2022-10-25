@@ -8,137 +8,140 @@
 <div class="pb-10 max-w-[1170px] mx-auto">
   <h1 class="mb-8 px-4 text-2xl lg:text-3xl font-heading font-bold">Cформировать отчет</h1>
   <app-filter (filterChanged)="fetchDataWithFilterParams($event)"></app-filter>
-  <div class="flex flex-col" *appLet="(orders$ | async) as orders">
-    <div class="overflow-x-auto">
-      <div class="inline-block min-w-full align-middle">
-        <div class="overflow-hidden shadow-sm ring-1 ring-black ring-opacity-5">
-          <tui-loader
-            [showLoader]="isLoading$ | async"
-          >
-            <table
-              *ngIf="orders"
-              tuiTable
-              [columns]="columns"
-              class="w-full"
+  <ng-container *appLet="(orders$ | async) as orders">
+    <div class="flex flex-col">
+      <div class="overflow-x-auto">
+        <div class="inline-block min-w-full align-middle">
+          <div class="overflow-hidden shadow-sm ring-1 ring-black ring-opacity-5">
+            <tui-loader
+              [showLoader]="isLoading$ | async"
             >
-              <thead>
-              <tr tuiThGroup>
-                <th
-                  *tuiHead="'order_id'"
-                  tuiTh
-                  [sorter]="null"
-                  [sticky]="true"
-                >
-                  № Заказа
-                </th>
-                <th
-                  *tuiHead="'date'"
-                  tuiTh
-                  [sticky]="true"
-                >
-                  Дата заказа
-                </th>
-                <th
-                  *tuiHead="'sender_name'"
-                  tuiTh
-                  [sorter]="null"
-                  [sticky]="true"
-                >
-                  Отправитель
-                </th>
-                <th
-                  *tuiHead="'recipient_name'"
-                  tuiTh
-                  [sticky]="true"
-                >
-                  Получатель
-                </th>
-                <th
-                  *tuiHead="'start_city'"
-                  tuiTh
-                  [sticky]="true"
-                >
-                  Город отправления
-                </th>
-                <th
-                  *tuiHead="'end_city'"
-                  tuiTh
-                  [sticky]="true"
-                >
-                  Город получения
-                </th>
-                <th
-                  *tuiHead="'order_price'"
-                  tuiTh
-                  [sticky]="true"
-                >
-                  Цена
-                </th>
-              </tr>
-              </thead>
-              <tbody
-                tuiTbody
-                [data]="orders"
+              <table
+                *ngIf="orders"
+                tuiTable
+                [columns]="columns"
+                class="w-full"
               >
-              <tr
-                *tuiRow="let order of orders"
-                tuiTr
-              >
-                <td
-                  *tuiCell="'order_id'"
-                  tuiTd
+                <thead>
+                <tr tuiThGroup>
+                  <th
+                    *tuiHead="'order_id'"
+                    tuiTh
+                    [sorter]="null"
+                    [sticky]="true"
+                  >
+                    № Заказа
+                  </th>
+                  <th
+                    *tuiHead="'date'"
+                    tuiTh
+                    [sticky]="true"
+                  >
+                    Дата заказа
+                  </th>
+                  <th
+                    *tuiHead="'sender_name'"
+                    tuiTh
+                    [sorter]="null"
+                    [sticky]="true"
+                  >
+                    Отправитель
+                  </th>
+                  <th
+                    *tuiHead="'recipient_name'"
+                    tuiTh
+                    [sticky]="true"
+                  >
+                    Получатель
+                  </th>
+                  <th
+                    *tuiHead="'start_city'"
+                    tuiTh
+                    [sticky]="true"
+                  >
+                    Город отправления
+                  </th>
+                  <th
+                    *tuiHead="'end_city'"
+                    tuiTh
+                    [sticky]="true"
+                  >
+                    Город получения
+                  </th>
+                  <th
+                    *tuiHead="'order_price'"
+                    tuiTh
+                    [sticky]="true"
+                  >
+                    Цена
+                  </th>
+                </tr>
+                </thead>
+                <tbody
+                  tuiTbody
+                  [data]="orders"
                 >
-                  <b (click)="showDetails(order.order_id)">{{order.order_id}}</b>
-                </td>
-                <td
-                  *tuiCell="'date'"
-                  tuiTd
+                <tr
+                  *tuiRow="let order of orders"
+                  tuiTr
                 >
-                  {{order.date}}
-                </td>
-                <td
-                  *tuiCell="'sender_name'"
-                  tuiTd
-                >
-                  {{order.sender_name}}
-                </td>
-                <td
-                  *tuiCell="'recipient_name'"
-                  tuiTd
-                >
-                  {{order.recipient_name}}
-                </td>
-                <td
-                  *tuiCell="'start_city'"
-                  tuiTd
-                >
-                  {{order.start_city}}
-                </td>
-                <td
-                  *tuiCell="'end_city'"
-                  tuiTd
-                >
-                  {{order.end_city}}
-                </td>
-                <td
-                  *tuiCell="'order_price'"
-                  tuiTd
-                >
-                  {{order.order_price}} {{'RUB' | tuiCurrency}}
-                </td>
-              </tr>
-              </tbody>
-            </table>
-          </tui-loader>
+                  <td
+                    *tuiCell="'order_id'"
+                    tuiTd
+                  >
+                    <b (click)="showDetails(order.order_id)">{{order.order_id}}</b>
+                  </td>
+                  <td
+                    *tuiCell="'date'"
+                    tuiTd
+                  >
+                    {{order.date}}
+                  </td>
+                  <td
+                    *tuiCell="'sender_name'"
+                    tuiTd
+                  >
+                    {{order.sender_name}}
+                  </td>
+                  <td
+                    *tuiCell="'recipient_name'"
+                    tuiTd
+                  >
+                    {{order.recipient_name}}
+                  </td>
+                  <td
+                    *tuiCell="'start_city'"
+                    tuiTd
+                  >
+                    {{order.start_city}}
+                  </td>
+                  <td
+                    *tuiCell="'end_city'"
+                    tuiTd
+                  >
+                    {{order.end_city}}
+                  </td>
+                  <td
+                    *tuiCell="'order_price'"
+                    tuiTd
+                  >
+                    {{order.order_price}} {{'RUB' | tuiCurrency}}
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </tui-loader>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <tui-pagination
-    *ngIf="(orders$ | async)"
-    [length]="length"
-    [index]="pageIndex"
-    (indexChange)="goToPage($event)"
-    class="mt-7"
-  ></tui-pagination>
+    <tui-pagination
+      *ngIf="orders"
+      [length]="length"
+      [index]="pageIndex"
+      (indexChange)="goToPage($event)"
+      class="mt-7"
+    ></tui-pagination>
+    <p *ngIf="!(isLoading$ | async) && !orders" class="text-xl text-gray-500 text-center">По указанным параметрам нет данных</p>
+  </ng-container>
 </div>

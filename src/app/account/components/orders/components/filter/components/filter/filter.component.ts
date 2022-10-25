@@ -76,7 +76,6 @@ export class FilterComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('this.form.value', this.form.value)
     this.filterChangedEvent.emit(this.form.value)
   }
 }
