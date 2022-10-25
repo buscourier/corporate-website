@@ -24,6 +24,7 @@ import {
   TUI_DATE_VALUE_TRANSFORMER,
 } from '@taiga-ui/kit'
 import {DateTransformer} from './shared/services/date-transformer.service'
+import {getDateRangeTransformer} from './shared/handlers/date-range-transformer'
 
 @NgModule({
   declarations: [AppComponent],
@@ -66,11 +67,11 @@ import {DateTransformer} from './shared/services/date-transformer.service'
       provide: TUI_DATE_VALUE_TRANSFORMER,
       useClass: DateTransformer,
     },
-    // {
-    //   provide: TUI_DATE_RANGE_VALUE_TRANSFORMER,
-    //   deps: [TUI_DATE_VALUE_TRANSFORMER],
-    //   useFactory: getDateRangeTransformer,
-    // },
+    {
+      provide: TUI_DATE_RANGE_VALUE_TRANSFORMER,
+      deps: [TUI_DATE_VALUE_TRANSFORMER],
+      useFactory: getDateRangeTransformer,
+    },
   ],
   bootstrap: [AppComponent],
 })

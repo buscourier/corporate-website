@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core'
 import {TuiControlValueTransformer, TuiDay} from '@taiga-ui/cdk'
 
-@Injectable()
+@Injectable() // TuiDay | null, Date | null>
 export class DateTransformer
   implements TuiControlValueTransformer<TuiDay | null, any | null>
 {
