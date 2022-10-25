@@ -17,11 +17,13 @@ import {StoreDevtoolsModule} from '@ngrx/store-devtools'
 import {environment} from '../environments/environment'
 import {StoreRouterConnectingModule} from '@ngrx/router-store'
 import {AuthModule} from './auth/auth.module'
-import {HTTP_INTERCEPTORS} from '@angular/common/http'
-import {AuthInterceptor} from './shared/services/auth-interceptor.service'
 import {PageHeaderModule} from './shared/components/page-header/page-header.module'
 import {of} from 'rxjs'
-import {BaseUrlInterceptor} from './shared/interceptors/base-url/base-url.interceptor'
+import {
+  TUI_DATE_RANGE_VALUE_TRANSFORMER,
+  TUI_DATE_VALUE_TRANSFORMER,
+} from '@taiga-ui/kit'
+import {DateTransformer} from './shared/services/date-transformer.service'
 
 @NgModule({
   declarations: [AppComponent],
@@ -50,15 +52,24 @@ import {BaseUrlInterceptor} from './shared/interceptors/base-url/base-url.interc
     //   useClass: AuthInterceptor,
     //   multi: true,
     // },
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: BaseUrlInterceptor,
+    //   multi: true,
+    // },
     {provide: TUI_SANITIZER, useClass: NgDompurifySanitizer},
     {
       provide: TUI_LANGUAGE,
       useValue: of(TUI_RUSSIAN_LANGUAGE),
     },
+    {
+      provide: TUI_DATE_VALUE_TRANSFORMER,
+      useClass: DateTransformer,
+    },
     // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: BaseUrlInterceptor,
-    //   multi: true,
+    //   provide: TUI_DATE_RANGE_VALUE_TRANSFORMER,
+    //   deps: [TUI_DATE_VALUE_TRANSFORMER],
+    //   useFactory: getDateRangeTransformer,
     // },
   ],
   bootstrap: [AppComponent],

@@ -1,21 +1,21 @@
 import {TuiControlValueTransformer, TuiDay, TuiDayRange} from '@taiga-ui/cdk'
 import {Injectable} from '@angular/core'
 
-@Injectable()
-export class DateTransformer
-  implements TuiControlValueTransformer<TuiDay | null, Date | null>
-{
-  fromControlValue(controlValue: Date | null): TuiDay | null {
-    console.log('from controlValue', TuiDay.fromUtcNativeDate(controlValue))
-    return controlValue && TuiDay.fromLocalNativeDate(controlValue)
-  }
-
-  toControlValue(componentValue: TuiDay | null): Date | null {
-    console.log('to componentValue', componentValue)
-
-    return componentValue?.toLocalNativeDate() || null
-  }
-}
+// @Injectable()
+// export class DateTransformer
+//   implements TuiControlValueTransformer<TuiDay | null, Date | null>
+// {
+//   fromControlValue(controlValue: Date | null): TuiDay | null {
+//     console.log('from controlValue', TuiDay.fromUtcNativeDate(controlValue))
+//     return controlValue && TuiDay.fromLocalNativeDate(controlValue)
+//   }
+//
+//   toControlValue(componentValue: TuiDay | null): Date | null {
+//     console.log('to componentValue', componentValue)
+//
+//     return componentValue?.toLocalNativeDate() || null
+//   }
+// }
 
 class DateRangeTransformer
   implements
@@ -48,8 +48,8 @@ class DateRangeTransformer
   }
 }
 
-export function getDateRangeTransformer(
-  dateTransformer: DateTransformer | null
-): TuiControlValueTransformer<TuiDayRange | null, [Date, Date] | null> | null {
-  return dateTransformer && new DateRangeTransformer(dateTransformer)
-}
+// export function getDateRangeTransformer(
+//   dateTransformer: DateTransformer | null
+// ): TuiControlValueTransformer<TuiDayRange | null, [Date, Date] | null> | null {
+//   return dateTransformer && new DateRangeTransformer(dateTransformer)
+// }
