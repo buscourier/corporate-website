@@ -1,4 +1,10 @@
-import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  HostListener,
+  Inject,
+  OnInit,
+} from '@angular/core'
 import {isLoadingSelector, ordersSelector} from '../../store/selectors'
 import {currentUserSelector} from '../../../../../auth/store/selectors'
 import {Store} from '@ngrx/store'
@@ -35,6 +41,8 @@ export class OrdersComponent implements OnInit {
   }
   length = 8
   pageIndex = 0
+  breakpoint = window.matchMedia(`(min-width: 768px)`)
+  isLargeScreen: boolean
 
   constructor(
     private store: Store,
@@ -78,6 +86,7 @@ export class OrdersComponent implements OnInit {
   initializeValues() {
     this.isLoading$ = this.store.select(isLoadingSelector)
     this.orders$ = this.store.select(ordersSelector)
+    this.isLargeScreen = this.breakpoint && this.breakpoint.matches
   }
 
   showDetails(id: string) {
@@ -87,5 +96,9 @@ export class OrdersComponent implements OnInit {
   goToPage(index: number): void {
     this.pageIndex = index
     this.fetchData()
+  }
+
+  @HostListener('window:resize') resizeWindow() {
+    this.isLargeScreen = this.breakpoint && this.breakpoint.matches
   }
 }

@@ -17,6 +17,7 @@ import {ScrollingModule} from '@angular/cdk/scrolling'
 import {HTTP_INTERCEPTORS} from '@angular/common/http'
 import {BaseUrlInterceptor} from '../../../shared/interceptors/base-url/base-url.interceptor'
 import {TuiPaginationModule} from '@taiga-ui/kit'
+import {MobileDataModule} from 'src/app/shared/components/mobile-data/mobile-data.module'
 
 @NgModule({
   declarations: [OrdersComponent],
@@ -34,6 +35,7 @@ import {TuiPaginationModule} from '@taiga-ui/kit'
     TuiScrollbarModule,
     TuiSvgModule,
     TuiPaginationModule,
+    MobileDataModule,
     ScrollingModule,
   ],
   providers: [OrdersService],
