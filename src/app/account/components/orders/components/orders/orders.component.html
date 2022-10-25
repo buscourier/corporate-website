@@ -9,7 +9,7 @@
   <h1 class="mb-8 px-4 text-2xl lg:text-3xl font-heading font-bold">Cформировать отчет</h1>
   <app-filter (filterChanged)="fetchDataWithFilterParams($event)"></app-filter>
   <ng-container *appLet="(orders$ | async) as orders">
-    <div *ngIf="isLargeScreen; else mobileData" class="flex flex-col">
+    <div *ngIf="isLargeScreen; else mobileData" class="mb-7 flex flex-col">
       <div class="overflow-x-auto">
         <div class="inline-block min-w-full align-middle">
           <div class="overflow-hidden shadow-sm ring-1 ring-black ring-opacity-5">
@@ -139,8 +139,8 @@
      <tui-loader
        [showLoader]="isLoading$ | async"
      >
-       <div *ngFor="let order of orders" class="mb-7">
-         <app-mobile-data key="№ Заказа" [value]="order.order_id"></app-mobile-data>
+       <div *ngFor="let order of orders" class="mx-4 mb-7 pb-7 border-b border-gray-300">
+         <app-mobile-data key="Заказ" [value]="getIdValue(order.order_id)" (click)='showDetails(order.order_id)'></app-mobile-data>
          <app-mobile-data key="Дата заказа" [value]="order.date"></app-mobile-data>
          <app-mobile-data key="Отправитель" [value]="order.sender_name"></app-mobile-data>
          <app-mobile-data key="Получатель" [value]="order.recipient_name"></app-mobile-data>
@@ -155,7 +155,6 @@
       [length]="length"
       [index]="pageIndex"
       (indexChange)="goToPage($event)"
-      class="mt-7"
     ></tui-pagination>
     <p *ngIf="!(isLoading$ | async) && !orders" class="text-xl text-gray-500 text-center">По указанным параметрам нет данных</p>
   </ng-container>

@@ -41,7 +41,7 @@ export class OrdersComponent implements OnInit {
   }
   length = 8
   pageIndex = 0
-  breakpoint = window.matchMedia(`(min-width: 768px)`)
+  breakpoint = window.matchMedia(`(min-width: 640px)`)
   isLargeScreen: boolean
 
   constructor(
@@ -90,12 +90,17 @@ export class OrdersComponent implements OnInit {
   }
 
   showDetails(id: string) {
+    console.log('id', id)
     this.orderDetailsService.open(null).subscribe()
   }
 
   goToPage(index: number): void {
     this.pageIndex = index
     this.fetchData()
+  }
+
+  getIdValue(id: string) {
+    return `<b class="hover:cursor-pointer">№ ${id}</b>`
   }
 
   @HostListener('window:resize') resizeWindow() {
