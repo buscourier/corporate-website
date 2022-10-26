@@ -13,12 +13,27 @@ import {filter, map, Observable} from 'rxjs'
 import {CurrentUserInterface} from '../../../../../shared/types/current-user.interface'
 import {FilterInterface} from '../../types/filter.interface'
 import {ReportDetailsService} from '../report-details/services/report-details.service'
+import {TUI_SVG_SRC_PROCESSOR} from '@taiga-ui/core'
 
 @Component({
   selector: 'app-report',
   templateUrl: './report.component.html',
   styleUrls: ['./report.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    {
+      provide: TUI_SVG_SRC_PROCESSOR,
+      useFactory: () => {
+        return (src: string): string => {
+          const myCustomPrefix = `icons::`
+
+          return src.startsWith(myCustomPrefix)
+            ? `assets/icons/${src.replace(myCustomPrefix, ``)}.svg`
+            : src
+        }
+      },
+    },
+  ],
 })
 export class ReportComponent implements OnInit {
   columns = [

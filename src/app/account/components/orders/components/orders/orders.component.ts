@@ -13,12 +13,27 @@ import {filter, map, Observable} from 'rxjs'
 import {CurrentUserInterface} from '../../../../../shared/types/current-user.interface'
 import {FilterInterface} from '../../types/filter.interface'
 import {OrderDetailsService} from '../order-details/services/order-details.service'
+import {TUI_SVG_SRC_PROCESSOR} from '@taiga-ui/core'
 
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    {
+      provide: TUI_SVG_SRC_PROCESSOR,
+      useFactory: () => {
+        return (src: string): string => {
+          const myCustomPrefix = `icons::`
+
+          return src.startsWith(myCustomPrefix)
+            ? `assets/icons/${src.replace(myCustomPrefix, ``)}.svg`
+            : src
+        }
+      },
+    },
+  ],
 })
 export class OrdersComponent implements OnInit {
   columns = [
