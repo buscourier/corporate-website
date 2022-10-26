@@ -84,8 +84,6 @@ export class EntityEditComponent implements OnInit {
   }
 
   initializeForm(): void {
-    console.log('this.profile', this.profile)
-
     this.form = this.fb.group({
       name: {
         value: this.profile.name.value,
