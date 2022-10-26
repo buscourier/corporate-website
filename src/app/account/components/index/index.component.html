@@ -13,7 +13,7 @@
           ></tui-svg>
         </div>
         <div class="basis-full">
-          <h2 class="mb-2 font-bold text-lg">Мои заявки</h2>
+          <h2 class="mb-2 font-bold text-lg">Мои заказы</h2>
           <p>Вы еще не создали ни одного отправления. <br /> Посмотрите историю ваших отправлений.</p>
         </div>
         <div class="hidden sm:flex items-center">
@@ -45,7 +45,7 @@
         </div>
       </div>
       <!-- item-3-->
-      <div class="flex mb-2 border-y border-gray-200 py-5 px-4 sm:py-9 sm:px-6 sm:space-x-13
+      <div [routerLink]="['report']" class="flex mb-2 border-y border-gray-200 py-5 px-4 sm:py-9 sm:px-6 sm:space-x-13
        md:px-8 md:border-x md:space-x-0 md:rounded-sm lg:pr-10 lg:pl-13 lg:space-x-13
        hover:border-yellow hover:cursor-pointer">
         <div class="hidden sm:block md:hidden lg:block">

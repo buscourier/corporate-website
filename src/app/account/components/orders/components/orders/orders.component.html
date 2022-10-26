@@ -6,7 +6,7 @@
   <span class="text-sm">Назад к личному кабинету</span>
 </a>
 <div class="pb-10 max-w-[1170px] mx-auto">
-  <h1 class="mb-8 px-4 text-2xl lg:text-3xl font-heading font-bold">Cформировать отчет</h1>
+  <h1 class="mb-8 px-4 text-2xl lg:text-3xl font-heading font-bold">Мои заказы</h1>
   <app-filter (filterChanged)="fetchDataWithFilterParams($event)"></app-filter>
   <ng-container *appLet="(orders$ | async) as orders">
     <div *ngIf="isLargeScreen; else mobileData" class="mb-7 flex flex-col">
