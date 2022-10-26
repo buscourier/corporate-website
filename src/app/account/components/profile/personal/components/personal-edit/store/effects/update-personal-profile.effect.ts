@@ -1,5 +1,5 @@
 import {Actions, createEffect, ofType} from '@ngrx/effects'
-import {Injectable} from '@angular/core'
+import {Inject, Injectable} from '@angular/core'
 import {
   updatePersonalProfileAction,
   updatePersonalProfileFailureAction,
@@ -8,15 +8,19 @@ import {
 import {catchError, map, of, switchMap} from 'rxjs'
 import {PersonalService} from '../../../../services/personal.service'
 import {PersonalProfileInterface} from '../../../../types/personal-profile.interface'
+import {tap} from 'rxjs/operators'
+import {TuiAlertService, TuiNotification} from '@taiga-ui/core'
 
 @Injectable()
 export class UpdatePersonalProfileEffect {
   constructor(
     private actions$: Actions,
+    @Inject(TuiAlertService)
+    private readonly alertService: TuiAlertService,
     private personalService: PersonalService
   ) {}
 
-  updatePersonalProfile = createEffect(() =>
+  updateProfile = createEffect(() =>
     this.actions$.pipe(
       ofType(updatePersonalProfileAction),
       switchMap(({currentUserId, profileInput}) => {
@@ -36,5 +40,37 @@ export class UpdatePersonalProfileEffect {
           )
       })
     )
+  )
+
+  afterSuccessUpdate$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(updatePersonalProfileSuccessAction),
+        tap(() => {
+          this.alertService
+            .open(`Данные успешно сохранены`, {
+              label: `Изменения данных!`,
+              status: TuiNotification.Success,
+            })
+            .subscribe()
+        })
+      ),
+    {dispatch: false}
+  )
+
+  afterFailureUpdate$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(updatePersonalProfileFailureAction),
+        tap(() => {
+          this.alertService
+            .open(`Ошибка сохранения данных`, {
+              label: `Изменения данных!`,
+              status: TuiNotification.Error,
+            })
+            .subscribe()
+        })
+      ),
+    {dispatch: false}
   )
 }

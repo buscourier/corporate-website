@@ -44,12 +44,7 @@ export class PersonalEditComponent implements OnInit {
     passport: '',
   })
 
-  constructor(
-    private store: Store,
-    private fb: FormBuilder,
-    @Inject(TuiAlertService)
-    private readonly alertService: TuiAlertService
-  ) {}
+  constructor(private store: Store, private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.fetchData()
@@ -119,12 +114,5 @@ export class PersonalEditComponent implements OnInit {
         profileInput,
       })
     )
-
-    this.alertService
-      .open(`Ошибка сохранения данных`, {
-        label: `Изменения данных!`,
-        // status: TuiNotification.Error,
-      })
-      .subscribe()
   }
 }

@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core'
 import {filter, map, Observable} from 'rxjs'
 import {FormBuilder, FormGroup} from '@angular/forms'
 import {Store} from '@ngrx/store'
-import {TuiAlertService} from '@taiga-ui/core'
+import {TuiAlertService, TuiNotification} from '@taiga-ui/core'
 import {currentUserSelector} from '../../../../../../auth/store/selectors'
 import {CurrentUserInterface} from '../../../../../../shared/types/current-user.interface'
 import {tap} from 'rxjs/operators'
@@ -43,12 +43,7 @@ export class EntityEditComponent implements OnInit {
     driver: '',
   })
 
-  constructor(
-    private store: Store,
-    private fb: FormBuilder,
-    @Inject(TuiAlertService)
-    private readonly alertService: TuiAlertService
-  ) {}
+  constructor(private store: Store, private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.fetchData()
@@ -139,12 +134,5 @@ export class EntityEditComponent implements OnInit {
         profileInput,
       })
     )
-
-    this.alertService
-      .open(`Ошибка сохранения данных`, {
-        label: `Изменения данных!`,
-        // status: TuiNotification.Error,
-      })
-      .subscribe()
   }
 }
