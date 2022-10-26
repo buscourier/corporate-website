@@ -84,18 +84,47 @@ export class EntityEditComponent implements OnInit {
   }
 
   initializeForm(): void {
+    console.log('this.profile', this.profile)
+
     this.form = this.fb.group({
-      name: this.profile.name.value,
-      contactperson: this.profile.contactperson.value,
-      phone: this.profile.phone.value,
-      inn: this.profile.inn.value,
-      kpp: this.profile.kpp.value,
-      ogrn: this.profile.ogrn.value,
-      bank: this.profile.bank.value,
-      rs: this.profile.rs.value,
-      ks: this.profile.ks.value,
-      contractNumber: this.profile.contractID.value,
-      contractDate: this.profile.contractDate.value,
+      name: {
+        value: this.profile.name.value,
+        disabled: this.profile.name.edit == 0,
+      },
+      contactperson: {
+        value: this.profile.contactperson.value,
+        disabled: this.profile.contactperson.edit == 0,
+      },
+      phone: {
+        value: this.profile.phone.value,
+        disabled: this.profile.phone.edit == 0,
+      },
+      inn: {
+        value: this.profile.inn.value,
+        disabled: this.profile.inn.edit == 0,
+      },
+      kpp: {
+        value: this.profile.kpp.value,
+        disabled: this.profile.kpp.edit == 0,
+      },
+      ogrn: {
+        value: this.profile.ogrn.value,
+        disabled: this.profile.ogrn.edit == 0,
+      },
+      bank: {
+        value: this.profile.bank.value,
+        disabled: this.profile.bank.edit == 0,
+      },
+      rs: {value: this.profile.rs.value, disabled: this.profile.rs.edit == 0},
+      ks: {value: this.profile.ks.value, disabled: this.profile.ks.edit == 0},
+      contractNumber: {
+        value: this.profile.contractID.value,
+        disabled: this.profile.contractID.edit == 0,
+      },
+      contractDate: {
+        value: this.profile.contractDate.value,
+        disabled: this.profile.contractDate.edit == 0,
+      },
       driver: '',
     })
   }

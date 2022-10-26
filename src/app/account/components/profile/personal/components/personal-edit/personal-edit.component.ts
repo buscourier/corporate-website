@@ -88,10 +88,22 @@ export class PersonalEditComponent implements OnInit {
 
   initializeForm(): void {
     this.form = this.fb.group({
-      fio: this.profile['contactperson'].value,
-      email: this.profile['email'].value,
-      phone: this.profile['phone'].value,
-      passport: this.profile['passport'].value,
+      fio: {
+        value: this.profile['contactperson'].value,
+        disabled: this.profile['contactperson'].edit == '0',
+      },
+      email: {
+        value: this.profile['email'].value,
+        disabled: this.profile['email'].edit == '0',
+      },
+      phone: {
+        value: this.profile['phone'].value,
+        disabled: this.profile['phone'].edit == '0',
+      },
+      passport: {
+        value: this.profile['passport'].value,
+        disabled: this.profile['passport'].edit == '0',
+      },
     })
   }
 
