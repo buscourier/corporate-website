@@ -1,0 +1,6 @@
+{
+  "babel": true,
+  "ts": {
+    "path": "./src/app"
+  }
+}
