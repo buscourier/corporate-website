@@ -2,12 +2,12 @@ import {Injectable} from '@angular/core'
 import {Actions, createEffect, ofType} from '@ngrx/effects'
 import {catchError, map, of, switchMap} from 'rxjs'
 import {EntityService} from '../../../../services/entity.service'
+import {EntityProfileInterface} from '../../../../types/entity-profile.interface'
 import {
   getEntityProfileAction,
   getEntityProfileFailureAction,
   getEntityProfileSuccessAction,
 } from '../actions/get-entity-profile.action'
-import {EntityProfileInterface} from '../../../../types/entity-profile.interface'
 
 @Injectable()
 export class GetEntityProfileEffect {

@@ -1,14 +1,14 @@
-import {NgModule} from '@angular/core'
 import {CommonModule} from '@angular/common'
-
-import {StoreModule} from '@ngrx/store'
+import {NgModule} from '@angular/core'
 import {EffectsModule} from '@ngrx/effects'
 
-import {reducer} from './store/reducer'
-import {GetOrderEffect} from './store/effects/get-order.effect'
-import {CancelOrderEffect} from './store/effects/cancel-order.effect'
-import {ORDER_DETAILS_PROVIDER} from './services/report-details.service'
+import {StoreModule} from '@ngrx/store'
 import {ReportDetailsComponent} from './components/report-details/report-details.component'
+import {ORDER_DETAILS_PROVIDER} from './services/report-details.service'
+import {CancelOrderEffect} from './store/effects/cancel-order.effect'
+import {GetOrderEffect} from './store/effects/get-order.effect'
+
+import {reducer} from './store/reducer'
 import {REPORT_DETAILS_FEATURE} from './store/state'
 
 @NgModule({

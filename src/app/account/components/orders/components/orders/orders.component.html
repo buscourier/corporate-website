@@ -156,6 +156,8 @@
       [index]="pageIndex"
       (indexChange)="goToPage($event)"
     ></tui-pagination>
-    <p *ngIf="!(isLoading$ | async) && !orders" class="text-xl text-gray-500 text-center">По указанным параметрам нет данных</p>
+    <ng-container *tuiLet="(isLoading$ | async) as isLoading ">
+      <p *ngIf="!isLoading && !orders" class="text-xl text-gray-500 text-center">По указанным параметрам нет данных</p>
+    </ng-container>
   </ng-container>
 </div>

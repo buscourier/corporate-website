@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core'
 import {HttpClient} from '@angular/common/http'
+import {Injectable} from '@angular/core'
 import {filter, map, Observable} from 'rxjs'
-import {PersonalProfileInterface} from '../types/personal-profile.interface'
-import {ProfileInterface} from '../../shared/types/profile.interface'
 import {environment} from '../../../../../../environments/environment'
+import {ProfileInterface} from '../../shared/types/profile.interface'
+import {PersonalProfileInterface} from '../types/personal-profile.interface'
 
 @Injectable()
 export class PersonalService {

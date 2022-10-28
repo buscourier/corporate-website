@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core'
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core'
 
 @Component({
   selector: 'app-mobile-data',
@@ -6,11 +6,7 @@ import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core'
   styleUrls: ['./mobile-data.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MobileDataComponent implements OnInit {
+export class MobileDataComponent {
   @Input('key') keyProps: string
   @Input('value') valueProps: string
-
-  constructor() {}
-
-  ngOnInit(): void {}
 }

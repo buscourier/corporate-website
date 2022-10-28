@@ -1,15 +1,15 @@
-import {Actions, createEffect, ofType} from '@ngrx/effects'
 import {Inject, Injectable} from '@angular/core'
+import {Actions, createEffect, ofType} from '@ngrx/effects'
+import {TuiAlertService, TuiNotification} from '@taiga-ui/core'
+import {catchError, map, of, switchMap} from 'rxjs'
+import {tap} from 'rxjs/operators'
+import {PersonalService} from '../../../../services/personal.service'
+import {PersonalProfileInterface} from '../../../../types/personal-profile.interface'
 import {
   updatePersonalProfileAction,
   updatePersonalProfileFailureAction,
   updatePersonalProfileSuccessAction,
 } from '../actions/update-personal-profile.action'
-import {catchError, map, of, switchMap} from 'rxjs'
-import {PersonalService} from '../../../../services/personal.service'
-import {PersonalProfileInterface} from '../../../../types/personal-profile.interface'
-import {tap} from 'rxjs/operators'
-import {TuiAlertService, TuiNotification} from '@taiga-ui/core'
 
 @Injectable()
 export class UpdatePersonalProfileEffect {

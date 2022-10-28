@@ -6,8 +6,8 @@ import {
   Router,
   RouterStateSnapshot,
 } from '@angular/router'
-import {map, Observable} from 'rxjs'
 import {Store} from '@ngrx/store'
+import {Observable} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {isLoggedInSelector} from '../../auth/store/selectors'
 import {LoginService} from '../components/login/services/login.service'

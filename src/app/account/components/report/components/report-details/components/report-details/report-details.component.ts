@@ -1,6 +1,6 @@
-import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core'
-import {POLYMORPHEUS_CONTEXT} from '@tinkoff/ng-polymorpheus'
+import {ChangeDetectionStrategy, Component, Inject} from '@angular/core'
 import {TuiDialog} from '@taiga-ui/cdk'
+import {POLYMORPHEUS_CONTEXT} from '@tinkoff/ng-polymorpheus'
 
 @Component({
   selector: 'app-order-details',

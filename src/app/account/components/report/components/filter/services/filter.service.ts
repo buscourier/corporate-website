@@ -1,9 +1,9 @@
 import {HttpClient} from '@angular/common/http'
 import {Injectable} from '@angular/core'
-import {StartCityInterface} from '../../../../../../shared/types/start-city.interface'
 import {Observable} from 'rxjs'
 import {EndCityInterface} from 'src/app/shared/types/end-city.interface'
 import {environment} from '../../../../../../../environments/environment'
+import {StartCityInterface} from '../../../../../../shared/types/start-city.interface'
 
 @Injectable()
 export class FilterService {

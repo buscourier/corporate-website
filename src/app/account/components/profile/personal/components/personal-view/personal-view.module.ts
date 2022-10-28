@@ -1,13 +1,12 @@
-import {NgModule} from '@angular/core'
 import {CommonModule} from '@angular/common'
-import {PersonalViewComponent} from './personal-view.component'
-import {HttpClientModule} from '@angular/common/http'
-import {StoreModule} from '@ngrx/store'
-import {reducer} from './store/reducer'
-import {EffectsModule} from '@ngrx/effects'
-import {GetPersonalProfileEffect} from './store/effects/get-personal-profile.effect'
-import {TuiButtonModule, TuiLoaderModule, TuiSvgModule} from '@taiga-ui/core'
+import {NgModule} from '@angular/core'
 import {RouterModule} from '@angular/router'
+import {EffectsModule} from '@ngrx/effects'
+import {StoreModule} from '@ngrx/store'
+import {TuiButtonModule, TuiLoaderModule, TuiSvgModule} from '@taiga-ui/core'
+import {PersonalViewComponent} from './personal-view.component'
+import {GetPersonalProfileEffect} from './store/effects/get-personal-profile.effect'
+import {reducer} from './store/reducer'
 
 @NgModule({
   declarations: [PersonalViewComponent],

@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core'
 import {Actions, createEffect, ofType} from '@ngrx/effects'
 import {catchError, map, of, switchMap} from 'rxjs'
-import {OrderDetailsInterface} from '../../types/order-details.interface'
-import {ReportService} from '../../../../services/report.service'
 import {
   getOrderDetailsFailureAction,
   getOrderDetailsSuccessAction,
 } from '../../../../../orders/components/order-details/store/actions/get-order-details.action'
+import {ReportService} from '../../../../services/report.service'
+import {OrderDetailsInterface} from '../../types/order-details.interface'
 import {getOrderAction} from '../actions/get-order.action'
 
 @Injectable()

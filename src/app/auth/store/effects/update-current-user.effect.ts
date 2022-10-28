@@ -1,14 +1,14 @@
+import {HttpErrorResponse} from '@angular/common/http'
 import {Injectable} from '@angular/core'
 import {Actions, createEffect, ofType} from '@ngrx/effects'
+import {catchError, map, of, switchMap} from 'rxjs'
+import {CurrentUserInterface} from '../../../shared/types/current-user.interface'
 import {AuthService} from '../../services/auth.service'
 import {
   updateCurrentUserAction,
   updateCurrentUserFailureAction,
   updateCurrentUserSuccessAction,
 } from '../actions/update-current-user.action'
-import {catchError, map, of, switchMap} from 'rxjs'
-import {CurrentUserInterface} from '../../../shared/types/current-user.interface'
-import {HttpErrorResponse} from '@angular/common/http'
 
 @Injectable()
 export class UpdateCurrentUserEffect {

@@ -1,24 +1,24 @@
-import {NgModule} from '@angular/core'
 import {CommonModule} from '@angular/common'
-import {EntityEditComponent} from './entity-edit.component'
+import {NgModule} from '@angular/core'
+import {ReactiveFormsModule} from '@angular/forms'
+import {RouterModule} from '@angular/router'
+import {EffectsModule} from '@ngrx/effects'
+import {StoreModule} from '@ngrx/store'
 import {
   TuiButtonModule,
   TuiErrorModule,
   TuiLabelModule,
   TuiLoaderModule,
-  TuiSvgModule,
   TuiNotificationModule,
+  TuiSvgModule,
   TuiTextfieldControllerModule,
 } from '@taiga-ui/core'
 import {TuiFieldErrorPipeModule, TuiInputModule} from '@taiga-ui/kit'
-import {StoreModule} from '@ngrx/store'
-import {EffectsModule} from '@ngrx/effects'
-import {EDIT_ENTITY_PROFILE_FEATURE} from './store/state'
-import {reducer} from './store/reducer'
+import {EntityEditComponent} from './entity-edit.component'
 import {GetEntityProfileEffect} from './store/effects/get-entity-profile.effect'
-import {ReactiveFormsModule} from '@angular/forms'
-import {RouterModule} from '@angular/router'
 import {UpdateEntityProfileEffect} from './store/effects/update-entity-profile.effect'
+import {reducer} from './store/reducer'
+import {EDIT_ENTITY_PROFILE_FEATURE} from './store/state'
 
 @NgModule({
   declarations: [EntityEditComponent],

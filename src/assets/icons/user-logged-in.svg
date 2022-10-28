@@ -1,6 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="2.5em" height="2.5em"><g id="user-logged-in" xmlns="http://www.w3.org/2000/svg">
             <svg x="50%" y="50%" width="2.5em" height="2.5em" overflow="visible" viewBox="0 0 40 40">
-                <svg x="-20" y="-20"><svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <svg x="-20" y="-20">
+                  <svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg">
     <!-- Generator: Sketch 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
     <title>Личный кабинет</title>
     <desc>Created with Sketch.</desc>

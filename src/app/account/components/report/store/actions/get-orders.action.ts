@@ -1,7 +1,7 @@
 import {createAction, props} from '@ngrx/store'
-import {ActionTypes} from '../action-types'
 import {OrderInterface} from '../../types/order.interface'
 import {ReportInputInterface} from '../../types/report-input.interface'
+import {ActionTypes} from '../action-types'
 
 export const getOrdersAction = createAction(
   ActionTypes.GET_ORDERS,

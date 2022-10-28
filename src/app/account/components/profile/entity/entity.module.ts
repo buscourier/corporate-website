@@ -1,8 +1,8 @@
-import {NgModule} from '@angular/core'
 import {CommonModule} from '@angular/common'
-import {EntityRoutingModule} from './entity-routing.module'
+import {NgModule} from '@angular/core'
 import {EntityEditModule} from './components/entity-edit/entity-edit.module'
 import {EntityViewModule} from './components/entity-view/entity-view.module'
+import {EntityRoutingModule} from './entity-routing.module'
 import {EntityService} from './services/entity.service'
 
 @NgModule({

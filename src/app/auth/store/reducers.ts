@@ -1,25 +1,24 @@
-import {AuthStateInterface} from '../types/auth-state.interface'
 import {Action, createReducer, on} from '@ngrx/store'
+import {AuthStateInterface} from '../types/auth-state.interface'
+import {clearValidationErrorsAction} from './actions/clear-validation-errors'
 import {
-  registerAction,
-  registerFailureAction,
-  registerSuccessAction,
-} from './actions/register.action'
-import {BackendErrorsInterface} from '../../shared/types/backend-errors.interface'
+  getCurrentUserAction,
+  getCurrentUserFailureAction,
+  getCurrentUserSuccessAction,
+} from './actions/get-current-user.action'
 import {
   loginAction,
   loginFailureAction,
   loginSuccessAction,
 } from './actions/login.action'
 import {
-  getCurrentUserAction,
-  getCurrentUserFailureAction,
-  getCurrentUserSuccessAction,
-} from './actions/get-current-user.action'
-import {updateCurrentUserSuccessAction} from './actions/update-current-user.action'
+  registerAction,
+  registerFailureAction,
+  registerSuccessAction,
+} from './actions/register.action'
 import {logoutAction} from './actions/sync.action'
+import {updateCurrentUserSuccessAction} from './actions/update-current-user.action'
 import {initialState} from './state'
-import {clearValidationErrorsAction} from './actions/clear-validation-errors'
 
 const authReducer = createReducer(
   initialState,

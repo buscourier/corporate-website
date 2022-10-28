@@ -1,10 +1,10 @@
+import {Action, createReducer, on} from '@ngrx/store'
+import {OrdersStateInterface} from '../types/orders-state.interface'
 import {
   getOrdersAction,
   getOrdersFailureAction,
   getOrdersSuccessAction,
 } from './actions/get-orders.action'
-import {OrdersStateInterface} from '../types/orders-state.interface'
-import {Action, createReducer, on} from '@ngrx/store'
 import {initialState} from './state'
 
 const ordersReducer = createReducer(

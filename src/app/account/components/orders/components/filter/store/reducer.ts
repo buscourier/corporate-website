@@ -1,17 +1,16 @@
 import {Action, createReducer, on} from '@ngrx/store'
-import {initialState} from './state'
-import {
-  getStartCitiesAction,
-  getStartCitiesFailureAction,
-  getStartCitiesSuccessAction,
-} from './actions/get-start-cities.action'
 import {FilterStateInterface} from '../types/filter-state.interface'
 import {
   getEndCitiesAction,
   getEndCitiesFailureAction,
   getEndCitiesSuccessAction,
 } from './actions/get-end-cities.action'
-import {OrdersStateInterface} from '../../../types/orders-state.interface'
+import {
+  getStartCitiesAction,
+  getStartCitiesFailureAction,
+  getStartCitiesSuccessAction,
+} from './actions/get-start-cities.action'
+import {initialState} from './state'
 
 const filterReducer = createReducer(
   initialState,

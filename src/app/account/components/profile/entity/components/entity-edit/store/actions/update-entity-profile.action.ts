@@ -1,6 +1,6 @@
 import {createAction, props} from '@ngrx/store'
-import {ActionTypes} from '../action-types'
 import {EntityProfileInterface} from '../../../../types/entity-profile.interface'
+import {ActionTypes} from '../action-types'
 
 export const updateEntityProfileAction = createAction(
   ActionTypes.UPDATE_ENTITY_PROFILE,

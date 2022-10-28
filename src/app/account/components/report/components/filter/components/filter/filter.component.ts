@@ -5,10 +5,16 @@ import {
   OnInit,
   Output,
 } from '@angular/core'
-import {filter, Observable, pairwise} from 'rxjs'
-import {StartCityInterface} from '../../../../../../../shared/types/start-city.interface'
-import {EndCityInterface} from '../../../../../../../shared/types/end-city.interface'
+import {FormBuilder} from '@angular/forms'
 import {Store} from '@ngrx/store'
+import {tuiItemsHandlersProvider} from '@taiga-ui/kit'
+import {Observable} from 'rxjs'
+import {tap} from 'rxjs/operators'
+import {STRINGIFY_CITIES} from '../../../../../../../shared/handlers/string-handlers'
+import {EndCityInterface} from '../../../../../../../shared/types/end-city.interface'
+import {StartCityInterface} from '../../../../../../../shared/types/start-city.interface'
+import {getEndCitiesAction} from '../../store/actions/get-end-cities.action'
+import {getStartCitiesAction} from '../../store/actions/get-start-cities.action'
 import {
   backendErrorsSelector,
   endCitiesSelector,
@@ -16,12 +22,6 @@ import {
   isStartCitiesLoadingSelector,
   startCitiesSelector,
 } from '../../store/selectors'
-import {getStartCitiesAction} from '../../store/actions/get-start-cities.action'
-import {FormBuilder} from '@angular/forms'
-import {getEndCitiesAction} from '../../store/actions/get-end-cities.action'
-import {tap} from 'rxjs/operators'
-import {tuiItemsHandlersProvider} from '@taiga-ui/kit'
-import {STRINGIFY_CITIES} from '../../../../../../../shared/handlers/string-handlers'
 
 @Component({
   selector: 'app-filter',

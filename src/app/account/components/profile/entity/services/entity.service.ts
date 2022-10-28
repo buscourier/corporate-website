@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core'
 import {HttpClient} from '@angular/common/http'
+import {Injectable} from '@angular/core'
 import {filter, map, Observable} from 'rxjs'
-import {EntityProfileInterface} from '../types/entity-profile.interface'
-import {ProfileInterface} from '../../shared/types/profile.interface'
 import {environment} from '../../../../../../environments/environment'
+import {ProfileInterface} from '../../shared/types/profile.interface'
+import {EntityProfileInterface} from '../types/entity-profile.interface'
 
 @Injectable()
 export class EntityService {

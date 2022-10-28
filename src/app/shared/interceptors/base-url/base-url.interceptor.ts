@@ -1,10 +1,10 @@
-import {Inject, Injectable} from '@angular/core'
 import {
-  HttpRequest,
-  HttpHandler,
   HttpEvent,
+  HttpHandler,
   HttpInterceptor,
+  HttpRequest,
 } from '@angular/common/http'
+import {Inject, Injectable} from '@angular/core'
 import {Observable} from 'rxjs'
 import {BASE_URL} from '../../tokens/base-url.token'
 

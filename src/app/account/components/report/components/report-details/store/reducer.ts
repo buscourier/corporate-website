@@ -1,16 +1,16 @@
 import {Action, createReducer, on} from '@ngrx/store'
-import {initialState} from './state'
-import {
-  getOrderAction,
-  getOrderFailureAction,
-  getOrderSuccessAction,
-} from './actions/get-order.action'
+import {ReportDetailsStateInterface} from '../types/report-details-state.interface'
 import {
   cancelOrderAction,
   cancelOrderFailureAction,
   cancelOrderSuccessAction,
 } from './actions/cancel-order.action'
-import {ReportDetailsStateInterface} from '../types/report-details-state.interface'
+import {
+  getOrderAction,
+  getOrderFailureAction,
+  getOrderSuccessAction,
+} from './actions/get-order.action'
+import {initialState} from './state'
 
 const detailsReducer = createReducer(
   initialState,

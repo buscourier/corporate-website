@@ -1,8 +1,8 @@
 import {createAction, props} from '@ngrx/store'
-import {ActionTypes} from '../action-types'
+import {BackendErrorsInterface} from '../../../shared/types/backend-errors.interface'
 import {CurrentUserInputInterface} from '../../../shared/types/current-user-input.interface'
 import {CurrentUserInterface} from '../../../shared/types/current-user.interface'
-import {BackendErrorsInterface} from '../../../shared/types/backend-errors.interface'
+import {ActionTypes} from '../action-types'
 
 export const updateCurrentUserAction = createAction(
   ActionTypes.UPDATE_CURRENT_USER,

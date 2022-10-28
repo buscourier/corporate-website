@@ -1,12 +1,12 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
-import {filter, map, Observable} from 'rxjs'
 import {Store} from '@ngrx/store'
+import {tuiLoaderOptionsProvider} from '@taiga-ui/core'
+import {filter, map, Observable} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {currentUserSelector} from '../../../../../../auth/store/selectors'
 import {CurrentUserInterface} from '../../../../../../shared/types/current-user.interface'
-import {tuiLoaderOptionsProvider} from '@taiga-ui/core'
-import {entityProfileSelector, isLoadingSelector} from './store/selectors'
 import {getEntityProfileAction} from './store/actions/get-entity-profile.action'
+import {entityProfileSelector, isLoadingSelector} from './store/selectors'
 
 @Component({
   selector: 'app-entity-view',

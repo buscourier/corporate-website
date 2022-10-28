@@ -1,11 +1,11 @@
 import {Action, createReducer, on} from '@ngrx/store'
-import {initialState} from './state'
 import {EntityProfileStateInterface} from '../types/entity-profile-state.interface'
 import {
   getEntityProfileAction,
   getEntityProfileFailureAction,
   getEntityProfileSuccessAction,
 } from './actions/get-entity-profile.action'
+import {initialState} from './state'
 
 const entityProfileReducer = createReducer(
   initialState,

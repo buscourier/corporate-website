@@ -1,9 +1,9 @@
 import {Component, Inject, OnInit} from '@angular/core'
-import {LoginService} from './auth/components/login/services/login.service'
 import {Store} from '@ngrx/store'
-import {isLoggedInSelector} from './auth/store/selectors'
 import {Observable} from 'rxjs'
+import {LoginService} from './auth/components/login/services/login.service'
 import {getCurrentUserAction} from './auth/store/actions/get-current-user.action'
+import {isLoggedInSelector} from './auth/store/selectors'
 
 @Component({
   selector: 'app-root',

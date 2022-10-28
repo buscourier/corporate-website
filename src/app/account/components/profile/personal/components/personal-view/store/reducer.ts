@@ -1,11 +1,11 @@
 import {Action, createReducer, on} from '@ngrx/store'
-import {initialState} from './state'
+import {PersonalProfileStateInterface} from '../types/personal-profile-state.interface'
 import {
   getPersonalProfileAction,
   getPersonalProfileFailureAction,
   getPersonalProfileSuccessAction,
 } from './actions/get-personal-profile.action'
-import {PersonalProfileStateInterface} from '../types/personal-profile-state.interface'
+import {initialState} from './state'
 
 const personalProfileReducer = createReducer(
   initialState,

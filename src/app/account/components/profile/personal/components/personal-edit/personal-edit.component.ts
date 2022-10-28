@@ -1,20 +1,19 @@
-import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core'
-import {filter, map, Observable} from 'rxjs'
-import {PersonalProfileInterface} from '../../types/personal-profile.interface'
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
+import {FormBuilder, FormGroup} from '@angular/forms'
 import {Store} from '@ngrx/store'
-import {getPersonalProfileAction} from './store/actions/get-personal-profile.action'
+import {TUI_VALIDATION_ERRORS} from '@taiga-ui/kit'
+import {filter, map, Observable} from 'rxjs'
+import {tap} from 'rxjs/operators'
 import {currentUserSelector} from '../../../../../../auth/store/selectors'
 import {CurrentUserInterface} from '../../../../../../shared/types/current-user.interface'
-import {tap} from 'rxjs/operators'
+import {PersonalProfileInterface} from '../../types/personal-profile.interface'
+import {getPersonalProfileAction} from './store/actions/get-personal-profile.action'
+import {updatePersonalProfileAction} from './store/actions/update-personal-profile.action'
 import {
   isLoadingSelector,
   isSubmittingSelector,
   personalProfileSelector,
 } from './store/selectors'
-import {FormBuilder, FormGroup} from '@angular/forms'
-import {TUI_VALIDATION_ERRORS} from '@taiga-ui/kit'
-import {TuiAlertService, TuiNotification} from '@taiga-ui/core'
-import {updatePersonalProfileAction} from './store/actions/update-personal-profile.action'
 
 @Component({
   selector: 'app-personal-edit',

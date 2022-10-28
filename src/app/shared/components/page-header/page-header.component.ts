@@ -8,24 +8,23 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core'
+import {Store} from '@ngrx/store'
+import {tuiPure} from '@taiga-ui/cdk'
 import {
-  TUI_ICONS_PATH,
   TUI_SVG_SRC_PROCESSOR,
   TuiDurationOptions,
   tuiHeightCollapse,
 } from '@taiga-ui/core'
-import nav from './nav'
-import {tuiPure} from '@taiga-ui/cdk'
-import {Store} from '@ngrx/store'
 import {Observable} from 'rxjs'
+import {LoginService} from '../../../auth/components/login/services/login.service'
+import {logoutAction} from '../../../auth/store/actions/sync.action'
 import {
   isAnonymousSelector,
   isLoggedInSelector,
 } from '../../../auth/store/selectors'
-import {LoginService} from '../../../auth/components/login/services/login.service'
-import {logoutAction} from '../../../auth/store/actions/sync.action'
-import {PersistenceService} from '../../services/persistence.service'
 import {fadeIn} from '../../animations/fade'
+import {PersistenceService} from '../../services/persistence.service'
+import nav from './nav'
 
 const MAPPER: Record<string, string> = {
   customPhoneIcon: 'phone',

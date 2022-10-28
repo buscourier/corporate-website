@@ -1,9 +1,9 @@
 import {HttpClient} from '@angular/common/http'
 import {Injectable} from '@angular/core'
-import {concatAll, tap, toArray} from 'rxjs/operators'
-import {OrderInterface} from '../types/order.interface'
 import {map, Observable} from 'rxjs'
+import {concatAll, toArray} from 'rxjs/operators'
 import {environment} from '../../../../../environments/environment'
+import {OrderInterface} from '../types/order.interface'
 import {ReportInputInterface} from '../types/report-input.interface'
 
 @Injectable()

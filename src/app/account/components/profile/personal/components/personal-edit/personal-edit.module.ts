@@ -1,11 +1,9 @@
-import {NgModule} from '@angular/core'
 import {CommonModule} from '@angular/common'
-import {PersonalEditComponent} from './personal-edit.component'
-import {StoreModule} from '@ngrx/store'
-import {EffectsModule} from '@ngrx/effects'
-import {reducer} from './store/reducer'
-import {GetPersonalProfileEffect} from './store/effects/get-personal-profile.effect'
+import {NgModule} from '@angular/core'
 import {ReactiveFormsModule} from '@angular/forms'
+import {RouterModule} from '@angular/router'
+import {EffectsModule} from '@ngrx/effects'
+import {StoreModule} from '@ngrx/store'
 import {
   TuiButtonModule,
   TuiErrorModule,
@@ -15,8 +13,10 @@ import {
   TuiTextfieldControllerModule,
 } from '@taiga-ui/core'
 import {TuiFieldErrorPipeModule, TuiInputModule} from '@taiga-ui/kit'
+import {PersonalEditComponent} from './personal-edit.component'
+import {GetPersonalProfileEffect} from './store/effects/get-personal-profile.effect'
 import {UpdatePersonalProfileEffect} from './store/effects/update-personal-profile.effect'
-import {RouterModule} from '@angular/router'
+import {reducer} from './store/reducer'
 
 @NgModule({
   declarations: [PersonalEditComponent],

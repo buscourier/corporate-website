@@ -1,14 +1,14 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
 import {FormBuilder, FormGroup, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
-import {registerAction} from '../../store/actions/register.action'
 import {Observable} from 'rxjs'
+import {BackendErrorsInterface} from '../../../shared/types/backend-errors.interface'
+import {registerAction} from '../../store/actions/register.action'
 import {
   isSubmittingSelector,
   validationErrorsSelector,
 } from '../../store/selectors'
 import {RegisterRequestInterface} from '../../types/register-request.interface'
-import {BackendErrorsInterface} from '../../../shared/types/backend-errors.interface'
 
 @Component({
   selector: 'app-register',

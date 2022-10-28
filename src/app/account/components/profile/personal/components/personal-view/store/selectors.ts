@@ -1,6 +1,6 @@
 import {createFeatureSelector, createSelector} from '@ngrx/store'
-import {PERSONAL_PROFILE_FEATURE} from './state'
 import {PersonalProfileStateInterface} from '../types/personal-profile-state.interface'
+import {PERSONAL_PROFILE_FEATURE} from './state'
 
 export const PersonalProfileFeatureSelector =
   createFeatureSelector<PersonalProfileStateInterface>(PERSONAL_PROFILE_FEATURE)

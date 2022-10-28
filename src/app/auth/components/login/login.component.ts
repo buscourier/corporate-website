@@ -6,8 +6,15 @@ import {
   OnInit,
 } from '@angular/core'
 import {FormBuilder, FormGroup, Validators} from '@angular/forms'
-import {Observable, Subscription} from 'rxjs'
 import {Store} from '@ngrx/store'
+import {TuiDialog} from '@taiga-ui/cdk'
+import {TUI_VALIDATION_ERRORS} from '@taiga-ui/kit'
+import {POLYMORPHEUS_CONTEXT} from '@tinkoff/ng-polymorpheus'
+import {Observable, Subscription} from 'rxjs'
+import {tap} from 'rxjs/operators'
+import {BackendErrorsInterface} from '../../../shared/types/backend-errors.interface'
+import {clearValidationErrorsAction} from '../../store/actions/clear-validation-errors'
+import {loginAction} from '../../store/actions/login.action'
 import {
   isLoadingSelector,
   isLoggedInSelector,
@@ -15,13 +22,6 @@ import {
   validationErrorsSelector,
 } from '../../store/selectors'
 import {LoginRequestInterface} from '../../types/login-request.interface'
-import {loginAction} from '../../store/actions/login.action'
-import {BackendErrorsInterface} from '../../../shared/types/backend-errors.interface'
-import {TuiDialog} from '@taiga-ui/cdk'
-import {POLYMORPHEUS_CONTEXT} from '@tinkoff/ng-polymorpheus'
-import {tap} from 'rxjs/operators'
-import {clearValidationErrorsAction} from '../../store/actions/clear-validation-errors'
-import {TUI_VALIDATION_ERRORS} from '@taiga-ui/kit'
 
 @Component({
   selector: 'app-login',

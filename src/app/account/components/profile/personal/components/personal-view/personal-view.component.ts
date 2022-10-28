@@ -1,12 +1,12 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
-import {filter, map, Observable} from 'rxjs'
 import {Store} from '@ngrx/store'
-import {getPersonalProfileAction} from './store/actions/get-personal-profile.action'
+import {tuiLoaderOptionsProvider} from '@taiga-ui/core'
+import {filter, map, Observable} from 'rxjs'
+import {tap} from 'rxjs/operators'
 import {currentUserSelector} from '../../../../../../auth/store/selectors'
 import {CurrentUserInterface} from '../../../../../../shared/types/current-user.interface'
+import {getPersonalProfileAction} from './store/actions/get-personal-profile.action'
 import {isLoadingSelector, personalProfileSelector} from './store/selectors'
-import {tuiLoaderOptionsProvider} from '@taiga-ui/core'
-import {tap} from 'rxjs/operators'
 
 @Component({
   selector: 'app-personal-view',

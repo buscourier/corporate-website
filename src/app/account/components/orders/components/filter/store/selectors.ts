@@ -1,6 +1,6 @@
 import {createFeatureSelector, createSelector} from '@ngrx/store'
-import {FILTER_FEATURE} from './state'
 import {FilterStateInterface} from '../types/filter-state.interface'
+import {FILTER_FEATURE} from './state'
 
 export const filterFeatureSelector =
   createFeatureSelector<FilterStateInterface>(FILTER_FEATURE)

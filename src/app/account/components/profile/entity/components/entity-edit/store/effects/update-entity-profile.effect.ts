@@ -1,15 +1,15 @@
-import {Actions, createEffect, ofType} from '@ngrx/effects'
 import {Inject, Injectable} from '@angular/core'
+import {Actions, createEffect, ofType} from '@ngrx/effects'
+import {TuiAlertService, TuiNotification} from '@taiga-ui/core'
 import {catchError, map, of, switchMap} from 'rxjs'
+import {tap} from 'rxjs/operators'
 import {EntityService} from '../../../../services/entity.service'
+import {EntityProfileInterface} from '../../../../types/entity-profile.interface'
 import {
   updateEntityProfileAction,
   updateEntityProfileFailureAction,
   updateEntityProfileSuccessAction,
 } from '../actions/update-entity-profile.action'
-import {EntityProfileInterface} from '../../../../types/entity-profile.interface'
-import {tap} from 'rxjs/operators'
-import {TuiAlertService, TuiNotification} from '@taiga-ui/core'
 
 @Injectable()
 export class UpdateEntityProfileEffect {

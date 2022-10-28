@@ -1,19 +1,18 @@
-import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core'
-import {filter, map, Observable} from 'rxjs'
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
 import {FormBuilder, FormGroup} from '@angular/forms'
 import {Store} from '@ngrx/store'
-import {TuiAlertService, TuiNotification} from '@taiga-ui/core'
+import {filter, map, Observable} from 'rxjs'
+import {tap} from 'rxjs/operators'
 import {currentUserSelector} from '../../../../../../auth/store/selectors'
 import {CurrentUserInterface} from '../../../../../../shared/types/current-user.interface'
-import {tap} from 'rxjs/operators'
 import {EntityProfileInterface} from '../../types/entity-profile.interface'
 import {getEntityProfileAction} from './store/actions/get-entity-profile.action'
+import {updateEntityProfileAction} from './store/actions/update-entity-profile.action'
 import {
   entityProfileSelector,
   isLoadingSelector,
   isSubmittingSelector,
 } from './store/selectors'
-import {updateEntityProfileAction} from './store/actions/update-entity-profile.action'
 
 @Component({
   selector: 'app-entity-edit',

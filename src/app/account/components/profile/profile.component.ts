@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
+import {ChangeDetectionStrategy, Component} from '@angular/core'
 import {TUI_SVG_SRC_PROCESSOR} from '@taiga-ui/core'
 
 @Component({

@@ -5,15 +5,15 @@ import {
   Inject,
   OnInit,
 } from '@angular/core'
-import {isLoadingSelector, ordersSelector} from '../../store/selectors'
-import {currentUserSelector} from '../../../../../auth/store/selectors'
 import {Store} from '@ngrx/store'
-import {getOrdersAction} from '../../store/actions/get-orders.action'
+import {TUI_SVG_SRC_PROCESSOR} from '@taiga-ui/core'
 import {filter, map, Observable} from 'rxjs'
+import {currentUserSelector} from '../../../../../auth/store/selectors'
 import {CurrentUserInterface} from '../../../../../shared/types/current-user.interface'
+import {getOrdersAction} from '../../store/actions/get-orders.action'
+import {isLoadingSelector, ordersSelector} from '../../store/selectors'
 import {FilterInterface} from '../../types/filter.interface'
 import {ReportDetailsService} from '../report-details/services/report-details.service'
-import {TUI_SVG_SRC_PROCESSOR} from '@taiga-ui/core'
 
 @Component({
   selector: 'app-report',

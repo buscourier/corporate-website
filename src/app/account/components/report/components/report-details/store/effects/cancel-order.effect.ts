@@ -1,14 +1,14 @@
 import {Inject, Injectable} from '@angular/core'
 import {Actions, createEffect, ofType} from '@ngrx/effects'
+import {TuiAlertService, TuiNotification} from '@taiga-ui/core'
 import {catchError, map, of, switchMap} from 'rxjs'
+import {tap} from 'rxjs/operators'
+import {ReportService} from '../../../../services/report.service'
 import {
   cancelOrderAction,
   cancelOrderFailureAction,
   cancelOrderSuccessAction,
 } from '../actions/cancel-order.action'
-import {ReportService} from '../../../../services/report.service'
-import {tap} from 'rxjs/operators'
-import {TuiAlertService, TuiNotification} from '@taiga-ui/core'
 
 @Injectable()
 export class CancelOrderEffect {

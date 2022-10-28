@@ -4,8 +4,8 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core'
-import {filter, Subject} from 'rxjs'
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router'
+import {filter, Subject} from 'rxjs'
 import {UtilsService} from '../../../../../../services/utils.service'
 
 @Component({
