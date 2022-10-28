@@ -1,14 +1,24 @@
-<a [routerLink]="['/account/profile/personal']" class="mb-6 flex items-center hover:opacity-70">
-  <tui-svg
-    src="icons::account-back"
-    class="!w-[32px] !h-[32px] mr-3"
-  ></tui-svg>
+<a
+  [routerLink]="['/account/profile/personal']"
+  class="mb-6 flex items-center hover:opacity-70"
+>
+  <tui-svg src="icons::account-back" class="mr-3 !h-[32px] !w-[32px]"></tui-svg>
   <span class="text-sm">Назад к личному кабинету</span>
 </a>
-<h1 class="mb-8 text-2xl sm:text-3xl font-heading font-bold">Персональные данные</h1>
-<form [formGroup]="form" (ngSubmit)="onSubmit()" class="md:max-w-[570px] grid grid-cols-2 gap-x-8 gap-y-4">
-  <label class="block col-span-2 sm:col-span-1">
-    <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >ФИО</span>
+<h1 class="mb-8 font-heading text-2xl font-bold sm:text-3xl">
+  Персональные данные
+</h1>
+<form
+  [formGroup]="form"
+  (ngSubmit)="onSubmit()"
+  class="grid grid-cols-2 gap-x-8 gap-y-4 md:max-w-[570px]"
+>
+  <label class="col-span-2 block sm:col-span-1">
+    <span
+      class="mb-1 inline-block text-xs"
+      [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'"
+      >ФИО</span
+    >
     <tui-input
       tuiTextfieldSize="m"
       formControlName="email"
@@ -16,18 +26,19 @@
       [class.tui-skeleton]="isLoading$ | async"
     >
       Нет данных
-      <input
-        tuiTextfield
-        type="text"
-      />
+      <input tuiTextfield type="text" />
     </tui-input>
     <tui-error
       formControlName="email"
       [error]="[] | tuiFieldError | async"
     ></tui-error>
   </label>
-  <label class="block col-span-2 sm:col-span-1">
-    <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >Email</span>
+  <label class="col-span-2 block sm:col-span-1">
+    <span
+      class="mb-1 inline-block text-xs"
+      [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'"
+      >Email</span
+    >
     <tui-input
       tuiTextfieldSize="m"
       formControlName="email"
@@ -35,18 +46,19 @@
       [class.tui-skeleton]="isLoading$ | async"
     >
       Нет данных
-      <input
-        tuiTextfield
-        type="text"
-      />
+      <input tuiTextfield type="text" />
     </tui-input>
     <tui-error
       formControlName="email"
       [error]="[] | tuiFieldError | async"
     ></tui-error>
   </label>
-  <label class="block mb-3 col-span-2 sm:col-span-1">
-    <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >Телефон</span>
+  <label class="col-span-2 mb-3 block sm:col-span-1">
+    <span
+      class="mb-1 inline-block text-xs"
+      [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'"
+      >Телефон</span
+    >
     <tui-input
       tuiTextfieldSize="m"
       formControlName="phone"
@@ -54,18 +66,19 @@
       [class.tui-skeleton]="isLoading$ | async"
     >
       Нет данных
-      <input
-        tuiTextfield
-        type="text"
-      />
+      <input tuiTextfield type="text" />
     </tui-input>
     <tui-error
       formControlName="phone"
       [error]="[] | tuiFieldError | async"
     ></tui-error>
   </label>
-  <label class="block mb-3 col-span-2 sm:col-span-1">
-    <span class="inline-block text-xs mb-1" [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'" >Паспорт</span>
+  <label class="col-span-2 mb-3 block sm:col-span-1">
+    <span
+      class="mb-1 inline-block text-xs"
+      [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'"
+      >Паспорт</span
+    >
     <tui-input
       tuiTextfieldSize="m"
       formControlName="passport"
@@ -73,21 +86,31 @@
       [class.tui-skeleton]="isLoading$ | async"
     >
       Нет данных
-      <input
-        tuiTextfield
-        type="text"
-      />
+      <input tuiTextfield type="text" />
     </tui-input>
     <tui-error
       formControlName="passport"
       [error]="[] | tuiFieldError | async"
     ></tui-error>
   </label>
-  <button tuiButton type="submit" [class.tui-skeleton]="isLoading$ | async"
-    size="m" [showLoader]="isSubmitting$ | async" class="mt-3 col-span-2 sm:col-span-1">
-    Сохранить изменения</button>
+  <button
+    tuiButton
+    type="submit"
+    [class.tui-skeleton]="isLoading$ | async"
+    size="m"
+    [showLoader]="isSubmitting$ | async"
+    class="col-span-2 mt-3 sm:col-span-1"
+  >
+    Сохранить изменения
+  </button>
 
-  <div class="h-[50px] flex col-span-2 sm:col-span-1 justify-center sm:justify-start sm:items-center sm:mt-3">
-    <a [routerLink]="['/account', 'profile', 'personal']" class="text-sm text-blue hover:text-blue-900">Отменить</a>
+  <div
+    class="col-span-2 flex h-[50px] justify-center sm:col-span-1 sm:mt-3 sm:items-center sm:justify-start"
+  >
+    <a
+      [routerLink]="['/account', 'profile', 'personal']"
+      class="text-sm text-blue hover:text-blue-900"
+      >Отменить</a
+    >
   </div>
 </form>

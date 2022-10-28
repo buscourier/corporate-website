@@ -1,352 +1,539 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>AngularTailwindStarter</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="preload" as="font" href="./assets/fonts/KelsonSans-Light.woff2" type="font/woff2" crossorigin="anonymous">
-  <link rel="preload" as="font" href="./assets/fonts/KelsonSans-Light.woff" type="font/woff" crossorigin="anonymous">
-  <link rel="preload" as="font" href="./assets/fonts/KelsonSans-Regular.woff2" type="font/woff2" crossorigin="anonymous">
-  <link rel="preload" as="font" href="./assets/fonts/KelsonSans-Regular.woff" type="font/woff" crossorigin="anonymous">
-  <link rel="preload" as="font" href="./assets/fonts/KelsonSans-Bold.woff2" type="font/woff2" crossorigin="anonymous">
-  <link rel="preload" as="font" href="./assets/fonts/KelsonSans-Bold.woff" type="font/woff" crossorigin="anonymous">
+  <head>
+    <meta charset="utf-8" />
+    <title>AngularTailwindStarter</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="preload"
+      as="font"
+      href="./assets/fonts/KelsonSans-Light.woff2"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      as="font"
+      href="./assets/fonts/KelsonSans-Light.woff"
+      type="font/woff"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      as="font"
+      href="./assets/fonts/KelsonSans-Regular.woff2"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      as="font"
+      href="./assets/fonts/KelsonSans-Regular.woff"
+      type="font/woff"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      as="font"
+      href="./assets/fonts/KelsonSans-Bold.woff2"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      as="font"
+      href="./assets/fonts/KelsonSans-Bold.woff"
+      type="font/woff"
+      crossorigin="anonymous"
+    />
 
-  <link rel="preload" as="font" href="./assets/fonts/Robotothin.woff" type="font/woff" crossorigin="anonymous">
-  <link rel="preload" as="font" href="./assets/fonts/Robotothinitalic.woff" type="font/woff" crossorigin="anonymous">
-  <link rel="preload" as="font" href="./assets/fonts/Robotothin.woff2" type="font/woff2" crossorigin="anonymous">
-  <link rel="preload" as="font" href="./assets/fonts/Robotothinitalic.woff2" type="font/woff2" crossorigin="anonymous">
-  <link rel="preload" as="font" href="./assets/fonts/Robotolight.woff" type="font/woff" crossorigin="anonymous">
-  <link rel="preload" as="font" href="./assets/fonts/Robotolightitalic.woff" type="font/woff" crossorigin="anonymous">
-  <link rel="preload" as="font" href="./assets/fonts/Robotolight.woff2" type="font/woff2" crossorigin="anonymous">
-  <link rel="preload" as="font" href="./assets/fonts/Robotolightitalic.woff2" type="font/woff2" crossorigin="anonymous">
-  <link rel="preload" as="font" href="./assets/fonts/Roboto.woff" type="font/woff" crossorigin="anonymous">
-  <link rel="preload" as="font" href="./assets/fonts/Robotoitalic.woff" type="font/woff" crossorigin="anonymous">
-  <link rel="preload" as="font" href="./assets/fonts/Roboto.woff2" type="font/woff2" crossorigin="anonymous">
-  <link rel="preload" as="font" href="./assets/fonts/Robotoitalic.woff2" type="font/woff2" crossorigin="anonymous">
-  <link rel="preload" as="font" href="./assets/fonts/Robotomedium.woff" type="font/woff" crossorigin="anonymous">
-  <link rel="preload" as="font" href="./assets/fonts/Robotomediumitalic.woff" type="font/woff" crossorigin="anonymous">
-  <link rel="preload" as="font" href="./assets/fonts/Robotomedium.woff2" type="font/woff2" crossorigin="anonymous">
-  <link rel="preload" as="font" href="./assets/fonts/Robotomediumitalic.woff2" type="font/woff2" crossorigin="anonymous">
-  <link rel="preload" as="font" href="./assets/fonts/Robotobold.woff" type="font/woff" crossorigin="anonymous">
-  <link rel="preload" as="font" href="./assets/fonts/Robotobolditalic.woff" type="font/woff" crossorigin="anonymous">
-  <link rel="preload" as="font" href="./assets/fonts/Robotobold.woff2" type="font/woff2" crossorigin="anonymous">
-  <link rel="preload" as="font" href="./assets/fonts/Robotobolditalic.woff2" type="font/woff2" crossorigin="anonymous">
-  <link rel="preload" as="font" href="./assets/fonts/Robotoblack.woff" type="font/woff" crossorigin="anonymous">
-  <link rel="preload" as="font" href="./assets/fonts/Robotoblackitalic.woff" type="font/woff" crossorigin="anonymous">
-  <link rel="preload" as="font" href="./assets/fonts/Robotoblack.woff2" type="font/woff2" crossorigin="anonymous">
-  <link rel="preload" as="font" href="./assets/fonts/Robotoblackitalic.woff2" type="font/woff2" crossorigin="anonymous">
+    <link
+      rel="preload"
+      as="font"
+      href="./assets/fonts/Robotothin.woff"
+      type="font/woff"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      as="font"
+      href="./assets/fonts/Robotothinitalic.woff"
+      type="font/woff"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      as="font"
+      href="./assets/fonts/Robotothin.woff2"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      as="font"
+      href="./assets/fonts/Robotothinitalic.woff2"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      as="font"
+      href="./assets/fonts/Robotolight.woff"
+      type="font/woff"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      as="font"
+      href="./assets/fonts/Robotolightitalic.woff"
+      type="font/woff"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      as="font"
+      href="./assets/fonts/Robotolight.woff2"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      as="font"
+      href="./assets/fonts/Robotolightitalic.woff2"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      as="font"
+      href="./assets/fonts/Roboto.woff"
+      type="font/woff"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      as="font"
+      href="./assets/fonts/Robotoitalic.woff"
+      type="font/woff"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      as="font"
+      href="./assets/fonts/Roboto.woff2"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      as="font"
+      href="./assets/fonts/Robotoitalic.woff2"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      as="font"
+      href="./assets/fonts/Robotomedium.woff"
+      type="font/woff"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      as="font"
+      href="./assets/fonts/Robotomediumitalic.woff"
+      type="font/woff"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      as="font"
+      href="./assets/fonts/Robotomedium.woff2"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      as="font"
+      href="./assets/fonts/Robotomediumitalic.woff2"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      as="font"
+      href="./assets/fonts/Robotobold.woff"
+      type="font/woff"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      as="font"
+      href="./assets/fonts/Robotobolditalic.woff"
+      type="font/woff"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      as="font"
+      href="./assets/fonts/Robotobold.woff2"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      as="font"
+      href="./assets/fonts/Robotobolditalic.woff2"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      as="font"
+      href="./assets/fonts/Robotoblack.woff"
+      type="font/woff"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      as="font"
+      href="./assets/fonts/Robotoblackitalic.woff"
+      type="font/woff"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      as="font"
+      href="./assets/fonts/Robotoblack.woff2"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      as="font"
+      href="./assets/fonts/Robotoblackitalic.woff2"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
 
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <style>
-    @font-face {
-      font-family: 'Kelson Sans';
-      src: local('Kelson Sans Light'), local('KelsonSans-Light'),
-      url('./assets/fonts/KelsonSans-Light.woff2') format('woff2'),
-      url('./assets/fonts/KelsonSans-Light.woff') format('woff');
-      font-weight: 300;
-      font-style: normal;
-      font-display: swap;
-    }
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <style>
+      @font-face {
+        font-family: 'Kelson Sans';
+        src: local('Kelson Sans Light'), local('KelsonSans-Light'),
+          url('./assets/fonts/KelsonSans-Light.woff2') format('woff2'),
+          url('./assets/fonts/KelsonSans-Light.woff') format('woff');
+        font-weight: 300;
+        font-style: normal;
+        font-display: swap;
+      }
 
-    @font-face {
-      font-family: 'Kelson Sans';
-      src: local('Kelson Sans Regular'), local('KelsonSans-Regular'),
-      url('./assets/fonts/KelsonSans-Regular.woff2') format('woff2'),
-      url('./assets/fonts/KelsonSans-Regular.woff') format('woff');
-      font-weight: 400;
-      font-style: normal;
-      font-display: swap;
-    }
+      @font-face {
+        font-family: 'Kelson Sans';
+        src: local('Kelson Sans Regular'), local('KelsonSans-Regular'),
+          url('./assets/fonts/KelsonSans-Regular.woff2') format('woff2'),
+          url('./assets/fonts/KelsonSans-Regular.woff') format('woff');
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+      }
 
-    @font-face {
-      font-family: 'Kelson Sans';
-      src: local('Kelson Sans Bold'), local('KelsonSans-Bold'),
-      url('./assets/fonts/KelsonSans-Bold.woff2') format('woff2'),
-      url('./assets/fonts/KelsonSans-Bold.woff') format('woff');
-      font-weight: 700;
-      font-style: normal;
-      font-display: swap;
-    }
+      @font-face {
+        font-family: 'Kelson Sans';
+        src: local('Kelson Sans Bold'), local('KelsonSans-Bold'),
+          url('./assets/fonts/KelsonSans-Bold.woff2') format('woff2'),
+          url('./assets/fonts/KelsonSans-Bold.woff') format('woff');
+        font-weight: 700;
+        font-style: normal;
+        font-display: swap;
+      }
 
-    @font-face {
-      font-family: 'TT Norms Pro';
-      src: local('TT Norms Pro Bold'), local('TTNormsPro-Bold'),
-      url('./assets/fonts/TTNormsPro-Bold.woff2') format('woff2'),
-      url('./assets/fonts/TTNormsPro-Bold.woff') format('woff');
-      font-weight: bold;
-      font-style: normal;
-      font-display: swap;
-    }
+      @font-face {
+        font-family: 'TT Norms Pro';
+        src: local('TT Norms Pro Bold'), local('TTNormsPro-Bold'),
+          url('./assets/fonts/TTNormsPro-Bold.woff2') format('woff2'),
+          url('./assets/fonts/TTNormsPro-Bold.woff') format('woff');
+        font-weight: bold;
+        font-style: normal;
+        font-display: swap;
+      }
 
-    @font-face {
-      font-family: 'TT Norms Pro';
-      src: local('TT Norms Pro ExtraBold Italic'), local('TTNormsPro-ExtraBoldItalic'),
-      url('./assets/fonts/TTNormsPro-ExtraBoldItalic.woff2') format('woff2'),
-      url('./assets/fonts/TTNormsPro-ExtraBoldItalic.woff') format('woff');
-      font-weight: 800;
-      font-style: italic;
-      font-display: swap;
-    }
+      @font-face {
+        font-family: 'TT Norms Pro';
+        src: local('TT Norms Pro ExtraBold Italic'),
+          local('TTNormsPro-ExtraBoldItalic'),
+          url('./assets/fonts/TTNormsPro-ExtraBoldItalic.woff2') format('woff2'),
+          url('./assets/fonts/TTNormsPro-ExtraBoldItalic.woff') format('woff');
+        font-weight: 800;
+        font-style: italic;
+        font-display: swap;
+      }
 
-    @font-face {
-      font-family: 'TT Norms Pro';
-      src: local('TT Norms Pro ExtraLight Italic'), local('TTNormsPro-ExtraLightItalic'),
-      url('./assets/fonts/TTNormsPro-ExtraLightItalic.woff2') format('woff2'),
-      url('./assets/fonts/TTNormsPro-ExtraLightItalic.woff') format('woff');
-      font-weight: 200;
-      font-style: italic;
-      font-display: swap;
-    }
+      @font-face {
+        font-family: 'TT Norms Pro';
+        src: local('TT Norms Pro ExtraLight Italic'),
+          local('TTNormsPro-ExtraLightItalic'),
+          url('./assets/fonts/TTNormsPro-ExtraLightItalic.woff2')
+            format('woff2'),
+          url('./assets/fonts/TTNormsPro-ExtraLightItalic.woff') format('woff');
+        font-weight: 200;
+        font-style: italic;
+        font-display: swap;
+      }
 
-    @font-face {
-      font-family: 'TT Norms Pro';
-      src: local('TT Norms Pro Thin'), local('TTNormsPro-Thin'),
-      url('./assets/fonts/TTNormsPro-Thin.woff2') format('woff2'),
-      url('./assets/fonts/TTNormsPro-Thin.woff') format('woff');
-      font-weight: 100;
-      font-style: normal;
-      font-display: swap;
-    }
+      @font-face {
+        font-family: 'TT Norms Pro';
+        src: local('TT Norms Pro Thin'), local('TTNormsPro-Thin'),
+          url('./assets/fonts/TTNormsPro-Thin.woff2') format('woff2'),
+          url('./assets/fonts/TTNormsPro-Thin.woff') format('woff');
+        font-weight: 100;
+        font-style: normal;
+        font-display: swap;
+      }
 
-    @font-face {
-      font-family: 'TT Norms Pro';
-      src: local('TT Norms Pro ExtraBold'), local('TTNormsPro-ExtraBold'),
-      url('./assets/fonts/TTNormsPro-ExtraBold.woff2') format('woff2'),
-      url('./assets/fonts/TTNormsPro-ExtraBold.woff') format('woff');
-      font-weight: 800;
-      font-style: normal;
-      font-display: swap;
-    }
+      @font-face {
+        font-family: 'TT Norms Pro';
+        src: local('TT Norms Pro ExtraBold'), local('TTNormsPro-ExtraBold'),
+          url('./assets/fonts/TTNormsPro-ExtraBold.woff2') format('woff2'),
+          url('./assets/fonts/TTNormsPro-ExtraBold.woff') format('woff');
+        font-weight: 800;
+        font-style: normal;
+        font-display: swap;
+      }
 
-    @font-face {
-      font-family: 'TT Norms Pro';
-      src: local('TT Norms Pro Regular'), local('TTNormsPro-Regular'),
-      url('./assets/fonts/TTNormsPro-Regular.woff2') format('woff2'),
-      url('./assets/fonts/TTNormsPro-Regular.woff') format('woff');
-      font-weight: normal;
-      font-style: normal;
-      font-display: swap;
-    }
+      @font-face {
+        font-family: 'TT Norms Pro';
+        src: local('TT Norms Pro Regular'), local('TTNormsPro-Regular'),
+          url('./assets/fonts/TTNormsPro-Regular.woff2') format('woff2'),
+          url('./assets/fonts/TTNormsPro-Regular.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+      }
 
-    @font-face {
-      font-family: 'TT Norms Pro';
-      src: local('TT Norms Pro Thin Italic'), local('TTNormsPro-ThinItalic'),
-      url('./assets/fonts/TTNormsPro-ThinItalic.woff2') format('woff2'),
-      url('./assets/fonts/TTNormsPro-ThinItalic.woff') format('woff');
-      font-weight: 100;
-      font-style: italic;
-      font-display: swap;
-    }
+      @font-face {
+        font-family: 'TT Norms Pro';
+        src: local('TT Norms Pro Thin Italic'), local('TTNormsPro-ThinItalic'),
+          url('./assets/fonts/TTNormsPro-ThinItalic.woff2') format('woff2'),
+          url('./assets/fonts/TTNormsPro-ThinItalic.woff') format('woff');
+        font-weight: 100;
+        font-style: italic;
+        font-display: swap;
+      }
 
-    @font-face {
-      font-family: 'TT Norms Pro';
-      src: local('TT Norms Pro Light'), local('TTNormsPro-Light'),
-      url('./assets/fonts/TTNormsPro-Light.woff2') format('woff2'),
-      url('./assets/fonts/TTNormsPro-Light.woff') format('woff');
-      font-weight: 300;
-      font-style: normal;
-      font-display: swap;
-    }
+      @font-face {
+        font-family: 'TT Norms Pro';
+        src: local('TT Norms Pro Light'), local('TTNormsPro-Light'),
+          url('./assets/fonts/TTNormsPro-Light.woff2') format('woff2'),
+          url('./assets/fonts/TTNormsPro-Light.woff') format('woff');
+        font-weight: 300;
+        font-style: normal;
+        font-display: swap;
+      }
 
-    @font-face {
-      font-family: 'TT Norms Pro';
-      src: local('TT Norms Pro Medium Italic'), local('TTNormsPro-MediumItalic'),
-      url('./assets/fonts/TTNormsPro-MediumItalic.woff2') format('woff2'),
-      url('./assets/fonts/TTNormsPro-MediumItalic.woff') format('woff');
-      font-weight: 500;
-      font-style: italic;
-      font-display: swap;
-    }
+      @font-face {
+        font-family: 'TT Norms Pro';
+        src: local('TT Norms Pro Medium Italic'),
+          local('TTNormsPro-MediumItalic'),
+          url('./assets/fonts/TTNormsPro-MediumItalic.woff2') format('woff2'),
+          url('./assets/fonts/TTNormsPro-MediumItalic.woff') format('woff');
+        font-weight: 500;
+        font-style: italic;
+        font-display: swap;
+      }
 
-    @font-face {
-      font-family: 'TT Norms Pro ExtraBlack';
-      src: local('TT Norms Pro ExtraBlack Italic'), local('TTNormsPro-ExtraBlackItalic'),
-      url('./assets/fonts/TTNormsPro-ExtraBlackItalic.woff2') format('woff2'),
-      url('./assets/fonts/TTNormsPro-ExtraBlackItalic.woff') format('woff');
-      font-weight: 900;
-      font-style: italic;
-      font-display: swap;
-    }
+      @font-face {
+        font-family: 'TT Norms Pro ExtraBlack';
+        src: local('TT Norms Pro ExtraBlack Italic'),
+          local('TTNormsPro-ExtraBlackItalic'),
+          url('./assets/fonts/TTNormsPro-ExtraBlackItalic.woff2')
+            format('woff2'),
+          url('./assets/fonts/TTNormsPro-ExtraBlackItalic.woff') format('woff');
+        font-weight: 900;
+        font-style: italic;
+        font-display: swap;
+      }
 
-    @font-face {
-      font-family: 'TT Norms Pro';
-      src: local('TT Norms Pro ExtraLight'), local('TTNormsPro-ExtraLight'),
-      url('./assets/fonts/TTNormsPro-ExtraLight.woff2') format('woff2'),
-      url('./assets/fonts/TTNormsPro-ExtraLight.woff') format('woff');
-      font-weight: 200;
-      font-style: normal;
-      font-display: swap;
-    }
+      @font-face {
+        font-family: 'TT Norms Pro';
+        src: local('TT Norms Pro ExtraLight'), local('TTNormsPro-ExtraLight'),
+          url('./assets/fonts/TTNormsPro-ExtraLight.woff2') format('woff2'),
+          url('./assets/fonts/TTNormsPro-ExtraLight.woff') format('woff');
+        font-weight: 200;
+        font-style: normal;
+        font-display: swap;
+      }
 
-    @font-face {
-      font-family: 'TT Norms Pro';
-      src: local('TT Norms Pro Light Italic'), local('TTNormsPro-LightItalic'),
-      url('./assets/fonts/TTNormsPro-LightItalic.woff2') format('woff2'),
-      url('./assets/fonts/TTNormsPro-LightItalic.woff') format('woff');
-      font-weight: 300;
-      font-style: italic;
-      font-display: swap;
-    }
+      @font-face {
+        font-family: 'TT Norms Pro';
+        src: local('TT Norms Pro Light Italic'), local('TTNormsPro-LightItalic'),
+          url('./assets/fonts/TTNormsPro-LightItalic.woff2') format('woff2'),
+          url('./assets/fonts/TTNormsPro-LightItalic.woff') format('woff');
+        font-weight: 300;
+        font-style: italic;
+        font-display: swap;
+      }
 
-    @font-face {
-      font-family: 'TT Norms Pro';
-      src: local('TT Norms Pro Medium'), local('TTNormsPro-Medium'),
-      url('./assets/fonts/TTNormsPro-Medium.woff2') format('woff2'),
-      url('./assets/fonts/TTNormsPro-Medium.woff') format('woff');
-      font-weight: 500;
-      font-style: normal;
-      font-display: swap;
-    }
+      @font-face {
+        font-family: 'TT Norms Pro';
+        src: local('TT Norms Pro Medium'), local('TTNormsPro-Medium'),
+          url('./assets/fonts/TTNormsPro-Medium.woff2') format('woff2'),
+          url('./assets/fonts/TTNormsPro-Medium.woff') format('woff');
+        font-weight: 500;
+        font-style: normal;
+        font-display: swap;
+      }
 
-    @font-face {
-      font-family: 'TT Norms Pro';
-      src: local('TT Norms Pro ExtraBlack'), local('TTNormsPro-ExtraBlack'),
-      url('./assets/fonts/TTNormsPro-ExtraBlack.woff2') format('woff2'),
-      url('./assets/fonts/TTNormsPro-ExtraBlack.woff') format('woff');
-      font-weight: 900;
-      font-style: normal;
-      font-display: swap;
-    }
+      @font-face {
+        font-family: 'TT Norms Pro';
+        src: local('TT Norms Pro ExtraBlack'), local('TTNormsPro-ExtraBlack'),
+          url('./assets/fonts/TTNormsPro-ExtraBlack.woff2') format('woff2'),
+          url('./assets/fonts/TTNormsPro-ExtraBlack.woff') format('woff');
+        font-weight: 900;
+        font-style: normal;
+        font-display: swap;
+      }
 
-    @font-face {
-      font-family: 'TT Norms Pro';
-      src: local('TT Norms Pro Bold Italic'), local('TTNormsPro-BoldItalic'),
-      url('./assets/fonts/TTNormsPro-BoldItalic.woff2') format('woff2'),
-      url('./assets/fonts/TTNormsPro-BoldItalic.woff') format('woff');
-      font-weight: bold;
-      font-style: italic;
-      font-display: swap;
-    }
+      @font-face {
+        font-family: 'TT Norms Pro';
+        src: local('TT Norms Pro Bold Italic'), local('TTNormsPro-BoldItalic'),
+          url('./assets/fonts/TTNormsPro-BoldItalic.woff2') format('woff2'),
+          url('./assets/fonts/TTNormsPro-BoldItalic.woff') format('woff');
+        font-weight: bold;
+        font-style: italic;
+        font-display: swap;
+      }
 
-    @font-face {
-      font-family: 'TT Norms Pro';
-      src: local('TT Norms Pro Black Italic'), local('TTNormsPro-BlackItalic'),
-      url('./assets/fonts/TTNormsPro-BlackItalic.woff2') format('woff2'),
-      url('./assets/fonts/TTNormsPro-BlackItalic.woff') format('woff');
-      font-weight: 900;
-      font-style: italic;
-      font-display: swap;
-    }
+      @font-face {
+        font-family: 'TT Norms Pro';
+        src: local('TT Norms Pro Black Italic'), local('TTNormsPro-BlackItalic'),
+          url('./assets/fonts/TTNormsPro-BlackItalic.woff2') format('woff2'),
+          url('./assets/fonts/TTNormsPro-BlackItalic.woff') format('woff');
+        font-weight: 900;
+        font-style: italic;
+        font-display: swap;
+      }
 
-    @font-face {
-      font-family: 'TT Norms Pro';
-      src: local('TT Norms Pro Black'), local('TTNormsPro-Black'),
-      url('./assets/fonts/TTNormsPro-Black.woff2') format('woff2'),
-      url('./assets/fonts/TTNormsPro-Black.woff') format('woff');
-      font-weight: 900;
-      font-style: normal;
-      font-display: swap;
-    }
+      @font-face {
+        font-family: 'TT Norms Pro';
+        src: local('TT Norms Pro Black'), local('TTNormsPro-Black'),
+          url('./assets/fonts/TTNormsPro-Black.woff2') format('woff2'),
+          url('./assets/fonts/TTNormsPro-Black.woff') format('woff');
+        font-weight: 900;
+        font-style: normal;
+        font-display: swap;
+      }
 
-    @font-face {
-      font-family: 'TT Norms Pro';
-      src: local('TT Norms Pro Italic'), local('TTNormsPro-Italic'),
-      url('./assets/fonts/TTNormsPro-Italic.woff2') format('woff2'),
-      url('./assets/fonts/TTNormsPro-Italic.woff') format('woff');
-      font-weight: normal;
-      font-style: italic;
-      font-display: swap;
-    }
+      @font-face {
+        font-family: 'TT Norms Pro';
+        src: local('TT Norms Pro Italic'), local('TTNormsPro-Italic'),
+          url('./assets/fonts/TTNormsPro-Italic.woff2') format('woff2'),
+          url('./assets/fonts/TTNormsPro-Italic.woff') format('woff');
+        font-weight: normal;
+        font-style: italic;
+        font-display: swap;
+      }
 
-    @font-face {
-      font-family: 'Roboto';
-      src: local('Roboto Thin'), local('Roboto-Thin'),
-      url('./assets/fonts/Robotothin.woff2') format('woff2'),
-      url('./assets/fonts/Robotothin.woff') format('woff');
-      font-weight: 100;
-      font-style: normal;
-    }
-    @font-face {
-      font-family: 'Roboto';
-      src: local('Roboto Thin Italic'), local('Roboto-ThinItalic'),
-      url('./assets/fonts/Robotothinitalic.woff2') format('woff2'), url('./assets/fonts/Robotothinitalic.woff') format('woff');
-      font-weight: 100;
-      font-style: italic;
-    }
-    @font-face {
-      font-family: 'Roboto';
-      src: local('Roboto Light'), local('Roboto-Light'),
-      url('./assets/fonts/Robotolight.woff2') format('woff2'), url('./assets/fonts/Robotolight.woff') format('woff');
-      font-weight: 300;
-      font-style: normal;
-    }
-    @font-face {
-      font-family: 'Roboto';
-      src: local('Roboto Light Italic'), local('Roboto-LightItalic'),
-      url('./assets/fonts/Robotolightitalic.woff2') format('woff2'), url('./assets/fonts/Robotolightitalic.woff') format('woff');
-      font-weight: 300;
-      font-style: italic;
-    }
-    @font-face {
-      font-family: 'Roboto';
-      src: local('Roboto'), local('Roboto-Regular'),
-      url('./assets/fonts/Roboto.woff2') format('woff2'),
-      url('./assets/fonts/Roboto.woff') format('woff');
-      font-weight: 400;
-      font-style: normal;
-    }
-    @font-face {
-      font-family: 'Roboto';
-      src: local('Roboto Italic'), local('Roboto-Italic'),
-      url('./assets/fonts/Robotoitalic.woff2') format('woff2'),
-      url('./assets/fonts/Robotoitalic.woff') format('woff');
-      font-weight: 400;
-      font-style: italic;
-    }
-    @font-face {
-      font-family: 'Roboto';
-      src: local('Roboto Medium'), local('Roboto-Medium'),
-      url('./assets/fonts/Robotomedium.woff2') format('woff2'),
-      url('./assets/fonts/Robotomedium.woff') format('woff');
-      font-weight: 500;
-      font-style: normal;
-    }
-    @font-face {
-      font-family: 'Roboto';
-      src: local('Roboto Medium Italic'),
-      local('Roboto-MediumItalic'),
-      url('./assets/fonts/Robotomediumitalic.woff2') format('woff2'),
-      url('./assets/fonts/Robotomediumitalic.woff') format('woff');
-      font-weight: 500;
-      font-style: italic;
-    }
-    @font-face {
-      font-family: 'Roboto';
-      src: local('Roboto Bold'), local('Roboto-Bold'),
-      url('./assets/fonts/Robotobold.woff2') format('woff2'),
-      url('./assets/fonts/Robotobold.woff') format('woff');
-      font-weight: 700;
-      font-style: normal;
-    }
-    @font-face {
-      font-family: 'Roboto';
-      src: local('Roboto Bold Italic'),
-      local('./assets/fonts/Roboto-BoldItalic'),
-      url('./assets/fonts/Robotobolditalic.woff2') format('woff2');
-      font-weight: 700;
-      font-style: italic;
-    }
-    @font-face {
-      font-family: 'Roboto';
-      src: local('Roboto Black'), local('Roboto-Black'),
-      url('./assets/fonts/Robotoblack.woff2') format('woff2'),
-      url('./assets/fonts/Robotoblack.woff') format('woff');
-      font-weight: 900;
-      font-style: normal;
-    }
-    @font-face {
-      font-family: 'Roboto';
-      src: local('Roboto Black Italic'),
-      local('Roboto-BlackItalic'), url('./assets/fonts/Robotoblackitalic.woff2') format('woff2'),
-      url('./assets/fonts/Robotoblackitalic.woff') format('woff');
-      font-weight: 900;
-      font-style: italic;
-    }
-
-  </style>
-</head>
-<body>
-  <app-root></app-root>
-</body>
+      @font-face {
+        font-family: 'Roboto';
+        src: local('Roboto Thin'), local('Roboto-Thin'),
+          url('./assets/fonts/Robotothin.woff2') format('woff2'),
+          url('./assets/fonts/Robotothin.woff') format('woff');
+        font-weight: 100;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: 'Roboto';
+        src: local('Roboto Thin Italic'), local('Roboto-ThinItalic'),
+          url('./assets/fonts/Robotothinitalic.woff2') format('woff2'),
+          url('./assets/fonts/Robotothinitalic.woff') format('woff');
+        font-weight: 100;
+        font-style: italic;
+      }
+      @font-face {
+        font-family: 'Roboto';
+        src: local('Roboto Light'), local('Roboto-Light'),
+          url('./assets/fonts/Robotolight.woff2') format('woff2'),
+          url('./assets/fonts/Robotolight.woff') format('woff');
+        font-weight: 300;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: 'Roboto';
+        src: local('Roboto Light Italic'), local('Roboto-LightItalic'),
+          url('./assets/fonts/Robotolightitalic.woff2') format('woff2'),
+          url('./assets/fonts/Robotolightitalic.woff') format('woff');
+        font-weight: 300;
+        font-style: italic;
+      }
+      @font-face {
+        font-family: 'Roboto';
+        src: local('Roboto'), local('Roboto-Regular'),
+          url('./assets/fonts/Roboto.woff2') format('woff2'),
+          url('./assets/fonts/Roboto.woff') format('woff');
+        font-weight: 400;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: 'Roboto';
+        src: local('Roboto Italic'), local('Roboto-Italic'),
+          url('./assets/fonts/Robotoitalic.woff2') format('woff2'),
+          url('./assets/fonts/Robotoitalic.woff') format('woff');
+        font-weight: 400;
+        font-style: italic;
+      }
+      @font-face {
+        font-family: 'Roboto';
+        src: local('Roboto Medium'), local('Roboto-Medium'),
+          url('./assets/fonts/Robotomedium.woff2') format('woff2'),
+          url('./assets/fonts/Robotomedium.woff') format('woff');
+        font-weight: 500;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: 'Roboto';
+        src: local('Roboto Medium Italic'), local('Roboto-MediumItalic'),
+          url('./assets/fonts/Robotomediumitalic.woff2') format('woff2'),
+          url('./assets/fonts/Robotomediumitalic.woff') format('woff');
+        font-weight: 500;
+        font-style: italic;
+      }
+      @font-face {
+        font-family: 'Roboto';
+        src: local('Roboto Bold'), local('Roboto-Bold'),
+          url('./assets/fonts/Robotobold.woff2') format('woff2'),
+          url('./assets/fonts/Robotobold.woff') format('woff');
+        font-weight: 700;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: 'Roboto';
+        src: local('Roboto Bold Italic'),
+          local('./assets/fonts/Roboto-BoldItalic'),
+          url('./assets/fonts/Robotobolditalic.woff2') format('woff2');
+        font-weight: 700;
+        font-style: italic;
+      }
+      @font-face {
+        font-family: 'Roboto';
+        src: local('Roboto Black'), local('Roboto-Black'),
+          url('./assets/fonts/Robotoblack.woff2') format('woff2'),
+          url('./assets/fonts/Robotoblack.woff') format('woff');
+        font-weight: 900;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: 'Roboto';
+        src: local('Roboto Black Italic'), local('Roboto-BlackItalic'),
+          url('./assets/fonts/Robotoblackitalic.woff2') format('woff2'),
+          url('./assets/fonts/Robotoblackitalic.woff') format('woff');
+        font-weight: 900;
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body>
+    <app-root></app-root>
+  </body>
 </html>

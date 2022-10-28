@@ -1,90 +1,111 @@
 <a [routerLink]="['/account']" class="mb-6 flex items-center hover:opacity-70">
-  <tui-svg
-    src="icons::account-back"
-    class="!w-[32px] !h-[32px] mr-3"
-  ></tui-svg>
+  <tui-svg src="icons::account-back" class="mr-3 !h-[32px] !w-[32px]"></tui-svg>
   <span class="text-sm">Назад к личному кабинету</span>
 </a>
-<h1 class="mb-8 text-2xl sm:text-3xl font-heading font-bold">Персональные данные</h1>
+<h1 class="mb-8 font-heading text-2xl font-bold sm:text-3xl">
+  Персональные данные
+</h1>
 <div class="max-w-[520px]">
   <tui-loader [showLoader]="isLoading$ | async">
-    <ng-container *ngIf="(profile$ | async) as profile">
-      <ul class="mb-8 pb-11 space-y-2 border-b border-gray-300">
-        <li class="flex justify-between items-baseline gap-1
-   after:basis-full after:h-1 after:border-b after:border-gray-500 after:order-2 after:border-dotted">
+    <ng-container *ngIf="profile$ | async as profile">
+      <ul class="mb-8 space-y-2 border-b border-gray-300 pb-11">
+        <li
+          class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
+        >
           <span class="order-1 flex-shrink-0">Логин:</span>
-          <span class="order-3 flex-shrink-0">{{profile.email.value}}</span>
+          <span class="order-3 flex-shrink-0">{{ profile.email.value }}</span>
         </li>
-        <li class="flex justify-between items-baseline gap-1
-   after:basis-full after:h-1 after:border-b after:border-gray-500 after:order-2 after:border-dotted">
+        <li
+          class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
+        >
           <span class="order-1 flex-shrink-0">Пароль:</span>
           <span class="order-3 flex-shrink-0">*********</span>
         </li>
       </ul>
-      <h2 class="text-lg font-heading font-bold">Данные организации</h2>
+      <h2 class="font-heading text-lg font-bold">Данные организации</h2>
       <ul class="mt-7 mb-8 space-y-2">
-        <li class="flex justify-between items-baseline gap-1
-   after:basis-full after:h-1 after:border-b after:border-gray-500 after:order-2 after:border-dotted">
+        <li
+          class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
+        >
           <span class="order-1 flex-shrink-0">Наименование организации:</span>
-          <span class="order-3 flex-shrink-0">{{profile.name.value}}</span>
+          <span class="order-3 flex-shrink-0">{{ profile.name.value }}</span>
         </li>
-        <li class="flex justify-between items-baseline gap-1
-   after:basis-full after:h-1 after:border-b after:border-gray-500 after:order-2 after:border-dotted">
+        <li
+          class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
+        >
           <span class="order-1 flex-shrink-0">Руководитель:</span>
-          <span class="order-3 flex-shrink-0">{{profile.contactperson.value}}</span>
+          <span class="order-3 flex-shrink-0">{{
+            profile.contactperson.value
+          }}</span>
         </li>
-        <li class="flex justify-between items-baseline gap-1
-   after:basis-full after:h-1 after:border-b after:border-gray-500 after:order-2 after:border-dotted">
+        <li
+          class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
+        >
           <span class="order-1 flex-shrink-0">Телефон:</span>
-          <span class="order-3 flex-shrink-0">{{profile.phone.value}}</span>
+          <span class="order-3 flex-shrink-0">{{ profile.phone.value }}</span>
         </li>
-        <li class="flex justify-between items-baseline gap-1
-   after:basis-full after:h-1 after:border-b after:border-gray-500 after:order-2 after:border-dotted">
+        <li
+          class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
+        >
           <span class="order-1 flex-shrink-0">ИНН:</span>
-          <span class="order-3 flex-shrink-0">{{profile.inn.value}}</span>
+          <span class="order-3 flex-shrink-0">{{ profile.inn.value }}</span>
         </li>
-        <li class="flex justify-between items-baseline gap-1
-   after:basis-full after:h-1 after:border-b after:border-gray-500 after:order-2 after:border-dotted">
+        <li
+          class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
+        >
           <span class="order-1 flex-shrink-0">КПП:</span>
-          <span class="order-3 flex-shrink-0">{{profile.kpp.value}}</span>
+          <span class="order-3 flex-shrink-0">{{ profile.kpp.value }}</span>
         </li>
-        <li class="flex justify-between items-baseline gap-1
-   after:basis-full after:h-1 after:border-b after:border-gray-500 after:order-2 after:border-dotted">
+        <li
+          class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
+        >
           <span class="order-1 flex-shrink-0">ОГРН:</span>
-          <span class="order-3 flex-shrink-0">{{profile.ogrn.value}}</span>
+          <span class="order-3 flex-shrink-0">{{ profile.ogrn.value }}</span>
         </li>
-        <li class="flex justify-between items-baseline gap-1
-   after:basis-full after:h-1 after:border-b after:border-gray-500 after:order-2 after:border-dotted">
+        <li
+          class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
+        >
           <span class="order-1 flex-shrink-0">Банк:</span>
-          <span class="order-3 flex-shrink-0">{{profile.bank.value}}</span>
+          <span class="order-3 flex-shrink-0">{{ profile.bank.value }}</span>
         </li>
-        <li class="flex justify-between items-baseline gap-1
-   after:basis-full after:h-1 after:border-b after:border-gray-500 after:order-2 after:border-dotted">
+        <li
+          class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
+        >
           <span class="order-1 flex-shrink-0">Р/с:</span>
-          <span class="order-3 flex-shrink-0">{{profile.rs.value}}</span>
+          <span class="order-3 flex-shrink-0">{{ profile.rs.value }}</span>
         </li>
-        <li class="flex justify-between items-baseline gap-1
-   after:basis-full after:h-1 after:border-b after:border-gray-500 after:order-2 after:border-dotted">
+        <li
+          class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
+        >
           <span class="order-1 flex-shrink-0">К/с:</span>
-          <span class="order-3 flex-shrink-0">{{profile.ks.value}}</span>
+          <span class="order-3 flex-shrink-0">{{ profile.ks.value }}</span>
         </li>
-        <li class="flex justify-between items-baseline gap-1
-   after:basis-full after:h-1 after:border-b after:border-gray-500 after:order-2 after:border-dotted">
+        <li
+          class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
+        >
           <span class="order-1 flex-shrink-0">№ договора:</span>
-          <span class="order-3 flex-shrink-0">{{profile.contractID.value}}</span>
+          <span class="order-3 flex-shrink-0">{{
+            profile.contractID.value
+          }}</span>
         </li>
-        <li class="flex justify-between items-baseline gap-1
-   after:basis-full after:h-1 after:border-b after:border-gray-500 after:order-2 after:border-dotted">
+        <li
+          class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
+        >
           <span class="order-1 flex-shrink-0">Дата договора:</span>
-          <span class="order-3 flex-shrink-0">{{profile.contractDate.value}}</span>
+          <span class="order-3 flex-shrink-0">{{
+            profile.contractDate.value
+          }}</span>
         </li>
-        <li class="flex justify-between items-baseline gap-1
-   after:basis-full after:h-1 after:border-b after:border-gray-500 after:order-2 after:border-dotted">
+        <li
+          class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
+        >
           <span class="order-1 flex-shrink-0">Перевозчик:</span>
           <span class="order-3 flex-shrink-0">Нет данных</span>
         </li>
       </ul>
-      <button [routerLink]="['edit']" tuiButton type="button" size="m">Изменить данные</button>
+      <button [routerLink]="['edit']" tuiButton type="button" size="m">
+        Изменить данные
+      </button>
     </ng-container>
   </tui-loader>
 </div>

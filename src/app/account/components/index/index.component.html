@@ -1,89 +1,80 @@
-<div class="mt-16 mx-auto max-w-[1170px] md:px-4">
-  <h1 class="mb-10 px-4 md:px-0 text-2xl mg:text-3xl font-bold">Личный кабинет</h1>
+<div class="mx-auto mt-16 max-w-[1170px] md:px-4">
+  <h1 class="mg:text-3xl mb-10 px-4 text-2xl font-bold md:px-0">
+    Личный кабинет
+  </h1>
   <div class="flex flex-col md:flex-row md:space-x-10 lg:space-x-13">
-    <div class="order-2 md:order-1 flex-grow">
+    <div class="order-2 flex-grow md:order-1">
       <!-- item-1-->
-      <div [routerLink]="['orders']" class="flex mb-2 border-y border-gray-200 py-5 px-4 sm:py-9 sm:px-6 sm:space-x-13
-       md:px-8 md:border-x md:space-x-0 md:rounded-sm lg:pr-10 lg:pl-13 lg:space-x-13
-       hover:border-yellow hover:cursor-pointer">
+      <div
+        [routerLink]="['orders']"
+        class="mb-2 flex border-y border-gray-200 py-5 px-4 hover:cursor-pointer hover:border-yellow sm:space-x-13 sm:py-9 sm:px-6 md:space-x-0 md:rounded-sm md:border-x md:px-8 lg:space-x-13 lg:pr-10 lg:pl-13"
+      >
         <div class="hidden sm:block md:hidden lg:block">
-          <tui-svg
-            src="icons::catalog"
-            class="!w-[68px] !h-[53px]"
-          ></tui-svg>
+          <tui-svg src="icons::catalog" class="!h-[53px] !w-[68px]"></tui-svg>
         </div>
         <div class="basis-full">
-          <h2 class="mb-2 font-bold text-lg">Мои заказы</h2>
-          <p>Вы еще не создали ни одного отправления. <br /> Посмотрите историю ваших отправлений.</p>
+          <h2 class="mb-2 text-lg font-bold">Мои заказы</h2>
+          <p>
+            Вы еще не создали ни одного отправления. <br />
+            Посмотрите историю ваших отправлений.
+          </p>
         </div>
-        <div class="hidden sm:flex items-center">
+        <div class="hidden items-center sm:flex">
           <tui-svg
             src="icons::caret-right"
-            class="!w-[13px] !h-[26px]"
+            class="!h-[26px] !w-[13px]"
           ></tui-svg>
         </div>
       </div>
       <!-- item-2-->
-      <div [routerLink]="['profile', 'entity']" class="flex mb-2 border-y border-gray-200 py-5 px-4 sm:py-9 sm:px-6 sm:space-x-13
-       md:px-8 md:border-x md:space-x-0 md:rounded-sm lg:pr-10 lg:pl-13 lg:space-x-13
-       hover:border-yellow hover:cursor-pointer">
+      <div
+        [routerLink]="['profile', 'entity']"
+        class="mb-2 flex border-y border-gray-200 py-5 px-4 hover:cursor-pointer hover:border-yellow sm:space-x-13 sm:py-9 sm:px-6 md:space-x-0 md:rounded-sm md:border-x md:px-8 lg:space-x-13 lg:pr-10 lg:pl-13"
+      >
         <div class="hidden sm:block md:hidden lg:block">
-          <tui-svg
-            src="icons::profile"
-            class="!w-[65px] !h-[54px]"
-          ></tui-svg>
+          <tui-svg src="icons::profile" class="!h-[54px] !w-[65px]"></tui-svg>
         </div>
         <div class="basis-full">
-          <h2 class="mb-2 font-bold text-lg">Персональные данные</h2>
+          <h2 class="mb-2 text-lg font-bold">Персональные данные</h2>
           <p>Данные вашего личного кабинета и платежного лица.</p>
         </div>
-        <div class="hidden sm:flex items-center">
+        <div class="hidden items-center sm:flex">
           <tui-svg
             src="icons::caret-right"
-            class="!w-[13px] !h-[26px]"
+            class="!h-[26px] !w-[13px]"
           ></tui-svg>
         </div>
       </div>
       <!-- item-3-->
-      <div [routerLink]="['report']" class="flex mb-2 border-y border-gray-200 py-5 px-4 sm:py-9 sm:px-6 sm:space-x-13
-       md:px-8 md:border-x md:space-x-0 md:rounded-sm lg:pr-10 lg:pl-13 lg:space-x-13
-       hover:border-yellow hover:cursor-pointer">
+      <div
+        [routerLink]="['report']"
+        class="mb-2 flex border-y border-gray-200 py-5 px-4 hover:cursor-pointer hover:border-yellow sm:space-x-13 sm:py-9 sm:px-6 md:space-x-0 md:rounded-sm md:border-x md:px-8 lg:space-x-13 lg:pr-10 lg:pl-13"
+      >
         <div class="hidden sm:block md:hidden lg:block">
-          <tui-svg
-            src="icons::report"
-            class="!w-[48px] !h-[53px]"
-          ></tui-svg>
+          <tui-svg src="icons::report" class="!h-[53px] !w-[48px]"></tui-svg>
         </div>
         <div class="basis-full">
-          <h2 class="mb-2 font-bold text-lg">Сформировать отчет</h2>
+          <h2 class="mb-2 text-lg font-bold">Сформировать отчет</h2>
           <p>Удобное формирование отчета с применением фильтров.</p>
         </div>
-        <div class="hidden sm:flex items-center">
+        <div class="hidden items-center sm:flex">
           <tui-svg
             src="icons::caret-right"
-            class="!w-[13px] !h-[26px]"
+            class="!h-[26px] !w-[13px]"
           ></tui-svg>
         </div>
       </div>
     </div>
     <!-- aside-->
-    <div class="flex flex-col items-start flex-shrink-0 order-1 mb-8 md:mb-0 px-4 md:px-0">
-      <button
-        tuiButton
-        type="button"
-        class="w-[270px] mb-7"
-        size="m"
-      >
+    <div
+      class="order-1 mb-8 flex flex-shrink-0 flex-col items-start px-4 md:mb-0 md:px-0"
+    >
+      <button tuiButton type="button" class="mb-7 w-[270px]" size="m">
         Оформить заказ
       </button>
       <a href="#" class="space-x-1 md:text-xs lg:text-base">
-        <span>
-          Выйти из личного кабинета
-        </span>
-        <tui-svg
-          src="icons::logout"
-          class="!w-[27px] !h-[27px]"
-        ></tui-svg>
+        <span> Выйти из личного кабинета </span>
+        <tui-svg src="icons::logout" class="!h-[27px] !w-[27px]"></tui-svg>
       </a>
     </div>
   </div>

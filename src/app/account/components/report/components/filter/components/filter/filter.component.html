@@ -1,21 +1,26 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()" class="mb-8 md:mb-9 flex flex-col items-bottom gap-4 px-4
- sm:flex-row sm:flex-wrap lg:flex-nowrap lg:mb-20 lg:pt-4 lg:pr-7 lg:pb-9 lg:pl-10 lg:shadow-md">
-  <label class="flex-grow sm:basis-[48%] lg:basis-1/4 lg:shrink-1">
-    <span class="inline-block text-xs text-gray-500 mb-1">Период:</span>
+<form
+  [formGroup]="form"
+  (ngSubmit)="onSubmit()"
+  class="items-bottom mb-8 flex flex-col gap-4 px-4 sm:flex-row sm:flex-wrap md:mb-9 lg:mb-20 lg:flex-nowrap lg:pt-4 lg:pr-7 lg:pb-9 lg:pl-10 lg:shadow-md"
+>
+  <label class="lg:shrink-1 flex-grow sm:basis-[48%] lg:basis-1/4">
+    <span class="mb-1 inline-block text-xs text-gray-500">Период:</span>
     <tui-input-date-range
       tuiUnfinishedValidator="Заполните данные"
       formControlName="range"
       tuiTextfieldSize="m"
       [tuiTextfieldLabelOutside]="true"
     >
-      <input
-        tuiTextfield
-        placeholder="От - до"
-      />
+      <input tuiTextfield placeholder="От - до" />
     </tui-input-date-range>
   </label>
-  <label class="sm:basis-[48%] flex-grow xl:flex-grow-0 lg:basis-1/4 lg:shrink-2" *appLet="(startCities$ | async) as startCites">
-    <span class="inline-block text-xs text-gray-500 mb-1">Город отправления:</span>
+  <label
+    class="lg:shrink-2 flex-grow sm:basis-[48%] lg:basis-1/4 xl:flex-grow-0"
+    *appLet="startCities$ | async as startCites"
+  >
+    <span class="mb-1 inline-block text-xs text-gray-500"
+      >Город отправления:</span
+    >
     <tui-loader [showLoader]="isStartCitiesLoading$ | async">
       <tui-select
         tuiTextfieldSize="m"
@@ -30,8 +35,13 @@
       </tui-select>
     </tui-loader>
   </label>
-  <label class="sm:basis-[48%] flex-grow lg:flex-grow-0 lg:basis-1/4 lg:shrink-2" *appLet="(endCities$ | async) as endCites">
-    <span class="inline-block text-xs text-gray-500 mb-1">Город получения:</span>
+  <label
+    class="lg:shrink-2 flex-grow sm:basis-[48%] lg:flex-grow-0 lg:basis-1/4"
+    *appLet="endCities$ | async as endCites"
+  >
+    <span class="mb-1 inline-block text-xs text-gray-500"
+      >Город получения:</span
+    >
     <tui-loader [showLoader]="isEndCitiesLoading$ | async">
       <tui-select
         tuiTextfieldSize="m"
@@ -51,7 +61,7 @@
     type="submit"
     [showLoader]="false"
     size="m"
-    class="sm:basis-[48%] flex-grow lg:flex-grow-0 lg:basis-[210px] sm:mt-auto"
+    class="flex-grow sm:mt-auto sm:basis-[48%] lg:flex-grow-0 lg:basis-[210px]"
   >
     Показать
   </button>

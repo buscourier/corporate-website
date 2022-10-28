@@ -1,6 +1,6 @@
 @layer base {
   body {
     font: unset;
-    @apply font-base font-normal text-base text-gray;
+    @apply font-base text-base font-normal text-gray;
   }
 }
