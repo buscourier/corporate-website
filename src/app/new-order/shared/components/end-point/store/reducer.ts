@@ -6,15 +6,15 @@ import {
   getCitiesSuccessAction,
 } from './actions/get-cities.action'
 import {
-  getOfficeFailureAction,
   getOfficesAction,
+  getOfficesFailureAction,
   getOfficesSuccessAction,
 } from './actions/get-offices.action'
-import {setCityAction} from './actions/set-city.action'
-import {initialState} from './state'
-import {setOfficeAction} from './actions/set-office.action'
-import {setBusAction} from './actions/set-bus.action'
 import {setActiveTabAction} from './actions/set-active-tab.action'
+import {setBusAction} from './actions/set-bus.action'
+import {setCityAction} from './actions/set-city.action'
+import {setOfficeAction} from './actions/set-office.action'
+import {initialState} from './state'
 
 const endPointReducer = createReducer(
   initialState,
@@ -41,7 +41,7 @@ const endPointReducer = createReducer(
     isOfficesLoading: false,
     offices,
   })),
-  on(getOfficeFailureAction, (state: EndPointStateInterface, {error}) => ({
+  on(getOfficesFailureAction, (state: EndPointStateInterface, {error}) => ({
     ...state,
     isOfficesLoading: false,
     // backendErrors: errors,

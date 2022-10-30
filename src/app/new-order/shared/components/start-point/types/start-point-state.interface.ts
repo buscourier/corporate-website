@@ -5,6 +5,8 @@ import {CourierInterface} from '../../../types/courier.interface'
 export interface StartPointStateInterface {
   isCitiesLoading: boolean
   isOfficesLoading: boolean
+  cities: StartCityInterface[] | null
+  offices: OfficeInterface[] | null
   city: StartCityInterface | null
   give: OfficeInterface | null
   pickup: CourierInterface | null

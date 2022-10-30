@@ -4,5 +4,5 @@ import {ActionTypes} from '../action-types'
 
 export const setCourierAction = createAction(
   ActionTypes.SET_COURIER,
-  props<{courier: CourierInterface}>()
+  props<{pickup: CourierInterface}>()
 )

@@ -5,6 +5,8 @@ export const START_POINT_FEATURE = 'startPoint'
 export const initialState: StartPointStateInterface = {
   isCitiesLoading: false,
   isOfficesLoading: false,
+  cities: null,
+  offices: null,
   city: null,
   give: null,
   pickup: null,

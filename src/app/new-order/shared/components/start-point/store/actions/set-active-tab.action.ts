@@ -3,7 +3,7 @@ import {OfficeInterface} from '../../../../../../shared/types/office.interface'
 import {CourierInterface} from '../../../../types/courier.interface'
 import {ActionTypes} from '../action-types'
 
-export const setActiveTab = createAction(
+export const setActiveTabAction = createAction(
   ActionTypes.SET_ACTIVE_TAB,
-  props<{data: OfficeInterface | CourierInterface}>()
+  props<{activeTab: OfficeInterface | CourierInterface}>()
 )

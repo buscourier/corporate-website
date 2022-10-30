@@ -4,5 +4,5 @@ import {ActionTypes} from '../action-types'
 
 export const setOfficeAction = createAction(
   ActionTypes.SET_OFFICE,
-  props<{office: OfficeInterface}>()
+  props<{give: OfficeInterface}>()
 )
