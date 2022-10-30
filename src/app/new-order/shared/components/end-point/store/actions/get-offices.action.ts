@@ -9,7 +9,7 @@ export const getOfficesSuccessAction = createAction(
   props<{offices: OfficeInterface[]}>()
 )
 
-export const getOfficeFailureAction = createAction(
+export const getOfficesFailureAction = createAction(
   ActionTypes.GET_OFFICES_FAILURE,
   props<{error: string}>()
 )

@@ -5,8 +5,10 @@ export const END_POINT_FEATURE = 'endPoint'
 export const initialState: EndPointStateInterface = {
   isCitiesLoading: false,
   isOfficesLoading: false,
+  cities: null,
+  offices: null,
   city: null,
   get: null,
-  bus: null,
+  isBus: false,
   activeTab: null,
 }

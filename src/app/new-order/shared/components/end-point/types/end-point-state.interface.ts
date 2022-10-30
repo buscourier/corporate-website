@@ -4,8 +4,10 @@ import {OfficeInterface} from '../../../../../shared/types/office.interface'
 export interface EndPointStateInterface {
   isCitiesLoading: boolean
   isOfficesLoading: boolean
+  cities: EndCityInterface[]
+  offices: OfficeInterface[]
   city: EndCityInterface | null
   get: OfficeInterface | null
-  bus: string | null
+  isBus: boolean
   activeTab: OfficeInterface | string | null
 }

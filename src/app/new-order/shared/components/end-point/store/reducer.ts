@@ -1,4 +1,4 @@
-import {createReducer, on} from '@ngrx/store'
+import {Action, createReducer, on} from '@ngrx/store'
 import {EndPointStateInterface} from '../types/end-point-state.interface'
 import {
   getCitiesAction,
@@ -12,8 +12,11 @@ import {
 } from './actions/get-offices.action'
 import {setCityAction} from './actions/set-city.action'
 import {initialState} from './state'
+import {setOfficeAction} from './actions/set-office.action'
+import {setBusAction} from './actions/set-bus.action'
+import {setActiveTabAction} from './actions/set-active-tab.action'
 
-const reducer = createReducer(
+const endPointReducer = createReducer(
   initialState,
   on(getCitiesAction, (state: EndPointStateInterface) => ({
     ...state,
@@ -46,5 +49,21 @@ const reducer = createReducer(
   on(setCityAction, (state: EndPointStateInterface, {city}) => ({
     ...state,
     city,
+  })),
+  on(setOfficeAction, (state: EndPointStateInterface, {get}) => ({
+    ...state,
+    get,
+  })),
+  on(setBusAction, (state: EndPointStateInterface, {isBus}) => ({
+    ...state,
+    isBus,
+  })),
+  on(setActiveTabAction, (state: EndPointStateInterface, {activeTab}) => ({
+    ...state,
+    activeTab,
   }))
 )
+
+export function reducer(state: EndPointStateInterface, action: Action) {
+  return endPointReducer(state, action)
+}
