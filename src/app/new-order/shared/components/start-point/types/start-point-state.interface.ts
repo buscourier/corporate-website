@@ -11,5 +11,5 @@ export interface StartPointStateInterface {
   give: OfficeInterface | null
   pickup: CourierInterface | null
   date: string | null
-  activeTab: OfficeInterface | CourierInterface | null
+  activeTabIndex: number
 }

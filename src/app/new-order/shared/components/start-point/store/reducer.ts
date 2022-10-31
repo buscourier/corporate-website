@@ -63,9 +63,9 @@ const startPointReducer = createReducer(
     ...state,
     date,
   })),
-  on(setActiveTabAction, (state: StartPointStateInterface, {activeTab}) => ({
+  on(setActiveTabAction, (state: StartPointStateInterface, {index}) => ({
     ...state,
-    activeTab,
+    activeTabIndex: index,
   }))
 )
 

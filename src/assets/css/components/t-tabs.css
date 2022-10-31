@@ -1,0 +1,9 @@
+/*::ng-deep(tui-tabs) > *:first-child {*/
+/*  --tui-tab-margin: 2px !important;*/
+
+/*  background-color: var(--tui-base-05) !important;*/
+/*}*/
+
+/*::ng-deep([tuiTabs]) > *:first-child {*/
+/*  background-color: var(--tui-primary) !important;*/
+/*}*/

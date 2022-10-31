@@ -2,6 +2,22 @@ import {CommonModule} from '@angular/common'
 import {NgModule} from '@angular/core'
 import {EffectsModule} from '@ngrx/effects'
 import {StoreModule} from '@ngrx/store'
+import {TuiLetModule} from '@taiga-ui/cdk'
+import {
+  TuiErrorModule,
+  TuiLoaderModule,
+  TuiSvgModule,
+  TuiTextfieldControllerModule,
+} from '@taiga-ui/core'
+import {
+  TuiDataListWrapperModule,
+  TuiFieldErrorPipeModule,
+  TuiInputDateModule,
+  TuiInputModule,
+  TuiRadioListModule,
+  TuiSelectModule,
+  TuiTabsModule,
+} from '@taiga-ui/kit'
 import {StartPointComponent} from './components/start-point/start-point.component'
 import {GetCitiesEffect} from './store/effects/get-cities.effect'
 import {GetOfficesEffect} from './store/effects/get-offices.effect'
@@ -14,6 +30,18 @@ import {START_POINT_FEATURE} from './store/state'
     CommonModule,
     StoreModule.forFeature(START_POINT_FEATURE, reducer),
     EffectsModule.forFeature([GetCitiesEffect, GetOfficesEffect]),
+    TuiLetModule,
+    TuiLoaderModule,
+    TuiInputModule,
+    TuiSelectModule,
+    TuiTextfieldControllerModule,
+    TuiDataListWrapperModule,
+    TuiSvgModule,
+    TuiTabsModule,
+    TuiErrorModule,
+    TuiFieldErrorPipeModule,
+    TuiRadioListModule,
+    TuiInputDateModule,
   ],
   exports: [StartPointComponent],
 })
