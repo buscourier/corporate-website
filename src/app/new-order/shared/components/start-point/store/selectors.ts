@@ -1,4 +1,5 @@
 import {createFeatureSelector, createSelector} from '@ngrx/store'
+import {OfficeInterface} from '../../../../../shared/types/office.interface'
 import {StartPointStateInterface} from '../types/start-point-state.interface'
 import {START_POINT_FEATURE} from './state'
 
@@ -22,7 +23,13 @@ export const citiesSelector = createSelector(
 
 export const officesSelector = createSelector(
   startPointFeatureSelector,
-  (state: StartPointStateInterface) => state.offices
+  (state: StartPointStateInterface) =>
+    state.offices
+      ? state.offices.map((office: OfficeInterface) => ({
+          ...office,
+          name: office.address,
+        }))
+      : []
 )
 
 export const citySelector = createSelector(
@@ -47,5 +54,5 @@ export const DateSelector = createSelector(
 
 export const activeTabSelector = createSelector(
   startPointFeatureSelector,
-  (state: StartPointStateInterface) => state.activeTab
+  (state: StartPointStateInterface) => state.activeTabIndex
 )

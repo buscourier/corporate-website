@@ -1,6 +1,7 @@
 import {HttpClient} from '@angular/common/http'
 import {Injectable} from '@angular/core'
-import {Observable} from 'rxjs'
+import {filter, Observable} from 'rxjs'
+import {concatAll, toArray} from 'rxjs/operators'
 import {environment} from '../../../../environments/environment'
 import {EndCityInterface} from '../../../shared/types/end-city.interface'
 import {OfficeInterface} from '../../../shared/types/office.interface'
@@ -10,7 +11,7 @@ import {ServiceInterface} from '../types/service.interface'
 
 @Injectable()
 export class NewOrderService {
-  private readonly url = `${environment.apiUrl}/calc/`
+  private readonly url = `${environment.apiUrl}/calc`
 
   constructor(private http: HttpClient) {}
 
@@ -24,8 +25,14 @@ export class NewOrderService {
     )
   }
 
-  getOffices(): Observable<OfficeInterface[]> {
-    return this.http.get<OfficeInterface[]>(`${this.url}/getoffices`)
+  getOffices(id: string): Observable<OfficeInterface[]> {
+    return this.http.get<OfficeInterface[]>(`${this.url}/getoffices`).pipe(
+      concatAll(),
+      filter((office: OfficeInterface) => {
+        return office.office_id === id
+      }),
+      toArray()
+    )
   }
 
   getCargo(cityFromId: string, cityToId: string): Observable<CargoInterface[]> {

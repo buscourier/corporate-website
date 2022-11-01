@@ -1,5 +1,6 @@
 import {CommonModule} from '@angular/common'
 import {NgModule} from '@angular/core'
+import {ReactiveFormsModule} from '@angular/forms'
 import {EffectsModule} from '@ngrx/effects'
 import {StoreModule} from '@ngrx/store'
 import {TuiLetModule} from '@taiga-ui/cdk'
@@ -42,6 +43,7 @@ import {START_POINT_FEATURE} from './store/state'
     TuiFieldErrorPipeModule,
     TuiRadioListModule,
     TuiInputDateModule,
+    ReactiveFormsModule,
   ],
   exports: [StartPointComponent],
 })

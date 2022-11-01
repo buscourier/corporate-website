@@ -12,10 +12,6 @@ import {
   TuiRootModule,
 } from '@taiga-ui/core'
 import {TUI_LANGUAGE, TUI_RUSSIAN_LANGUAGE} from '@taiga-ui/i18n'
-import {
-  TUI_DATE_RANGE_VALUE_TRANSFORMER,
-  TUI_DATE_VALUE_TRANSFORMER,
-} from '@taiga-ui/kit'
 import {NgDompurifySanitizer} from '@tinkoff/ng-dompurify'
 import {of} from 'rxjs'
 import {environment} from '../environments/environment'
@@ -23,8 +19,6 @@ import {AppRoutingModule} from './app-routing.module'
 import {AppComponent} from './app.component'
 import {AuthModule} from './auth/auth.module'
 import {PageHeaderModule} from './shared/components/page-header/page-header.module'
-import {getDateRangeTransformer} from './shared/handlers/date-range-transformer'
-import {DateTransformer} from './shared/services/date-transformer.service'
 
 @NgModule({
   declarations: [AppComponent],
@@ -63,15 +57,15 @@ import {DateTransformer} from './shared/services/date-transformer.service'
       provide: TUI_LANGUAGE,
       useValue: of(TUI_RUSSIAN_LANGUAGE),
     },
-    {
-      provide: TUI_DATE_VALUE_TRANSFORMER,
-      useClass: DateTransformer,
-    },
-    {
-      provide: TUI_DATE_RANGE_VALUE_TRANSFORMER,
-      deps: [TUI_DATE_VALUE_TRANSFORMER],
-      useFactory: getDateRangeTransformer,
-    },
+    // {
+    //   provide: TUI_DATE_VALUE_TRANSFORMER,
+    //   useClass: DateTransformer,
+    // },
+    // {
+    //   provide: TUI_DATE_RANGE_VALUE_TRANSFORMER,
+    //   deps: [TUI_DATE_VALUE_TRANSFORMER],
+    //   useFactory: getDateRangeTransformer,
+    // },
   ],
   bootstrap: [AppComponent],
 })

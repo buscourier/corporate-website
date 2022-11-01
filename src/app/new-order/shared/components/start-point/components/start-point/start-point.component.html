@@ -1,112 +1,129 @@
-<form>
-  <label class="w-full" *tuiLet="cities$ | async as cities">
+<form [formGroup]="form">
+  <label class="w-full" *tuiLet="isCitiesLoading$ | async as isCitiesLoading">
     <span class="mb-1 inline-block text-xs text-gray-500"
       >Город отправления:</span
     >
-    <tui-loader [showLoader]="isCitiesLoading$ | async">
+    <tui-loader [showLoader]="isCitiesLoading">
       <tui-select
         tuiTextfieldSize="m"
-        formControlName="startCity"
+        formControlName="city"
         [tuiTextfieldLabelOutside]="true"
       >
-        Выберите город
+        {{ isCitiesLoading ? '' : 'Выберите город' }}
         <tui-data-list-wrapper
           *tuiDataList
-          [items]="cities"
+          [items]="cities$ | async"
         ></tui-data-list-wrapper>
       </tui-select>
     </tui-loader>
   </label>
-  <tui-tabs [(activeItemIndex)]="activeTabIndex" class="mb-8">
-    <button tuiTab>Сдать в отделение</button>
-    <button tuiTab>Забрать по адресу</button>
-  </tui-tabs>
-  <div *ngIf="activeTabIndex === 0">
-    <label class="w-full" *tuiLet="cities$ | async as cities">
-      <!--      <span class="mb-1 inline-block text-xs text-gray-500"-->
-      <!--        >Отделение для отправки:</span-->
-      <!--      >-->
-      <tui-loader [showLoader]="isCitiesLoading$ | async">
-        <tui-select
-          tuiTextfieldSize="m"
-          formControlName="give"
-          [tuiTextfieldLabelOutside]="true"
+  <ng-container *ngIf="form.get('city').value">
+    <ng-container *tuiLet="isOfficesLoading$ | async as isOfficesLoading">
+      <ng-container *tuiLet="offices$ | async as offices">
+        <tui-loader [showLoader]="isOfficesLoading">
+          <tui-tabs
+            *ngIf="offices && !isOfficesLoading"
+            [(activeItemIndex)]="activeTabIndex"
+            class="mb-8"
+          >
+            <button tuiTab *ngFor="let tab of tabs">{{ TabName[tab] }}</button>
+          </tui-tabs>
+        </tui-loader>
+        <div *ngIf="activeTabIndex === 0">
+          <label class="w-full">
+            <!--      <span class="mb-1 inline-block text-xs text-gray-500"-->
+            <!--        >Отделение для отправки:</span-->
+            <!--      >-->
+            <tui-loader [showLoader]="isOfficesLoading">
+              <tui-select
+                tuiTextfieldSize="m"
+                formControlName="give"
+                [tuiTextfieldLabelOutside]="true"
+              >
+                {{ isOfficesLoading ? '' : 'Выберите отделение' }}
+                <tui-data-list-wrapper
+                  *tuiDataList
+                  [items]="offices"
+                ></tui-data-list-wrapper>
+              </tui-select>
+            </tui-loader>
+          </label>
+        </div>
+        <div
+          *ngIf="activeTabIndex === 1"
+          formGroupName="pickup"
+          class="mb-4 space-y-4"
         >
-          Выберите отделение
-          <tui-data-list-wrapper
-            *tuiDataList
-            [items]="offices$ | async"
-          ></tui-data-list-wrapper>
-        </tui-select>
-      </tui-loader>
-    </label>
-  </div>
-  <div *ngIf="activeTabIndex === 1" formGroup="pickup" class="space-y-4">
-    <label class="block">
-      <span class="mb-1 inline-block text-xs">Улица</span>
-      <tui-input
-        tuiTextfieldSize="m"
-        formControlName="street"
-        [tuiTextfieldLabelOutside]="true"
-      >
-        <input tuiTextfield type="text" />
-      </tui-input>
-      <tui-error
-        formControlName="street"
-        [error]="[] | tuiFieldError | async"
-      ></tui-error>
-    </label>
-    <div class="flex space-x-7">
-      <label class="mb-3 block flex-grow">
-        <span class="mb-1 inline-block text-xs">Дом, корпус, строение</span>
-        <tui-input
-          tuiTextfieldSize="m"
-          formControlName="building"
+          <label class="block">
+            <span class="mb-1 inline-block text-xs">Улица</span>
+            <tui-input
+              tuiTextfieldSize="m"
+              formControlName="street"
+              [tuiTextfieldLabelOutside]="true"
+            >
+              <input tuiTextfield type="text" />
+            </tui-input>
+            <tui-error
+              formControlName="street"
+              [error]="[] | tuiFieldError | async"
+            ></tui-error>
+          </label>
+          <div class="flex space-x-7">
+            <label class="mb-3 block flex-grow">
+              <span class="mb-1 inline-block text-xs"
+                >Дом, корпус, строение</span
+              >
+              <tui-input
+                tuiTextfieldSize="m"
+                formControlName="building"
+                [tuiTextfieldLabelOutside]="true"
+              >
+                <input tuiTextfield type="text" />
+              </tui-input>
+              <tui-error
+                formControlName="building"
+                [error]="[] | tuiFieldError | async"
+              ></tui-error>
+            </label>
+            <label class="block">
+              <span class="mb-1 inline-block text-xs">Кв. / офис</span>
+              <tui-input
+                tuiTextfieldSize="m"
+                formControlName="apartment"
+                [tuiTextfieldLabelOutside]="true"
+              >
+                <input tuiTextfield type="text" />
+              </tui-input>
+              <tui-error
+                formControlName="apartment"
+                [error]="[] | tuiFieldError | async"
+              ></tui-error>
+            </label>
+          </div>
+          <tui-radio-list
+            formControlName="time"
+            orientation="horizontal"
+            [items]="timeRange"
+            [itemContent]="timeContent"
+          ></tui-radio-list>
+          <ng-template #timeContent let-data>
+            {{ data.range }}
+          </ng-template>
+        </div>
+      </ng-container>
+      <label class="mt-4 block">
+        <span class="mb-1 inline-block text-xs">Дата оправления</span>
+        <tui-input-date
+          tuiUnfinishedValidator="Выберите дату"
           [tuiTextfieldLabelOutside]="true"
+          formControlName="date"
         >
-          <input tuiTextfield type="text" />
-        </tui-input>
+        </tui-input-date>
         <tui-error
-          formControlName="building"
+          formControlName="date"
           [error]="[] | tuiFieldError | async"
         ></tui-error>
       </label>
-      <label class="block">
-        <span class="mb-1 inline-block text-xs">Кв. / офис</span>
-        <tui-input
-          tuiTextfieldSize="m"
-          formControlName="apartment"
-          [tuiTextfieldLabelOutside]="true"
-        >
-          <input tuiTextfield type="text" />
-        </tui-input>
-        <tui-error
-          formControlName="apartment"
-          [error]="[] | tuiFieldError | async"
-        ></tui-error>
-      </label>
-    </div>
-    <tui-radio-list
-      formControlName="time"
-      orientation="horizontal"
-      [items]="timeRange"
-      [itemContent]="timeContent"
-    ></tui-radio-list>
-    <ng-template #timeContent let-data>
-      {{ data.name }}
-    </ng-template>
-    <label class="block">
-      <span class="mb-1 inline-block text-xs">Дата оправления</span>
-      <tui-input-date
-        tuiUnfinishedValidator="Выберите дату"
-        [tuiTextfieldLabelOutside]="true"
-        formControlName="date"
-      >
-      </tui-input-date>
-      <tui-error
-        formControlName="date"
-        [error]="[] | tuiFieldError | async"
-      ></tui-error>
-    </label>
-  </div>
+    </ng-container>
+  </ng-container>
 </form>
