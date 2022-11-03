@@ -24,7 +24,6 @@ export class PersonComponent {
       this.form.valueChanges
         .pipe(
           tap((values: PersonStateInterface) => {
-            console.log('values', values)
             this.store.dispatch(valueChangesAction(values))
           })
         )
