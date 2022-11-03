@@ -2,9 +2,14 @@
   <app-person formControlName="person"></app-person>
 
   <div class="mt-5 flex justify-between">
-    <button [routerLink]="['/new-order', 'checkout', '1']" tuiButton size="m">
+    <button
+      [routerLink]="['/new-order', 'checkout', '1']"
+      tuiButton
+      size="m"
+      [disabled]="this.form.invalid"
+    >
       Дальше
     </button>
-    <button type="submit">Submit</button>
+    <button tuiButton type="submit">Submit</button>
   </div>
 </form>

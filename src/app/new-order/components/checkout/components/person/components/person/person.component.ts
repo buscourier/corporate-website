@@ -1,14 +1,17 @@
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
+  forwardRef,
   OnDestroy,
   OnInit,
 } from '@angular/core'
 import {
+  AbstractControl,
   ControlValueAccessor,
   FormBuilder,
+  NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
+  ValidationErrors,
   Validators,
 } from '@angular/forms'
 import {Store} from '@ngrx/store'
@@ -28,12 +31,20 @@ import {PersonStateInterface} from '../../types/person-state.interface'
       multi: true,
       useExisting: PersonComponent,
     },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => PersonComponent),
+      multi: true,
+    },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PersonComponent
   implements ControlValueAccessor, OnInit, OnDestroy
 {
+  onTouched = () => {}
+  onChangeSub: Subscription
+
   form = this.fb.group({
     name: [initialState.name, [Validators.required]],
     email: [initialState.email, [Validators.required]],
@@ -51,12 +62,7 @@ export class PersonComponent
     () => this.store.select((state: any) => state.person)
   )
 
-  onTouched = () => {}
-  onChangeSub: Subscription
-
-  registerOnChange(onChange: any) {
-    this.onChangeSub = this.form.valueChanges.subscribe(onChange)
-  }
+  constructor(private fb: FormBuilder, private store: Store) {}
 
   writeValue(value: any) {
     if (value) {
@@ -68,6 +74,10 @@ export class PersonComponent
     this.onTouched = onTouched
   }
 
+  registerOnChange(onChange: any) {
+    this.onChangeSub = this.form.valueChanges.subscribe(onChange)
+  }
+
   setDisabledState(disabled: boolean) {
     if (disabled) {
       this.form.disable()
@@ -76,19 +86,22 @@ export class PersonComponent
     }
   }
 
-  ngOnInit() {
-    this.onTouched()
-    this.cdr.detectChanges()
-    console.log('ssdfsdfs444')
+  allRequiredFieldsFilled(control: AbstractControl): ValidationErrors | null {
+    const controlValue = control.value
+    const isValid = controlValue?.email && controlValue?.name
+    return isValid ? null : {required: true}
+  }
+
+  validate(control: AbstractControl): ValidationErrors | null {
+    return this.allRequiredFieldsFilled(control)
+  }
+
+  ngOnInit(): void {
+    this.form.updateValueAndValidity()
+    console.log('ths', this.form.value)
   }
 
   ngOnDestroy() {
     this.onChangeSub.unsubscribe()
   }
-
-  constructor(
-    private fb: FormBuilder,
-    private store: Store,
-    private cdr: ChangeDetectorRef
-  ) {}
 }

@@ -1,10 +1,12 @@
-<form action="" [formGroup]="form" [patchFormGroupValues]="formValues$ | async">
+{{ form.value | json }}
+<fieldset [formGroup]="form" [patchFormGroupValues]="formValues$ | async">
   <label class="mb-3 block">
     <span class="mb-1 inline-block text-xs">Email</span>
     <tui-input
       tuiTextfieldSize="m"
       formControlName="email"
       [tuiTextfieldLabelOutside]="true"
+      (blur)="onTouched()"
     >
       Email
       <input tuiTextfield type="text" />
@@ -20,6 +22,7 @@
       tuiTextfieldSize="m"
       formControlName="name"
       [tuiTextfieldLabelOutside]="true"
+      (blur)="onTouched()"
     >
       Name
       <input tuiTextfield type="text" />
@@ -29,4 +32,5 @@
       [error]="[] | tuiFieldError | async"
     ></tui-error>
   </label>
-</form>
+  <!--  <button tuiButton type="submit">Sumbit</button>-->
+</fieldset>
