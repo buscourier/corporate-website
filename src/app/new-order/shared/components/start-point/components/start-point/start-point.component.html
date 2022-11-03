@@ -1,21 +1,23 @@
-<form [formGroup]="form">
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
   <label class="w-full" *tuiLet="isCitiesLoading$ | async as isCitiesLoading">
     <span class="mb-1 inline-block text-xs text-gray-500"
       >Город отправления:</span
     >
-    <tui-loader [showLoader]="isCitiesLoading">
-      <tui-select
-        tuiTextfieldSize="m"
-        formControlName="city"
-        [tuiTextfieldLabelOutside]="true"
-      >
-        {{ isCitiesLoading ? '' : 'Выберите город' }}
-        <tui-data-list-wrapper
-          *tuiDataList
-          [items]="cities$ | async"
-        ></tui-data-list-wrapper>
-      </tui-select>
-    </tui-loader>
+    <ng-container *tuiLet="cities$ | async as cities">
+      <tui-loader [showLoader]="isCitiesLoading">
+        <tui-select
+          tuiTextfieldSize="m"
+          formControlName="city"
+          [tuiTextfieldLabelOutside]="true"
+        >
+          {{ isCitiesLoading ? '' : 'Выберите город' }}
+          <tui-data-list-wrapper
+            *tuiDataList
+            [items]="cities"
+          ></tui-data-list-wrapper>
+        </tui-select>
+      </tui-loader>
+    </ng-container>
   </label>
   <ng-container *ngIf="form.get('city').value">
     <ng-container *tuiLet="isOfficesLoading$ | async as isOfficesLoading">
@@ -111,7 +113,7 @@
           </ng-template>
         </div>
       </ng-container>
-      <label class="mt-4 block">
+      <label *ngIf="form.get('give').value" class="mt-4 block">
         <span class="mb-1 inline-block text-xs">Дата оправления</span>
         <tui-input-date
           tuiUnfinishedValidator="Выберите дату"
@@ -126,4 +128,5 @@
       </label>
     </ng-container>
   </ng-container>
+  <button type="submit">Ok</button>
 </form>

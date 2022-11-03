@@ -3,7 +3,7 @@ import {FormBuilder} from '@angular/forms'
 import {Store} from '@ngrx/store'
 import {TuiDay} from '@taiga-ui/cdk'
 import {TUI_VALIDATION_ERRORS, tuiItemsHandlersProvider} from '@taiga-ui/kit'
-import {first, map, Observable, of, switchMap} from 'rxjs'
+import {filter, first, map, Observable, of, switchMap} from 'rxjs'
 import {concatAll, tap} from 'rxjs/operators'
 import {STRINGIFY_CITIES} from '../../../../../../shared/handlers/string-handlers'
 import {OfficeInterface} from '../../../../../../shared/types/office.interface'
@@ -11,8 +11,10 @@ import {StartCityInterface} from '../../../../../../shared/types/start-city.inte
 import {CourierInterface} from '../../../../types/courier.interface'
 import {getCitiesAction} from '../../store/actions/get-cities.action'
 import {getOfficesAction} from '../../store/actions/get-offices.action'
+import {setCityAction} from '../../store/actions/set-city.action'
 import {
   citiesSelector,
+  citySelector,
   isCitiesLoadingSelector,
   isOfficesLoadingSelector,
   officesSelector,
@@ -42,7 +44,7 @@ export class StartPointComponent implements OnInit {
   backendErrors$: Observable<string | null>
 
   form = this.fb.group({
-    city: null,
+    city: [{value: null, disabled: true}],
     give: null,
     pickup: this.fb.group<CourierInterface>({
       street: '',
@@ -77,7 +79,15 @@ export class StartPointComponent implements OnInit {
   initializeValues() {
     this.isCitiesLoading$ = this.store.select(isCitiesLoadingSelector)
     this.isOfficesLoading$ = this.store.select(isOfficesLoadingSelector)
-    this.cities$ = this.store.select(citiesSelector)
+    this.cities$ = this.store.select(citiesSelector).pipe(
+      filter(Boolean),
+      tap((cities: StartCityInterface[]) => {
+        this.form.get('city').enable()
+
+        this.store.dispatch(setCityAction({city: cities[0]}))
+      })
+    )
+
     this.offices$ = this.store.select(officesSelector).pipe(
       tap((offices: OfficeInterface[]) => {
         this.form.get('give').setValue(offices[0]) //TODO consider another way to set default office
@@ -85,12 +95,32 @@ export class StartPointComponent implements OnInit {
       })
     )
 
+    this.store.select(citySelector).pipe(
+      filter(Boolean),
+      tap((city: StartCityInterface) => {
+        this.form.get('city').patchValue(city)
+      })
+    )
+
     this.form
       .get('city')
       .valueChanges.pipe(
-        tap((city: StartCityInterface) => {
-          this.store.dispatch(getOfficesAction({id: city.office_id}))
-          this.activeTabIndex = -1
+        tap((city: StartCityInterface | null) => {
+          if (city) {
+            this.store.dispatch(getOfficesAction({id: city.office_id}))
+            this.activeTabIndex = -1
+          }
+        })
+      )
+      .subscribe()
+
+    this.form
+      .get('give')
+      .valueChanges.pipe(
+        tap((give: OfficeInterface) => {
+          if (give) {
+            // this.store.dispatch(setOfficeAction({give}))
+          }
         })
       )
       .subscribe()
@@ -127,5 +157,9 @@ export class StartPointComponent implements OnInit {
   setCurrentDate() {
     const date = new Date()
     return new TuiDay(date.getFullYear(), date.getMonth(), date.getDate())
+  }
+
+  onSubmit() {
+    console.log('this.form.value', this.form.value)
   }
 }

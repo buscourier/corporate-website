@@ -1,0 +1,33 @@
+{{ formValues$ | async | json }}
+<form action="" [formGroup]="form" [patchFormGroupValues]="formValues$ | async">
+  <label class="mb-3 block">
+    <span class="mb-1 inline-block text-xs">Email</span>
+    <tui-input
+      tuiTextfieldSize="m"
+      formControlName="email"
+      [tuiTextfieldLabelOutside]="true"
+    >
+      Email
+      <input tuiTextfield type="text" />
+    </tui-input>
+    <tui-error
+      formControlName="email"
+      [error]="[] | tuiFieldError | async"
+    ></tui-error>
+  </label>
+  <label class="mb-3 block">
+    <span class="mb-1 inline-block text-xs">Name</span>
+    <tui-input
+      tuiTextfieldSize="m"
+      formControlName="name"
+      [tuiTextfieldLabelOutside]="true"
+    >
+      Name
+      <input tuiTextfield type="text" />
+    </tui-input>
+    <tui-error
+      formControlName="name"
+      [error]="[] | tuiFieldError | async"
+    ></tui-error>
+  </label>
+</form>

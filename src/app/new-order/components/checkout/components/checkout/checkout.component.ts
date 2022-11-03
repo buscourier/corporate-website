@@ -6,4 +6,10 @@ import {ChangeDetectionStrategy, Component} from '@angular/core'
   styleUrls: ['./checkout.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CheckoutComponent {}
+export class CheckoutComponent {
+  activeItemIndex = 0
+
+  goToStep(index) {
+    this.activeItemIndex = index
+  }
+}
