@@ -4,5 +4,5 @@ export const PERSON_FEATURE = 'person'
 
 export const initialState: PersonStateInterface = {
   name: 'rrrrrr',
-  email: '',
+  email: 'qweqweqwe',
 }

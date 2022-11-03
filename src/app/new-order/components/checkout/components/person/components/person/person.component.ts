@@ -1,7 +1,6 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  forwardRef,
   OnDestroy,
   OnInit,
 } from '@angular/core'
@@ -33,7 +32,7 @@ import {PersonStateInterface} from '../../types/person-state.interface'
     },
     {
       provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => PersonComponent),
+      useExisting: PersonComponent,
       multi: true,
     },
   ],
