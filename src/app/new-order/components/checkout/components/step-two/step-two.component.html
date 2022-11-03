@@ -1,3 +1,12 @@
 <div>
   <app-start-point></app-start-point>
 </div>
+
+<div class="mt-5 flex justify-between">
+  <button [routerLink]="['/new-order', 'checkout']" tuiButton size="m">
+    Назад
+  </button>
+  <button [routerLink]="['/new-order', 'checkout', '2']" tuiButton size="m">
+    Дальше
+  </button>
+</div>

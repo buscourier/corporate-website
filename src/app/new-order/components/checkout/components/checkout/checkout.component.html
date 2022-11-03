@@ -13,33 +13,4 @@
   <button tuiStep disabled>Disabled step</button>
 </tui-stepper>
 
-<div *ngIf="activeItemIndex === 0">
-  <app-step-one></app-step-one>
-  <div class="mt-5">
-    <button tuiButton size="m" (click)="goToStep(1)">Дальше</button>
-  </div>
-</div>
-
-<div *ngIf="activeItemIndex === 1">
-  <app-step-two></app-step-two>
-  <div class="mt-5 flex justify-between">
-    <button tuiButton size="m" (click)="goToStep(0)">Назад</button>
-    <button tuiButton size="m" (click)="goToStep(2)">Дальше</button>
-  </div>
-</div>
-
-<div *ngIf="activeItemIndex === 2">
-  <app-step-three></app-step-three>
-  <div class="mt-5 flex justify-between">
-    <button tuiButton size="m" (click)="goToStep(1)">Назад</button>
-    <button tuiButton size="m" (click)="goToStep(3)">Дальше</button>
-  </div>
-</div>
-
-<div *ngIf="activeItemIndex === 3">
-  step 4
-  <div class="mt-5 flex justify-between">
-    <button tuiButton size="m" (click)="goToStep(2)">Назад</button>
-    <button tuiButton size="m">Оформить заказ</button>
-  </div>
-</div>
+<router-outlet></router-outlet>

@@ -1,4 +1,5 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core'
+import {FormBuilder} from '@angular/forms'
 
 @Component({
   selector: 'app-checkout',
@@ -11,5 +12,13 @@ export class CheckoutComponent {
 
   goToStep(index) {
     this.activeItemIndex = index
+  }
+
+  form = this.fb.group({})
+
+  constructor(private fb: FormBuilder) {}
+
+  onSubmit() {
+    alert(1)
   }
 }
