@@ -11,10 +11,10 @@ import {StartCityInterface} from '../../../../../../shared/types/start-city.inte
 import {CourierInterface} from '../../../../types/courier.interface'
 import {getCitiesAction} from '../../store/actions/get-cities.action'
 import {getOfficesAction} from '../../store/actions/get-offices.action'
-import {setCityAction} from '../../store/actions/set-city.action'
 import {
   citiesSelector,
   citySelector,
+  isCitiesLoadedSelector,
   isCitiesLoadingSelector,
   isOfficesLoadingSelector,
   officesSelector,
@@ -38,6 +38,7 @@ import {
 })
 export class StartPointComponent implements OnInit {
   isCitiesLoading$: Observable<boolean>
+  isCitiesLoaded$: Observable<boolean>
   isOfficesLoading$: Observable<boolean>
   cities$: Observable<StartCityInterface[]>
   offices$: Observable<OfficeInterface[]>
@@ -73,7 +74,14 @@ export class StartPointComponent implements OnInit {
   }
 
   fetchData() {
-    this.store.dispatch(getCitiesAction())
+    this.store
+      .select(isCitiesLoadedSelector)
+      .pipe(
+        tap((is) => console.log('is', is)),
+        filter((isCitiesLoaded: boolean) => !isCitiesLoaded),
+        tap(() => this.store.dispatch(getCitiesAction()))
+      )
+      .subscribe()
   }
 
   initializeValues() {
@@ -83,8 +91,6 @@ export class StartPointComponent implements OnInit {
       filter(Boolean),
       tap((cities: StartCityInterface[]) => {
         this.form.get('city').enable()
-
-        this.store.dispatch(setCityAction({city: cities[0]}))
       })
     )
 

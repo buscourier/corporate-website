@@ -7,6 +7,8 @@ export enum ActionTypes {
   GET_OFFICES_SUCCESS = '[Start point] Get offices success',
   GET_OFFICES_FAILURE = '[Start point] Get offices failure',
 
+  CITIES_LOADED = '[Start point] Cities loaded',
+
   SET_CITY = '[Start point] City changed',
   // SET_CITY_SUCCESS = '[Start point] Set city success',
   // SET_CITY_FAILURE = '[Start point] Set city failure',

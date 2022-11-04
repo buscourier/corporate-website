@@ -11,6 +11,11 @@ export const isCitiesLoadingSelector = createSelector(
   (state: StartPointStateInterface) => state.isCitiesLoading
 )
 
+export const isCitiesLoadedSelector = createSelector(
+  startPointFeatureSelector,
+  (state: StartPointStateInterface) => state.isCitiesLoaded
+)
+
 export const isOfficesLoadingSelector = createSelector(
   startPointFeatureSelector,
   (state: StartPointStateInterface) => state.isOfficesLoading

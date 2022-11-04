@@ -3,6 +3,7 @@ import {Actions, createEffect, ofType} from '@ngrx/effects'
 import {catchError, map, of, switchMap} from 'rxjs'
 import {StartCityInterface} from 'src/app/shared/types/start-city.interface'
 import {NewOrderService} from '../../../../services/new-order.service'
+import {citiesLoadedAction} from '../actions/cities-loaded.action'
 import {
   getCitiesAction,
   getCitiesFailureAction,
@@ -27,6 +28,13 @@ export class GetCitiesEffect {
           catchError((error: string) => of(getCitiesFailureAction({error})))
         )
       )
+    )
+  )
+
+  afterSuccessCitiesLoading$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(getCitiesSuccessAction),
+      map(() => citiesLoadedAction({isCitiesLoaded: true}))
     )
   )
 }

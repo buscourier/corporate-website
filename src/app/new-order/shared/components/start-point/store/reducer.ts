@@ -1,5 +1,6 @@
 import {Action, createReducer, on} from '@ngrx/store'
 import {StartPointStateInterface} from '../types/start-point-state.interface'
+import {citiesLoadedAction} from './actions/cities-loaded.action'
 import {
   getCitiesAction,
   getCitiesFailureAction,
@@ -33,6 +34,13 @@ const startPointReducer = createReducer(
     isCitiesLoading: false,
     // backendErrors: errors
   })),
+  on(
+    citiesLoadedAction,
+    (state: StartPointStateInterface, {isCitiesLoaded}) => ({
+      ...state,
+      isCitiesLoaded,
+    })
+  ),
   on(getOfficesAction, (state: StartPointStateInterface) => ({
     ...state,
     isOfficesLoading: true,
