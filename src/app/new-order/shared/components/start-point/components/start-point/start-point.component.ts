@@ -11,6 +11,7 @@ import {StartCityInterface} from '../../../../../../shared/types/start-city.inte
 import {CourierInterface} from '../../../../types/courier.interface'
 import {getCitiesAction} from '../../store/actions/get-cities.action'
 import {getOfficesAction} from '../../store/actions/get-offices.action'
+import {setCityAction} from '../../store/actions/set-city.action'
 import {
   citiesSelector,
   citySelector,
@@ -113,6 +114,7 @@ export class StartPointComponent implements OnInit {
       .valueChanges.pipe(
         tap((city: StartCityInterface | null) => {
           if (city) {
+            this.store.dispatch(setCityAction({city}))
             this.store.dispatch(getOfficesAction({id: city.office_id}))
             this.activeTabIndex = -1
           }
