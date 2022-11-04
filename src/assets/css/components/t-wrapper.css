@@ -12,3 +12,8 @@
 [tuiWrapper][data-state='disabled'][data-state='disabled'] {
   background-color: var(--tui-base-02);
 }
+
+[tuiWrapper][data-appearance='textfield']:invalid:invalid,
+[tuiWrapper][data-appearance='textfield']._invalid._invalid {
+  background-color: rgba(199, 65, 65, 0.05);
+}
