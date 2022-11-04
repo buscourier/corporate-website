@@ -101,6 +101,8 @@ export class PersonComponent
   }
 
   ngOnDestroy() {
-    this.onChangeSub.unsubscribe()
+    if (this.onChangeSub) {
+      this.onChangeSub.unsubscribe()
+    }
   }
 }
