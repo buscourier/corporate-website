@@ -1,15 +1,115 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <app-person formControlName="person"></app-person>
+  <tui-loader [showLoader]="false">
+    <tui-tabs [(activeItemIndex)]="activeTabIndex" class="mb-8">
+      <button tuiTab>Физическое лицо</button>
+      <button tuiTab>Юридическое лицо</button>
+    </tui-tabs>
+  </tui-loader>
+  <fieldset
+    *ngIf="activeTabIndex === 0"
+    [patchFormGroupValues]="personValues$ | async"
+    [formGroup]="person"
+    class="grid grid-cols-3 gap-x-5 gap-y-4"
+  >
+    <label class="mb-3 block">
+      <span class="mb-1 inline-block text-xs">Фамилия</span>
+      <tui-input
+        tuiTextfieldSize="m"
+        formControlName="lastName"
+        [tuiTextfieldLabelOutside]="true"
+      >
+        <input tuiTextfield type="text" />
+      </tui-input>
+      <tui-error
+        formControlName="lastName"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
+    </label>
+    <label class="mb-3 block">
+      <span class="mb-1 inline-block text-xs">Имя</span>
+      <tui-input
+        tuiTextfieldSize="m"
+        formControlName="firstName"
+        [tuiTextfieldLabelOutside]="true"
+      >
+        <input tuiTextfield type="text" />
+      </tui-input>
+      <tui-error
+        formControlName="firstName"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
+    </label>
+    <label class="mb-3 block">
+      <span class="mb-1 inline-block text-xs">Отчество</span>
+      <tui-input
+        tuiTextfieldSize="m"
+        formControlName="middleName"
+        [tuiTextfieldLabelOutside]="true"
+      >
+        <input tuiTextfield type="text" />
+      </tui-input>
+      <tui-error
+        formControlName="middleName"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
+    </label>
+    <label class="mb-3 block">
+      <span class="mb-1 inline-block text-xs">Email</span>
+      <tui-input
+        tuiTextfieldSize="m"
+        formControlName="email"
+        [tuiTextfieldLabelOutside]="true"
+      >
+        <input tuiTextfield type="email" />
+      </tui-input>
+      <tui-error
+        formControlName="email"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
+    </label>
+    <label class="mb-3 block">
+      <span class="mb-1 inline-block text-xs">Телефон</span>
+      <tui-input-phone
+        formControlName="phone"
+        tuiTextfieldSize="m"
+        [tuiTextfieldLabelOutside]="true"
+      >
+        <input tuiTextfield autocomplete="tel" />
+      </tui-input-phone>
+      <tui-error
+        formControlName="phone"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
+    </label>
+    <label class="mb-3 block">
+      <span class="mb-1 inline-block text-xs">Роль</span>
+      <tui-select
+        tuiTextfieldSize="m"
+        formControlName="role"
+        [tuiTextfieldLabelOutside]="true"
+      >
+        <tui-data-list-wrapper
+          *tuiDataList
+          [items]="roles"
+        ></tui-data-list-wrapper>
+      </tui-select>
+      <tui-error
+        formControlName="role"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
+    </label>
+  </fieldset>
+  <fieldset *ngIf="activeTabIndex === 1"></fieldset>
 
-  <div class="mt-5 flex justify-between">
+  <div class="mt-5 grid grid-cols-3 gap-x-5">
     <button
       [routerLink]="['/new-order', 'checkout', '1']"
       tuiButton
       size="m"
       [disabled]="this.form.invalid"
+      class="col-start-3 w-full"
     >
       Дальше
     </button>
-    <button tuiButton type="submit">Submit</button>
   </div>
 </form>
