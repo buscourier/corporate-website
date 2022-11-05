@@ -9,7 +9,6 @@ export class PatchFormGroupValuesDirective {
   @Input() formGroup: any
   @Input()
   set patchFormGroupValues(val: any) {
-    console.log('val', val)
     if (!val) return
     this.formGroup.patchValue(val)
     // this.formGroup.patchValue(val, {emitEvent: false})

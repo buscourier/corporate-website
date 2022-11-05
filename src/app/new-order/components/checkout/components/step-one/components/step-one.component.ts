@@ -27,15 +27,10 @@ export class StepOneComponent {
     role: [initialState.person.role, Validators.required],
   })
 
-  form = this.fb.group({
-    person: this.person,
-  })
-
   personValues$ = using(
     () =>
-      this.form
-        .get('person')
-        .valueChanges.pipe(
+      this.person.valueChanges
+        .pipe(
           tap((values: PersonInterface) => {
             this.store.dispatch(personValueChangesAction(values))
           })
@@ -43,6 +38,10 @@ export class StepOneComponent {
         .subscribe(),
     () => this.store.select(personSelector)
   )
+
+  form = this.fb.group({
+    person: this.person,
+  })
 
   constructor(private fb: FormBuilder, private store: Store) {}
 
