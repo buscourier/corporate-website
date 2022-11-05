@@ -9,8 +9,17 @@
       (activeItemIndexChange)="setActiveTabIndex($event)"
       class="mb-8"
     >
-      <button tuiTab>Физическое лицо</button>
-      <button tuiTab>Юридическое лицо</button>
+      <button tuiTab class="bg-amber-400">Физическое лицо</button>
+      <button
+        *ngIf="isLoggedIn$ | async; else checkTabButton"
+        [routerLink]="['/account']"
+        tuiTab
+      >
+        Юридическое лицо
+      </button>
+      <ng-template #checkTabButton>
+        <button tuiTab>Юридическое лицо</button>
+      </ng-template>
     </tui-tabs>
   </tui-loader>
   <fieldset
@@ -169,7 +178,23 @@
   </fieldset>
   <fieldset *ngIf="activeTabIndex === 1"></fieldset>
 
-  <div *ngIf="activeTabIndex !== -1" class="mt-5 grid grid-cols-3 gap-x-5">
+  <p *ngIf="activeTabIndex === -1" class="text-center text-md text-gray-500">
+    Выберите статус лица для<br />
+    перехода на следующий шаг
+  </p>
+
+  <p
+    *ngIf="activeTabIndex === 1 && (isAnonymous$ | async)"
+    class="text-center text-md"
+  >
+    Чтобы оформить заказ как юридическое лицо, вам необходимо
+    <a [routerLink]="['/account']" class="text-blue hover:cursor-pointer"
+      >войти</a
+    >,<br />
+    затем вы сможете указать ваши данные.
+  </p>
+
+  <div *ngIf="activeTabIndex === 0" class="mt-5 grid grid-cols-3 gap-x-5">
     <button
       [routerLink]="['/new-order', 'checkout', '1']"
       tuiButton

@@ -3,6 +3,11 @@ import {FormBuilder, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
 import {Observable, using} from 'rxjs'
 import {tap} from 'rxjs/operators'
+import {LoginService} from 'src/app/auth/components/login/services/login.service'
+import {
+  isAnonymousSelector,
+  isLoggedInSelector,
+} from 'src/app/auth/store/selectors'
 import {personValueChangesAction} from '../store/actions/person-value-chages.action'
 import {setActiveTabAction} from '../store/actions/set-active-tab.action'
 import {activeTabSelector, personSelector} from '../store/selectors'
@@ -17,6 +22,8 @@ import {PersonInterface} from '../types/person.interface'
 })
 export class StepOneComponent implements OnInit {
   activeTabIndex$: Observable<number>
+  isLoggedIn$: Observable<boolean>
+  isAnonymous$: Observable<boolean>
   roles = ['Отправитель', 'Получатель']
 
   person = this.fb.group({
@@ -44,7 +51,11 @@ export class StepOneComponent implements OnInit {
     person: this.person,
   })
 
-  constructor(private fb: FormBuilder, private store: Store) {}
+  constructor(
+    private fb: FormBuilder,
+    private store: Store,
+    private loginService: LoginService
+  ) {}
 
   ngOnInit(): void {
     this.initializeValues()
@@ -52,10 +63,16 @@ export class StepOneComponent implements OnInit {
 
   initializeValues(): void {
     this.activeTabIndex$ = this.store.select(activeTabSelector)
+    this.isLoggedIn$ = this.store.select(isLoggedInSelector)
+    this.isAnonymous$ = this.store.select(isAnonymousSelector)
   }
 
   setActiveTabIndex(index: number) {
     this.store.dispatch(setActiveTabAction({activeTabIndex: index}))
+  }
+
+  login() {
+    this.loginService.open(null).subscribe()
   }
 
   onSubmit() {
