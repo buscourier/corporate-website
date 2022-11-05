@@ -5,9 +5,11 @@ import {initialState} from './state'
 
 const stepOneReducer = createReducer(
   initialState,
-  on(personValueChangesAction, (state, ...person) => ({
+  on(personValueChangesAction, (state, person) => ({
     ...state,
-    ...person,
+    person: {
+      ...person,
+    },
   }))
 )
 
