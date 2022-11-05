@@ -12,7 +12,17 @@
     class="grid grid-cols-3 gap-x-5 gap-y-4"
   >
     <label class="mb-3 block">
-      <span class="mb-1 inline-block text-xs">Фамилия</span>
+      <span class="mb-1 inline-block text-xs">
+        Фамилия
+        <sup
+          class="text-red"
+          *ngIf="
+            form.get('person.lastName').errors &&
+            form.get('person.lastName').hasError('required')
+          "
+          >*</sup
+        >
+      </span>
       <tui-input
         tuiTextfieldSize="m"
         formControlName="lastName"
@@ -26,7 +36,17 @@
       ></tui-error>
     </label>
     <label class="mb-3 block">
-      <span class="mb-1 inline-block text-xs">Имя</span>
+      <span class="mb-1 inline-block text-xs">
+        Имя
+        <sup
+          class="text-red"
+          *ngIf="
+            form.get('person.firstName').errors &&
+            form.get('person.firstName').hasError('required')
+          "
+          >*</sup
+        >
+      </span>
       <tui-input
         tuiTextfieldSize="m"
         formControlName="firstName"
@@ -40,7 +60,17 @@
       ></tui-error>
     </label>
     <label class="mb-3 block">
-      <span class="mb-1 inline-block text-xs">Отчество</span>
+      <span class="mb-1 inline-block text-xs">
+        Отчество
+        <sup
+          class="text-red"
+          *ngIf="
+            form.get('person.middleName').errors &&
+            form.get('person.middleName').hasError('required')
+          "
+          >*</sup
+        >
+      </span>
       <tui-input
         tuiTextfieldSize="m"
         formControlName="middleName"
@@ -54,7 +84,17 @@
       ></tui-error>
     </label>
     <label class="mb-3 block">
-      <span class="mb-1 inline-block text-xs">Email</span>
+      <span class="mb-1 inline-block text-xs">
+        Email
+        <sup
+          class="text-red"
+          *ngIf="
+            form.get('person.email').errors &&
+            form.get('person.email').hasError('required')
+          "
+          >*</sup
+        >
+      </span>
       <tui-input
         tuiTextfieldSize="m"
         formControlName="email"
@@ -68,7 +108,17 @@
       ></tui-error>
     </label>
     <label class="mb-3 block">
-      <span class="mb-1 inline-block text-xs">Телефон</span>
+      <span class="mb-1 inline-block text-xs">
+        Телефон
+        <sup
+          class="text-red"
+          *ngIf="
+            form.get('person.phone').errors &&
+            form.get('person.phone').hasError('required')
+          "
+          >*</sup
+        >
+      </span>
       <tui-input-phone
         formControlName="phone"
         tuiTextfieldSize="m"
@@ -82,7 +132,17 @@
       ></tui-error>
     </label>
     <label class="mb-3 block">
-      <span class="mb-1 inline-block text-xs">Роль</span>
+      <span class="mb-1 inline-block text-xs">
+        Роль
+        <sup
+          class="text-red"
+          *ngIf="
+            form.get('person.role').errors &&
+            form.get('person.role').hasError('required')
+          "
+          >*</sup
+        >
+      </span>
       <tui-select
         tuiTextfieldSize="m"
         formControlName="role"
