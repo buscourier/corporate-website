@@ -7,8 +7,8 @@
   </tui-loader>
   <fieldset
     *ngIf="activeTabIndex === 0"
-    [patchFormGroupValues]="personValues$ | async"
     [formGroup]="person"
+    [patchFormGroupValues]="personValues$ | async"
     class="grid grid-cols-3 gap-x-5 gap-y-4"
   >
     <label class="mb-3 block">
