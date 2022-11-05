@@ -1,10 +1,11 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core'
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
 import {FormBuilder, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
-import {using} from 'rxjs'
+import {Observable, using} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {personValueChangesAction} from '../store/actions/person-value-chages.action'
-import {personSelector} from '../store/selectors'
+import {setActiveTabAction} from '../store/actions/set-active-tab.action'
+import {activeTabSelector, personSelector} from '../store/selectors'
 import {initialState} from '../store/state'
 import {PersonInterface} from '../types/person.interface'
 
@@ -14,8 +15,8 @@ import {PersonInterface} from '../types/person.interface'
   styleUrls: ['./step-one.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StepOneComponent {
-  activeTabIndex = 0
+export class StepOneComponent implements OnInit {
+  activeTabIndex$: Observable<number>
   roles = ['Отправитель', 'Получатель']
 
   person = this.fb.group({
@@ -44,6 +45,18 @@ export class StepOneComponent {
   })
 
   constructor(private fb: FormBuilder, private store: Store) {}
+
+  ngOnInit(): void {
+    this.initializeValues()
+  }
+
+  initializeValues(): void {
+    this.activeTabIndex$ = this.store.select(activeTabSelector)
+  }
+
+  setActiveTabIndex(index: number) {
+    this.store.dispatch(setActiveTabAction({activeTabIndex: index}))
+  }
 
   onSubmit() {
     console.log(this.form.value)

@@ -3,6 +3,7 @@ import {NgModule} from '@angular/core'
 import {ReactiveFormsModule} from '@angular/forms'
 import {RouterModule} from '@angular/router'
 import {StoreModule} from '@ngrx/store'
+import {TuiLetModule} from '@taiga-ui/cdk'
 import {
   TuiButtonModule,
   TuiErrorModule,
@@ -40,6 +41,7 @@ import {STEP_ONE_FEATURE} from './store/state'
     TuiSelectModule,
     TuiDataListWrapperModule,
     TuiInputPhoneModule,
+    TuiLetModule,
   ],
   exports: [StepOneComponent],
 })

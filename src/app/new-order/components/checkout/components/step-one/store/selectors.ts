@@ -9,3 +9,8 @@ export const personSelector = createSelector(
   stepOneFeatureSelector,
   (state: StepOneStateInterface) => state.person
 )
+
+export const activeTabSelector = createSelector(
+  stepOneFeatureSelector,
+  (state: StepOneStateInterface) => state.activeTabIndex
+)

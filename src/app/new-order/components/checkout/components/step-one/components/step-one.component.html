@@ -1,6 +1,14 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
+<form
+  [formGroup]="form"
+  (ngSubmit)="onSubmit()"
+  *tuiLet="activeTabIndex$ | async as activeTabIndex"
+>
   <tui-loader [showLoader]="false">
-    <tui-tabs [(activeItemIndex)]="activeTabIndex" class="mb-8">
+    <tui-tabs
+      [activeItemIndex]="activeTabIndex"
+      (activeItemIndexChange)="setActiveTabIndex($event)"
+      class="mb-8"
+    >
       <button tuiTab>Физическое лицо</button>
       <button tuiTab>Юридическое лицо</button>
     </tui-tabs>
@@ -161,7 +169,7 @@
   </fieldset>
   <fieldset *ngIf="activeTabIndex === 1"></fieldset>
 
-  <div class="mt-5 grid grid-cols-3 gap-x-5">
+  <div *ngIf="activeTabIndex !== -1" class="mt-5 grid grid-cols-3 gap-x-5">
     <button
       [routerLink]="['/new-order', 'checkout', '1']"
       tuiButton
