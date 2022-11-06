@@ -24,14 +24,36 @@
     <ng-container *tuiLet="isOfficesLoading$ | async as isOfficesLoading">
       <ng-container *tuiLet="offices$ | async as offices">
         <tui-loader [showLoader]="isOfficesLoading">
-          <tui-tabs
-            *ngIf="offices && !isOfficesLoading"
-            [activeItemIndex]="activeTabIndex$ | async"
-            (activeItemIndexChange)="setActiveTabIndex($event)"
-            class="mb-8"
-          >
-            <button tuiTab *ngFor="let tab of tabs">{{ TabName[tab] }}</button>
-          </tui-tabs>
+          <!--          <tui-tabs-->
+          <!--            *ngIf="offices && !isOfficesLoading"-->
+          <!--            [activeItemIndex]="activeTabIndex$ | async"-->
+          <!--            (activeItemIndexChange)="setActiveTabIndex($event)"-->
+          <!--            class="mb-8"-->
+          <!--          >-->
+          <!--            <button tuiTab *ngFor="let tab of tabs">{{ TabName[tab] }}</button>-->
+          <!--          </tui-tabs>-->
+          <div class="mt-4 mb-5 flex">
+            <button
+              type="button"
+              class="radius flex-grow rounded-tl-sm rounded-bl-sm py-3 px-1 text-center text-xs"
+              [class]="
+                (activeTabIndex$ | async) === 0 ? 'bg-yellow' : 'bg-gray-100'
+              "
+              (click)="setActiveTabIndex(0)"
+            >
+              Сдать в отделение
+            </button>
+            <button
+              type="button"
+              class="flex-grow rounded-tr-sm rounded-br-sm py-3 px-1 text-center text-xs"
+              [class]="
+                (activeTabIndex$ | async) === 1 ? 'bg-yellow' : 'bg-gray-100'
+              "
+              (click)="setActiveTabIndex(1)"
+            >
+              Вызвать курьера
+            </button>
+          </div>
         </tui-loader>
         <div *ngIf="(activeTabIndex$ | async) === 0">
           <label class="w-full">
