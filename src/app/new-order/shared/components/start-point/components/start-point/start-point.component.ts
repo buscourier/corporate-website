@@ -9,6 +9,7 @@ import {STRINGIFY_CITIES} from '../../../../../../shared/handlers/string-handler
 import {OfficeInterface} from '../../../../../../shared/types/office.interface'
 import {StartCityInterface} from '../../../../../../shared/types/start-city.interface'
 import {CourierInterface} from '../../../../types/courier.interface'
+import {courierValueChangesAction} from '../../store/actions/courier-value-changes.action'
 import {getCitiesAction} from '../../store/actions/get-cities.action'
 import {getOfficesAction} from '../../store/actions/get-offices.action'
 import {setCityAction} from '../../store/actions/set-city.action'
@@ -17,6 +18,7 @@ import {setOfficeAction} from '../../store/actions/set-office.action'
 import {
   citiesSelector,
   citySelector,
+  courierSelector,
   dateSelector,
   isCitiesLoadedSelector,
   isCitiesLoadingSelector,
@@ -52,6 +54,12 @@ export class StartPointComponent implements OnInit {
   city = this.fb.control(null)
   give = this.fb.control(null)
   date = this.fb.control(this.setCurrentDate())
+  pickup = this.fb.group<CourierInterface>({
+    street: '',
+    building: '',
+    apartment: '',
+    time: '',
+  })
 
   cityValues$ = using(
     () =>
@@ -95,15 +103,22 @@ export class StartPointComponent implements OnInit {
     () => this.store.select(dateSelector)
   )
 
+  pickupValues$ = using(
+    () =>
+      this.pickup.valueChanges
+        .pipe(
+          tap((pickup: CourierInterface) => {
+            this.store.dispatch(courierValueChangesAction({pickup}))
+          })
+        )
+        .subscribe(),
+    () => this.store.select(courierSelector)
+  )
+
   form = this.fb.group({
     city: this.city,
     give: this.give,
-    pickup: this.fb.group<CourierInterface>({
-      street: '',
-      building: '',
-      apartment: '',
-      time: '',
-    }),
+    pickup: this.pickup,
     date: this.date,
   })
 

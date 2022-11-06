@@ -17,7 +17,7 @@ export enum ActionTypes {
   // SET_OFFICE_SUCCESS = '[Start point] Set office success',
   // SET_OFFICE_FAILURE = '[Start point] Set office failure',
 
-  SET_COURIER = '[Start point] Courier changed',
+  COURIER_VALUE_CHANGES = '[Start point] Courier value changes',
   // SET_COURIER_SUCCESS = '[Start point] Set courier success',
   // SET_COURIER_FAILURE = '[Start point] Set courier failure',
 

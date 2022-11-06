@@ -1,6 +1,7 @@
 import {Action, createReducer, on} from '@ngrx/store'
 import {StartPointStateInterface} from '../types/start-point-state.interface'
 import {citiesLoadedAction} from './actions/cities-loaded.action'
+import {courierValueChangesAction} from './actions/courier-value-changes.action'
 import {
   getCitiesAction,
   getCitiesFailureAction,
@@ -13,7 +14,6 @@ import {
 } from './actions/get-offices.action'
 import {setActiveTabAction} from './actions/set-active-tab.action'
 import {setCityAction} from './actions/set-city.action'
-import {setCourierAction} from './actions/set-courier.action'
 import {setDateAction} from './actions/set-date.action'
 import {setOfficeAction} from './actions/set-office.action'
 import {initialState} from './state'
@@ -63,10 +63,13 @@ const startPointReducer = createReducer(
     ...state,
     give,
   })),
-  on(setCourierAction, (state: StartPointStateInterface, {pickup}) => ({
-    ...state,
-    pickup,
-  })),
+  on(
+    courierValueChangesAction,
+    (state: StartPointStateInterface, {pickup}) => ({
+      ...state,
+      pickup,
+    })
+  ),
   on(setDateAction, (state: StartPointStateInterface, {date}) => ({
     ...state,
     date,

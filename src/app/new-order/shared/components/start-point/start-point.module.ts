@@ -19,6 +19,7 @@ import {
   TuiSelectModule,
   TuiTabsModule,
 } from '@taiga-ui/kit'
+import {PatchFormGroupValuesModule} from '../../../../shared/directives/patch-form-group-values/patch-form-group-values.module'
 import {SetControlValueModule} from '../../../../shared/directives/set-control-value/set-control-value.module'
 import {StartPointComponent} from './components/start-point/start-point.component'
 import {GetCitiesEffect} from './store/effects/get-cities.effect'
@@ -46,6 +47,7 @@ import {START_POINT_FEATURE} from './store/state'
     TuiInputDateModule,
     ReactiveFormsModule,
     SetControlValueModule,
+    PatchFormGroupValuesModule,
   ],
   exports: [StartPointComponent],
 })
