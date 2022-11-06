@@ -3,5 +3,5 @@ import {ActionTypes} from '../action-types'
 
 export const setActiveTabAction = createAction(
   ActionTypes.SET_ACTIVE_TAB,
-  props<{index: number}>()
+  props<{activeTabIndex: number}>()
 )

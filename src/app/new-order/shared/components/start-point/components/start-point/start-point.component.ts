@@ -12,10 +12,12 @@ import {CourierInterface} from '../../../../types/courier.interface'
 import {courierValueChangesAction} from '../../store/actions/courier-value-changes.action'
 import {getCitiesAction} from '../../store/actions/get-cities.action'
 import {getOfficesAction} from '../../store/actions/get-offices.action'
+import {setActiveTabAction} from '../../store/actions/set-active-tab.action'
 import {setCityAction} from '../../store/actions/set-city.action'
 import {setDateAction} from '../../store/actions/set-date.action'
 import {setOfficeAction} from '../../store/actions/set-office.action'
 import {
+  activeTabSelector,
   citiesSelector,
   citySelector,
   courierSelector,
@@ -50,6 +52,7 @@ export class StartPointComponent implements OnInit {
   cities$: Observable<StartCityInterface[]>
   offices$: Observable<OfficeInterface[]>
   backendErrors$: Observable<string | null>
+  activeTabIndex$: Observable<number>
 
   city = this.fb.control(null)
   give = this.fb.control(null)
@@ -69,7 +72,7 @@ export class StartPointComponent implements OnInit {
             if (city) {
               this.store.dispatch(setCityAction({city}))
               this.store.dispatch(getOfficesAction({id: city.office_id}))
-              this.activeTabIndex = -1
+              // this.activeTabIndex = -1
             }
           })
         )
@@ -123,7 +126,6 @@ export class StartPointComponent implements OnInit {
   })
 
   tabs: string[]
-  activeTabIndex = -1
 
   readonly TabName = {
     give: 'Сдать в отделение',
@@ -156,6 +158,12 @@ export class StartPointComponent implements OnInit {
       filter(Boolean),
       tap((cities: StartCityInterface[]) => {
         this.form.get('city').enable()
+      })
+    )
+
+    this.activeTabIndex$ = this.store.select(activeTabSelector).pipe(
+      tap((index) => {
+        console.log('tab index', index)
       })
     )
 
@@ -212,13 +220,16 @@ export class StartPointComponent implements OnInit {
       )
       .subscribe((tabs: Array<string>) => {
         this.tabs = tabs
-        this.activeTabIndex = 0
       })
   }
 
   setCurrentDate() {
     const date = new Date()
     return new TuiDay(date.getFullYear(), date.getMonth(), date.getDate())
+  }
+
+  setActiveTabIndex(index: number) {
+    this.store.dispatch(setActiveTabAction({activeTabIndex: index}))
   }
 
   onSubmit() {

@@ -26,13 +26,14 @@
         <tui-loader [showLoader]="isOfficesLoading">
           <tui-tabs
             *ngIf="offices && !isOfficesLoading"
-            [(activeItemIndex)]="activeTabIndex"
+            [activeItemIndex]="activeTabIndex$ | async"
+            (activeItemIndexChange)="setActiveTabIndex($event)"
             class="mb-8"
           >
             <button tuiTab *ngFor="let tab of tabs">{{ TabName[tab] }}</button>
           </tui-tabs>
         </tui-loader>
-        <div *ngIf="activeTabIndex === 0">
+        <div *ngIf="(activeTabIndex$ | async) === 0">
           <label class="w-full">
             <span class="mb-1 inline-block text-xs">
               Выберите отделение
@@ -61,7 +62,7 @@
           </label>
         </div>
         <div
-          *ngIf="activeTabIndex === 1"
+          *ngIf="(activeTabIndex$ | async) === 1"
           [formGroup]="pickup"
           class="mb-4 space-y-4"
         >

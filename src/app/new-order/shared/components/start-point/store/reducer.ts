@@ -74,10 +74,13 @@ const startPointReducer = createReducer(
     ...state,
     date,
   })),
-  on(setActiveTabAction, (state: StartPointStateInterface, {index}) => ({
-    ...state,
-    activeTabIndex: index,
-  }))
+  on(
+    setActiveTabAction,
+    (state: StartPointStateInterface, {activeTabIndex}) => ({
+      ...state,
+      activeTabIndex,
+    })
+  )
 )
 
 export function reducer(state: StartPointStateInterface, action: Action) {
