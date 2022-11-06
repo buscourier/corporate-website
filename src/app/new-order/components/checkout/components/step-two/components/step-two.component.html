@@ -1,6 +1,8 @@
 <div>
-  <app-start-point></app-start-point>
+  <app-start-point #start></app-start-point>
 </div>
+
+valid {{ start.form.valid }}
 
 <div class="mt-5 flex justify-between">
   <button
@@ -8,6 +10,7 @@
     type="button"
     tuiButton
     size="m"
+    appearance="secondary"
   >
     Назад
   </button>

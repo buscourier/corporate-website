@@ -1,8 +1,11 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
+<form [formGroup]="form">
   <label class="w-full" *tuiLet="isCitiesLoading$ | async as isCitiesLoading">
-    <span class="mb-1 inline-block text-xs text-gray-500"
-      >Город отправления:</span
-    >
+    <span class="mb-1 inline-block text-xs text-gray-500">
+      Населенный пункт
+      <sup class="text-red" *ngIf="city.errors && city.hasError('required')"
+        >*</sup
+      >
+    </span>
     <ng-container *tuiLet="cities$ | async as cities">
       <tui-loader [showLoader]="isCitiesLoading">
         <tui-combo-box
@@ -20,7 +23,7 @@
       </tui-loader>
     </ng-container>
   </label>
-  <ng-container *ngIf="form.get('city').value">
+  <ng-container *ngIf="city.value">
     <ng-container *tuiLet="isOfficesLoading$ | async as isOfficesLoading">
       <ng-container *tuiLet="offices$ | async as offices">
         <ng-container *tuiLet="activeTabIndex$ | async as activeTabIndex">
@@ -49,10 +52,7 @@
                 Выберите отделение
                 <sup
                   class="text-red"
-                  *ngIf="
-                    form.get('give').errors &&
-                    form.get('give').hasError('required')
-                  "
+                  *ngIf="give.errors && give.hasError('required')"
                   >*</sup
                 >
               </span>
@@ -82,8 +82,8 @@
                 <sup
                   class="text-red"
                   *ngIf="
-                    form.get('pickup.street').errors &&
-                    form.get('pickup.street').hasError('required')
+                    pickup.get('street').errors &&
+                    pickup.get('street').hasError('required')
                   "
                   >*</sup
                 >
@@ -107,8 +107,8 @@
                   <sup
                     class="text-red"
                     *ngIf="
-                      form.get('pickup.building').errors &&
-                      form.get('pickup.building').hasError('required')
+                      pickup.get('building').errors &&
+                      pickup.get('building').hasError('required')
                     "
                     >*</sup
                   >
@@ -131,8 +131,8 @@
                   <sup
                     class="text-red"
                     *ngIf="
-                      form.get('pickup.apartment').errors &&
-                      form.get('pickup.apartment').hasError('required')
+                      pickup.get('apartment').errors &&
+                      pickup.get('apartment').hasError('required')
                     "
                     >*</sup
                   >
@@ -156,8 +156,8 @@
                 <sup
                   class="text-red"
                   *ngIf="
-                    form.get('pickup.time').errors &&
-                    form.get('pickup.time').hasError('required')
+                    pickup.get('time').errors &&
+                    pickup.get('time').hasError('required')
                   "
                   >*</sup
                 >
@@ -178,11 +178,7 @@
       <label class="mt-5 block">
         <span class="mb-1 inline-block text-xs">
           Дата оправления
-          <sup
-            class="text-red"
-            *ngIf="
-              form.get('date').errors && form.get('date').hasError('required')
-            "
+          <sup class="text-red" *ngIf="date.errors && date.hasError('required')"
             >*</sup
           >
         </span>
@@ -200,5 +196,4 @@
       </label>
     </ng-container>
   </ng-container>
-  <button type="submit">Ok</button>
 </form>

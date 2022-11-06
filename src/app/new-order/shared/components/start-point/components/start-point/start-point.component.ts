@@ -39,7 +39,6 @@ import {
       provide: TUI_VALIDATION_ERRORS,
       useValue: {
         required: `Поле обязательно для заполнения`,
-        email: `Укажите корректный email`,
       },
     },
   ],
@@ -54,9 +53,9 @@ export class StartPointComponent implements OnInit {
   backendErrors$: Observable<string | null>
   activeTabIndex$: Observable<number>
 
-  city = this.fb.control(null)
-  give = this.fb.control(null)
-  date = this.fb.control(this.setCurrentDate())
+  city = this.fb.control(null, [Validators.required])
+  give = this.fb.control(null, [Validators.required])
+  date = this.fb.control(null, [Validators.required])
   pickup = this.fb.group({
     street: ['', [Validators.required]],
     building: ['', [Validators.required]],
@@ -172,6 +171,10 @@ export class StartPointComponent implements OnInit {
         this.createTabControls(offices)
       })
     )
+
+    this.city.disable()
+    this.setActiveTabIndex(0)
+    this.form.get('date').setValue(this.setCurrentDate())
   }
 
   createTabControls(offices: OfficeInterface[]) {
@@ -208,9 +211,18 @@ export class StartPointComponent implements OnInit {
 
   setActiveTabIndex(index: number) {
     this.store.dispatch(setActiveTabAction({activeTabIndex: index}))
-  }
 
-  onSubmit() {
-    console.log('this.form.value', this.form.value)
+    switch (index) {
+      case 0:
+        this.give.enable()
+        this.pickup.disable()
+        this.store.dispatch(courierValueChangesAction({pickup: null}))
+        break
+      case 1:
+        this.pickup.enable()
+        this.give.disable()
+        this.store.dispatch(setOfficeAction({give: null}))
+        break
+    }
   }
 }
