@@ -19,6 +19,7 @@ import {
   TuiSelectModule,
   TuiTabsModule,
 } from '@taiga-ui/kit'
+import {SetControlValueModule} from '../../../../shared/directives/set-control-value/set-control-value.module'
 import {StartPointComponent} from './components/start-point/start-point.component'
 import {GetCitiesEffect} from './store/effects/get-cities.effect'
 import {GetOfficesEffect} from './store/effects/get-offices.effect'
@@ -44,6 +45,7 @@ import {START_POINT_FEATURE} from './store/state'
     TuiRadioListModule,
     TuiInputDateModule,
     ReactiveFormsModule,
+    SetControlValueModule,
   ],
   exports: [StartPointComponent],
 })

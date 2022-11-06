@@ -7,7 +7,8 @@
       <tui-loader [showLoader]="isCitiesLoading">
         <tui-select
           tuiTextfieldSize="m"
-          formControlName="city"
+          [formControl]="city"
+          [setControlValue]="cityValues$ | async"
           [tuiTextfieldLabelOutside]="true"
         >
           {{ isCitiesLoading ? '' : 'Выберите город' }}
@@ -39,7 +40,8 @@
             <tui-loader [showLoader]="isOfficesLoading">
               <tui-select
                 tuiTextfieldSize="m"
-                formControlName="give"
+                [formControl]="give"
+                [setControlValue]="giveValues$ | async"
                 [tuiTextfieldLabelOutside]="true"
               >
                 {{ isOfficesLoading ? '' : 'Выберите отделение' }}
@@ -118,7 +120,8 @@
         <tui-input-date
           tuiUnfinishedValidator="Выберите дату"
           [tuiTextfieldLabelOutside]="true"
-          formControlName="date"
+          [formControl]="date"
+          [setControlValue]="dateValues$ | async"
         >
         </tui-input-date>
         <tui-error

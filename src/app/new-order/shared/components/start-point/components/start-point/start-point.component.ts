@@ -3,7 +3,7 @@ import {FormBuilder} from '@angular/forms'
 import {Store} from '@ngrx/store'
 import {TuiDay} from '@taiga-ui/cdk'
 import {TUI_VALIDATION_ERRORS, tuiItemsHandlersProvider} from '@taiga-ui/kit'
-import {filter, first, map, Observable, of, switchMap} from 'rxjs'
+import {filter, first, map, Observable, of, switchMap, using} from 'rxjs'
 import {concatAll, tap} from 'rxjs/operators'
 import {STRINGIFY_CITIES} from '../../../../../../shared/handlers/string-handlers'
 import {OfficeInterface} from '../../../../../../shared/types/office.interface'
@@ -12,12 +12,16 @@ import {CourierInterface} from '../../../../types/courier.interface'
 import {getCitiesAction} from '../../store/actions/get-cities.action'
 import {getOfficesAction} from '../../store/actions/get-offices.action'
 import {setCityAction} from '../../store/actions/set-city.action'
+import {setDateAction} from '../../store/actions/set-date.action'
+import {setOfficeAction} from '../../store/actions/set-office.action'
 import {
   citiesSelector,
   citySelector,
+  dateSelector,
   isCitiesLoadedSelector,
   isCitiesLoadingSelector,
   isOfficesLoadingSelector,
+  officeSelector,
   officesSelector,
 } from '../../store/selectors'
 
@@ -45,16 +49,62 @@ export class StartPointComponent implements OnInit {
   offices$: Observable<OfficeInterface[]>
   backendErrors$: Observable<string | null>
 
+  city = this.fb.control(null)
+  give = this.fb.control(null)
+  date = this.fb.control(this.setCurrentDate())
+
+  cityValues$ = using(
+    () =>
+      this.city.valueChanges
+        .pipe(
+          tap((city: StartCityInterface) => {
+            if (city) {
+              this.store.dispatch(setCityAction({city}))
+              this.store.dispatch(getOfficesAction({id: city.office_id}))
+              this.activeTabIndex = -1
+            }
+          })
+        )
+        .subscribe(),
+    () => this.store.select(citySelector)
+  )
+
+  giveValues$ = using(
+    () =>
+      this.give.valueChanges
+        .pipe(
+          tap((give: OfficeInterface) => {
+            if (give) {
+              this.store.dispatch(setOfficeAction({give}))
+            }
+          })
+        )
+        .subscribe(),
+    () => this.store.select(officeSelector)
+  )
+
+  dateValues$ = using(
+    () =>
+      this.date.valueChanges
+        .pipe(
+          tap((date: TuiDay) => {
+            this.store.dispatch(setDateAction({date}))
+          })
+        )
+        .subscribe(),
+    () => this.store.select(dateSelector)
+  )
+
   form = this.fb.group({
-    city: [{value: null, disabled: true}],
-    give: null,
+    city: this.city,
+    give: this.give,
     pickup: this.fb.group<CourierInterface>({
       street: '',
       building: '',
       apartment: '',
       time: '',
     }),
-    date: this.setCurrentDate(),
+    date: this.date,
   })
 
   tabs: string[]
@@ -78,7 +128,6 @@ export class StartPointComponent implements OnInit {
     this.store
       .select(isCitiesLoadedSelector)
       .pipe(
-        tap((is) => console.log('is', is)),
         filter((isCitiesLoaded: boolean) => !isCitiesLoaded),
         tap(() => this.store.dispatch(getCitiesAction()))
       )
@@ -97,30 +146,20 @@ export class StartPointComponent implements OnInit {
 
     this.offices$ = this.store.select(officesSelector).pipe(
       tap((offices: OfficeInterface[]) => {
-        this.form.get('give').setValue(offices[0]) //TODO consider another way to set default office
+        // if (offices.length < 2) {
+        //   this.give.patchValue(offices[0])
+        // }
+        // this.form.get('give').setValue(offices[0]) //TODO consider another way to set default office
         this.createTabControls(offices)
       })
     )
 
-    this.store.select(citySelector).pipe(
-      filter(Boolean),
-      tap((city: StartCityInterface) => {
-        this.form.get('city').patchValue(city)
-      })
-    )
-
-    this.form
-      .get('city')
-      .valueChanges.pipe(
-        tap((city: StartCityInterface | null) => {
-          if (city) {
-            this.store.dispatch(setCityAction({city}))
-            this.store.dispatch(getOfficesAction({id: city.office_id}))
-            this.activeTabIndex = -1
-          }
-        })
-      )
-      .subscribe()
+    // this.store.select(citySelector).pipe(
+    //   filter(Boolean),
+    //   tap((city: StartCityInterface) => {
+    //     this.form.get('city').patchValue(city)
+    //   })
+    // )
 
     this.form
       .get('give')

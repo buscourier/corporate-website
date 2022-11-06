@@ -52,7 +52,7 @@ export const courierSelector = createSelector(
   (state: StartPointStateInterface) => state.pickup
 )
 
-export const DateSelector = createSelector(
+export const dateSelector = createSelector(
   startPointFeatureSelector,
   (state: StartPointStateInterface) => state.date
 )
