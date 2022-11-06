@@ -9,13 +9,13 @@ import {STRINGIFY_CITIES} from '../../../../../../shared/handlers/string-handler
 import {OfficeInterface} from '../../../../../../shared/types/office.interface'
 import {StartCityInterface} from '../../../../../../shared/types/start-city.interface'
 import {CourierInterface} from '../../../../types/courier.interface'
-import {courierValueChangesAction} from '../../store/actions/courier-value-changes.action'
+import {changeActiveTabAction} from '../../store/actions/change-active-tab.action'
+import {changeCityAction} from '../../store/actions/change-city.action'
+import {changeCourierAction} from '../../store/actions/change-courier.action'
+import {changeDateAction} from '../../store/actions/change-date.action'
+import {changeOfficeAction} from '../../store/actions/change-office.action'
 import {getCitiesAction} from '../../store/actions/get-cities.action'
 import {getOfficesAction} from '../../store/actions/get-offices.action'
-import {setActiveTabAction} from '../../store/actions/set-active-tab.action'
-import {setCityAction} from '../../store/actions/set-city.action'
-import {setDateAction} from '../../store/actions/set-date.action'
-import {setOfficeAction} from '../../store/actions/set-office.action'
 import {
   activeTabSelector,
   citiesSelector,
@@ -70,9 +70,8 @@ export class StartPointComponent implements OnInit {
         .pipe(
           tap((city: StartCityInterface) => {
             if (city) {
-              this.store.dispatch(setCityAction({city}))
+              this.store.dispatch(changeCityAction({city}))
               this.store.dispatch(getOfficesAction({id: city.office_id}))
-              // this.activeTabIndex = -1
             }
           })
         )
@@ -86,7 +85,7 @@ export class StartPointComponent implements OnInit {
         .pipe(
           tap((give: OfficeInterface) => {
             if (give) {
-              this.store.dispatch(setOfficeAction({give}))
+              this.store.dispatch(changeOfficeAction({give}))
             }
           })
         )
@@ -99,7 +98,7 @@ export class StartPointComponent implements OnInit {
       this.date.valueChanges
         .pipe(
           tap((date: TuiDay) => {
-            this.store.dispatch(setDateAction({date}))
+            this.store.dispatch(changeDateAction({date}))
           })
         )
         .subscribe(),
@@ -111,7 +110,7 @@ export class StartPointComponent implements OnInit {
       this.pickup.valueChanges
         .pipe(
           tap((pickup: CourierInterface) => {
-            this.store.dispatch(courierValueChangesAction({pickup}))
+            this.store.dispatch(changeCourierAction({pickup}))
           })
         )
         .subscribe(),
@@ -161,7 +160,22 @@ export class StartPointComponent implements OnInit {
       })
     )
 
-    this.activeTabIndex$ = this.store.select(activeTabSelector)
+    this.activeTabIndex$ = this.store.select(activeTabSelector).pipe(
+      tap((index: number) => {
+        switch (index) {
+          case 0:
+            this.give.enable()
+            this.pickup.disable()
+            this.store.dispatch(changeCourierAction({pickup: null}))
+            break
+          case 1:
+            this.pickup.enable()
+            this.give.disable()
+            this.store.dispatch(changeOfficeAction({give: null}))
+            break
+        }
+      })
+    )
 
     this.offices$ = this.store.select(officesSelector).pipe(
       tap((offices: OfficeInterface[]) => {
@@ -174,7 +188,7 @@ export class StartPointComponent implements OnInit {
     )
 
     this.city.disable()
-    this.setActiveTabIndex(0)
+    // this.setActiveTabIndex(0)
   }
 
   createTabControls(offices: OfficeInterface[]) {
@@ -205,19 +219,6 @@ export class StartPointComponent implements OnInit {
   }
 
   setActiveTabIndex(index: number) {
-    this.store.dispatch(setActiveTabAction({activeTabIndex: index}))
-
-    switch (index) {
-      case 0:
-        this.give.enable()
-        this.pickup.disable()
-        this.store.dispatch(courierValueChangesAction({pickup: null}))
-        break
-      case 1:
-        this.pickup.enable()
-        this.give.disable()
-        this.store.dispatch(setOfficeAction({give: null}))
-        break
-    }
+    this.store.dispatch(changeActiveTabAction({activeTabIndex: index}))
   }
 }

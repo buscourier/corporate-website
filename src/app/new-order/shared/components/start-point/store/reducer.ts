@@ -1,7 +1,11 @@
 import {Action, createReducer, on} from '@ngrx/store'
 import {StartPointStateInterface} from '../types/start-point-state.interface'
+import {changeActiveTabAction} from './actions/change-active-tab.action'
+import {changeCityAction} from './actions/change-city.action'
+import {changeCourierAction} from './actions/change-courier.action'
+import {changeDateAction} from './actions/change-date.action'
+import {changeOfficeAction} from './actions/change-office.action'
 import {citiesLoadedAction} from './actions/cities-loaded.action'
-import {courierValueChangesAction} from './actions/courier-value-changes.action'
 import {
   getCitiesAction,
   getCitiesFailureAction,
@@ -12,10 +16,6 @@ import {
   getOfficesFailureAction,
   getOfficesSuccessAction,
 } from './actions/get-offices.action'
-import {setActiveTabAction} from './actions/set-active-tab.action'
-import {setCityAction} from './actions/set-city.action'
-import {setDateAction} from './actions/set-date.action'
-import {setOfficeAction} from './actions/set-office.action'
 import {initialState} from './state'
 
 const startPointReducer = createReducer(
@@ -55,27 +55,24 @@ const startPointReducer = createReducer(
     isOfficesLoading: false,
     // backendErrors: errors,
   })),
-  on(setCityAction, (state: StartPointStateInterface, {city}) => ({
+  on(changeCityAction, (state: StartPointStateInterface, {city}) => ({
     ...state,
     city,
   })),
-  on(setOfficeAction, (state: StartPointStateInterface, {give}) => ({
+  on(changeOfficeAction, (state: StartPointStateInterface, {give}) => ({
     ...state,
     give,
   })),
-  on(
-    courierValueChangesAction,
-    (state: StartPointStateInterface, {pickup}) => ({
-      ...state,
-      pickup,
-    })
-  ),
-  on(setDateAction, (state: StartPointStateInterface, {date}) => ({
+  on(changeCourierAction, (state: StartPointStateInterface, {pickup}) => ({
+    ...state,
+    pickup,
+  })),
+  on(changeDateAction, (state: StartPointStateInterface, {date}) => ({
     ...state,
     date,
   })),
   on(
-    setActiveTabAction,
+    changeActiveTabAction,
     (state: StartPointStateInterface, {activeTabIndex}) => ({
       ...state,
       activeTabIndex,

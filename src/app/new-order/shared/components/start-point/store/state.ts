@@ -18,5 +18,5 @@ export const initialState: StartPointStateInterface = {
   give: null,
   pickup: null,
   date: setCurrentDate(),
-  activeTabIndex: -1,
+  activeTabIndex: 0,
 }
