@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
-import {FormBuilder} from '@angular/forms'
+import {FormBuilder, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
 import {TuiDay} from '@taiga-ui/cdk'
 import {TUI_VALIDATION_ERRORS, tuiItemsHandlersProvider} from '@taiga-ui/kit'
@@ -54,11 +54,11 @@ export class StartPointComponent implements OnInit {
   city = this.fb.control(null)
   give = this.fb.control(null)
   date = this.fb.control(this.setCurrentDate())
-  pickup = this.fb.group<CourierInterface>({
-    street: '',
-    building: '',
-    apartment: '',
-    time: '',
+  pickup = this.fb.group({
+    street: ['', [Validators.required]],
+    building: ['', [Validators.required]],
+    apartment: ['', [Validators.required]],
+    time: ['', [Validators.required]],
   })
 
   cityValues$ = using(

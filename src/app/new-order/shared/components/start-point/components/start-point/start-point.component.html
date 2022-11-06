@@ -34,9 +34,17 @@
         </tui-loader>
         <div *ngIf="activeTabIndex === 0">
           <label class="w-full">
-            <!--      <span class="mb-1 inline-block text-xs text-gray-500"-->
-            <!--        >Отделение для отправки:</span-->
-            <!--      >-->
+            <span class="mb-1 inline-block text-xs">
+              Выберите отделение
+              <sup
+                class="text-red"
+                *ngIf="
+                  form.get('give').errors &&
+                  form.get('give').hasError('required')
+                "
+                >*</sup
+              >
+            </span>
             <tui-loader [showLoader]="isOfficesLoading">
               <tui-select
                 tuiTextfieldSize="m"
@@ -44,7 +52,6 @@
                 [setControlValue]="giveValues$ | async"
                 [tuiTextfieldLabelOutside]="true"
               >
-                {{ isOfficesLoading ? '' : 'Выберите отделение' }}
                 <tui-data-list-wrapper
                   *tuiDataList
                   [items]="offices"
@@ -59,7 +66,17 @@
           class="mb-4 space-y-4"
         >
           <label class="block">
-            <span class="mb-1 inline-block text-xs">Улица</span>
+            <span class="mb-1 inline-block text-xs">
+              Улица
+              <sup
+                class="text-red"
+                *ngIf="
+                  form.get('pickup.street').errors &&
+                  form.get('pickup.street').hasError('required')
+                "
+                >*</sup
+              >
+            </span>
             <tui-input
               tuiTextfieldSize="m"
               formControlName="street"
@@ -74,9 +91,17 @@
           </label>
           <div class="flex space-x-7">
             <label class="mb-3 block flex-grow">
-              <span class="mb-1 inline-block text-xs"
-                >Дом, корпус, строение</span
-              >
+              <span class="mb-1 inline-block text-xs">
+                Дом, корпус, строение
+                <sup
+                  class="text-red"
+                  *ngIf="
+                    form.get('pickup.building').errors &&
+                    form.get('pickup.building').hasError('required')
+                  "
+                  >*</sup
+                >
+              </span>
               <tui-input
                 tuiTextfieldSize="m"
                 formControlName="building"
@@ -90,7 +115,17 @@
               ></tui-error>
             </label>
             <label class="block">
-              <span class="mb-1 inline-block text-xs">Кв. / офис</span>
+              <span class="mb-1 inline-block text-xs">
+                Кв. / офис
+                <sup
+                  class="text-red"
+                  *ngIf="
+                    form.get('pickup.apartment').errors &&
+                    form.get('pickup.apartment').hasError('required')
+                  "
+                  >*</sup
+                >
+              </span>
               <tui-input
                 tuiTextfieldSize="m"
                 formControlName="apartment"
@@ -104,19 +139,41 @@
               ></tui-error>
             </label>
           </div>
-          <tui-radio-list
-            formControlName="time"
-            orientation="horizontal"
-            [items]="timeRange"
-            [itemContent]="timeContent"
-          ></tui-radio-list>
-          <ng-template #timeContent let-data>
-            {{ data.range }}
-          </ng-template>
+          <label class="mt-4 block">
+            <span class="mb-1.5 inline-block text-xs text-gray-500">
+              Удобное время для приезда курьера
+              <sup
+                class="text-red"
+                *ngIf="
+                  form.get('pickup.time').errors &&
+                  form.get('pickup.time').hasError('required')
+                "
+                >*</sup
+              >
+            </span>
+            <tui-radio-list
+              formControlName="time"
+              orientation="horizontal"
+              [items]="timeRange"
+              [itemContent]="timeContent"
+            ></tui-radio-list>
+            <ng-template #timeContent let-data>
+              {{ data.range }}
+            </ng-template>
+          </label>
         </div>
       </ng-container>
-      <label *ngIf="form.get('give').value" class="mt-4 block">
-        <span class="mb-1 inline-block text-xs">Дата оправления</span>
+      <label class="mt-5 block">
+        <span class="mb-1 inline-block text-xs">
+          Дата оправления
+          <sup
+            class="text-red"
+            *ngIf="
+              form.get('date').errors && form.get('date').hasError('required')
+            "
+            >*</sup
+          >
+        </span>
         <tui-input-date
           tuiUnfinishedValidator="Выберите дату"
           [tuiTextfieldLabelOutside]="true"
