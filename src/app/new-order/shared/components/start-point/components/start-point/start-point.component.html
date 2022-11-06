@@ -82,6 +82,7 @@
           <div
             *ngIf="activeTabIndex === 1"
             [formGroup]="pickup"
+            [patchFormGroupValues]="pickupValues$ | async"
             class="mb-4 space-y-4"
           >
             <label class="block">
