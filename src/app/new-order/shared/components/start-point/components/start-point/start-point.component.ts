@@ -28,6 +28,7 @@ import {
   officeSelector,
   officesSelector,
 } from '../../store/selectors'
+import {initialState} from '../../store/state'
 
 @Component({
   selector: 'app-start-point',
@@ -55,7 +56,7 @@ export class StartPointComponent implements OnInit {
 
   city = this.fb.control(null, [Validators.required])
   give = this.fb.control(null, [Validators.required])
-  date = this.fb.control(null, [Validators.required])
+  date = this.fb.control(initialState.date, [Validators.required])
   pickup = this.fb.group({
     street: ['', [Validators.required]],
     building: ['', [Validators.required]],
@@ -174,7 +175,6 @@ export class StartPointComponent implements OnInit {
 
     this.city.disable()
     this.setActiveTabIndex(0)
-    this.form.get('date').setValue(this.setCurrentDate())
   }
 
   createTabControls(offices: OfficeInterface[]) {
@@ -202,11 +202,6 @@ export class StartPointComponent implements OnInit {
       .subscribe((tabs: Array<string>) => {
         this.tabs = tabs
       })
-  }
-
-  setCurrentDate() {
-    const date = new Date()
-    return new TuiDay(date.getFullYear(), date.getMonth(), date.getDate())
   }
 
   setActiveTabIndex(index: number) {
