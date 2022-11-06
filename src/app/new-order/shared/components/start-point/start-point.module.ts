@@ -11,6 +11,7 @@ import {
   TuiTextfieldControllerModule,
 } from '@taiga-ui/core'
 import {
+  TuiComboBoxModule,
   TuiDataListWrapperModule,
   TuiFieldErrorPipeModule,
   TuiInputDateModule,
@@ -48,6 +49,7 @@ import {START_POINT_FEATURE} from './store/state'
     ReactiveFormsModule,
     SetControlValueModule,
     PatchFormGroupValuesModule,
+    TuiComboBoxModule,
   ],
   exports: [StartPointComponent],
 })

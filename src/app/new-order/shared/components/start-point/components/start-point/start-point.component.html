@@ -5,7 +5,7 @@
     >
     <ng-container *tuiLet="cities$ | async as cities">
       <tui-loader [showLoader]="isCitiesLoading">
-        <tui-select
+        <tui-combo-box
           tuiTextfieldSize="m"
           [formControl]="city"
           [setControlValue]="cityValues$ | async"
@@ -16,7 +16,7 @@
             *tuiDataList
             [items]="cities"
           ></tui-data-list-wrapper>
-        </tui-select>
+        </tui-combo-box>
       </tui-loader>
     </ng-container>
   </label>
