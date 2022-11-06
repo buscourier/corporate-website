@@ -3,30 +3,41 @@
   (ngSubmit)="onSubmit()"
   *tuiLet="activeTabIndex$ | async as activeTabIndex"
 >
-  <tui-loader [showLoader]="false">
-    <tui-tabs
-      [activeItemIndex]="activeTabIndex"
-      (activeItemIndexChange)="setActiveTabIndex($event)"
-      class="mb-8"
+  <h2 class="text-lg font-medium">Ваши данные</h2>
+  <div class="mt-4 flex h-11">
+    <button
+      type="button"
+      class="radius flex-grow rounded-tl-sm rounded-bl-sm py-3 px-1 text-center text-xs hover:opacity-80"
+      [class]="activeTabIndex === 0 ? 'bg-yellow' : 'bg-gray-100'"
+      (click)="setActiveTabIndex(0)"
     >
-      <button tuiTab class="bg-amber-400">Физическое лицо</button>
+      <span>Физическое лицо</span>
+    </button>
+    <button
+      *ngIf="isLoggedIn$ | async; else checkTabButton"
+      type="button"
+      class="flex-grow rounded-tr-sm rounded-br-sm py-3 px-1 text-center text-xs hover:opacity-90"
+      [class]="activeTabIndex === 1 ? 'bg-yellow' : 'bg-gray-100'"
+      [routerLink]="['/account']"
+    >
+      <span>Юридическое лицо</span>
+    </button>
+    <ng-template #checkTabButton>
       <button
-        *ngIf="isLoggedIn$ | async; else checkTabButton"
-        [routerLink]="['/account']"
-        tuiTab
+        type="button"
+        class="flex-grow rounded-tr-sm rounded-br-sm py-3 px-1 text-center text-xs hover:opacity-90"
+        [class]="activeTabIndex === 1 ? 'bg-yellow' : 'bg-gray-100'"
+        (click)="setActiveTabIndex(1)"
       >
-        Юридическое лицо
+        <span>Юридическое лицо</span>
       </button>
-      <ng-template #checkTabButton>
-        <button tuiTab>Юридическое лицо</button>
-      </ng-template>
-    </tui-tabs>
-  </tui-loader>
+    </ng-template>
+  </div>
   <fieldset
     *ngIf="activeTabIndex === 0"
     [formGroup]="person"
     [patchFormGroupValues]="personValues$ | async"
-    class="grid grid-cols-3 gap-x-5 gap-y-4"
+    class="mt-9 grid grid-cols-3 gap-x-5 gap-y-4"
   >
     <label class="mb-3 block">
       <span class="mb-1 inline-block text-xs">
@@ -178,14 +189,17 @@
   </fieldset>
   <fieldset *ngIf="activeTabIndex === 1"></fieldset>
 
-  <p *ngIf="activeTabIndex === -1" class="text-center text-md text-gray-500">
+  <p
+    *ngIf="activeTabIndex === -1"
+    class="mt-12 text-center text-md text-gray-500"
+  >
     Выберите статус лица для<br />
     перехода на следующий шаг
   </p>
 
   <p
     *ngIf="activeTabIndex === 1 && (isAnonymous$ | async)"
-    class="text-center text-md"
+    class="mt-11 text-center text-md"
   >
     Чтобы оформить заказ как юридическое лицо, вам необходимо
     <a [routerLink]="['/account']" class="text-blue hover:cursor-pointer"

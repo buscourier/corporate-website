@@ -23,168 +23,157 @@
   <ng-container *ngIf="form.get('city').value">
     <ng-container *tuiLet="isOfficesLoading$ | async as isOfficesLoading">
       <ng-container *tuiLet="offices$ | async as offices">
-        <tui-loader [showLoader]="isOfficesLoading">
-          <!--          <tui-tabs-->
-          <!--            *ngIf="offices && !isOfficesLoading"-->
-          <!--            [activeItemIndex]="activeTabIndex$ | async"-->
-          <!--            (activeItemIndexChange)="setActiveTabIndex($event)"-->
-          <!--            class="mb-8"-->
-          <!--          >-->
-          <!--            <button tuiTab *ngFor="let tab of tabs">{{ TabName[tab] }}</button>-->
-          <!--          </tui-tabs>-->
-          <div class="mt-4 mb-5 flex">
-            <button
-              type="button"
-              class="radius flex-grow rounded-tl-sm rounded-bl-sm py-3 px-1 text-center text-xs"
-              [class]="
-                (activeTabIndex$ | async) === 0 ? 'bg-yellow' : 'bg-gray-100'
-              "
-              (click)="setActiveTabIndex(0)"
+        <ng-container *tuiLet="activeTabIndex$ | async as activeTabIndex">
+          <tui-loader [showLoader]="isOfficesLoading">
+            <div
+              class="mt-4 mb-5 flex h-11 [&>button:first-child]:rounded-tl-sm [&>button:first-child]:rounded-bl-sm [&>button:last-child]:rounded-tr-sm [&>button:last-child]:rounded-br-sm"
             >
-              Сдать в отделение
-            </button>
-            <button
-              type="button"
-              class="flex-grow rounded-tr-sm rounded-br-sm py-3 px-1 text-center text-xs"
-              [class]="
-                (activeTabIndex$ | async) === 1 ? 'bg-yellow' : 'bg-gray-100'
-              "
-              (click)="setActiveTabIndex(1)"
-            >
-              Вызвать курьера
-            </button>
-          </div>
-        </tui-loader>
-        <div *ngIf="(activeTabIndex$ | async) === 0">
-          <label class="w-full">
-            <span class="mb-1 inline-block text-xs">
-              Выберите отделение
-              <sup
-                class="text-red"
-                *ngIf="
-                  form.get('give').errors &&
-                  form.get('give').hasError('required')
+              <button
+                *ngFor="let tab of tabs; let i = index"
+                type="button"
+                class="radius flex-grow py-3 px-1 text-center text-xs"
+                [class]="
+                  activeTabIndex === i && !isOfficesLoading
+                    ? 'bg-yellow'
+                    : 'bg-gray-100'
                 "
-                >*</sup
+                (click)="setActiveTabIndex(i)"
               >
-            </span>
-            <tui-loader [showLoader]="isOfficesLoading">
-              <tui-select
-                tuiTextfieldSize="m"
-                [formControl]="give"
-                [setControlValue]="giveValues$ | async"
-                [tuiTextfieldLabelOutside]="true"
-              >
-                <tui-data-list-wrapper
-                  *tuiDataList
-                  [items]="offices"
-                ></tui-data-list-wrapper>
-              </tui-select>
-            </tui-loader>
-          </label>
-        </div>
-        <div
-          *ngIf="(activeTabIndex$ | async) === 1"
-          [formGroup]="pickup"
-          class="mb-4 space-y-4"
-        >
-          <label class="block">
-            <span class="mb-1 inline-block text-xs">
-              Улица
-              <sup
-                class="text-red"
-                *ngIf="
-                  form.get('pickup.street').errors &&
-                  form.get('pickup.street').hasError('required')
-                "
-                >*</sup
-              >
-            </span>
-            <tui-input
-              tuiTextfieldSize="m"
-              formControlName="street"
-              [tuiTextfieldLabelOutside]="true"
-            >
-              <input tuiTextfield type="text" />
-            </tui-input>
-            <tui-error
-              formControlName="street"
-              [error]="[] | tuiFieldError | async"
-            ></tui-error>
-          </label>
-          <div class="flex space-x-7">
-            <label class="mb-3 block flex-grow">
+                <span *ngIf="!isOfficesLoading">{{ TabName[tab] }}</span>
+              </button>
+            </div>
+          </tui-loader>
+          <div *ngIf="activeTabIndex === 0">
+            <label class="w-full">
               <span class="mb-1 inline-block text-xs">
-                Дом, корпус, строение
+                Выберите отделение
                 <sup
                   class="text-red"
                   *ngIf="
-                    form.get('pickup.building').errors &&
-                    form.get('pickup.building').hasError('required')
+                    form.get('give').errors &&
+                    form.get('give').hasError('required')
                   "
                   >*</sup
                 >
               </span>
-              <tui-input
-                tuiTextfieldSize="m"
-                formControlName="building"
-                [tuiTextfieldLabelOutside]="true"
-              >
-                <input tuiTextfield type="text" />
-              </tui-input>
-              <tui-error
-                formControlName="building"
-                [error]="[] | tuiFieldError | async"
-              ></tui-error>
+              <tui-loader [showLoader]="isOfficesLoading">
+                <tui-select
+                  tuiTextfieldSize="m"
+                  [formControl]="give"
+                  [setControlValue]="giveValues$ | async"
+                  [tuiTextfieldLabelOutside]="true"
+                >
+                  <tui-data-list-wrapper
+                    *tuiDataList
+                    [items]="offices"
+                  ></tui-data-list-wrapper>
+                </tui-select>
+              </tui-loader>
             </label>
+          </div>
+          <div
+            *ngIf="activeTabIndex === 1"
+            [formGroup]="pickup"
+            class="mb-4 space-y-4"
+          >
             <label class="block">
               <span class="mb-1 inline-block text-xs">
-                Кв. / офис
+                Улица
                 <sup
                   class="text-red"
                   *ngIf="
-                    form.get('pickup.apartment').errors &&
-                    form.get('pickup.apartment').hasError('required')
+                    form.get('pickup.street').errors &&
+                    form.get('pickup.street').hasError('required')
                   "
                   >*</sup
                 >
               </span>
               <tui-input
                 tuiTextfieldSize="m"
-                formControlName="apartment"
+                formControlName="street"
                 [tuiTextfieldLabelOutside]="true"
               >
                 <input tuiTextfield type="text" />
               </tui-input>
               <tui-error
-                formControlName="apartment"
+                formControlName="street"
                 [error]="[] | tuiFieldError | async"
               ></tui-error>
             </label>
+            <div class="flex space-x-7">
+              <label class="mb-3 block flex-grow">
+                <span class="mb-1 inline-block text-xs">
+                  Дом, корпус, строение
+                  <sup
+                    class="text-red"
+                    *ngIf="
+                      form.get('pickup.building').errors &&
+                      form.get('pickup.building').hasError('required')
+                    "
+                    >*</sup
+                  >
+                </span>
+                <tui-input
+                  tuiTextfieldSize="m"
+                  formControlName="building"
+                  [tuiTextfieldLabelOutside]="true"
+                >
+                  <input tuiTextfield type="text" />
+                </tui-input>
+                <tui-error
+                  formControlName="building"
+                  [error]="[] | tuiFieldError | async"
+                ></tui-error>
+              </label>
+              <label class="block">
+                <span class="mb-1 inline-block text-xs">
+                  Кв. / офис
+                  <sup
+                    class="text-red"
+                    *ngIf="
+                      form.get('pickup.apartment').errors &&
+                      form.get('pickup.apartment').hasError('required')
+                    "
+                    >*</sup
+                  >
+                </span>
+                <tui-input
+                  tuiTextfieldSize="m"
+                  formControlName="apartment"
+                  [tuiTextfieldLabelOutside]="true"
+                >
+                  <input tuiTextfield type="text" />
+                </tui-input>
+                <tui-error
+                  formControlName="apartment"
+                  [error]="[] | tuiFieldError | async"
+                ></tui-error>
+              </label>
+            </div>
+            <label class="mt-4 block">
+              <span class="mb-1.5 inline-block text-xs text-gray-500">
+                Удобное время для приезда курьера
+                <sup
+                  class="text-red"
+                  *ngIf="
+                    form.get('pickup.time').errors &&
+                    form.get('pickup.time').hasError('required')
+                  "
+                  >*</sup
+                >
+              </span>
+              <tui-radio-list
+                formControlName="time"
+                orientation="horizontal"
+                [items]="timeRange"
+                [itemContent]="timeContent"
+              ></tui-radio-list>
+              <ng-template #timeContent let-data>
+                {{ data.range }}
+              </ng-template>
+            </label>
           </div>
-          <label class="mt-4 block">
-            <span class="mb-1.5 inline-block text-xs text-gray-500">
-              Удобное время для приезда курьера
-              <sup
-                class="text-red"
-                *ngIf="
-                  form.get('pickup.time').errors &&
-                  form.get('pickup.time').hasError('required')
-                "
-                >*</sup
-              >
-            </span>
-            <tui-radio-list
-              formControlName="time"
-              orientation="horizontal"
-              [items]="timeRange"
-              [itemContent]="timeContent"
-            ></tui-radio-list>
-            <ng-template #timeContent let-data>
-              {{ data.range }}
-            </ng-template>
-          </label>
-        </div>
+        </ng-container>
       </ng-container>
       <label class="mt-5 block">
         <span class="mb-1 inline-block text-xs">

@@ -161,11 +161,7 @@ export class StartPointComponent implements OnInit {
       })
     )
 
-    this.activeTabIndex$ = this.store.select(activeTabSelector).pipe(
-      tap((index) => {
-        console.log('tab index', index)
-      })
-    )
+    this.activeTabIndex$ = this.store.select(activeTabSelector)
 
     this.offices$ = this.store.select(officesSelector).pipe(
       tap((offices: OfficeInterface[]) => {
@@ -176,24 +172,6 @@ export class StartPointComponent implements OnInit {
         this.createTabControls(offices)
       })
     )
-
-    // this.store.select(citySelector).pipe(
-    //   filter(Boolean),
-    //   tap((city: StartCityInterface) => {
-    //     this.form.get('city').patchValue(city)
-    //   })
-    // )
-
-    this.form
-      .get('give')
-      .valueChanges.pipe(
-        tap((give: OfficeInterface) => {
-          if (give) {
-            // this.store.dispatch(setOfficeAction({give}))
-          }
-        })
-      )
-      .subscribe()
   }
 
   createTabControls(offices: OfficeInterface[]) {
