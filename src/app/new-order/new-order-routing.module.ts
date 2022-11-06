@@ -4,7 +4,7 @@ import {CalculatorComponent} from './components/calculator/calculator.component'
 import {CheckoutComponent} from './components/checkout/components/checkout/checkout.component'
 import {StepOneComponent} from './components/checkout/components/step-one/components/step-one.component'
 import {StepThreeComponent} from './components/checkout/components/step-three/step-three.component'
-import {StepTwoComponent} from './components/checkout/components/step-two/step-two.component'
+import {StepTwoComponent} from './components/checkout/components/step-two/components/step-two.component'
 import {IndexComponent} from './components/index/index.component'
 
 const routes: Routes = [
