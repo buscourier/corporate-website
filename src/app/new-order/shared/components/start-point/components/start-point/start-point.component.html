@@ -22,6 +22,10 @@
         </tui-combo-box>
       </tui-loader>
     </ng-container>
+    <tui-error
+      [formControl]="city"
+      [error]="[] | tuiFieldError | async"
+    ></tui-error>
   </label>
   <ng-container *ngIf="city.value">
     <ng-container *tuiLet="isOfficesLoading$ | async as isOfficesLoading">
@@ -69,6 +73,10 @@
                   ></tui-data-list-wrapper>
                 </tui-select>
               </tui-loader>
+              <tui-error
+                [formControl]="give"
+                [error]="[] | tuiFieldError | async"
+              ></tui-error>
             </label>
           </div>
           <div
@@ -171,6 +179,10 @@
               <ng-template #timeContent let-data>
                 {{ data.range }}
               </ng-template>
+              <tui-error
+                formControlName="time"
+                [error]="[] | tuiFieldError | async"
+              ></tui-error>
             </label>
           </div>
         </ng-container>
@@ -190,7 +202,7 @@
         >
         </tui-input-date>
         <tui-error
-          formControlName="date"
+          [formControl]="date"
           [error]="[] | tuiFieldError | async"
         ></tui-error>
       </label>
