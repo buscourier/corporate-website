@@ -54,6 +54,8 @@ export class StartPointComponent implements OnInit {
   backendErrors$: Observable<string | null>
   activeTabIndex$: Observable<number>
 
+  readonly timeRange = ['8.00 - 14.00', '14.00 - 18.00']
+
   city = this.fb.control(null, [Validators.required])
   give = this.fb.control(null, [Validators.required])
   date = this.fb.control(initialState.date, [Validators.required])
@@ -61,7 +63,7 @@ export class StartPointComponent implements OnInit {
     street: ['', [Validators.required]],
     building: ['', [Validators.required]],
     apartment: ['', [Validators.required]],
-    time: ['', [Validators.required]],
+    time: [this.timeRange[0], [Validators.required]],
   })
 
   cityValues$ = using(
@@ -130,8 +132,6 @@ export class StartPointComponent implements OnInit {
     give: 'Сдать в отделение',
     pickup: 'Вызвать курьера',
   }
-
-  readonly timeRange = [{range: '8.00 - 14.00'}, {range: '14.00 - 18.00'}]
 
   constructor(private fb: FormBuilder, private store: Store) {}
 
