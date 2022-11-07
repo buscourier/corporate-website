@@ -55,6 +55,7 @@ export class EndPointComponent implements OnInit {
   activeTabIndex$: Observable<number>
 
   readonly timeRange = ['8.00 - 14.00', '14.00 - 18.00']
+  //TODO: add needToMeetTab
   tabs: string[] = []
 
   city = this.fb.control(null, [Validators.required])

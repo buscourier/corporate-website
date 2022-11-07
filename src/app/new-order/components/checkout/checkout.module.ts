@@ -9,6 +9,8 @@ import {StepOneModule} from './components/step-one/step-one.module'
 import {StepThreeModule} from './components/step-three/step-three.module'
 import {StepTwoModule} from './components/step-two/step-two.module'
 
+//TODO: Think need StepOne, StepTwo, StepThree, StepFour modules or not
+
 @NgModule({
   declarations: [CheckoutComponent, StepFourComponent],
   imports: [
