@@ -9,5 +9,5 @@ export interface EndPointStateInterface {
   city: EndCityInterface | null
   get: OfficeInterface | null
   isBus: boolean
-  activeTab: OfficeInterface | string | null
+  activeTabIndex: number
 }

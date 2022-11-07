@@ -1,5 +1,9 @@
 import {Action, createReducer, on} from '@ngrx/store'
 import {EndPointStateInterface} from '../types/end-point-state.interface'
+import {changeActiveTabAction} from './actions/change-active-tab.action'
+import {changeBusAction} from './actions/change-bus.action'
+import {changeCityAction} from './actions/change-city.action'
+import {changeOfficeAction} from './actions/change-office.action'
 import {
   getCitiesAction,
   getCitiesFailureAction,
@@ -10,10 +14,6 @@ import {
   getOfficesFailureAction,
   getOfficesSuccessAction,
 } from './actions/get-offices.action'
-import {setActiveTabAction} from './actions/set-active-tab.action'
-import {setBusAction} from './actions/set-bus.action'
-import {setCityAction} from './actions/set-city.action'
-import {setOfficeAction} from './actions/set-office.action'
 import {initialState} from './state'
 
 const endPointReducer = createReducer(
@@ -46,22 +46,25 @@ const endPointReducer = createReducer(
     isOfficesLoading: false,
     // backendErrors: errors,
   })),
-  on(setCityAction, (state: EndPointStateInterface, {city}) => ({
+  on(changeCityAction, (state: EndPointStateInterface, {city}) => ({
     ...state,
     city,
   })),
-  on(setOfficeAction, (state: EndPointStateInterface, {get}) => ({
+  on(changeOfficeAction, (state: EndPointStateInterface, {get}) => ({
     ...state,
     get,
   })),
-  on(setBusAction, (state: EndPointStateInterface, {isBus}) => ({
+  on(changeBusAction, (state: EndPointStateInterface, {isBus}) => ({
     ...state,
     isBus,
   })),
-  on(setActiveTabAction, (state: EndPointStateInterface, {activeTab}) => ({
-    ...state,
-    activeTab,
-  }))
+  on(
+    changeActiveTabAction,
+    (state: EndPointStateInterface, {activeTabIndex}) => ({
+      ...state,
+      activeTabIndex,
+    })
+  )
 )
 
 export function reducer(state: EndPointStateInterface, action: Action) {

@@ -10,5 +10,5 @@ export const initialState: EndPointStateInterface = {
   city: null,
   get: null,
   isBus: false,
-  activeTab: null,
+  activeTabIndex: 0,
 }

@@ -1,6 +1,6 @@
 import {createFeatureSelector, createSelector} from '@ngrx/store'
-import {END_POINT_FEATURE} from './state'
 import {EndPointStateInterface} from '../types/end-point-state.interface'
+import {END_POINT_FEATURE} from './state'
 
 export const endPointFeatureSelector =
   createFeatureSelector<EndPointStateInterface>(END_POINT_FEATURE)
@@ -42,5 +42,5 @@ export const isBusSelector = createSelector(
 
 export const activeTabSelector = createSelector(
   endPointFeatureSelector,
-  (state: EndPointStateInterface) => state.activeTab
+  (state: EndPointStateInterface) => state.activeTabIndex
 )
