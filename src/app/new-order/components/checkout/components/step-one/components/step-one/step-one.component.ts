@@ -8,11 +8,11 @@ import {
   isAnonymousSelector,
   isLoggedInSelector,
 } from 'src/app/auth/store/selectors'
-import {personValueChangesAction} from '../store/actions/person-value-chages.action'
-import {setActiveTabAction} from '../store/actions/set-active-tab.action'
-import {activeTabSelector, personSelector} from '../store/selectors'
-import {initialState} from '../store/state'
-import {PersonInterface} from '../types/person.interface'
+import {personValueChangesAction} from '../../store/actions/person-value-chages.action'
+import {setActiveTabAction} from '../../store/actions/set-active-tab.action'
+import {activeTabSelector, personSelector} from '../../store/selectors'
+import {initialState} from '../../store/state'
+import {PersonInterface} from '../../types/person.interface'
 
 @Component({
   selector: 'app-step-one',

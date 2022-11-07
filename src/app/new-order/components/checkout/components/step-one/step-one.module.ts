@@ -19,7 +19,7 @@ import {
   TuiTabsModule,
 } from '@taiga-ui/kit'
 import {PatchFormGroupValuesModule} from '../../../../../shared/directives/patch-form-group-values/patch-form-group-values.module'
-import {StepOneComponent} from './components/step-one.component'
+import {StepOneComponent} from './components/step-one/step-one.component'
 import {reducer} from './store/reducer'
 import {STEP_ONE_FEATURE} from './store/state'
 
