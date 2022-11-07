@@ -1,4 +1,5 @@
 import {createFeatureSelector, createSelector} from '@ngrx/store'
+import {OfficeInterface} from '../../../../../shared/types/office.interface'
 import {EndPointStateInterface} from '../types/end-point-state.interface'
 import {END_POINT_FEATURE} from './state'
 
@@ -27,10 +28,17 @@ export const isCitiesLoadedSelector = createSelector(
 
 export const officesSelector = createSelector(
   endPointFeatureSelector,
-  (state: EndPointStateInterface) => state.offices
+  (state: EndPointStateInterface) => {
+    return state.offices
+      ? state.offices.map((office: OfficeInterface) => ({
+          ...office,
+          name: office.address,
+        }))
+      : []
+  }
 )
 
-export const citySelector = createSelector(
+export const endCitySelector = createSelector(
   endPointFeatureSelector,
   (state: EndPointStateInterface) => state.city
 )
@@ -45,7 +53,7 @@ export const courierSelector = createSelector(
   (state: EndPointStateInterface) => state.delivery
 )
 
-export const isBusSelector = createSelector(
+export const busSelector = createSelector(
   endPointFeatureSelector,
   (state: EndPointStateInterface) => state.needToMeet
 )

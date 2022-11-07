@@ -1,1 +1,193 @@
-<p>cities: {{ cities$ | async | json }}</p>
+<form [formGroup]="form">
+  <label class="w-full" *tuiLet="isCitiesLoading$ | async as isCitiesLoading">
+    <span class="mb-1 inline-block text-xs text-gray-500">
+      Населенный пункт
+      <sup class="text-red" *ngIf="city.errors && city.hasError('required')"
+        >*</sup
+      >
+    </span>
+    <ng-container *tuiLet="cities$ | async as cities">
+      <tui-loader [showLoader]="isCitiesLoading">
+        <tui-combo-box
+          tuiTextfieldSize="m"
+          [formControl]="city"
+          [setControlValue]="cityValues$ | async"
+          [tuiTextfieldLabelOutside]="true"
+        >
+          {{ isCitiesLoading ? '' : 'Выберите город' }}
+          <tui-data-list-wrapper
+            *tuiDataList
+            [items]="cities"
+          ></tui-data-list-wrapper>
+        </tui-combo-box>
+      </tui-loader>
+    </ng-container>
+    <tui-error
+      [formControl]="city"
+      [error]="[] | tuiFieldError | async"
+    ></tui-error>
+  </label>
+  <ng-container *ngIf="city.value">
+    <ng-container *tuiLet="isOfficesLoading$ | async as isOfficesLoading">
+      <ng-container *tuiLet="offices$ | async as offices">
+        <ng-container *tuiLet="activeTabIndex$ | async as activeTabIndex">
+          <tui-loader [showLoader]="isOfficesLoading">
+            <div
+              class="mt-4 mb-5 flex h-11 bg-gray-50 [&>button:first-child]:rounded-tl-sm [&>button:first-child]:rounded-bl-sm [&>button:last-child]:rounded-tr-sm [&>button:last-child]:rounded-br-sm"
+            >
+              <button
+                *ngFor="let tab of tabs; let i = index"
+                type="button"
+                class="radius flex-grow py-3 px-1 text-center text-xs"
+                [class]="
+                  activeTabIndex === i && !isOfficesLoading
+                    ? 'bg-yellow'
+                    : 'bg-gray-100'
+                "
+                (click)="setActiveTabIndex(i)"
+              >
+                <span *ngIf="!isOfficesLoading">{{ TabName[tab] }}</span>
+              </button>
+            </div>
+          </tui-loader>
+          <div *ngIf="activeTabIndex === 0">
+            <label class="w-full">
+              <span class="mb-1 inline-block text-xs">
+                Выберите отделение
+                <sup
+                  class="text-red"
+                  *ngIf="get.errors && get.hasError('required')"
+                  >*</sup
+                >
+              </span>
+              <tui-loader [showLoader]="isOfficesLoading">
+                <tui-select
+                  tuiTextfieldSize="m"
+                  [formControl]="get"
+                  [setControlValue]="getValues$ | async"
+                  [tuiTextfieldLabelOutside]="true"
+                >
+                  <tui-data-list-wrapper
+                    *tuiDataList
+                    [items]="offices"
+                  ></tui-data-list-wrapper>
+                </tui-select>
+              </tui-loader>
+              <tui-error
+                [formControl]="get"
+                [error]="[] | tuiFieldError | async"
+              ></tui-error>
+            </label>
+          </div>
+          <div
+            *ngIf="activeTabIndex === 1"
+            [formGroup]="delivery"
+            [patchFormGroupValues]="deliveryValues$ | async"
+            class="mb-4 space-y-4"
+          >
+            <label class="block">
+              <span class="mb-1 inline-block text-xs">
+                Улица
+                <sup
+                  class="text-red"
+                  *ngIf="
+                    delivery.get('street').errors &&
+                    delivery.get('street').hasError('required')
+                  "
+                  >*</sup
+                >
+              </span>
+              <tui-input
+                tuiTextfieldSize="m"
+                formControlName="street"
+                [tuiTextfieldLabelOutside]="true"
+              >
+                <input tuiTextfield type="text" />
+              </tui-input>
+              <tui-error
+                formControlName="street"
+                [error]="[] | tuiFieldError | async"
+              ></tui-error>
+            </label>
+            <div class="flex space-x-7">
+              <label class="mb-3 block flex-grow">
+                <span class="mb-1 inline-block text-xs">
+                  Дом, корпус, строение
+                  <sup
+                    class="text-red"
+                    *ngIf="
+                      delivery.get('building').errors &&
+                      delivery.get('building').hasError('required')
+                    "
+                    >*</sup
+                  >
+                </span>
+                <tui-input
+                  tuiTextfieldSize="m"
+                  formControlName="building"
+                  [tuiTextfieldLabelOutside]="true"
+                >
+                  <input tuiTextfield type="text" />
+                </tui-input>
+                <tui-error
+                  formControlName="building"
+                  [error]="[] | tuiFieldError | async"
+                ></tui-error>
+              </label>
+              <label class="block">
+                <span class="mb-1 inline-block text-xs">
+                  Кв. / офис
+                  <sup
+                    class="text-red"
+                    *ngIf="
+                      delivery.get('apartment').errors &&
+                      delivery.get('apartment').hasError('required')
+                    "
+                    >*</sup
+                  >
+                </span>
+                <tui-input
+                  tuiTextfieldSize="m"
+                  formControlName="apartment"
+                  [tuiTextfieldLabelOutside]="true"
+                >
+                  <input tuiTextfield type="text" />
+                </tui-input>
+                <tui-error
+                  formControlName="apartment"
+                  [error]="[] | tuiFieldError | async"
+                ></tui-error>
+              </label>
+            </div>
+            <label class="mt-4 block">
+              <span class="mb-1.5 inline-block text-xs text-gray-500">
+                Удобное время для приезда курьера
+                <sup
+                  class="text-red"
+                  *ngIf="
+                    delivery.get('time').errors &&
+                    delivery.get('time').hasError('required')
+                  "
+                  >*</sup
+                >
+              </span>
+              <tui-radio-list
+                formControlName="time"
+                orientation="horizontal"
+                [items]="timeRange"
+                [itemContent]="timeContent"
+              ></tui-radio-list>
+              <ng-template #timeContent let-data>
+                {{ data }}
+              </ng-template>
+              <tui-error
+                formControlName="time"
+                [error]="[] | tuiFieldError | async"
+              ></tui-error>
+            </label>
+          </div>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</form>

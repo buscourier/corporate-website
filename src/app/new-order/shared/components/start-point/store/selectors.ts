@@ -28,13 +28,14 @@ export const citiesSelector = createSelector(
 
 export const officesSelector = createSelector(
   startPointFeatureSelector,
-  (state: StartPointStateInterface) =>
-    state.offices
+  (state: StartPointStateInterface) => {
+    return state.offices
       ? state.offices.map((office: OfficeInterface) => ({
           ...office,
           name: office.address,
         }))
       : []
+  }
 )
 
 export const startCitySelector = createSelector(

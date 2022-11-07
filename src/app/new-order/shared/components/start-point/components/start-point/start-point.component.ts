@@ -72,6 +72,7 @@ export class StartPointComponent implements OnInit {
         .pipe(
           tap((city: StartCityInterface) => {
             if (city) {
+              //TODO: Check is that way correct, maybe need switch to map
               this.store.dispatch(changeCityAction({city}))
               this.store.dispatch(getOfficesAction({id: city.office_id}))
             }
