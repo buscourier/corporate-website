@@ -33,7 +33,7 @@
         <ng-container *tuiLet="activeTabIndex$ | async as activeTabIndex">
           <tui-loader [showLoader]="isOfficesLoading">
             <div
-              class="mt-4 mb-5 flex h-11 [&>button:first-child]:rounded-tl-sm [&>button:first-child]:rounded-bl-sm [&>button:last-child]:rounded-tr-sm [&>button:last-child]:rounded-br-sm"
+              class="mt-4 mb-5 flex h-11 bg-gray-50 [&>button:first-child]:rounded-tl-sm [&>button:first-child]:rounded-bl-sm [&>button:last-child]:rounded-tr-sm [&>button:last-child]:rounded-br-sm"
             >
               <button
                 *ngFor="let tab of tabs; let i = index"
