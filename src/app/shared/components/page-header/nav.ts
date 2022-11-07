@@ -1,6 +1,6 @@
 export default [
   {link: 'orders/track-order', name: 'Отследить посылку'},
-  {link: 'orders/quick-order', name: 'Расчет тарифа по Приморью'},
+  {link: 'new-order', name: 'Расчет тарифа по Приморью'},
   {
     link: 'services/index',
     name: 'Услуги',

@@ -215,6 +215,12 @@ export class StartPointComponent implements OnInit {
         )
       )
       .subscribe((tabs: Array<string>) => {
+        //TODO: fix error in start-point
+
+        // EmptyErrorImpl {stack: 'Error\n    at _super (http://localhost:4200/vendor.…mplete
+        // (http://localhost:4200/vendor.js:31023:12)',
+        // name: 'EmptyError', message: 'no elements in sequence'}
+
         this.tabs = tabs
       })
   }
