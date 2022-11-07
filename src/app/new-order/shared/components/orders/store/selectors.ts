@@ -40,6 +40,11 @@ export const activeOrderSelector = createSelector(
   (state: OrdersStateInterface) => state.activeOrderIndex
 )
 
+export const ordersSelector = createSelector(
+  ordersFeatureSelector,
+  (state: OrdersStateInterface) => state.orders
+)
+
 export const backendErrorsSelector = createSelector(
   ordersFeatureSelector,
   (state: OrdersStateInterface) => state.backendErrors

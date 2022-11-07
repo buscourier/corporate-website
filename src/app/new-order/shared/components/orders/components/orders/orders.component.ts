@@ -1,18 +1,27 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+} from '@angular/core'
 import {FormBuilder, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
-import {Observable, switchMap, zip} from 'rxjs'
+import {Observable, switchMap, using, zip} from 'rxjs'
+import {tap} from 'rxjs/operators'
 import {endCitySelector} from '../../../end-point/store/selectors'
+import {OrderStateInterface} from '../../../order/types/order-state.interface'
 import {startCitySelector} from '../../../start-point/store/selectors'
 import {changeActiveOrderAction} from '../../store/actions/change-active-order.action'
 import {getAllCargosAction} from '../../store/actions/get-all-cargos.action'
 import {getAllServicesAction} from '../../store/actions/get-all-services.action'
+import {ordersValueChangesAction} from '../../store/actions/orders-value-changes.action'
 import {
   activeOrderSelector,
   isAllCargosLoadedSelector,
   isAllCargosLoadingSelector,
   isAllServicesLoadedSelector,
   isAllServicesLoadingSelector,
+  ordersSelector,
 } from '../../store/selectors'
 
 @Component({
@@ -21,31 +30,43 @@ import {
   styleUrls: ['./orders.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OrdersComponent implements OnInit {
+export class OrdersComponent implements OnInit, AfterViewInit {
   isAllCargosLoading$: Observable<boolean>
   isAllServicesLoading$: Observable<boolean>
   isAllCargosLoaded$: Observable<boolean>
   isAllServicesLoaded$: Observable<boolean>
   activeOrderIndex$: Observable<number>
 
-  orders = this.fb.array([
-    this.fb.control('', Validators.required),
-    this.fb.control('', Validators.required),
-    this.fb.control('', Validators.required),
-  ])
+  orders = this.fb.array([])
 
   form = this.fb.group({
     orders: this.orders,
   })
 
+  formValues$ = using(
+    () =>
+      this.form.valueChanges
+        .pipe(
+          tap((orders: any) => {
+            console.log('orders', orders)
+            this.store.dispatch(ordersValueChangesAction({orders}))
+          })
+        )
+        .subscribe(),
+    () => this.store.select(ordersSelector)
+  )
+
   constructor(private fb: FormBuilder, private store: Store) {}
 
   ngOnInit(): void {
-    this.fetchData()
     this.initializeValues()
   }
 
-  fetchData(): void {}
+  ngAfterViewInit(): void {
+    this.orders.push(
+      this.fb.control<OrderStateInterface>(null, Validators.required)
+    )
+  }
 
   initializeValues(): void {
     zip(
@@ -92,6 +113,8 @@ export class OrdersComponent implements OnInit {
   }
 
   addOrder() {
-    alert(1)
+    this.orders.push(
+      this.fb.control<OrderStateInterface>(null, Validators.required)
+    )
   }
 }

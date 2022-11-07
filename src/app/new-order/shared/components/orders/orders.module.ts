@@ -6,6 +6,7 @@ import {StoreModule} from '@ngrx/store'
 import {TuiLetModule} from '@taiga-ui/cdk'
 import {TuiLoaderModule} from '@taiga-ui/core'
 import {TuiTagModule} from '@taiga-ui/kit'
+import {PatchFormGroupValuesModule} from '../../../../shared/directives/patch-form-group-values/patch-form-group-values.module'
 import {OrderModule} from '../order/order.module'
 import {OrdersComponent} from './components/orders/orders.component'
 import {GetAllCargosEffect} from './store/effects/get-all-cargos.effect'
@@ -24,6 +25,7 @@ import {ORDERS_FEATURE} from './store/state'
     StoreModule.forFeature(ORDERS_FEATURE, reducer),
     EffectsModule.forFeature([GetAllCargosEffect, GetAllServicesEffect]),
     TuiLoaderModule,
+    PatchFormGroupValuesModule,
   ],
   exports: [OrdersComponent],
 })

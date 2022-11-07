@@ -9,5 +9,6 @@ export enum ActionTypes {
   GET_ALL_SERVICES_FAILURE = '[New order] Get all services failure',
   ALL_SERVICES_LOADED = '[New order] All services loaded',
 
+  CHANGE_ORDERS = '[New order] Change orders',
   CHANGE_ACTIVE_ORDER = '[New order] CHANGE_ACTIVE_ORDER',
 }

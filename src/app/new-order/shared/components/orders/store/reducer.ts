@@ -13,6 +13,7 @@ import {
   getAllServicesFailureAction,
   getAllServicesSuccessAction,
 } from './actions/get-all-services.action'
+import {ordersValueChangesAction} from './actions/orders-value-changes.action'
 import {initialState} from './state'
 
 const ordersReducer = createReducer(
@@ -55,6 +56,10 @@ const ordersReducer = createReducer(
   on(allServicesLoadedAction, (state: OrdersStateInterface, {loaded}) => ({
     ...state,
     isAllServicesLoaded: loaded,
+  })),
+  on(ordersValueChangesAction, (state: OrdersStateInterface, {orders}) => ({
+    ...state,
+    ...orders,
   })),
   on(
     changeActiveOrderAction,
