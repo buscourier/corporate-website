@@ -4,10 +4,10 @@ import {Store} from '@ngrx/store'
 import {TUI_VALIDATION_ERRORS, tuiItemsHandlersProvider} from '@taiga-ui/kit'
 import {filter, first, map, Observable, of, switchMap, using} from 'rxjs'
 import {concatAll, tap} from 'rxjs/operators'
-import {StartCityInterface} from 'src/app/shared/types/start-city.interface'
 import {STRINGIFY_CITIES} from '../../../../../../shared/handlers/string-handlers'
 import {EndCityInterface} from '../../../../../../shared/types/end-city.interface'
 import {OfficeInterface} from '../../../../../../shared/types/office.interface'
+import {StartCityInterface} from '../../../../../../shared/types/start-city.interface'
 import {CourierInterface} from '../../../../types/courier.interface'
 import {startCitySelector} from '../../../start-point/store/selectors'
 import {changeActiveTabAction} from '../../store/actions/change-active-tab.action'
@@ -71,15 +71,12 @@ export class EndPointComponent implements OnInit {
     () =>
       this.city.valueChanges
         .pipe(
-          filter(Boolean),
           tap((city: EndCityInterface) => {
-            //TODO: Check is that way correct, maybe need switch to map
-            this.store.dispatch(changeCityAction({city}))
-            this.store.dispatch(getOfficesAction({id: city.office_id}))
-
-            // if (city.need_to_meet !== '0') {
-            //   this.tabs.push('needToMeet')
-            // }
+            if (city) {
+              //TODO: Check is that way correct, maybe need switch to map
+              this.store.dispatch(changeCityAction({city}))
+              this.store.dispatch(getOfficesAction({id: city.office_id}))
+            }
           })
         )
         .subscribe(),
@@ -132,7 +129,7 @@ export class EndPointComponent implements OnInit {
   })
 
   readonly TabName = {
-    get: 'Забрать в отделении',
+    get: 'Забрать в отделение',
     delivery: 'Вызвать курьера',
     needToMeet: 'Встретить с автобуса',
   }
@@ -189,17 +186,17 @@ export class EndPointComponent implements OnInit {
     )
 
     this.offices$ = this.store.select(officesSelector).pipe(
-      filter(Boolean),
       tap((offices: OfficeInterface[]) => {
         // if (offices.length < 2) {
         //   this.give.patchValue(offices[0])
         // }
-        // this.form.get('get').setValue(offices[0]) //TODO consider another way to set default office
+        // this.form.get('give').setValue(offices[0]) //TODO consider another way to set default office
         this.createTabControls(offices)
       })
     )
 
     this.city.disable()
+    // this.setActiveTabIndex(0)
   }
 
   createTabControls(offices: OfficeInterface[]) {
@@ -223,9 +220,12 @@ export class EndPointComponent implements OnInit {
             first()
           )
         )
+        // tap(() => {
+        //   this.tabs = []
+        // })
       )
       .subscribe((tabs: Array<string>) => {
-        this.tabs = [...this.tabs, ...tabs]
+        this.tabs = tabs
       })
   }
 
