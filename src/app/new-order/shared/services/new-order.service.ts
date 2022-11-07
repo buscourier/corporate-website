@@ -35,7 +35,10 @@ export class NewOrderService {
     )
   }
 
-  getCargo(cityFromId: string, cityToId: string): Observable<CargoInterface[]> {
+  getCargos(
+    cityFromId: string,
+    cityToId: string
+  ): Observable<CargoInterface[]> {
     return this.http.get<CargoInterface[]>(
       `${this.url}/gettypes/${cityFromId}/${cityToId}`
     )

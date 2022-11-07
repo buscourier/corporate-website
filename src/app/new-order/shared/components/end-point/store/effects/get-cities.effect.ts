@@ -17,7 +17,7 @@ export class GetCitiesEffect {
     private newOrderService: NewOrderService
   ) {}
 
-  getCities = createEffect(() =>
+  getCities$ = createEffect(() =>
     this.actions$.pipe(
       ofType(getCitiesAction),
       switchMap(({cityId}) =>

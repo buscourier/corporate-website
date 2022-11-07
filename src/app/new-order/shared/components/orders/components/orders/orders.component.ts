@@ -1,9 +1,19 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
 import {FormBuilder, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
-import {zip} from 'rxjs'
+import {Observable, switchMap, zip} from 'rxjs'
 import {endCitySelector} from '../../../end-point/store/selectors'
 import {startCitySelector} from '../../../start-point/store/selectors'
+import {changeActiveOrderAction} from '../../store/actions/change-active-order.action'
+import {getAllCargosAction} from '../../store/actions/get-all-cargos.action'
+import {getAllServicesAction} from '../../store/actions/get-all-services.action'
+import {
+  activeOrderSelector,
+  isAllCargosLoadedSelector,
+  isAllCargosLoadingSelector,
+  isAllServicesLoadedSelector,
+  isAllServicesLoadingSelector,
+} from '../../store/selectors'
 
 @Component({
   selector: 'app-orders',
@@ -12,8 +22,12 @@ import {startCitySelector} from '../../../start-point/store/selectors'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrdersComponent implements OnInit {
-  isCitiesInitialized: boolean
-  activeOrderIndex = 0
+  isAllCargosLoading$: Observable<boolean>
+  isAllServicesLoading$: Observable<boolean>
+  isAllCargosLoaded$: Observable<boolean>
+  isAllServicesLoaded$: Observable<boolean>
+  activeOrderIndex$: Observable<number>
+
   orders = this.fb.array([
     this.fb.control('', Validators.required),
     this.fb.control('', Validators.required),
@@ -37,11 +51,36 @@ export class OrdersComponent implements OnInit {
     zip(
       this.store.select(startCitySelector),
       this.store.select(endCitySelector)
-    ).subscribe(([startCity, endCity]) => {
-      if (startCity && endCity) {
-        this.isCitiesInitialized = true
-      }
-    })
+    )
+      .pipe(
+        switchMap(([startCity, endCity]) => {
+          //TODO: maybe need to load like a sequence -> switchToMap ->switchToMap
+
+          if (startCity && endCity) {
+            this.store.dispatch(
+              getAllCargosAction({
+                startCityId: startCity.id,
+                endCityId: endCity.id,
+              })
+            )
+
+            this.store.dispatch(
+              getAllServicesAction({
+                startCityId: startCity.id,
+              })
+            )
+          }
+
+          return [startCity, endCity]
+        })
+      )
+      .subscribe()
+
+    this.isAllCargosLoading$ = this.store.select(isAllCargosLoadingSelector)
+    this.isAllServicesLoading$ = this.store.select(isAllServicesLoadingSelector)
+    this.isAllCargosLoaded$ = this.store.select(isAllCargosLoadedSelector)
+    this.isAllServicesLoaded$ = this.store.select(isAllServicesLoadedSelector)
+    this.activeOrderIndex$ = this.store.select(activeOrderSelector)
   }
 
   removeOrder() {
@@ -49,7 +88,7 @@ export class OrdersComponent implements OnInit {
   }
 
   selectOrder(index) {
-    this.activeOrderIndex = index
+    this.store.dispatch(changeActiveOrderAction({activeOrderIndex: index}))
   }
 
   addOrder() {

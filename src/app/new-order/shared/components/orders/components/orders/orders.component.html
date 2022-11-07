@@ -1,29 +1,43 @@
-<div [formGroup]="form">
-  <div class="space-x-1">
-    <tui-tag
-      *ngFor="let control of orders.controls; let i = index"
-      [value]="'Заказ № ' + (i + 1)"
-      [removable]="true"
-      [hoverable]="true"
-      [disabled]="false"
-      [status]="activeOrderIndex === i ? 'primary' : 'default'"
-      [showLoader]=""
-      (edited)="removeOrder()"
-      (click)="selectOrder(i)"
-      class="rounded-xl py-2 px-3"
-    ></tui-tag>
-    <tui-tag
-      [value]="'Добавить'"
-      [hoverable]="true"
-      [disabled]="false"
-      [status]=""
-      (click)="addOrder()"
-      class="rounded-xl py-2 px-3"
-    ></tui-tag>
-  </div>
-  <div formArrayName="orders">
-    <ng-container *ngFor="let order of orders.controls; let i = index">
-      <app-order *ngIf="activeOrderIndex === i"></app-order>
-    </ng-container>
-  </div>
-</div>
+<tui-loader
+  [showLoader]="
+    (isAllCargosLoading$ | async) || (isAllServicesLoading$ | async)
+  "
+>
+  <ng-container
+    *ngIf="(isAllCargosLoaded$ | async) || (isAllServicesLoaded$ | async)"
+  >
+    <div
+      [formGroup]="form"
+      *tuiLet="activeOrderIndex$ | async as activeOrderIndex"
+      class="border-t-2 border-gray-100 pt-10"
+    >
+      <div class="space-x-1">
+        <tui-tag
+          *ngFor="let control of orders.controls; let i = index"
+          [value]="'Заказ № ' + (i + 1)"
+          [removable]="true"
+          [hoverable]="true"
+          [disabled]="false"
+          [status]="activeOrderIndex === i ? 'primary' : 'default'"
+          [showLoader]=""
+          (edited)="removeOrder()"
+          (click)="selectOrder(i)"
+          class="rounded-xl py-2 px-3"
+        ></tui-tag>
+        <tui-tag
+          [value]="'Добавить'"
+          [hoverable]="true"
+          [disabled]="false"
+          [status]=""
+          (click)="addOrder()"
+          class="rounded-xl py-2 px-3"
+        ></tui-tag>
+      </div>
+      <div formArrayName="orders">
+        <ng-container *ngFor="let order of orders.controls; let i = index">
+          <app-order *ngIf="activeOrderIndex === i"></app-order>
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
+</tui-loader>
