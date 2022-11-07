@@ -2,6 +2,7 @@ import {Action, createReducer, on} from '@ngrx/store'
 import {OrdersStateInterface} from '../types/orders-state.interface'
 import {allCargosLoadedAction} from './actions/all-cargos-loaded.action'
 import {allServicesLoadedAction} from './actions/all-services-loaded.action'
+import {changeActiveOrderAction} from './actions/change-active-order.action'
 import {
   getAllCargosAction,
   getAllCargosFailureAction,
@@ -54,7 +55,14 @@ const ordersReducer = createReducer(
   on(allServicesLoadedAction, (state: OrdersStateInterface, {loaded}) => ({
     ...state,
     isAllServicesLoaded: loaded,
-  }))
+  })),
+  on(
+    changeActiveOrderAction,
+    (state: OrdersStateInterface, {activeOrderIndex}) => ({
+      ...state,
+      activeOrderIndex,
+    })
+  )
 )
 
 export function reducer(state: OrdersStateInterface, action: Action) {
