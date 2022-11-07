@@ -1,5 +1,6 @@
 import {EndCityInterface} from '../../../../../shared/types/end-city.interface'
 import {OfficeInterface} from '../../../../../shared/types/office.interface'
+import {CourierInterface} from '../../../types/courier.interface'
 
 export interface EndPointStateInterface {
   isCitiesLoading: boolean
@@ -9,6 +10,7 @@ export interface EndPointStateInterface {
   offices: OfficeInterface[] | null
   city: EndCityInterface | null
   get: OfficeInterface | null
-  isBus: boolean
+  delivery: CourierInterface
+  needToMeet: boolean
   activeTabIndex: number
 }

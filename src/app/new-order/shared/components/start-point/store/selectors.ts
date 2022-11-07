@@ -37,7 +37,7 @@ export const officesSelector = createSelector(
       : []
 )
 
-export const citySelector = createSelector(
+export const startCitySelector = createSelector(
   startPointFeatureSelector,
   (state: StartPointStateInterface) => state.city
 )

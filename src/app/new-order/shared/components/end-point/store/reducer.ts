@@ -1,10 +1,11 @@
 import {Action, createReducer, on} from '@ngrx/store'
-import {citiesLoadedAction} from '../../start-point/store/actions/cities-loaded.action'
 import {EndPointStateInterface} from '../types/end-point-state.interface'
 import {changeActiveTabAction} from './actions/change-active-tab.action'
 import {changeBusAction} from './actions/change-bus.action'
 import {changeCityAction} from './actions/change-city.action'
+import {changeCourierAction} from './actions/change-courier.action'
 import {changeOfficeAction} from './actions/change-office.action'
+import {citiesLoadedAction} from './actions/cities-loaded.action'
 import {
   getCitiesAction,
   getCitiesFailureAction,
@@ -59,9 +60,13 @@ const endPointReducer = createReducer(
     ...state,
     get,
   })),
-  on(changeBusAction, (state: EndPointStateInterface, {isBus}) => ({
+  on(changeCourierAction, (state: EndPointStateInterface, {delivery}) => ({
     ...state,
-    isBus,
+    delivery,
+  })),
+  on(changeBusAction, (state: EndPointStateInterface, {needToMeet}) => ({
+    ...state,
+    needToMeet,
   })),
   on(
     changeActiveTabAction,

@@ -11,6 +11,7 @@ export enum ActionTypes {
 
   CHANGE_CITY = '[End point] City changed',
   CHANGE_OFFICE = '[End point] Office changed',
+  CHANGE_COURIER = '[End point] Change courier',
   CHANGE_BUS = '[End point] Bus changed',
   CHANGE_ACTIVE_TAB = '[End point] Active tab changed',
 }

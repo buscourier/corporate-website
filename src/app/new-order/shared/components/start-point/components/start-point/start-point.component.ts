@@ -19,7 +19,6 @@ import {getOfficesAction} from '../../store/actions/get-offices.action'
 import {
   activeTabSelector,
   citiesSelector,
-  citySelector,
   courierSelector,
   dateSelector,
   isCitiesLoadedSelector,
@@ -27,6 +26,7 @@ import {
   isOfficesLoadingSelector,
   officeSelector,
   officesSelector,
+  startCitySelector,
 } from '../../store/selectors'
 import {initialState} from '../../store/state'
 
@@ -78,7 +78,7 @@ export class StartPointComponent implements OnInit {
           })
         )
         .subscribe(),
-    () => this.store.select(citySelector)
+    () => this.store.select(startCitySelector)
   )
 
   giveValues$ = using(
@@ -155,8 +155,8 @@ export class StartPointComponent implements OnInit {
     this.isOfficesLoading$ = this.store.select(isOfficesLoadingSelector)
     this.cities$ = this.store.select(citiesSelector).pipe(
       filter(Boolean),
-      tap((cities: StartCityInterface[]) => {
-        this.form.get('city').enable()
+      tap(() => {
+        this.city.enable()
       })
     )
 

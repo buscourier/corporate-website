@@ -21,7 +21,7 @@ export class NewOrderService {
 
   getEndCities(startCityId: string): Observable<EndCityInterface[]> {
     return this.http.get<EndCityInterface[]>(
-      `${this.url}/getcitiesfrom/${startCityId}/0`
+      `${this.url}/getcitiesto/${startCityId}/0`
     )
   }
 

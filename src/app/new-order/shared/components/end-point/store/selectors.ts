@@ -40,9 +40,14 @@ export const officeSelector = createSelector(
   (state: EndPointStateInterface) => state.get
 )
 
+export const courierSelector = createSelector(
+  endPointFeatureSelector,
+  (state: EndPointStateInterface) => state.delivery
+)
+
 export const isBusSelector = createSelector(
   endPointFeatureSelector,
-  (state: EndPointStateInterface) => state.isBus
+  (state: EndPointStateInterface) => state.needToMeet
 )
 
 export const activeTabSelector = createSelector(
