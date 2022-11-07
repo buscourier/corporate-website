@@ -20,6 +20,11 @@ export const citiesSelector = createSelector(
   (state: EndPointStateInterface) => state.cities
 )
 
+export const isCitiesLoadedSelector = createSelector(
+  endPointFeatureSelector,
+  (state: EndPointStateInterface) => state.isCitiesLoaded
+)
+
 export const officesSelector = createSelector(
   endPointFeatureSelector,
   (state: EndPointStateInterface) => state.offices
