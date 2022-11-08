@@ -43,7 +43,6 @@ export class OrdersComponent implements OnInit {
       this.form.valueChanges
         .pipe(
           tap((orders: any) => {
-            console.log('orders', orders)
             this.store.dispatch(ordersValueChangesAction({orders}))
           })
         )
@@ -64,6 +63,12 @@ export class OrdersComponent implements OnInit {
   // }
 
   initializeValues(): void {
+    this.isAllCargosLoading$ = this.store.select(isAllCargosLoadingSelector)
+    this.isAllServicesLoading$ = this.store.select(isAllServicesLoadingSelector)
+    this.isAllCargosLoaded$ = this.store.select(isAllCargosLoadedSelector)
+    this.isAllServicesLoaded$ = this.store.select(isAllServicesLoadedSelector)
+    this.activeOrderIndex$ = this.store.select(activeOrderSelector)
+
     zip(
       this.store.select(startCitySelector),
       this.store.select(endCitySelector)
@@ -91,12 +96,6 @@ export class OrdersComponent implements OnInit {
         })
       )
       .subscribe()
-
-    this.isAllCargosLoading$ = this.store.select(isAllCargosLoadingSelector)
-    this.isAllServicesLoading$ = this.store.select(isAllServicesLoadingSelector)
-    this.isAllCargosLoaded$ = this.store.select(isAllCargosLoadedSelector)
-    this.isAllServicesLoaded$ = this.store.select(isAllServicesLoadedSelector)
-    this.activeOrderIndex$ = this.store.select(activeOrderSelector)
   }
 
   removeOrder() {
