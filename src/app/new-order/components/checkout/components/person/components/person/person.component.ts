@@ -97,7 +97,6 @@ export class PersonComponent
 
   ngOnInit(): void {
     this.form.updateValueAndValidity()
-    console.log('ths', this.form.value)
   }
 
   ngOnDestroy() {

@@ -1,6 +1,7 @@
 import {CommonModule} from '@angular/common'
 import {NgModule} from '@angular/core'
 import {RouterModule} from '@angular/router'
+import {TuiButtonModule} from '@taiga-ui/core'
 import {EndPointModule} from '../../shared/components/end-point/end-point.module'
 import {OrdersModule} from '../../shared/components/orders/orders.module'
 import {StartPointModule} from '../../shared/components/start-point/start-point.module'
@@ -16,6 +17,7 @@ import {CalculatorComponent} from './calculator.component'
     EndPointModule,
     OrdersModule,
     RouterModule,
+    TuiButtonModule,
   ],
   exports: [CalculatorComponent],
 })

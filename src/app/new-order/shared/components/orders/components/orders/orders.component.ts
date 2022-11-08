@@ -1,9 +1,4 @@
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  Component,
-  OnInit,
-} from '@angular/core'
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
 import {FormBuilder, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
 import {Observable, switchMap, using, zip} from 'rxjs'
@@ -30,7 +25,7 @@ import {
   styleUrls: ['./orders.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OrdersComponent implements OnInit, AfterViewInit {
+export class OrdersComponent implements OnInit {
   isAllCargosLoading$: Observable<boolean>
   isAllServicesLoading$: Observable<boolean>
   isAllCargosLoaded$: Observable<boolean>
@@ -62,11 +57,11 @@ export class OrdersComponent implements OnInit, AfterViewInit {
     this.initializeValues()
   }
 
-  ngAfterViewInit(): void {
-    this.orders.push(
-      this.fb.control<OrderStateInterface>(null, Validators.required)
-    )
-  }
+  // ngAfterViewInit(): void {
+  //   this.orders.push(
+  //     this.fb.control<OrderStateInterface>(null, Validators.required)
+  //   )
+  // }
 
   initializeValues(): void {
     zip(

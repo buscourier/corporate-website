@@ -36,7 +36,10 @@
       </div>
       <div formArrayName="orders">
         <ng-container *ngFor="let order of orders.controls; let i = index">
-          <app-order *ngIf="activeOrderIndex === i"></app-order>
+          <app-order
+            *ngIf="activeOrderIndex === i"
+            [formControlName]="i"
+          ></app-order>
         </ng-container>
       </div>
     </div>
