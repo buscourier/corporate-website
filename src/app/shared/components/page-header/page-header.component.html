@@ -239,14 +239,24 @@
                 class="mt-2 flex flex-col border-t-2 border-yellow bg-white pt-3 pr-5 pb-2 pl-4 shadow"
               >
                 <a
-                  [routerLink]="['/orders', 'quick-order', 'new']"
+                  [routerLink]="['/new-order']"
                   class="leading-7 text-gray-800 hover:text-black"
                   >Заказать доставку</a
+                >
+                <a
+                  [routerLink]="['/account', 'orders']"
+                  class="leading-7 text-gray-800 hover:text-black"
+                  >Мои заказы</a
                 >
                 <a
                   [routerLink]="['/account', 'profile', 'entity']"
                   class="leading-7 text-gray-800 hover:text-black"
                   >Персональные данные</a
+                >
+                <a
+                  [routerLink]="['/account', 'report']"
+                  class="leading-7 text-gray-800 hover:text-black"
+                  >Сформировать отчет</a
                 >
                 <button
                   type="button"
