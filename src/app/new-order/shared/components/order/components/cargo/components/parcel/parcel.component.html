@@ -1,0 +1,72 @@
+<div [formGroup]="form" class="flex space-x-4">
+  <label class="mb-3 block w-24">
+    <span class="mb-1 inline-block text-xs">Кол-во мест</span>
+    <tui-input
+      formControlName="count"
+      tuiTextfieldSize="m"
+      [tuiTextfieldLabelOutside]="true"
+    >
+      <input tuiTextfield />
+    </tui-input>
+    <tui-error
+      formControlName="count"
+      [error]="[] | tuiFieldError | async"
+    ></tui-error>
+  </label>
+  <label class="mb-3 block w-24">
+    <span class="mb-1 inline-block text-xs">Вес</span>
+    <tui-input
+      formControlName="weight"
+      tuiTextfieldSize="m"
+      [tuiTextfieldLabelOutside]="true"
+    >
+      <input tuiTextfield />
+    </tui-input>
+    <tui-error
+      formControlName="weight"
+      [error]="[] | tuiFieldError | async"
+    ></tui-error>
+  </label>
+  <label class="mb-3 block w-24">
+    <span class="mb-1 inline-block text-xs">Ширина</span>
+    <tui-input
+      formControlName="width"
+      tuiTextfieldSize="m"
+      [tuiTextfieldLabelOutside]="true"
+    >
+      <input tuiTextfield />
+    </tui-input>
+    <tui-error
+      formControlName="width"
+      [error]="[] | tuiFieldError | async"
+    ></tui-error>
+  </label>
+  <label class="mb-3 block w-24">
+    <span class="mb-1 inline-block text-xs">Высота</span>
+    <tui-input
+      formControlName="height"
+      tuiTextfieldSize="m"
+      [tuiTextfieldLabelOutside]="true"
+    >
+      <input tuiTextfield />
+    </tui-input>
+    <tui-error
+      formControlName="height"
+      [error]="[] | tuiFieldError | async"
+    ></tui-error>
+  </label>
+  <label class="mb-3 block w-24">
+    <span class="mb-1 inline-block text-xs">Длина</span>
+    <tui-input
+      formControlName="length"
+      tuiTextfieldSize="m"
+      [tuiTextfieldLabelOutside]="true"
+    >
+      <input tuiTextfield />
+    </tui-input>
+    <tui-error
+      formControlName="length"
+      [error]="[] | tuiFieldError | async"
+    ></tui-error>
+  </label>
+</div>

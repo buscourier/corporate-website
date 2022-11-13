@@ -16,8 +16,8 @@
     </ng-template>
   </div>
   <!--  this.form.get('type').value {{ this.form.get('type').value | json }}-->
-  <div *ngIf="this.form.get('type').value?.id">
-    <label class="mb-3 block">
+  <div *ngIf="this.form.get('type').value?.id === '1'">
+    <label class="mb-3 block max-w-[200px]">
       <span class="mb-1 inline-block text-xs">Количество мест</span>
       <tui-input-count
         formControlName="value"
@@ -32,5 +32,8 @@
         [error]="[] | tuiFieldError | async"
       ></tui-error>
     </label>
+  </div>
+  <div *ngIf="this.form.get('type').value?.id === '2'">
+    <app-parcels formControlName="value"></app-parcels>
   </div>
 </form>

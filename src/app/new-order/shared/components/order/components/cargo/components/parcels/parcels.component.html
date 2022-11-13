@@ -1,0 +1,8 @@
+<div [formGroup]="form">
+  <ng-container formArrayName="parcels">
+    <app-parcel
+      *ngFor="let control of parcels.controls; let i = index"
+      [formControlName]="i"
+    ></app-parcel>
+  </ng-container>
+</div>

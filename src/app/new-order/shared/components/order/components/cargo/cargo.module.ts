@@ -6,12 +6,15 @@ import {TuiErrorModule, TuiTextfieldControllerModule} from '@taiga-ui/core'
 import {
   TuiFieldErrorPipeModule,
   TuiInputCountModule,
+  TuiInputModule,
   TuiRadioListModule,
 } from '@taiga-ui/kit'
 import {CargoComponent} from './components/cargo/cargo.component'
+import {ParcelComponent} from './components/parcel/parcel.component'
+import {ParcelsComponent} from './components/parcels/parcels.component'
 
 @NgModule({
-  declarations: [CargoComponent],
+  declarations: [CargoComponent, ParcelsComponent, ParcelComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -21,6 +24,7 @@ import {CargoComponent} from './components/cargo/cargo.component'
     TuiErrorModule,
     TuiFieldErrorPipeModule,
     TuiLetModule,
+    TuiInputModule,
   ],
   exports: [CargoComponent],
 })

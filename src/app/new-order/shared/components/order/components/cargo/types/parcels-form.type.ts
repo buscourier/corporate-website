@@ -1,3 +1,5 @@
 import {ParcelFormInterface} from './parcel-form.interface'
 
-export type ParcelsFormType = ParcelFormInterface[]
+export interface ParcelsFormInterface {
+  parcels: ParcelFormInterface[]
+}

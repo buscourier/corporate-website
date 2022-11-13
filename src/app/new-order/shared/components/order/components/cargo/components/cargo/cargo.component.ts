@@ -65,11 +65,15 @@ export class CargoComponent implements OnInit {
           filter((cargo: CargoInterface) => cargo.parent_id === '0'),
           toArray(),
           tap((types: CargoInterface[]) => {
-            this.form.get('type').patchValue(types[0])
+            // this.form.get('type').patchValue(types[0])
           })
         )
       })
     )
+  }
+
+  changeCargoType($event: any) {
+    console.log('$event', $event)
   }
 
   writeValue(value: any) {
@@ -103,9 +107,5 @@ export class CargoComponent implements OnInit {
   validate(control: AbstractControl): ValidationErrors | null {
     return null
     // return this.allRequiredFieldsFilled(control)
-  }
-
-  changeCargoType($event: any) {
-    console.log('$event', $event)
   }
 }

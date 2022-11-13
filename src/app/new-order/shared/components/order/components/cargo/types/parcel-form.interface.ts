@@ -1,7 +1,7 @@
 export interface ParcelFormInterface {
   count: string
-  height: string
-  width: string
   weight: string
+  width: string
+  height: string
   length: string
 }
