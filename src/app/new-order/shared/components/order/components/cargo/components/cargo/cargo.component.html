@@ -1,0 +1,36 @@
+<form [formGroup]="form">
+  <div
+    *tuiLet="cargoTypes$ | async as cargoTypes"
+    class="mt-10 mb-5 flex items-center"
+  >
+    <div class="mr-12 text-lg font-semibold">Тип груза:</div>
+    <tui-radio-list
+      orientation="horizontal"
+      formControlName="type"
+      [items]="cargoTypes"
+      [itemContent]="cargoTypesContent"
+      (change)="changeCargoType($event)"
+    ></tui-radio-list>
+    <ng-template #cargoTypesContent let-data>
+      {{ data.name }}
+    </ng-template>
+  </div>
+  <!--  this.form.get('type').value {{ this.form.get('type').value | json }}-->
+  <div *ngIf="this.form.get('type').value?.id">
+    <label class="mb-3 block">
+      <span class="mb-1 inline-block text-xs">Количество мест</span>
+      <tui-input-count
+        formControlName="value"
+        [tuiTextfieldLabelOutside]="true"
+        [min]="1"
+        [max]="20"
+      >
+        <input tuiTextfield />
+      </tui-input-count>
+      <tui-error
+        formControlName="value"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
+    </label>
+  </div>
+</form>

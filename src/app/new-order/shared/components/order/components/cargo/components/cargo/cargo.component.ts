@@ -8,9 +8,9 @@ import {
 } from '@angular/forms'
 import {Store} from '@ngrx/store'
 import {filter, Observable, of, Subscription, switchMap} from 'rxjs'
-import {concatAll, toArray} from 'rxjs/operators'
-import {CargoInterface} from '../../../../types/cargo.interface'
-import {allCargosSelector} from '../../../orders/store/selectors'
+import {concatAll, tap, toArray} from 'rxjs/operators'
+import {CargoInterface} from '../../../../../../types/cargo.interface'
+import {allCargosSelector} from '../../../../../orders/store/selectors'
 
 @Component({
   selector: 'app-cargo',
@@ -36,9 +36,12 @@ export class CargoComponent implements OnInit {
   onTouched = () => {}
   onChangeSub: Subscription
 
-  form = this.fb.group({
-    activeType: null,
-    cargo: '',
+  form = this.fb.group<{
+    type: CargoInterface
+    value: any
+  }>({
+    type: null,
+    value: null,
   })
 
   constructor(private fb: FormBuilder, private store: Store) {}
@@ -60,7 +63,10 @@ export class CargoComponent implements OnInit {
         return of(cargos).pipe(
           concatAll(),
           filter((cargo: CargoInterface) => cargo.parent_id === '0'),
-          toArray()
+          toArray(),
+          tap((types: CargoInterface[]) => {
+            this.form.get('type').patchValue(types[0])
+          })
         )
       })
     )

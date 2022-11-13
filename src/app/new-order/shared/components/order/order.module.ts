@@ -9,8 +9,8 @@ import {
   TuiInputModule,
   TuiRadioListModule,
 } from '@taiga-ui/kit'
+import {CargoComponent} from './components/cargo/components/cargo/cargo.component'
 import {OrderComponent} from './components/order/order.component'
-import {CargoComponent} from './components/cargo/cargo.component'
 
 @NgModule({
   declarations: [OrderComponent, CargoComponent],
