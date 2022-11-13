@@ -6,26 +6,22 @@ import {TuiErrorModule, TuiTextfieldControllerModule} from '@taiga-ui/core'
 import {
   TuiFieldErrorPipeModule,
   TuiInputCountModule,
-  TuiInputModule,
   TuiRadioListModule,
 } from '@taiga-ui/kit'
-import {CargoModule} from './components/cargo/cargo.module'
-import {OrderComponent} from './components/order/order.component'
+import {CargoComponent} from './components/cargo/cargo.component'
 
 @NgModule({
-  declarations: [OrderComponent],
+  declarations: [CargoComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    CargoModule,
-    TuiInputModule,
+    TuiRadioListModule,
+    TuiInputCountModule,
     TuiTextfieldControllerModule,
     TuiErrorModule,
     TuiFieldErrorPipeModule,
-    TuiRadioListModule,
     TuiLetModule,
-    TuiInputCountModule,
   ],
-  exports: [OrderComponent],
+  exports: [CargoComponent],
 })
-export class OrderModule {}
+export class CargoModule {}
