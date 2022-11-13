@@ -32,7 +32,7 @@ export class OrdersComponent implements OnInit {
   isAllServicesLoaded$: Observable<boolean>
   activeOrderIndex$: Observable<number>
 
-  orders = this.fb.array([])
+  orders = this.fb.array([this.fb.control(null)])
 
   form = this.fb.group({
     orders: this.orders,

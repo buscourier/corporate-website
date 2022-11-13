@@ -1,4 +1,9 @@
-import {ChangeDetectionStrategy, Component, OnDestroy} from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core'
 import {
   AbstractControl,
   FormBuilder,
@@ -6,8 +11,11 @@ import {
   NG_VALUE_ACCESSOR,
   ValidationErrors,
 } from '@angular/forms'
-import {Subscription} from 'rxjs'
-import {OrderStateInterface} from '../../types/order-state.interface'
+import {Store} from '@ngrx/store'
+import {filter, Observable, of, Subscription, switchMap} from 'rxjs'
+import {concatAll, toArray} from 'rxjs/operators'
+import {CargoInterface} from '../../../../types/cargo.interface'
+import {allCargosSelector} from '../../../orders/store/selectors'
 
 @Component({
   selector: 'app-order',
@@ -27,17 +35,43 @@ import {OrderStateInterface} from '../../types/order-state.interface'
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OrderComponent implements OnDestroy {
+export class OrderComponent implements OnInit, OnDestroy {
+  cargoTypes$: Observable<CargoInterface[]>
+
   onTouched = () => {}
   onChangeSub: Subscription
 
-  form = this.fb.group<OrderStateInterface>({
-    cargo: 'asdasd',
+  form = this.fb.group({
+    activeCargoType: null,
+    cargo: '',
     packages: [],
     services: [],
   })
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private store: Store) {}
+
+  ngOnInit(): void {
+    // this.form.updateValueAndValidity()
+    this.initializeValues()
+  }
+
+  ngOnDestroy() {
+    if (this.onChangeSub) {
+      this.onChangeSub.unsubscribe()
+    }
+  }
+
+  initializeValues(): void {
+    this.cargoTypes$ = this.store.select(allCargosSelector).pipe(
+      switchMap((cargos: CargoInterface[]) => {
+        return of(cargos).pipe(
+          concatAll(),
+          filter((cargo: CargoInterface) => cargo.parent_id === '0'),
+          toArray()
+        )
+      })
+    )
+  }
 
   writeValue(value: any) {
     if (value) {
@@ -72,13 +106,7 @@ export class OrderComponent implements OnDestroy {
     // return this.allRequiredFieldsFilled(control)
   }
 
-  // ngOnInit(): void {
-  //   this.form.updateValueAndValidity()
-  // }
-
-  ngOnDestroy() {
-    if (this.onChangeSub) {
-      this.onChangeSub.unsubscribe()
-    }
+  changeCargoType($event: any) {
+    console.log('$event', $event)
   }
 }

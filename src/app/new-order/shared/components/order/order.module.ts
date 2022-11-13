@@ -1,8 +1,13 @@
 import {CommonModule} from '@angular/common'
 import {NgModule} from '@angular/core'
 import {ReactiveFormsModule} from '@angular/forms'
+import {TuiLetModule} from '@taiga-ui/cdk'
 import {TuiErrorModule, TuiTextfieldControllerModule} from '@taiga-ui/core'
-import {TuiFieldErrorPipeModule, TuiInputModule} from '@taiga-ui/kit'
+import {
+  TuiFieldErrorPipeModule,
+  TuiInputModule,
+  TuiRadioListModule,
+} from '@taiga-ui/kit'
 import {OrderComponent} from './components/order/order.component'
 
 @NgModule({
@@ -14,6 +19,8 @@ import {OrderComponent} from './components/order/order.component'
     TuiTextfieldControllerModule,
     TuiErrorModule,
     TuiFieldErrorPipeModule,
+    TuiRadioListModule,
+    TuiLetModule,
   ],
   exports: [OrderComponent],
 })
