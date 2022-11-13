@@ -1,36 +1,3 @@
-<div>
-  <form [formGroup]="form">
-    <div
-      *tuiLet="cargoTypes$ | async as cargoTypes"
-      class="mt-10 mb-5 flex items-center"
-    >
-      <div class="mr-12 text-lg font-semibold">Тип груза:</div>
-      <tui-radio-list
-        orientation="horizontal"
-        formControlName="activeCargoType"
-        [items]="cargoTypes"
-        [itemContent]="cargoTypesContent"
-      ></tui-radio-list>
-      <ng-template #cargoTypesContent let-data>
-        {{ data.name }}
-      </ng-template>
-    </div>
-    activeCargoType: {{ form.get('activeCargoType').value | json }}
-    <label class="mb-3 block">
-      <span class="mb-1 inline-block text-xs">text</span>
-      <tui-input
-        tuiTextfieldSize="m"
-        formControlName="cargo"
-        [tuiTextfieldLabelOutside]="true"
-        (blur)="onTouched()"
-      >
-        Email
-        <input tuiTextfield type="text" />
-      </tui-input>
-      <tui-error
-        formControlName="cargo"
-        [error]="[] | tuiFieldError | async"
-      ></tui-error>
-    </label>
-  </form>
+<div [formGroup]="form">
+  <app-cargo formControlName="cargo"></app-cargo>
 </div>

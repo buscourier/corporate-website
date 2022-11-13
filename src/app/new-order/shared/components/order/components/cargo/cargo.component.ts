@@ -1,9 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core'
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
 import {
   AbstractControl,
   FormBuilder,
@@ -12,34 +7,38 @@ import {
   ValidationErrors,
 } from '@angular/forms'
 import {Store} from '@ngrx/store'
-import {Subscription} from 'rxjs'
+import {filter, Observable, of, Subscription, switchMap} from 'rxjs'
+import {concatAll, toArray} from 'rxjs/operators'
+import {CargoInterface} from '../../../../types/cargo.interface'
+import {allCargosSelector} from '../../../orders/store/selectors'
 
 @Component({
-  selector: 'app-order',
-  templateUrl: './order.component.html',
-  styleUrls: ['./order.component.css'],
+  selector: 'app-cargo',
+  templateUrl: './cargo.component.html',
+  styleUrls: ['./cargo.component.css'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       multi: true,
-      useExisting: OrderComponent,
+      useExisting: CargoComponent,
     },
     {
       provide: NG_VALIDATORS,
-      useExisting: OrderComponent,
+      useExisting: CargoComponent,
       multi: true,
     },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OrderComponent implements OnInit, OnDestroy {
+export class CargoComponent implements OnInit {
+  cargoTypes$: Observable<CargoInterface[]>
+
   onTouched = () => {}
   onChangeSub: Subscription
 
   form = this.fb.group({
+    activeType: null,
     cargo: '',
-    packages: [],
-    services: [],
   })
 
   constructor(private fb: FormBuilder, private store: Store) {}
@@ -55,7 +54,17 @@ export class OrderComponent implements OnInit, OnDestroy {
     }
   }
 
-  initializeValues(): void {}
+  initializeValues(): void {
+    this.cargoTypes$ = this.store.select(allCargosSelector).pipe(
+      switchMap((cargos: CargoInterface[]) => {
+        return of(cargos).pipe(
+          concatAll(),
+          filter((cargo: CargoInterface) => cargo.parent_id === '0'),
+          toArray()
+        )
+      })
+    )
+  }
 
   writeValue(value: any) {
     if (value) {
