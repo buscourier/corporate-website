@@ -5,6 +5,7 @@ import {
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
   ValidationErrors,
+  Validators,
 } from '@angular/forms'
 import {Subscription} from 'rxjs'
 import {ParcelFormInterface} from '../../types/parcel-form.interface'
@@ -31,18 +32,28 @@ export class ParcelComponent implements OnInit {
   onTouched = () => {}
   onChangeSub: Subscription
 
+  count = this.fb.control('', [Validators.required])
+  weight = this.fb.control('', [Validators.required])
+  width = this.fb.control('', [Validators.required])
+  height = this.fb.control('', [Validators.required])
+  length = this.fb.control('', [Validators.required])
+
   form = this.fb.group<ParcelFormInterface>({
-    count: '',
-    weight: '',
-    width: '',
-    height: '',
-    length: '',
+    count: this.count,
+    weight: this.weight,
+    width: this.width,
+    height: this.height,
+    length: this.length,
   })
 
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
     console.log('parcel')
+  }
+
+  deleteParcel(index) {
+    // this.parcels.removeAt(index)
   }
 
   writeValue(value: any) {

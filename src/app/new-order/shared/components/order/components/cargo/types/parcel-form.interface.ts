@@ -1,7 +1,9 @@
+import {FormControl} from '@angular/forms'
+
 export interface ParcelFormInterface {
-  count: string
-  weight: string
-  width: string
-  height: string
-  length: string
+  count: FormControl<string>
+  weight: FormControl<string>
+  width: FormControl<string>
+  height: FormControl<string>
+  length: FormControl<string>
 }

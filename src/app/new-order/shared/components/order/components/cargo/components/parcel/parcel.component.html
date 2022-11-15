@@ -1,72 +1,117 @@
-<div [formGroup]="form" class="flex space-x-4">
-  <label class="mb-3 block w-24">
-    <span class="mb-1 inline-block text-xs">Кол-во мест</span>
-    <tui-input
-      formControlName="count"
-      tuiTextfieldSize="m"
-      [tuiTextfieldLabelOutside]="true"
-    >
-      <input tuiTextfield />
-    </tui-input>
+<div [formGroup]="form">
+  <div class="mb-5 flex items-center space-x-4">
+    <label class="mb-3 block w-24">
+      <span class="mb-1 inline-block text-xs">
+        Кол-во мест
+        <sup class="text-red" *ngIf="count.errors && count.hasError('required')"
+          >*</sup
+        >
+      </span>
+      <tui-input-number
+        [formControl]="count"
+        tuiTextfieldSize="m"
+        [tuiTextfieldLabelOutside]="true"
+        [max]="100"
+      >
+        <input tuiTextfield (blur)="onTouched()" />
+      </tui-input-number>
+    </label>
+    <label class="mb-3 block w-24">
+      <span class="mb-1 inline-block text-xs">
+        Вес
+        <sup
+          class="text-red"
+          *ngIf="weight.errors && weight.hasError('required')"
+          >*</sup
+        >
+      </span>
+      <tui-input-number
+        [formControl]="weight"
+        tuiTextfieldSize="m"
+        [tuiTextfieldLabelOutside]="true"
+        [max]="100"
+        postfix="кг"
+      >
+        <input tuiTextfield />
+      </tui-input-number>
+    </label>
+    <label class="mb-3 block w-24">
+      <span class="mb-1 inline-block text-xs">
+        Ширина
+        <sup class="text-red" *ngIf="width.errors && width.hasError('required')"
+          >*</sup
+        >
+      </span>
+      <tui-input-number
+        [formControl]="width"
+        tuiTextfieldSize="m"
+        [tuiTextfieldLabelOutside]="true"
+        [max]="100"
+        postfix="см"
+      >
+        <input tuiTextfield />
+      </tui-input-number>
+    </label>
+    <label class="mb-3 block w-24">
+      <span class="mb-1 inline-block text-xs">
+        Высота
+        <sup
+          class="text-red"
+          *ngIf="height.errors && height.hasError('required')"
+          >*</sup
+        >
+      </span>
+      <tui-input-number
+        [formControl]="height"
+        tuiTextfieldSize="m"
+        [tuiTextfieldLabelOutside]="true"
+        [max]="100"
+        postfix="см"
+      >
+        <input tuiTextfield />
+      </tui-input-number>
+    </label>
+    <label class="mb-3 block w-24">
+      <span class="mb-1 inline-block text-xs">
+        Длина
+        <sup
+          class="text-red"
+          *ngIf="length.errors && length.hasError('required')"
+          >*</sup
+        >
+      </span>
+      <tui-input-number
+        [formControl]="length"
+        tuiTextfieldSize="m"
+        [tuiTextfieldLabelOutside]="true"
+        [max]="100"
+        postfix="см"
+      >
+        <input tuiTextfield />
+      </tui-input-number>
+    </label>
+    <button type="button" (click)="deleteParcel(0)">Delete</button>
+  </div>
+  <div>
     <tui-error
       formControlName="count"
       [error]="[] | tuiFieldError | async"
     ></tui-error>
-  </label>
-  <label class="mb-3 block w-24">
-    <span class="mb-1 inline-block text-xs">Вес</span>
-    <tui-input
-      formControlName="weight"
-      tuiTextfieldSize="m"
-      [tuiTextfieldLabelOutside]="true"
-    >
-      <input tuiTextfield />
-    </tui-input>
     <tui-error
       formControlName="weight"
       [error]="[] | tuiFieldError | async"
     ></tui-error>
-  </label>
-  <label class="mb-3 block w-24">
-    <span class="mb-1 inline-block text-xs">Ширина</span>
-    <tui-input
-      formControlName="width"
-      tuiTextfieldSize="m"
-      [tuiTextfieldLabelOutside]="true"
-    >
-      <input tuiTextfield />
-    </tui-input>
     <tui-error
       formControlName="width"
       [error]="[] | tuiFieldError | async"
     ></tui-error>
-  </label>
-  <label class="mb-3 block w-24">
-    <span class="mb-1 inline-block text-xs">Высота</span>
-    <tui-input
-      formControlName="height"
-      tuiTextfieldSize="m"
-      [tuiTextfieldLabelOutside]="true"
-    >
-      <input tuiTextfield />
-    </tui-input>
     <tui-error
       formControlName="height"
       [error]="[] | tuiFieldError | async"
     ></tui-error>
-  </label>
-  <label class="mb-3 block w-24">
-    <span class="mb-1 inline-block text-xs">Длина</span>
-    <tui-input
-      formControlName="length"
-      tuiTextfieldSize="m"
-      [tuiTextfieldLabelOutside]="true"
-    >
-      <input tuiTextfield />
-    </tui-input>
     <tui-error
       formControlName="length"
       [error]="[] | tuiFieldError | async"
     ></tui-error>
-  </label>
+  </div>
 </div>

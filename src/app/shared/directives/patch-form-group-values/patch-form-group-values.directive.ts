@@ -13,7 +13,7 @@ export class PatchFormGroupValuesDirective {
     this.formGroup.patchValue(val)
     // this.formGroup.patchValue(val, {emitEvent: false})
     // this.formGroupDirective.form.patchValue(val)
-    // this.formGroupDirective.form.markAsPristine()
+    // this.formGroup.markAsPristine()
   }
 
   constructor(private formGroupDirective: FormGroupDirective) {}

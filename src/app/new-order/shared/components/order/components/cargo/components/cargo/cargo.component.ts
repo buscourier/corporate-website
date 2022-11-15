@@ -11,6 +11,7 @@ import {filter, Observable, of, Subscription, switchMap} from 'rxjs'
 import {concatAll, tap, toArray} from 'rxjs/operators'
 import {CargoInterface} from '../../../../../../types/cargo.interface'
 import {allCargosSelector} from '../../../../../orders/store/selectors'
+import {CargoFormInterface} from '../../types/cargo-form.interface'
 
 @Component({
   selector: 'app-cargo',
@@ -36,10 +37,7 @@ export class CargoComponent implements OnInit {
   onTouched = () => {}
   onChangeSub: Subscription
 
-  form = this.fb.group<{
-    type: CargoInterface
-    value: any
-  }>({
+  form = this.fb.group<CargoFormInterface>({
     type: null,
     value: null,
   })

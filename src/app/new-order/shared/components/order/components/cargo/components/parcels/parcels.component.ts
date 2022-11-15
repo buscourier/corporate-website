@@ -8,6 +8,7 @@ import {
 } from '@angular/forms'
 import {Subscription} from 'rxjs'
 import {ParcelFormInterface} from '../../types/parcel-form.interface'
+import {ParcelsFormInterface} from '../../types/parcels-form.type'
 
 @Component({
   selector: 'app-parcels',
@@ -31,10 +32,9 @@ export class ParcelsComponent implements OnInit {
   onTouched = () => {}
   onChangeSub: Subscription
 
-  // @ts-ignore
-  parcels = this.fb.array<ParcelFormInterface[]>([this.fb.control(null)])
+  parcels = this.fb.array([this.fb.control<ParcelFormInterface>(null)])
 
-  form = this.fb.group({
+  form = this.fb.group<ParcelsFormInterface>({
     parcels: this.parcels,
   })
 
@@ -42,6 +42,10 @@ export class ParcelsComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('parcels')
+  }
+
+  addParcel() {
+    this.parcels.push(this.fb.control<ParcelFormInterface>(null))
   }
 
   writeValue(value: any) {
