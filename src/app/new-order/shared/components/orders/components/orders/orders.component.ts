@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
 import {FormBuilder, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
-import {Observable, switchMap, using, zip} from 'rxjs'
+import {map, Observable, switchMap, using, zip} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {endCitySelector} from '../../../end-point/store/selectors'
 import {OrderStateInterface} from '../../../order/types/order-state.interface'
@@ -30,9 +30,10 @@ export class OrdersComponent implements OnInit {
   isAllServicesLoading$: Observable<boolean>
   isAllCargosLoaded$: Observable<boolean>
   isAllServicesLoaded$: Observable<boolean>
+  orders$: Observable<any>
   activeOrderIndex$: Observable<number>
 
-  orders = this.fb.array([this.fb.control(null), this.fb.control(null)])
+  orders = this.fb.array([])
 
   form = this.fb.group({
     orders: this.orders,
@@ -68,6 +69,22 @@ export class OrdersComponent implements OnInit {
     this.isAllCargosLoaded$ = this.store.select(isAllCargosLoadedSelector)
     this.isAllServicesLoaded$ = this.store.select(isAllServicesLoadedSelector)
     this.activeOrderIndex$ = this.store.select(activeOrderSelector)
+    this.store
+      .select(ordersSelector)
+      .pipe(
+        map((orders) => {
+          return orders
+          console.log('ordersssss6666666', orders)
+          // this.orders.push(this.fb.control(null))
+        })
+        // map((orders) => {
+        //   console.log('ordersssss', orders)
+        //   // this.orders.push(this.fb.control(null))
+        // })
+      )
+      .subscribe((orders: any) => {
+        console.log('orders', orders)
+      })
 
     zip(
       this.store.select(startCitySelector),
