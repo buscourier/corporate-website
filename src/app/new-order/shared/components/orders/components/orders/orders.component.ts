@@ -106,9 +106,11 @@ export class OrdersComponent implements OnInit {
     this.store.dispatch(changeActiveOrderAction({activeOrderIndex: index}))
   }
 
-  addOrder() {
+  addOrder(index) {
     this.orders.push(
       this.fb.control<OrderStateInterface>(null, Validators.required)
     )
+
+    this.selectOrder(index + 1)
   }
 }
