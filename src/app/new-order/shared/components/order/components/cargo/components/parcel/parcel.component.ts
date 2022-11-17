@@ -192,7 +192,7 @@ export class ParcelComponent implements OnInit {
   }
 
   dimensionsError(): ValidationErrors | null {
-    const fields = this.form.value
+    const fields = Object.assign({}, this.form.value)
 
     delete fields['count']
     delete fields['weight']
