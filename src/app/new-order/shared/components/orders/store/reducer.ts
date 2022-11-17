@@ -59,7 +59,7 @@ const ordersReducer = createReducer(
   })),
   on(ordersValueChangesAction, (state: OrdersStateInterface, {orders}) => ({
     ...state,
-    orders,
+    ...orders,
   })),
   on(
     changeActiveOrderAction,
