@@ -5,7 +5,7 @@
       [formControlName]="i"
     ></app-parcel>
   </ng-container>
-  <button type="button" tuiButton (click)="addParcel()">
+  <button type="button" tuiButton (click)="addParcel()" [disabled]="this.form.get('parcels').invalid">
     Добавить еше 1 позицию
   </button>
 </div>

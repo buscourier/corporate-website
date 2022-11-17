@@ -1,6 +1,5 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
 import {
-  AbstractControl,
   FormBuilder,
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
@@ -49,7 +48,7 @@ export class ParcelComponent implements OnInit {
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
-    console.log('parcel')
+    this.form.setValidators(Validators.required)
   }
 
   deleteParcel(index) {
@@ -78,14 +77,15 @@ export class ParcelComponent implements OnInit {
     }
   }
 
-  allRequiredFieldsFilled(control: AbstractControl): ValidationErrors | null {
-    const controlValue = control.value
-    const isValid = controlValue?.email && controlValue?.name
-    return isValid ? null : {required: true}
+  requiredError(): ValidationErrors | null {
+    const error = Object.entries(this.form.controls).some(([, control]) => {
+      return control.errors && control.errors['required']
+    })
+
+    return error ? {required: true} : null
   }
 
-  validate(control: AbstractControl): ValidationErrors | null {
-    return null
-    // return this.allRequiredFieldsFilled(control)
+  validate(): ValidationErrors | null {
+    return this.requiredError()
   }
 }
