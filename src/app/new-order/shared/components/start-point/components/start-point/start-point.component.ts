@@ -19,14 +19,14 @@ import {getOfficesAction} from '../../store/actions/get-offices.action'
 import {
   activeTabSelector,
   citiesSelector,
-  courierSelector,
   dateSelector,
   isCitiesLoadedSelector,
   isCitiesLoadingSelector,
   isOfficesLoadingSelector,
-  officeSelector,
   officesSelector,
   startCitySelector,
+  startCourierSelector,
+  startOfficeSelector,
 } from '../../store/selectors'
 import {initialState} from '../../store/state'
 
@@ -93,7 +93,7 @@ export class StartPointComponent implements OnInit {
           })
         )
         .subscribe(),
-    () => this.store.select(officeSelector)
+    () => this.store.select(startOfficeSelector)
   )
 
   dateValues$ = using(
@@ -117,7 +117,7 @@ export class StartPointComponent implements OnInit {
           })
         )
         .subscribe(),
-    () => this.store.select(courierSelector)
+    () => this.store.select(startCourierSelector)
   )
 
   form = this.fb.group({

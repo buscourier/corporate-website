@@ -21,12 +21,12 @@ import {
   activeTabSelector,
   busSelector,
   citiesSelector,
-  courierSelector,
   endCitySelector,
+  endCourierSelector,
+  endOfficeSelector,
   isCitiesLoadedSelector,
   isCitiesLoadingSelector,
   isOfficesLoadingSelector,
-  officeSelector,
   officesSelector,
 } from '../../store/selectors'
 
@@ -95,7 +95,7 @@ export class EndPointComponent implements OnInit {
           })
         )
         .subscribe(),
-    () => this.store.select(officeSelector)
+    () => this.store.select(endOfficeSelector)
   )
 
   needToMeetValues$ = using(
@@ -119,7 +119,7 @@ export class EndPointComponent implements OnInit {
           })
         )
         .subscribe(),
-    () => this.store.select(courierSelector)
+    () => this.store.select(endCourierSelector)
   )
 
   form = this.fb.group({

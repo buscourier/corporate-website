@@ -43,12 +43,12 @@ export const startCitySelector = createSelector(
   (state: StartPointStateInterface) => state.city
 )
 
-export const officeSelector = createSelector(
+export const startOfficeSelector = createSelector(
   startPointFeatureSelector,
   (state: StartPointStateInterface) => state.give
 )
 
-export const courierSelector = createSelector(
+export const startCourierSelector = createSelector(
   startPointFeatureSelector,
   (state: StartPointStateInterface) => state.pickup
 )

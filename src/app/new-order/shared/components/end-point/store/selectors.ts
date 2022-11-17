@@ -43,12 +43,12 @@ export const endCitySelector = createSelector(
   (state: EndPointStateInterface) => state.city
 )
 
-export const officeSelector = createSelector(
+export const endOfficeSelector = createSelector(
   endPointFeatureSelector,
   (state: EndPointStateInterface) => state.get
 )
 
-export const courierSelector = createSelector(
+export const endCourierSelector = createSelector(
   endPointFeatureSelector,
   (state: EndPointStateInterface) => state.delivery
 )
