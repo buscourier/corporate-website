@@ -1,5 +1,5 @@
-<div [formGroup]="form">
-  <div class="mb-5 flex items-center space-x-4">
+<div [formGroup]="form" class="mb-5">
+  <div class="mb-0.5 flex items-center space-x-4">
     <label class="mb-3 block w-24">
       <span class="mb-1 inline-block text-xs">
         Кол-во мест
@@ -13,7 +13,7 @@
         [tuiTextfieldLabelOutside]="true"
         [min]="1"
         [max]="100"
-        [pseudoInvalid]="count.invalid && count.touched"
+        [pseudoInvalid]="count.invalid && form.touched"
       >
         <input tuiTextfield (blur)="onTouched()" />
       </tui-input-number>
@@ -33,8 +33,8 @@
         [tuiTextfieldLabelOutside]="true"
         [min]="1"
         [pseudoInvalid]="
-          (weight.invalid && weight.touched) ||
-          (this.form.errors && this.form.errors['weight'])
+          (weight.invalid && form.touched) ||
+          (form.errors && form.errors['weight'])
         "
         postfix="кг"
       >
@@ -55,8 +55,8 @@
         [min]="1"
         [max]="250"
         [pseudoInvalid]="
-          (width.invalid && width.touched) ||
-          (this.form.errors && this.form.errors['dimensions'])
+          (width.invalid && form.touched) ||
+          (form.errors && form.errors['dimensions'])
         "
         postfix="см"
       >
@@ -66,9 +66,7 @@
     <label class="mb-3 block w-24">
       <span class="mb-1 inline-block text-xs">
         Высота
-        <sup
-          class="text-red"
-          *ngIf="height.errors && height.hasError('required')"
+        <sup class="text-red" *ngIf="height.errors && form.hasError('required')"
           >*</sup
         >
       </span>
@@ -79,8 +77,8 @@
         [min]="1"
         [max]="250"
         [pseudoInvalid]="
-          (height.invalid && height.touched) ||
-          (this.form.errors && this.form.errors['dimensions'])
+          (height.invalid && form.touched) ||
+          (form.errors && form.errors['dimensions'])
         "
         postfix="см"
       >
@@ -103,8 +101,8 @@
         [min]="1"
         [max]="250"
         [pseudoInvalid]="
-          (length.invalid && length.touched) ||
-          (this.form.errors && this.form.errors['dimensions'])
+          (length.invalid && form.touched) ||
+          (form.errors && form.errors['dimensions'])
         "
         postfix="см"
       >

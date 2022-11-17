@@ -1,4 +1,9 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core'
 import {
   FormBuilder,
   NG_VALIDATORS,
@@ -66,12 +71,13 @@ enum VladivostokOffice {
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ParcelComponent implements OnInit {
+export class ParcelComponent implements OnInit, OnDestroy {
   endCity$: Observable<EndCityInterface>
   startOffice$: Observable<OfficeInterface>
   startCourier$: Observable<CourierInterface>
   endOffice$: Observable<OfficeInterface>
   endCourier$: Observable<CourierInterface>
+  combineAllSub: Subscription
 
   onTouched = () => {}
   onChangeSub: Subscription
@@ -114,8 +120,12 @@ export class ParcelComponent implements OnInit {
     this.initializeValues()
   }
 
+  ngOnDestroy() {
+    this.combineAllSub.unsubscribe()
+  }
+
   initializeValues() {
-    combineLatest([
+    this.combineAllSub = combineLatest([
       this.store.select(endCitySelector),
       this.store.select(startOfficeSelector),
       this.store.select(startCourierSelector),
