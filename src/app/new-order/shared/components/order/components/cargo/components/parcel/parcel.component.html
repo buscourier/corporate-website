@@ -97,26 +97,10 @@
     </label>
     <button type="button" (click)="deleteParcel(0)">Delete</button>
   </div>
-  <div>
-    <tui-error
-      formControlName="count"
-      [error]="[] | tuiFieldError | async"
-    ></tui-error>
-    <tui-error
-      formControlName="weight"
-      [error]="[] | tuiFieldError | async"
-    ></tui-error>
-    <tui-error
-      formControlName="width"
-      [error]="[] | tuiFieldError | async"
-    ></tui-error>
-    <tui-error
-      formControlName="height"
-      [error]="[] | tuiFieldError | async"
-    ></tui-error>
-    <tui-error
-      formControlName="length"
-      [error]="[] | tuiFieldError | async"
-    ></tui-error>
-  </div>
+  form.errors: {{ form.errors && form.errors['required'] }}
+  <!--  <div *ngIf="form.errors">Необходимо заполнить все поля</div>-->
+  <tui-error
+    [formGroup]="form"
+    [error]="[] | tuiFieldError | async"
+  ></tui-error>
 </div>

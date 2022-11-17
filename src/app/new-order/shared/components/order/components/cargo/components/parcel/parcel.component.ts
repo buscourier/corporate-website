@@ -6,6 +6,7 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms'
+import {TUI_VALIDATION_ERRORS} from '@taiga-ui/kit'
 import {Subscription} from 'rxjs'
 import {ParcelFormInterface} from '../../types/parcel-form.interface'
 
@@ -23,6 +24,12 @@ import {ParcelFormInterface} from '../../types/parcel-form.interface'
       provide: NG_VALIDATORS,
       useExisting: ParcelComponent,
       multi: true,
+    },
+    {
+      provide: TUI_VALIDATION_ERRORS,
+      useValue: {
+        required: `Все поля обязательны для заполнения`,
+      },
     },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -82,7 +89,12 @@ export class ParcelComponent implements OnInit {
       return control.errors && control.errors['required']
     })
 
-    return error ? {required: true} : null
+    if (error) {
+      this.form.setErrors({required: true})
+      return {required: true}
+    } else {
+      return null
+    }
   }
 
   validate(): ValidationErrors | null {
