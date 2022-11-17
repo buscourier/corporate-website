@@ -29,6 +29,9 @@ import {ParcelFormInterface} from '../../types/parcel-form.interface'
       provide: TUI_VALIDATION_ERRORS,
       useValue: {
         required: `Все поля обязательны для заполнения`,
+        dimensions: (error) => {
+          return `Габариты посылки превышают допустимые размеры на ${error.diff} см.`
+        },
       },
     },
   ],
@@ -51,6 +54,8 @@ export class ParcelComponent implements OnInit {
     height: this.height,
     length: this.length,
   })
+
+  private maxDimensionsSum = 250
 
   constructor(private fb: FormBuilder) {}
 
@@ -97,7 +102,27 @@ export class ParcelComponent implements OnInit {
     }
   }
 
+  dimensionsError(): ValidationErrors | null {
+    const fields = this.form.value
+
+    delete fields['count']
+    delete fields['weight']
+
+    const fieldsSum = Number(fields.width + fields.height + fields.length)
+
+    const error = fieldsSum > this.maxDimensionsSum
+
+    if (error) {
+      this.form.setErrors({
+        dimensions: {error: true, diff: fieldsSum - this.maxDimensionsSum},
+      })
+      return {dimensions: true}
+    } else {
+      return null
+    }
+  }
+
   validate(): ValidationErrors | null {
-    return this.requiredError()
+    return this.requiredError() || this.dimensionsError()
   }
 }

@@ -49,7 +49,7 @@
         tuiTextfieldSize="m"
         [tuiTextfieldLabelOutside]="true"
         [min]="1"
-        [max]="100"
+        [max]="250"
         postfix="см"
       >
         <input tuiTextfield />
@@ -69,7 +69,7 @@
         tuiTextfieldSize="m"
         [tuiTextfieldLabelOutside]="true"
         [min]="1"
-        [max]="100"
+        [max]="250"
         postfix="см"
       >
         <input tuiTextfield />
@@ -89,7 +89,7 @@
         tuiTextfieldSize="m"
         [tuiTextfieldLabelOutside]="true"
         [min]="1"
-        [max]="100"
+        [max]="250"
         postfix="см"
       >
         <input tuiTextfield />
@@ -97,8 +97,6 @@
     </label>
     <button type="button" (click)="deleteParcel(0)">Delete</button>
   </div>
-  form.errors: {{ form.errors && form.errors['required'] }}
-  <!--  <div *ngIf="form.errors">Необходимо заполнить все поля</div>-->
   <tui-error
     [formGroup]="form"
     [error]="[] | tuiFieldError | async"
