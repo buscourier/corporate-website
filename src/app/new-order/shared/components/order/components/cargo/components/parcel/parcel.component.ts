@@ -176,10 +176,6 @@ export class ParcelComponent implements OnInit, OnDestroy {
       .subscribe()
   }
 
-  deleteParcel(index) {
-    // this.parcels.removeAt(index)
-  }
-
   getCityLimit(id): CityLimitInterface {
     const result = Object.entries(this.citiesLimit).filter(([ids, data]) => {
       return ids.split(', ').indexOf(id) !== -1

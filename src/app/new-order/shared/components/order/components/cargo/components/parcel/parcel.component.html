@@ -13,7 +13,7 @@
         [tuiTextfieldLabelOutside]="true"
         [min]="1"
         [max]="100"
-        [pseudoInvalid]="count.invalid && form.touched"
+        [pseudoInvalid]="!!(count.invalid && form.touched)"
       >
         <input tuiTextfield (blur)="onTouched()" />
       </tui-input-number>
@@ -33,8 +33,10 @@
         [tuiTextfieldLabelOutside]="true"
         [min]="1"
         [pseudoInvalid]="
-          (weight.invalid && form.touched) ||
-          (form.errors && form.errors['weight'])
+          !!(
+            (weight.invalid && form.touched) ||
+            (form.errors && form.errors['weight'])
+          )
         "
         postfix="кг"
       >
@@ -55,8 +57,10 @@
         [min]="1"
         [max]="250"
         [pseudoInvalid]="
-          (width.invalid && form.touched) ||
-          (form.errors && form.errors['dimensions'])
+          !!(
+            (width.invalid && form.touched) ||
+            (form.errors && form.errors['dimensions'])
+          )
         "
         postfix="см"
       >
@@ -77,8 +81,10 @@
         [min]="1"
         [max]="250"
         [pseudoInvalid]="
-          (height.invalid && form.touched) ||
-          (form.errors && form.errors['dimensions'])
+          !!(
+            (height.invalid && form.touched) ||
+            (form.errors && form.errors['dimensions'])
+          )
         "
         postfix="см"
       >
@@ -101,15 +107,17 @@
         [min]="1"
         [max]="250"
         [pseudoInvalid]="
-          (length.invalid && form.touched) ||
-          (form.errors && form.errors['dimensions'])
+          !!(
+            (length.invalid && form.touched) ||
+            (form.errors && form.errors['dimensions'])
+          )
         "
         postfix="см"
       >
         <input tuiTextfield />
       </tui-input-number>
     </label>
-    <button type="button" (click)="deleteParcel(0)">Delete</button>
+    <ng-content select="button"></ng-content>
   </div>
   <tui-error
     [formGroup]="form"

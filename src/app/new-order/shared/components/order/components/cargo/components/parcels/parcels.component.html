@@ -3,7 +3,15 @@
     <app-parcel
       *ngFor="let control of parcels.controls; let i = index"
       [formControlName]="i"
-    ></app-parcel>
+    >
+      <button
+        *ngIf="parcels.length > 1"
+        type="button"
+        (click)="deleteParcel(i)"
+      >
+        Delete
+      </button>
+    </app-parcel>
   </ng-container>
   <button
     type="button"

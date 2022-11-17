@@ -8,7 +8,6 @@ import {
 } from '@angular/forms'
 import {Subscription} from 'rxjs'
 import {ParcelFormInterface} from '../../types/parcel-form.interface'
-import {ParcelsFormInterface} from '../../types/parcels-form.type'
 
 @Component({
   selector: 'app-parcels',
@@ -46,6 +45,10 @@ export class ParcelsComponent implements OnInit {
 
   addParcel() {
     this.parcels.push(this.fb.control<ParcelFormInterface>(null))
+  }
+
+  deleteParcel(index: number) {
+    this.parcels.removeAt(index)
   }
 
   writeValue(value: any) {
