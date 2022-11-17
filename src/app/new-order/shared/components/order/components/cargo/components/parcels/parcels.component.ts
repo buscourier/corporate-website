@@ -32,9 +32,9 @@ export class ParcelsComponent implements OnInit {
   onTouched = () => {}
   onChangeSub: Subscription
 
-  parcels = this.fb.array([this.fb.control<ParcelFormInterface>(null)])
+  parcels = this.fb.array([])
 
-  form = this.fb.group<ParcelsFormInterface>({
+  form = this.fb.group({
     parcels: this.parcels,
   })
 
@@ -49,7 +49,12 @@ export class ParcelsComponent implements OnInit {
   }
 
   writeValue(value: any) {
+    console.log('parcels value', value)
     if (value) {
+      value.parcels.forEach(() => {
+        this.parcels.push(this.fb.control(null))
+      })
+
       this.form.setValue(value)
     }
   }
