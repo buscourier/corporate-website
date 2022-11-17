@@ -86,6 +86,11 @@ export class OrdersComponent implements OnInit, OnDestroy {
       .select(ordersSelector)
       .pipe(
         take(1),
+        tap((orders: OrderStateInterface[]) => {
+          if (!orders) {
+            this.addOrder(0)
+          }
+        }),
         filter(Boolean),
         map((orders: OrderStateInterface[]) => {
           orders.forEach((order: OrderStateInterface) => {
@@ -182,6 +187,6 @@ export class OrdersComponent implements OnInit, OnDestroy {
       this.fb.control<OrderStateInterface>(null, Validators.required)
     )
 
-    this.selectOrder(index + 1)
+    this.selectOrder(index)
   }
 }
