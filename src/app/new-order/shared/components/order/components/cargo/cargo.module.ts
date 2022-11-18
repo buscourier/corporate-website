@@ -22,6 +22,7 @@ import {AutoPartsComponent} from './components/auto-parts/auto-parts.component'
 import {CargoComponent} from './components/cargo/cargo.component'
 import {ParcelComponent} from './components/parcel/parcel.component'
 import {ParcelsComponent} from './components/parcels/parcels.component'
+import {OtherCargosComponent} from './components/other-cargos/other-cargos.component'
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import {ParcelsComponent} from './components/parcels/parcels.component'
     ParcelsComponent,
     ParcelComponent,
     AutoPartsComponent,
+    OtherCargosComponent,
   ],
   imports: [
     CommonModule,

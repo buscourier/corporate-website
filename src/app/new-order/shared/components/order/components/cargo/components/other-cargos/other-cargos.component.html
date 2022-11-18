@@ -1,0 +1,47 @@
+<div [formGroup]="form" class="flex max-w-[550px] space-x-4">
+  <label *appLet="cargos$ | async as cargos" class="max-w-[370px] flex-grow">
+    <span class="mb-1 inline-block text-xs">
+      Выберите вариант
+      <sup class="text-red" *ngIf="detail.errors && detail.hasError('required')"
+        >*</sup
+      >
+    </span>
+    <tui-loader [showLoader]="false">
+      <tui-select
+        tuiTextfieldSize="m"
+        [formControl]="detail"
+        [tuiTextfieldLabelOutside]="true"
+      >
+        <tui-data-list-wrapper
+          *tuiDataList
+          [items]="cargos"
+        ></tui-data-list-wrapper>
+      </tui-select>
+    </tui-loader>
+    <!--    <tui-error-->
+    <!--      [formControl]="detail"-->
+    <!--      [error]="[] | tuiFieldError | async"-->
+    <!--    ></tui-error>-->
+  </label>
+  <label *ngIf="detail.value" class="max-w-[260px]">
+    <span class="mb-1 inline-block text-xs">
+      Количество мест
+      <sup class="text-red" *ngIf="places.errors && places.hasError('required')"
+        >*</sup
+      >
+    </span>
+    <tui-input-count
+      [formControl]="places"
+      [tuiTextfieldLabelOutside]="true"
+      tuiTextfieldSize="m"
+      [min]="1"
+      [max]="20"
+    >
+      <input tuiTextfield />
+    </tui-input-count>
+  </label>
+  <div *ngIf="detail.value" class="flex flex-col justify-center">
+    <span>&#160;</span>
+    <button type="button" (click)="delete()">Delete</button>
+  </div>
+</div>
