@@ -11,6 +11,7 @@ import {
 } from '@taiga-ui/kit'
 import {CargoModule} from './components/cargo/cargo.module'
 import {OrderComponent} from './components/order/order.component'
+import {PackageModule} from './components/package/package.module'
 
 @NgModule({
   declarations: [OrderComponent],
@@ -18,6 +19,7 @@ import {OrderComponent} from './components/order/order.component'
     CommonModule,
     ReactiveFormsModule,
     CargoModule,
+    PackageModule,
     TuiInputModule,
     TuiTextfieldControllerModule,
     TuiErrorModule,
