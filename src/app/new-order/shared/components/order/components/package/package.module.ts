@@ -4,6 +4,7 @@ import {PackageComponent} from './components/package/package.component'
 import {
   TuiButtonModule,
   TuiDialogModule,
+  TuiSvgModule,
   TuiTextfieldControllerModule,
 } from '@taiga-ui/core'
 import {ReactiveFormsModule} from '@angular/forms'
@@ -19,6 +20,7 @@ import {TuiCheckboxLabeledModule, TuiInputCountModule} from '@taiga-ui/kit'
     TuiCheckboxLabeledModule,
     TuiInputCountModule,
     TuiTextfieldControllerModule,
+    TuiSvgModule,
   ],
   exports: [PackageComponent],
 })

@@ -52,7 +52,6 @@ export class PackageComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeValues()
-    console.log('this.form', this.form)
   }
 
   initializeValues() {
@@ -143,7 +142,17 @@ export class PackageComponent implements OnInit {
       .subscribe()
   }
 
-  closeDialog() {
-    // this.dialogService.co
+  closeDialog(countControl, checkboxControl) {
+    if (countControl.value) {
+      checkboxControl.disable({emitEvent: false, onlySelf: true})
+    } else {
+      checkboxControl.enable()
+    }
+  }
+
+  clear(countControl, checkboxControl) {
+    countControl.setValue(1)
+    checkboxControl.setValue(false)
+    checkboxControl.enable()
   }
 }
