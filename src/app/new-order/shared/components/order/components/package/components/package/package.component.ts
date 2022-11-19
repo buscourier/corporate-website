@@ -72,7 +72,7 @@ export class PackageComponent implements OnInit {
                     this.boxes.push(
                       this.fb.group({
                         [service.id]: false,
-                        count: 0,
+                        count: 1,
                         data: {...service, short_name: 'Коробка'},
                       })
                     )
@@ -136,6 +136,14 @@ export class PackageComponent implements OnInit {
   }
 
   openDialog(content: PolymorpheusContent<TuiDialogContext>) {
-    this.dialogService.open(content).subscribe()
+    this.dialogService
+      .open(content, {
+        size: 's',
+      })
+      .subscribe()
+  }
+
+  closeDialog() {
+    // this.dialogService.co
   }
 }

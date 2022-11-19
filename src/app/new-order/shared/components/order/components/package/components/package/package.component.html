@@ -8,18 +8,28 @@
       >
         {{ box.get('data').value.site_name }}
         <div class="example">
-          {{ box.get('data').value.price }} руб. за 1 шт.
+          {{ box.get('data').value.price * getControl(box.get('count')).value }} руб. за {{getControl(box.get('count')).value}} шт.
         </div>
       </tui-checkbox-labeled>
       <ng-template #template let-observer>
-        <tui-input-count
-          [formControl]="getControl(box.get('count'))"
-          [tuiTextfieldLabelOutside]="true"
-          [min]="1"
-          [max]="20"
-        >
-          <input tuiTextfield />
-        </tui-input-count>
+        <article>
+          <h1 class="text-lg font-medium">{{box.get('data').value.short_name}} ({{box.get('data').value.site_name}})</h1>
+          <p class="mb-4 text-sm">{{box.get('data').value.property}}</p>
+          <div class="flex space-x-2 items-end">
+            <label class="block flex-grow">
+              <span class="mb-1 inline-block text-xs">Сколько штук?</span>
+              <tui-input-count
+                [formControl]="getControl(box.get('count'))"
+                [tuiTextfieldLabelOutside]="true"
+                [min]="1"
+                [max]="20"
+              >
+                <input tuiTextfield />
+              </tui-input-count>
+            </label>
+            <button type="button" tuiButton (click)="closeDialog()">Ok</button>
+          </div>
+        </article>
       </ng-template>
     </div>
   </div>
