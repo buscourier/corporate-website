@@ -24,6 +24,7 @@ import {
   Observable,
   of,
   Subscription,
+  take,
   toArray,
 } from 'rxjs'
 import {switchMap, tap} from 'rxjs/operators'
@@ -81,10 +82,25 @@ export class PackageComponent implements OnInit {
   }
 
   initializeValues() {
+    const packages = [
+      ...this.boxes.value,
+      ...this.placticPacks.value,
+      ...this.safePacks.value,
+      ...this.skins.value,
+      ...this.other.value,
+    ]
+
+    if (packages.length > 1) {
+      return
+    }
+
+    console.log('fuck!!!!', packages.length > 1)
+
     this.store
       .select(allServicesSelector)
       .pipe(
         filter(Boolean),
+        take(1),
         switchMap((services: ServiceInterface[]) => {
           return of(services).pipe(
             concatAll(),
@@ -189,8 +205,6 @@ export class PackageComponent implements OnInit {
   }
 
   writeValue(value: any) {
-    // this.boxes.clear()
-
     if (value) {
       this.form.patchValue(value, {emitEvent: false, onlySelf: true})
     }
