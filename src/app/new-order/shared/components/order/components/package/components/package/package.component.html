@@ -1,4 +1,28 @@
-<p>services</p>
-{{ services$ | async }}
-
+<div [formGroup]="form">
+  <div *ngIf="boxes.length" formArrayName="boxes">
+    <div>Коробки:</div>
+    <div *ngFor="let box of boxes.controls; let i = index" [formGroup]="box">
+      <tui-checkbox-labeled
+        [formControlName]="box.get('data').value.id"
+        (change)="openDialog(template)"
+      >
+        {{box.get('data').value.site_name}}
+        <div class="example">{{box.get('data').value.price}} руб. за 1 шт.</div>
+      </tui-checkbox-labeled>
+      <ng-template
+        #template
+        let-observer
+      >
+        <tui-input-count
+          [formControl]="getControl(box.get('count'))"
+          [tuiTextfieldLabelOutside]="true"
+          [min]="1"
+          [max]="20"
+        >
+          <input tuiTextfield />
+        </tui-input-count>
+      </ng-template>
+    </div>
+  </div>
+</div>
 <button type="button" (click)="open()" tuiButton>Open</button>
