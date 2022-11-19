@@ -1,10 +1,11 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
+import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core'
 import {FormBuilder} from '@angular/forms'
 import {Store} from '@ngrx/store'
 import {concatAll, filter, map, Observable, of, toArray} from 'rxjs'
 import {switchMap} from 'rxjs/operators'
 import {allServicesSelector} from 'src/app/new-order/shared/components/orders/store/selectors'
 import {ServiceInterface} from '../../../../../../types/service.interface'
+import {TuiDialogService} from '@taiga-ui/core'
 
 @Component({
   selector: 'app-package',
@@ -29,7 +30,12 @@ export class PackageComponent implements OnInit {
     other: this.other,
   })
 
-  constructor(private fb: FormBuilder, private store: Store) {}
+  constructor(
+    private fb: FormBuilder,
+    private store: Store,
+    @Inject(TuiDialogService)
+    private readonly dialogService: TuiDialogService
+  ) {}
 
   ngOnInit(): void {
     this.initializeValues()
@@ -44,10 +50,14 @@ export class PackageComponent implements OnInit {
           filter((service: ServiceInterface) => service.group_id === '1'),
           toArray(),
           map((services: ServiceInterface[]) => {
-            return null
+            return services
           })
         )
       })
     )
+  }
+
+  open() {
+    this.dialogService.open('hello').subscribe()
   }
 }
