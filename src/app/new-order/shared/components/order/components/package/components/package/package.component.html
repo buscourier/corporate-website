@@ -9,14 +9,21 @@
         <div class="">
           <tui-checkbox-labeled
             [formControlName]="box.get('data').value.id"
-            (change)="openDialog(template)"
+            (change)="
+              openDialog(
+                getControl(box.get(box.get('data').value.id)),
+                template
+              )
+            "
           >
             <div class="relative inline">
               <button
+                *ngIf="getControl(box.get(box.get('data').value.id)).disabled"
                 type="button"
                 class="absolute -top-3 -right-3 text-red"
                 (click)="
                   clear(
+                    $event,
                     getControl(box.get('count')),
                     getControl(box.get(box.get('data').value.id))
                   )
@@ -37,8 +44,14 @@
               }}
               руб. за {{ getControl(box.get('count')).value }} шт.
               <small
+                *ngIf="getControl(box.get(box.get('data').value.id)).disabled"
                 class="mt-1 block text-[10px] text-red"
-                (click)="openDialog(template)"
+                (click)="
+                  openDialog(
+                    getControl(box.get(box.get('data').value.id)),
+                    template
+                  )
+                "
                 >изменить</small
               >
             </div>

@@ -7,12 +7,12 @@ import {
 } from '@angular/core'
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms'
 import {Store} from '@ngrx/store'
+import {TuiDialogContext, TuiDialogService} from '@taiga-ui/core'
+import {PolymorpheusContent} from '@tinkoff/ng-polymorpheus'
 import {concatAll, filter, map, Observable, of, toArray} from 'rxjs'
 import {switchMap, tap} from 'rxjs/operators'
 import {allServicesSelector} from 'src/app/new-order/shared/components/orders/store/selectors'
 import {ServiceInterface} from '../../../../../../types/service.interface'
-import {TuiDialogContext, TuiDialogService} from '@taiga-ui/core'
-import {PolymorpheusContent} from '@tinkoff/ng-polymorpheus'
 
 // interface PackageInterface {
 //   [key: string]: boolean
@@ -134,10 +134,13 @@ export class PackageComponent implements OnInit {
     // this.dialogService.open('hello').subscribe()
   }
 
-  openDialog(content: PolymorpheusContent<TuiDialogContext>) {
+  openDialog(checkboxControl, content: PolymorpheusContent<TuiDialogContext>) {
+    checkboxControl.updateValueAndValidity()
+
     this.dialogService
       .open(content, {
         size: 's',
+        closeable: false,
       })
       .subscribe()
   }
@@ -146,11 +149,13 @@ export class PackageComponent implements OnInit {
     if (countControl.value) {
       checkboxControl.disable({emitEvent: false, onlySelf: true})
     } else {
-      checkboxControl.enable()
+      checkboxControl.enable({emitEvent: false, onlySelf: true})
     }
   }
 
-  clear(countControl, checkboxControl) {
+  clear(e: Event, countControl, checkboxControl) {
+    e.preventDefault()
+    e.stopPropagation()
     countControl.setValue(1)
     checkboxControl.setValue(false)
     checkboxControl.enable()
