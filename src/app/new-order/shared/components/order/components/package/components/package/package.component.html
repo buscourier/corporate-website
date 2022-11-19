@@ -6,13 +6,12 @@
         [formControlName]="box.get('data').value.id"
         (change)="openDialog(template)"
       >
-        {{box.get('data').value.site_name}}
-        <div class="example">{{box.get('data').value.price}} руб. за 1 шт.</div>
+        {{ box.get('data').value.site_name }}
+        <div class="example">
+          {{ box.get('data').value.price }} руб. за 1 шт.
+        </div>
       </tui-checkbox-labeled>
-      <ng-template
-        #template
-        let-observer
-      >
+      <ng-template #template let-observer>
         <tui-input-count
           [formControl]="getControl(box.get('count'))"
           [tuiTextfieldLabelOutside]="true"
