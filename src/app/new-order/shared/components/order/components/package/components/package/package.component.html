@@ -7,6 +7,12 @@
         [formGroup]="box"
       >
         <div class="">
+          {{
+            closeDialog(
+              getControl(box.get('count')),
+              getControl(box.get(box.get('data').value.id))
+            )
+          }}
           <tui-checkbox-labeled
             [formControlName]="box.get('data').value.id"
             (change)="

@@ -5,24 +5,47 @@ import {
   Inject,
   OnInit,
 } from '@angular/core'
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms'
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR,
+  ValidationErrors,
+} from '@angular/forms'
 import {Store} from '@ngrx/store'
 import {TuiDialogContext, TuiDialogService} from '@taiga-ui/core'
 import {PolymorpheusContent} from '@tinkoff/ng-polymorpheus'
-import {concatAll, filter, map, Observable, of, toArray} from 'rxjs'
+import {
+  concatAll,
+  filter,
+  map,
+  Observable,
+  of,
+  Subscription,
+  toArray,
+} from 'rxjs'
 import {switchMap, tap} from 'rxjs/operators'
 import {allServicesSelector} from 'src/app/new-order/shared/components/orders/store/selectors'
 import {ServiceInterface} from '../../../../../../types/service.interface'
-
-// interface PackageInterface {
-//   [key: string]: boolean
-//   count: number,
-// }
 
 @Component({
   selector: 'app-package',
   templateUrl: './package.component.html',
   styleUrls: ['./package.component.css'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      multi: true,
+      useExisting: PackageComponent,
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: PackageComponent,
+      multi: true,
+    },
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PackageComponent implements OnInit {
@@ -41,6 +64,9 @@ export class PackageComponent implements OnInit {
     skins: this.skins,
     other: this.other,
   })
+
+  onTouched = () => {}
+  onChangeSub: Subscription
 
   constructor(
     private fb: FormBuilder,
@@ -130,6 +156,7 @@ export class PackageComponent implements OnInit {
   }
 
   open() {
+    alert(1)
     console.log('form', this.form.value)
     // this.dialogService.open('hello').subscribe()
   }
@@ -146,10 +173,10 @@ export class PackageComponent implements OnInit {
   }
 
   closeDialog(countControl, checkboxControl) {
-    if (countControl.value) {
-      checkboxControl.disable({emitEvent: false, onlySelf: true})
+    if ((countControl.value && countControl.dirty) || countControl.value > 1) {
+      checkboxControl.disable({onlySelf: true, emitEvent: false})
     } else {
-      checkboxControl.enable({emitEvent: false, onlySelf: true})
+      checkboxControl.enable({emitEvent: false})
     }
   }
 
@@ -159,5 +186,40 @@ export class PackageComponent implements OnInit {
     countControl.setValue(1)
     checkboxControl.setValue(false)
     checkboxControl.enable()
+  }
+
+  writeValue(value: any) {
+    // this.boxes.clear()
+
+    if (value) {
+      this.form.patchValue(value, {emitEvent: false, onlySelf: true})
+    }
+  }
+
+  registerOnTouched(onTouched: any) {
+    this.onTouched = onTouched
+  }
+
+  registerOnChange(onChange: any) {
+    this.onChangeSub = this.form.valueChanges.subscribe(onChange)
+  }
+
+  setDisabledState(disabled: boolean) {
+    if (disabled) {
+      this.form.disable()
+    } else {
+      this.form.enable()
+    }
+  }
+
+  allRequiredFieldsFilled(control: AbstractControl): ValidationErrors | null {
+    const controlValue = control.value
+    const isValid = controlValue?.email && controlValue?.name
+    return isValid ? null : {required: true}
+  }
+
+  validate(control: AbstractControl): ValidationErrors | null {
+    return null
+    // return this.allRequiredFieldsFilled(control)
   }
 }
