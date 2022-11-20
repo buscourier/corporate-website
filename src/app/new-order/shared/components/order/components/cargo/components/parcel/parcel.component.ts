@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   OnDestroy,
@@ -71,7 +72,7 @@ enum VladivostokOffice {
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ParcelComponent implements OnInit, OnDestroy {
+export class ParcelComponent implements OnInit, AfterViewInit, OnDestroy {
   endCity$: Observable<EndCityInterface>
   startOffice$: Observable<OfficeInterface>
   startCourier$: Observable<CourierInterface>
@@ -118,6 +119,10 @@ export class ParcelComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.form.setValidators(Validators.required)
     this.initializeValues()
+  }
+
+  ngAfterViewInit() {
+    this.count.setValue(1)
   }
 
   ngOnDestroy() {
