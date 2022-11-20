@@ -87,18 +87,23 @@ export class TotalSumService {
         break
     }
 
-    const allServicesId = this.getAllServicesId(order)
+    const allServiceIds = [
+      startCourierId,
+      endCourierId,
+      ...this.getAllServiceIds(order),
+    ].filter(Boolean)
+
     const parcels = order.cargo.value ? order.cargo.value.parcels : []
 
-    console.log('order!!!', order)
+    console.log('order!!!', allServiceIds)
     console.log('cargo', cargo)
   }
 
-  getAllServicesId({packages, services}: OrderStateInterface) {
+  getAllServiceIds({packages, services}: OrderStateInterface) {
     const packageIds = this.getPackageIds(packages)
-    const serviceIds = this.getServiceIds(services)
+    const extServiceIds = this.getExtServiceIds(services)
 
-    return [...packageIds, ...serviceIds]
+    return [...packageIds, ...extServiceIds]
   }
 
   getPackageIds(packages: any) {
@@ -125,7 +130,7 @@ export class TotalSumService {
     return arr
   }
 
-  getServiceIds(services) {
+  getExtServiceIds(services) {
     const INSURANCE_15 = '58'
     const INSURANCE_30 = '59'
     const LIMIT_MIN = 15000
