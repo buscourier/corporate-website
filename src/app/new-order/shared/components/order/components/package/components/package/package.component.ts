@@ -3,6 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   Inject,
+  OnDestroy,
   OnInit,
 } from '@angular/core'
 import {
@@ -17,16 +18,7 @@ import {
 import {Store} from '@ngrx/store'
 import {TuiDialogContext, TuiDialogService} from '@taiga-ui/core'
 import {PolymorpheusContent} from '@tinkoff/ng-polymorpheus'
-import {
-  concatAll,
-  filter,
-  map,
-  Observable,
-  of,
-  Subscription,
-  take,
-  toArray,
-} from 'rxjs'
+import {concatAll, filter, map, of, Subscription, take, toArray} from 'rxjs'
 import {switchMap, tap} from 'rxjs/operators'
 import {allServicesSelector} from 'src/app/new-order/shared/components/orders/store/selectors'
 import {ServiceInterface} from '../../../../../../types/service.interface'
@@ -49,8 +41,8 @@ import {ServiceInterface} from '../../../../../../types/service.interface'
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PackageComponent implements OnInit {
-  services$: Observable<ServiceInterface[]>
+export class PackageComponent implements OnInit, OnDestroy {
+  servicesSub: Subscription
 
   boxes = this.fb.array<FormGroup>([])
   safePacks = this.fb.array<FormGroup>([])
@@ -81,6 +73,10 @@ export class PackageComponent implements OnInit {
     this.initializeValues()
   }
 
+  ngOnDestroy() {
+    this.servicesSub.unsubscribe()
+  }
+
   initializeValues() {
     const packages = [
       ...this.boxes.value,
@@ -94,9 +90,7 @@ export class PackageComponent implements OnInit {
       return
     }
 
-    console.log('fuck!!!!', packages.length > 1)
-
-    this.store
+    this.servicesSub = this.store
       .select(allServicesSelector)
       .pipe(
         filter(Boolean),

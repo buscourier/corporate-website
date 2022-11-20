@@ -12,6 +12,7 @@ import {
 import {CargoModule} from './components/cargo/cargo.module'
 import {OrderComponent} from './components/order/order.component'
 import {PackageModule} from './components/package/package.module'
+import {ServicesModule} from './components/services/services.module'
 
 @NgModule({
   declarations: [OrderComponent],
@@ -27,6 +28,7 @@ import {PackageModule} from './components/package/package.module'
     TuiRadioListModule,
     TuiLetModule,
     TuiInputCountModule,
+    ServicesModule,
   ],
   exports: [OrderComponent],
 })
