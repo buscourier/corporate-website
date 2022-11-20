@@ -3,6 +3,7 @@ import {Injectable} from '@angular/core'
 import {map, Observable, of, zip} from 'rxjs'
 import {OrderStateInterface} from 'src/app/new-order/shared/components/order/types/order-state.interface'
 import {environment} from '../../../../../environments/environment'
+import {ParcelInterface} from '../../../shared/components/order/types/parcel.interface'
 
 interface TotalSumInterface {
   price: number
@@ -93,10 +94,64 @@ export class TotalSumService {
       ...this.getAllServiceIds(order),
     ].filter(Boolean)
 
-    const parcels = order.cargo.value ? order.cargo.value.parcels : []
+    if (order.cargo.type.id === '2') {
+      const parcels = order.cargo.value ? order.cargo.value.parcels : []
 
-    console.log('order!!!', allServiceIds)
-    console.log('cargo', cargo)
+      if (parcels.length) {
+        const ttt = this.getParcelsSum(
+          startCityId,
+          endCityId,
+          order.cargo.type.id,
+          allServiceIds,
+          parcels
+        )
+      }
+    } else {
+    }
+  }
+
+  getParcelsSum(
+    startCityId: string,
+    endCityId: string,
+    cargoId: string,
+    allServiceIds: string[],
+    parcels
+  ) {
+    const weight = this.getWeight(parcels)
+    const dim = this.getDim(parcels)
+    const places = this.getParcelPlaces(parcels)
+
+    console.log('weight', weight)
+    console.log('dim', dim)
+    console.log('places', places)
+  }
+
+  getDim(parcels: ParcelInterface[]) {
+    const objSum = parcels.filter(Boolean).reduce(
+      (acc, obj: ParcelInterface) => ({
+        length: acc.length + obj.length,
+        width: acc.width + obj.width,
+        height: acc.height + obj.height,
+      }),
+      {width: 0, height: 0, length: 0}
+    )
+
+    return Object.values(objSum).reduce(
+      (sum: number, val: number) => sum + val,
+      0
+    )
+  }
+
+  getWeight(parcels: ParcelInterface[]) {
+    return parcels
+      .filter(Boolean)
+      .reduce((sum: number, {weight}) => sum + weight, 0)
+  }
+
+  getParcelPlaces(parcels: ParcelInterface[]) {
+    return parcels
+      .filter(Boolean)
+      .reduce((sum: number, parcel: ParcelInterface) => sum + parcel.count, 0)
   }
 
   getAllServiceIds({packages, services}: OrderStateInterface) {

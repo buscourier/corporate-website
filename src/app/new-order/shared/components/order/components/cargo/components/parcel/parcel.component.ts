@@ -82,11 +82,11 @@ export class ParcelComponent implements OnInit, OnDestroy {
   onTouched = () => {}
   onChangeSub: Subscription
 
-  count = this.fb.control('', [Validators.required])
-  weight = this.fb.control('', [Validators.required])
-  width = this.fb.control('', [Validators.required])
-  height = this.fb.control('', [Validators.required])
-  length = this.fb.control('', [Validators.required])
+  count = this.fb.control(null, [Validators.required])
+  weight = this.fb.control(null, [Validators.required])
+  width = this.fb.control(null, [Validators.required])
+  height = this.fb.control(null, [Validators.required])
+  length = this.fb.control(null, [Validators.required])
 
   form = this.fb.group<ParcelFormInterface>({
     count: this.count,
