@@ -5,7 +5,16 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core'
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms'
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms'
 import {Store} from '@ngrx/store'
 import {
   concatAll,
@@ -31,6 +40,18 @@ const INSURANCE_MAX = 30000
   selector: 'app-services',
   templateUrl: './services.component.html',
   styleUrls: ['./services.component.css'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      multi: true,
+      useExisting: ServicesComponent,
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: ServicesComponent,
+      multi: true,
+    },
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ServicesComponent implements OnInit, OnDestroy {
@@ -126,8 +147,7 @@ export class ServicesComponent implements OnInit, OnDestroy {
             })
           )
         }),
-        tap((services) => {
-          console.log('services', this.services)
+        tap(() => {
           this.cdr.markForCheck()
         })
       )
@@ -148,5 +168,41 @@ export class ServicesComponent implements OnInit, OnDestroy {
 
   open() {
     console.log('services form', this.form.value)
+  }
+
+  onTouched = () => {}
+  onChangeSub: Subscription
+
+  writeValue(value: any) {
+    if (value) {
+      this.form.setValue(value)
+    }
+  }
+
+  registerOnTouched(onTouched: any) {
+    this.onTouched = onTouched
+  }
+
+  registerOnChange(onChange: any) {
+    this.onChangeSub = this.form.valueChanges.subscribe(onChange)
+  }
+
+  setDisabledState(disabled: boolean) {
+    if (disabled) {
+      this.form.disable()
+    } else {
+      this.form.enable()
+    }
+  }
+
+  allRequiredFieldsFilled(control: AbstractControl): ValidationErrors | null {
+    const controlValue = control.value
+    const isValid = controlValue?.email && controlValue?.name
+    return isValid ? null : {required: true}
+  }
+
+  validate(control: AbstractControl): ValidationErrors | null {
+    return null
+    // return this.allRequiredFieldsFilled(control)
   }
 }
