@@ -87,17 +87,18 @@ export class TotalSumService {
         break
     }
 
-    const servicesId = this.getServicesId(order)
+    const allServicesId = this.getAllServicesId(order)
     const parcels = order.cargo.value ? order.cargo.value.parcels : []
 
     console.log('order!!!', order)
     console.log('cargo', cargo)
   }
 
-  getServicesId({packages, services}: OrderStateInterface) {
+  getAllServicesId({packages, services}: OrderStateInterface) {
     const packageIds = this.getPackageIds(packages)
+    const serviceIds = this.getServiceIds(services)
 
-    return []
+    return [...packageIds, ...serviceIds]
   }
 
   getPackageIds(packages: any) {
@@ -122,6 +123,30 @@ export class TotalSumService {
       .filter((el) => el)
 
     return arr
+  }
+
+  getServiceIds(services) {
+    const INSURANCE_15 = '58'
+    const INSURANCE_30 = '59'
+    const LIMIT_MIN = 15000
+
+    return services.services
+      .map((obj) => {
+        const id = Object.entries(obj)[0][0]
+        const checked = Object.entries(obj)[0][1]
+        const value = obj.sum || obj.phone
+
+        const formattedId =
+          id === 'insurance' && obj.sum
+            ? obj.sum >= LIMIT_MIN
+              ? INSURANCE_30
+              : INSURANCE_15
+            : id
+
+        return checked && value ? {id: formattedId, value} : null
+      })
+      .filter((service) => service)
+      .map((service) => service.id)
   }
 
   getResult<T>(
