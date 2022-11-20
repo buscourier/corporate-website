@@ -1,1 +1,1 @@
-export type DocFormType = string
+export type DocFormType = number

@@ -6,6 +6,7 @@ import {CalculatorModule} from './components/calculator/calculator.module'
 import {CheckoutModule} from './components/checkout/checkout.module'
 import {PersonModule} from './components/checkout/components/person/person.module'
 import {IndexComponent} from './components/index/index.component'
+import {SidebarModule} from './components/sidebar/sidebar.module'
 import {NewOrderRoutingModule} from './new-order-routing.module'
 import {NewOrderService} from './shared/services/new-order.service'
 
@@ -19,6 +20,7 @@ import {NewOrderService} from './shared/services/new-order.service'
     TuiStepperModule,
     TuiButtonModule,
     PersonModule,
+    SidebarModule,
   ],
   providers: [NewOrderService],
 })

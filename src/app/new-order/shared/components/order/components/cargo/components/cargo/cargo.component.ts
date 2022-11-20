@@ -63,7 +63,9 @@ export class CargoComponent implements OnInit {
           filter((cargo: CargoInterface) => cargo.parent_id === '0'),
           toArray(),
           tap((types: CargoInterface[]) => {
-            // this.form.get('type').patchValue(types[0])
+            //TODO: may be move doc control in separate form
+            this.form.get('type').patchValue(types[0])
+            this.form.get('value').patchValue(1)
           })
         )
       })
