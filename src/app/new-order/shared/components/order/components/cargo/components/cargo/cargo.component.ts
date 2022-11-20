@@ -64,8 +64,8 @@ export class CargoComponent implements OnInit {
           toArray(),
           tap((types: CargoInterface[]) => {
             //TODO: may be move doc control in separate form
-            this.form.get('type').patchValue(types[0])
-            this.form.get('value').patchValue(1)
+            // this.form.get('type').patchValue(types[0])
+            // this.form.get('value').patchValue(1)
           })
         )
       })
