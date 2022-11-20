@@ -62,13 +62,17 @@ export class SidebarComponent implements OnInit, OnDestroy {
           const startCourierId = startCourier ? '1' : null
           const endCourierId = endCourier ? '2' : null
 
-          this.totalSumService.calculateTotalSum(
-            startCityId,
-            endCityId,
-            startCourierId,
-            endCourierId,
-            orders
-          )
+          this.totalSumService
+            .calculateTotalSum(
+              startCityId,
+              endCityId,
+              startCourierId,
+              endCourierId,
+              orders
+            )
+            .subscribe((result) => {
+              console.log('totalSum', result)
+            })
 
           // console.log('startCity', startCity)
           // console.log('endCity', endCity)

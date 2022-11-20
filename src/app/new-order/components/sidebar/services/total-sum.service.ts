@@ -71,6 +71,7 @@ export class TotalSumService {
     }
 
     let cargo = ``
+    let result = null
 
     //TODO: refactor after validation well be ok
     switch (order.cargo.type.id) {
@@ -98,7 +99,7 @@ export class TotalSumService {
       const parcels = order.cargo.value ? order.cargo.value.parcels : []
 
       if (parcels.length) {
-        const ttt = this.getParcelsSum(
+        result = this.getParcelsSum(
           startCityId,
           endCityId,
           order.cargo.type.id,
@@ -107,7 +108,17 @@ export class TotalSumService {
         )
       }
     } else {
+      result = this.getResult(
+        startCityId,
+        endCityId,
+        order.cargo.type.id,
+        allServiceIds,
+        0,
+        0
+      )
     }
+
+    return result
   }
 
   getParcelsSum(
@@ -121,9 +132,37 @@ export class TotalSumService {
     const dim = this.getDim(parcels)
     const places = this.getParcelPlaces(parcels)
 
-    console.log('weight', weight)
-    console.log('dim', dim)
-    console.log('places', places)
+    const sumWithoutServices = this.getResult(
+      startCityId,
+      endCityId,
+      cargoId,
+      null,
+      weight,
+      dim
+    ).pipe(
+      map(({price}) => {
+        return {price: price * places}
+      })
+    )
+
+    const sumWithoutParcels = this.getResult(
+      startCityId,
+      endCityId,
+      '0',
+      allServiceIds,
+      0,
+      0
+    )
+
+    return zip(sumWithoutServices, sumWithoutParcels).pipe(
+      map((arr) => {
+        const sum = arr.reduce((acc, {price}) => {
+          return acc + price
+        }, 0)
+
+        return {price: sum}
+      }, 0)
+    )
   }
 
   getDim(parcels: ParcelInterface[]) {
