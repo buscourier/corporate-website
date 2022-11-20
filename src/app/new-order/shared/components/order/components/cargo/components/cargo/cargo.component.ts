@@ -72,8 +72,10 @@ export class CargoComponent implements OnInit {
     )
   }
 
-  changeCargoType($event: any) {
-    console.log('$event', $event)
+  changeCargoType() {
+    this.form.patchValue({
+      value: null,
+    })
   }
 
   writeValue(value: any) {

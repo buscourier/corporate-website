@@ -47,7 +47,7 @@ export class TotalSumService {
 
         if (success) {
           totalSum = prices.reduce((sum: number, {price}) => {
-            return sum + price
+            return sum + Number(price)
           }, 0)
         } else {
           totalSum = 0
@@ -66,28 +66,33 @@ export class TotalSumService {
     order
   ) {
     if (!order || !order.cargo.type) {
-      // return new Observable<TotalSumInterface>();
-      return
+      return new Observable<TotalSumInterface>()
+      // return
     }
 
-    let cargo = ``
+    let cargoId = order.cargo.type.id
     let result = null
 
     //TODO: refactor after validation well be ok
     switch (order.cargo.type.id) {
       case '1':
-        cargo = `${order.cargo.type.id}, ${order.cargo.value}`
-        break
-      // case '2':
-      //   const parcels = order.cargo.value ? order.cargo.value.parcels : []
-      //   break
-      case '5':
-      case '21':
-        cargo = order.cargo.value
-          ? `${order.cargo.value.detail.id}, ${order.cargo.value?.places}`
+        cargoId = order.cargo.value
+          ? `${order.cargo.type.id}, ${order.cargo.value}`
           : null
         break
+      case '2':
+        cargoId = order.cargo.type.id
+        break
+      case '5':
+      case '21':
+        cargoId =
+          order.cargo.value && order.cargo.value.detail
+            ? `${order.cargo.value.detail.id}, ${order.cargo.value?.places}`
+            : null
+        break
     }
+
+    console.log('cargo', cargoId)
 
     const allServiceIds = [
       startCourierId,
@@ -98,11 +103,14 @@ export class TotalSumService {
     if (order.cargo.type.id === '2') {
       const parcels = order.cargo.value ? order.cargo.value.parcels : []
 
+      console.log('order.cargo.value', order.cargo.value)
+      console.log('parcels', parcels)
+
       if (parcels.length) {
         result = this.getParcelsSum(
           startCityId,
           endCityId,
-          order.cargo.type.id,
+          cargoId,
           allServiceIds,
           parcels
         )
@@ -111,7 +119,7 @@ export class TotalSumService {
       result = this.getResult(
         startCityId,
         endCityId,
-        order.cargo.type.id,
+        cargoId,
         allServiceIds,
         0,
         0

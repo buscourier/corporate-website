@@ -9,7 +9,7 @@
       formControlName="type"
       [items]="cargoTypes"
       [itemContent]="cargoTypesContent"
-      (change)="changeCargoType($event)"
+      (change)="changeCargoType()"
     ></tui-radio-list>
     <ng-template #cargoTypesContent let-data>
       {{ data.name }}
