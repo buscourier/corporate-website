@@ -1,4 +1,5 @@
 <div [formGroup]="form" class="flex max-w-[550px] space-x-4">
+  form: {{ form.errors | json }}
   <label *appLet="cargos$ | async as cargos" class="max-w-[370px] flex-grow">
     <span class="mb-1 inline-block text-xs">
       Выберите запчасть
@@ -18,10 +19,6 @@
         ></tui-data-list-wrapper>
       </tui-select>
     </tui-loader>
-    <!--    <tui-error-->
-    <!--      [formControl]="detail"-->
-    <!--      [error]="[] | tuiFieldError | async"-->
-    <!--    ></tui-error>-->
   </label>
   <label *ngIf="detail.value" class="max-w-[260px]">
     <span class="mb-1 inline-block text-xs">
@@ -45,6 +42,7 @@
     <button type="button" (click)="delete()">Delete</button>
   </div>
 </div>
+<tui-error [formGroup]="form" [error]="[] | tuiFieldError | async"></tui-error>
 <b class="mt-10 block font-medium">Тип груза:</b>
 <p class="text-gray-700">
   Пожалуйста, выберите тип запчасти из списка. Если вы не нашли подходящей

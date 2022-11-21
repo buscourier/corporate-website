@@ -28,18 +28,13 @@ import {
   startCourierSelector,
   startOfficeSelector,
 } from '../../../../../start-point/store/selectors'
+import {VladivostokOffice} from '../../../../enums/vladivostokOffice'
 import {ParcelFormInterface} from '../../types/parcel-form.interface'
 
 interface CityLimitInterface {
   name: string
   maxWeight?: number
   maxDimensionsSum?: number
-}
-
-enum VladivostokOffice {
-  RUSSKAYA = '1',
-  ALEUTSKAYA = '1249',
-  GOGOLYA = '249',
 }
 
 @Component({
@@ -189,6 +184,7 @@ export class ParcelComponent implements OnInit, AfterViewInit, OnDestroy {
     return result.length ? result[0][1] : null
   }
 
+  //TODO: use abstract control instead this.form
   requiredError(): ValidationErrors | null {
     const error = Object.entries(this.form.controls).some(([, control]) => {
       return control.errors && control.errors['required']
@@ -202,6 +198,7 @@ export class ParcelComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  //TODO: use abstract control instead this.form
   dimensionsError(): ValidationErrors | null {
     const fields = Object.assign({}, this.form.value)
 
@@ -222,6 +219,7 @@ export class ParcelComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  //TODO: use abstract control instead this.form
   weightError(): ValidationErrors | null {
     const {weight} = this.form.value
 

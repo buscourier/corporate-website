@@ -1,6 +1,7 @@
 <form [formGroup]="form">
   <!--  docsInvalid: {{ docs.invalid }}-->
   <!--  parcelsInvalid: {{ parcels.invalid }}-->
+  autoInvalid: {{ auto.invalid }}
   <div
     *tuiLet="cargoTypes$ | async as cargoTypes"
     class="mt-10 mb-5 flex items-center"

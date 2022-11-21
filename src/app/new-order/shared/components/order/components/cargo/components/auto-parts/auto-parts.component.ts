@@ -1,11 +1,11 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   OnDestroy,
   OnInit,
 } from '@angular/core'
 import {
-  AbstractControl,
   FormBuilder,
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
@@ -13,12 +13,21 @@ import {
   Validators,
 } from '@angular/forms'
 import {Store} from '@ngrx/store'
-import {tuiItemsHandlersProvider} from '@taiga-ui/kit'
-import {Observable, of, Subscription} from 'rxjs'
+import {TUI_VALIDATION_ERRORS, tuiItemsHandlersProvider} from '@taiga-ui/kit'
+import {combineLatest, Observable, of, Subscription} from 'rxjs'
 import {concatAll, filter, switchMap, tap, toArray} from 'rxjs/operators'
 import {CargoInterface} from 'src/app/new-order/shared/types/cargo.interface'
 import {STRINGIFY_CARGOS} from '../../../../../../../../shared/handlers/string-handlers'
+import {
+  endCourierSelector,
+  endOfficeSelector,
+} from '../../../../../end-point/store/selectors'
 import {allCargosSelector} from '../../../../../orders/store/selectors'
+import {
+  startCourierSelector,
+  startOfficeSelector,
+} from '../../../../../start-point/store/selectors'
+import {VladivostokOffice} from '../../../../enums/vladivostokOffice'
 
 @Component({
   selector: 'app-auto-parts',
@@ -35,26 +44,46 @@ import {allCargosSelector} from '../../../../../orders/store/selectors'
       useExisting: AutoPartsComponent,
       multi: true,
     },
+    {
+      provide: TUI_VALIDATION_ERRORS,
+      useValue: {
+        startOffice: `Из выбранного офиса  автозапчасти не отправляются`,
+        endOffice: `Выбранный офис автозапчасти не принимает`,
+        courier: `Доставка этой запчасти курьером невозможна`,
+      },
+    },
     tuiItemsHandlersProvider({stringify: STRINGIFY_CARGOS}),
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AutoPartsComponent implements OnInit, OnDestroy {
   cargos$: Observable<CargoInterface[]>
+  combineAllSub: Subscription
 
   onTouched = () => {}
   onChangeSub: Subscription
   detailChangedSub: Subscription
 
   detail = this.fb.control(null, [Validators.required])
-  places = this.fb.control(1, [Validators.required])
+  places = this.fb.control({value: 1, disabled: true}, [
+    Validators.required,
+    Validators.min(1),
+  ])
 
   form = this.fb.group({
     detail: this.detail,
     places: this.places,
   })
 
-  constructor(private fb: FormBuilder, private store: Store) {}
+  startOfficeLimits = false
+  endOfficeLimits = false
+  courierLimits = false
+
+  constructor(
+    private fb: FormBuilder,
+    private store: Store,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.initializeValues()
@@ -62,6 +91,7 @@ export class AutoPartsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.detailChangedSub.unsubscribe()
+    this.combineAllSub.unsubscribe()
   }
 
   initializeValues() {
@@ -86,6 +116,33 @@ export class AutoPartsComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe()
+
+    this.combineAllSub = combineLatest([
+      this.store.select(startOfficeSelector),
+      this.store.select(startCourierSelector),
+      this.store.select(endOfficeSelector),
+      this.store.select(endCourierSelector),
+    ])
+      .pipe(
+        tap(([startOffice, startCourier, endOffice, endCourier]) => {
+          this.startOfficeLimits =
+            startOffice &&
+            (startOffice.home_id === VladivostokOffice.ALEUTSKAYA ||
+              startOffice.home_id === VladivostokOffice.GOGOLYA)
+
+          this.endOfficeLimits =
+            endOffice &&
+            (endOffice.home_id === VladivostokOffice.ALEUTSKAYA ||
+              endOffice.home_id === VladivostokOffice.GOGOLYA)
+
+          this.courierLimits = !!(startCourier || endCourier)
+        })
+      )
+      .subscribe(() => {
+        this.form.updateValueAndValidity()
+        this.form.markAsTouched()
+        this.cdr.markForCheck()
+      })
   }
 
   delete() {
@@ -120,14 +177,48 @@ export class AutoPartsComponent implements OnInit, OnDestroy {
     }
   }
 
-  allRequiredFieldsFilled(control: AbstractControl): ValidationErrors | null {
-    const controlValue = control.value
-    const isValid = controlValue?.email && controlValue?.name
-    return isValid ? null : {required: true}
+  startOfficeError(): ValidationErrors | null {
+    const error = this.startOfficeLimits
+
+    if (error) {
+      this.form.setErrors({startOffice: true})
+      // this.detail.disable({onlySelf: true, emitEvent: false})
+      return {startOffice: true}
+    } else {
+      // this.detail.enable()
+      return null
+    }
   }
 
-  validate(control: AbstractControl): ValidationErrors | null {
-    return null
-    // return this.allRequiredFieldsFilled(control)
+  endOfficeError(): ValidationErrors | null {
+    const error = this.endOfficeLimits
+
+    if (error) {
+      this.form.setErrors({endOffice: true})
+      // this.detail.disable({onlySelf: true, emitEvent: false})
+      return {endOffice: true}
+    } else {
+      // this.detail.enable()
+      return null
+    }
+  }
+
+  courierError(): ValidationErrors | null {
+    const error = this.courierLimits
+
+    if (error) {
+      this.form.setErrors({courier: true})
+      // this.detail.disable({onlySelf: true, emitEvent: false})
+      return {courier: true}
+    } else {
+      // this.detail.enable()
+      return null
+    }
+  }
+
+  validate(): ValidationErrors | null {
+    return (
+      this.startOfficeError() || this.endOfficeError() || this.courierError()
+    )
   }
 }
