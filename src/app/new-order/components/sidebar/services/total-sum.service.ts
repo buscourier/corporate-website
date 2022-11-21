@@ -87,13 +87,13 @@ export class TotalSumService {
       case '5':
         formattedCargoId =
           order.cargo.auto && order.cargo.auto.detail
-            ? `${order.cargo.auto.detail.id}, ${order.cargo.auto.detail.places}`
+            ? `${order.cargo.auto.detail.id}, ${order.cargo.auto.places}`
             : null
         break
       case '21':
         formattedCargoId =
           order.cargo.other && order.cargo.other.detail
-            ? `${order.cargo.other.detail.id}, ${order.cargo.other.detail.places}`
+            ? `${order.cargo.other.detail.id}, ${order.cargo.other.places}`
             : null
         break
     }
