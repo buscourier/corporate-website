@@ -142,7 +142,7 @@ export class EndPointComponent implements OnInit, OnDestroy {
     city: this.city,
     get: this.get,
     delivery: this.delivery,
-    needToMeet: this.needToMeet,
+    // needToMeet: this.needToMeet,
   })
 
   formValuesSub: Subscription
@@ -193,18 +193,18 @@ export class EndPointComponent implements OnInit, OnDestroy {
 
     this.activeTabIndex$ = this.store.select(activeTabSelector).pipe(
       tap((index: number) => {
-        // switch (index) {
-        //   case 0:
-        //     this.give.enable()
-        //     this.pickup.disable()
-        //     this.store.dispatch(changeCourierAction({pickup: null}))
-        //     break
-        //   case 1:
-        //     this.pickup.enable()
-        //     this.give.disable()
-        //     this.store.dispatch(changeOfficeAction({give: null}))
-        //     break
-        // }
+        switch (index) {
+          case 0:
+            this.get.enable()
+            this.delivery.disable()
+            this.store.dispatch(changeCourierAction({delivery: null}))
+            break
+          case 1:
+            this.delivery.enable()
+            this.get.disable()
+            this.store.dispatch(changeOfficeAction({get: null}))
+            break
+        }
       })
     )
 
