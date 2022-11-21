@@ -14,4 +14,6 @@ export enum ActionTypes {
   CHANGE_COURIER = '[Start point] Courier value changes',
   CHANGE_DATE = '[Start point] Date changed',
   CHANGE_ACTIVE_TAB = '[Start point] Set active tab',
+
+  CHANGE_VALIDITY = '[Start point] Validity changes',
 }

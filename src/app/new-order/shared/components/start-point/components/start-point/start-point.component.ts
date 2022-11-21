@@ -1,9 +1,24 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core'
 import {FormBuilder, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
 import {TuiDay} from '@taiga-ui/cdk'
 import {TUI_VALIDATION_ERRORS, tuiItemsHandlersProvider} from '@taiga-ui/kit'
-import {filter, first, map, Observable, of, switchMap, using} from 'rxjs'
+import {
+  debounceTime,
+  filter,
+  first,
+  map,
+  Observable,
+  of,
+  Subscription,
+  switchMap,
+  using,
+} from 'rxjs'
 import {concatAll, tap} from 'rxjs/operators'
 import {STRINGIFY_CITIES} from '../../../../../../shared/handlers/string-handlers'
 import {OfficeInterface} from '../../../../../../shared/types/office.interface'
@@ -29,6 +44,7 @@ import {
   startOfficeSelector,
 } from '../../store/selectors'
 import {initialState} from '../../store/state'
+import {changeValidityAction} from '../../store/actions/change-validity.action'
 
 @Component({
   selector: 'app-start-point',
@@ -45,7 +61,7 @@ import {initialState} from '../../store/state'
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StartPointComponent implements OnInit {
+export class StartPointComponent implements OnInit, OnDestroy {
   isCitiesLoading$: Observable<boolean>
   isCitiesLoaded$: Observable<boolean>
   isOfficesLoading$: Observable<boolean>
@@ -127,6 +143,8 @@ export class StartPointComponent implements OnInit {
     date: this.date,
   })
 
+  formValuesSub: Subscription
+
   tabs: string[]
 
   readonly TabName = {
@@ -139,6 +157,10 @@ export class StartPointComponent implements OnInit {
   ngOnInit(): void {
     this.fetchData()
     this.initializeValues()
+  }
+
+  ngOnDestroy() {
+    this.formValuesSub.unsubscribe()
   }
 
   fetchData() {
@@ -190,6 +212,15 @@ export class StartPointComponent implements OnInit {
 
     this.city.disable()
     // this.setActiveTabIndex(0)
+
+    this.formValuesSub = this.form.valueChanges
+      .pipe(
+        debounceTime(500),
+        tap(() => {
+          this.store.dispatch(changeValidityAction({isValid: this.form.valid}))
+        })
+      )
+      .subscribe()
   }
 
   createTabControls(offices: OfficeInterface[]) {

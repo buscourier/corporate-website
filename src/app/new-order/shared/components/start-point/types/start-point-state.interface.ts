@@ -7,6 +7,7 @@ export interface StartPointStateInterface {
   isCitiesLoading: boolean
   isOfficesLoading: boolean
   isCitiesLoaded: boolean
+  isValid: boolean
   cities: StartCityInterface[] | null
   offices: OfficeInterface[] | null
   city: StartCityInterface | null

@@ -62,3 +62,8 @@ export const activeTabSelector = createSelector(
   startPointFeatureSelector,
   (state: StartPointStateInterface) => state.activeTabIndex
 )
+
+export const isStartPointValidSelector = createSelector(
+  startPointFeatureSelector,
+  (state: StartPointStateInterface) => state.isValid
+)

@@ -12,6 +12,7 @@ export const initialState: StartPointStateInterface = {
   isCitiesLoading: false,
   isOfficesLoading: false,
   isCitiesLoaded: false,
+  isValid: false,
   cities: null,
   offices: null,
   city: null,
