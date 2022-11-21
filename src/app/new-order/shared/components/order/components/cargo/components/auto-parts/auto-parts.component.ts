@@ -49,7 +49,7 @@ import {VladivostokOffice} from '../../../../enums/vladivostokOffice'
       useValue: {
         startOffice: `Из выбранного офиса  автозапчасти не отправляются`,
         endOffice: `Выбранный офис автозапчасти не принимает`,
-        courier: `Доставка этой запчасти курьером невозможна`,
+        courier: `Доставка запчастей курьером невозможна`,
       },
     },
     tuiItemsHandlersProvider({stringify: STRINGIFY_CARGOS}),
@@ -182,10 +182,10 @@ export class AutoPartsComponent implements OnInit, OnDestroy {
 
     if (error) {
       this.form.setErrors({startOffice: true})
-      // this.detail.disable({onlySelf: true, emitEvent: false})
+      this.detail.disable({onlySelf: true, emitEvent: false})
       return {startOffice: true}
     } else {
-      // this.detail.enable()
+      this.detail.enable({onlySelf: true, emitEvent: false})
       return null
     }
   }
@@ -195,10 +195,10 @@ export class AutoPartsComponent implements OnInit, OnDestroy {
 
     if (error) {
       this.form.setErrors({endOffice: true})
-      // this.detail.disable({onlySelf: true, emitEvent: false})
+      this.detail.disable({onlySelf: true, emitEvent: false})
       return {endOffice: true}
     } else {
-      // this.detail.enable()
+      this.detail.enable({onlySelf: true, emitEvent: false})
       return null
     }
   }
@@ -208,10 +208,10 @@ export class AutoPartsComponent implements OnInit, OnDestroy {
 
     if (error) {
       this.form.setErrors({courier: true})
-      // this.detail.disable({onlySelf: true, emitEvent: false})
+      this.detail.disable({onlySelf: true, emitEvent: false})
       return {courier: true}
     } else {
-      // this.detail.enable()
+      this.detail.enable({onlySelf: true, emitEvent: false})
       return null
     }
   }

@@ -1,5 +1,4 @@
 <div [formGroup]="form" class="flex max-w-[550px] space-x-4">
-  form: {{ form.errors | json }}
   <label *appLet="cargos$ | async as cargos" class="max-w-[370px] flex-grow">
     <span class="mb-1 inline-block text-xs">
       Выберите запчасть
