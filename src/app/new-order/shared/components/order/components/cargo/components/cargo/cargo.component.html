@@ -16,21 +16,7 @@
     </ng-template>
   </div>
   <div *ngIf="this.form.get('active').value?.id === '1'">
-    <label class="mb-3 block max-w-[200px]">
-      <span class="mb-1 inline-block text-xs">Количество мест</span>
-      <tui-input-count
-        [formControl]="docs"
-        [tuiTextfieldLabelOutside]="true"
-        [min]="1"
-        [max]="20"
-      >
-        <input tuiTextfield />
-      </tui-input-count>
-      <tui-error
-        [formControl]="docs"
-        [error]="[] | tuiFieldError | async"
-      ></tui-error>
-    </label>
+    <app-docs [formControl]="docs"></app-docs>
   </div>
   <div *ngIf="active.value?.id === '2'">
     <app-parcels [formControl]="parcels"></app-parcels>
