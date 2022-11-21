@@ -51,7 +51,7 @@
               </button>
             </div>
           </tui-loader>
-          <div *ngIf="activeTabIndex === 0">
+          <div *ngIf="activeTabIndex === 0 && findTab('get')">
             <label class="w-full">
               <span class="mb-1 inline-block text-xs">
                 Выберите отделение
@@ -81,7 +81,7 @@
             </label>
           </div>
           <div
-            *ngIf="activeTabIndex === 1"
+            *ngIf="activeTabIndex === 1  && findTab('delivery')"
             [formGroup]="delivery"
             [patchFormGroupValues]="deliveryValues$ | async"
             class="mb-4 space-y-4"

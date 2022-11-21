@@ -234,6 +234,9 @@ export class EndPointComponent implements OnInit, OnDestroy {
   createTabControls(offices: OfficeInterface[]) {
     return of(offices)
       .pipe(
+        tap(() => {
+          this.tabs = []
+        }),
         switchMap((offices: OfficeInterface[]) =>
           of(offices).pipe(
             concatAll(),
@@ -252,9 +255,6 @@ export class EndPointComponent implements OnInit, OnDestroy {
             first()
           )
         )
-        // tap(() => {
-        //   this.tabs = []
-        // })
       )
       .subscribe((tabs: Array<string>) => {
         //TODO: fix error in endpoint
@@ -268,5 +268,9 @@ export class EndPointComponent implements OnInit, OnDestroy {
 
   setActiveTabIndex(index: number) {
     this.store.dispatch(changeActiveTabAction({activeTabIndex: index}))
+  }
+
+  findTab(name) {
+    return this.tabs.find((tabName: string) => tabName === name)
   }
 }
