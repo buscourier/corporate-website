@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
+import {ChangeDetectionStrategy, Component} from '@angular/core'
 import {
   AbstractControl,
   FormBuilder,
@@ -27,7 +27,7 @@ import {ParcelFormInterface} from '../../types/parcel-form.interface'
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ParcelsComponent implements OnInit {
+export class ParcelsComponent {
   onTouched = () => {}
   onChangeSub: Subscription
 
@@ -38,10 +38,6 @@ export class ParcelsComponent implements OnInit {
   })
 
   constructor(private fb: FormBuilder) {}
-
-  ngOnInit(): void {
-    console.log('parcels')
-  }
 
   addParcel() {
     this.parcels.push(this.fb.control<ParcelFormInterface>(null))
@@ -79,14 +75,19 @@ export class ParcelsComponent implements OnInit {
     }
   }
 
-  allRequiredFieldsFilled(control: AbstractControl): ValidationErrors | null {
-    const controlValue = control.value
-    const isValid = controlValue?.email && controlValue?.name
-    return isValid ? null : {required: true}
+  invalid(): ValidationErrors | null {
+    const invalid = this.parcels.controls.some((control: AbstractControl) => {
+      return control.invalid
+    })
+
+    if (invalid) {
+      return {invalid: true}
+    } else {
+      return null
+    }
   }
 
-  validate(control: AbstractControl): ValidationErrors | null {
-    return null
-    // return this.allRequiredFieldsFilled(control)
+  validate(): ValidationErrors | null {
+    return this.invalid()
   }
 }

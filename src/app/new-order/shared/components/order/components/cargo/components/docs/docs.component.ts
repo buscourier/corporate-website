@@ -95,6 +95,6 @@ export class DocsComponent {
   }
 
   validate(): ValidationErrors | null {
-    return this.minError()
+    return this.requiredError() || this.minError()
   }
 }
