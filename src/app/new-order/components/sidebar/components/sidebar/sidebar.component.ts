@@ -1,5 +1,6 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   OnDestroy,
   OnInit,
@@ -29,14 +30,14 @@ import {TotalSumService} from '../../services/total-sum.service'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarComponent implements OnInit, OnDestroy {
-  startCity$: Observable<StartCityInterface>
-  endCity$: Observable<EndCityInterface>
-  startCourier$: Observable<CourierInterface>
-  endCourier$: Observable<CourierInterface>
-  orders$: Observable<OrderStateInterface[]>
   combineAllSub: Subscription
+  totalSum = 0
 
-  constructor(private store: Store, private totalSumService: TotalSumService) {}
+  constructor(
+    private store: Store,
+    private totalSumService: TotalSumService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.initializeValues()
@@ -70,15 +71,10 @@ export class SidebarComponent implements OnInit, OnDestroy {
               endCourierId,
               orders
             )
-            .subscribe((result) => {
-              console.log('totalSum', result)
+            .subscribe((totalSum) => {
+              this.totalSum = totalSum
+              this.cdr.markForCheck()
             })
-
-          // console.log('startCity', startCity)
-          // console.log('endCity', endCity)
-          // console.log('startCourier', startCourier)
-          // console.log('endCourier', endCourier)
-          // console.log('orders', orders)
         })
       )
       .subscribe()
