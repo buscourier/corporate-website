@@ -44,7 +44,6 @@ import {
   isOfficesLoadingSelector,
   officesSelector,
 } from '../../store/selectors'
-import {changeValidityAction} from '../../store/actions/change-validity.action'
 
 @Component({
   selector: 'app-end-point',
@@ -218,8 +217,13 @@ export class EndPointComponent implements OnInit, OnDestroy {
             this.get.disable()
             this.needToMeet.disable()
 
-            //TODO: may be dont dispatch
-            this.store.dispatch(changeBusAction({needToMeet: false}))
+            setTimeout(() => {
+              this.delivery.patchValue({
+                street: '',
+              })
+            }, 0),
+              //TODO: may be dont dispatch
+              this.store.dispatch(changeBusAction({needToMeet: false}))
             this.store.dispatch(changeOfficeAction({get: null}))
             break
         }

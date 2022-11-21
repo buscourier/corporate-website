@@ -29,6 +29,7 @@ import {changeCityAction} from '../../store/actions/change-city.action'
 import {changeCourierAction} from '../../store/actions/change-courier.action'
 import {changeDateAction} from '../../store/actions/change-date.action'
 import {changeOfficeAction} from '../../store/actions/change-office.action'
+import {changeValidityAction} from '../../store/actions/change-validity.action'
 import {getCitiesAction} from '../../store/actions/get-cities.action'
 import {getOfficesAction} from '../../store/actions/get-offices.action'
 import {
@@ -44,7 +45,6 @@ import {
   startOfficeSelector,
 } from '../../store/selectors'
 import {initialState} from '../../store/state'
-import {changeValidityAction} from '../../store/actions/change-validity.action'
 
 @Component({
   selector: 'app-start-point',
@@ -194,7 +194,13 @@ export class StartPointComponent implements OnInit, OnDestroy {
           case 1:
             this.pickup.enable()
             this.give.disable()
-            this.store.dispatch(changeOfficeAction({give: null}))
+
+            setTimeout(() => {
+              this.pickup.patchValue({
+                street: '',
+              })
+            }, 0),
+              this.store.dispatch(changeOfficeAction({give: null}))
             break
         }
       })
