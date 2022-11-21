@@ -73,10 +73,11 @@ export class EndPointComponent implements OnInit, OnDestroy {
   readonly timeRange = ['8.00 - 14.00', '14.00 - 18.00']
   //TODO: add needToMeetTab
   tabs: string[] = []
+  isNeedToMeet = false
 
   city = this.fb.control(null, [Validators.required])
   get = this.fb.control(null, [Validators.required])
-  needToMeet = this.fb.control(null, [Validators.required])
+  needToMeet = this.fb.control(true, [Validators.required])
   delivery = this.fb.group({
     street: ['', [Validators.required]],
     building: ['', [Validators.required]],
@@ -90,6 +91,12 @@ export class EndPointComponent implements OnInit, OnDestroy {
         .pipe(
           tap((city: EndCityInterface) => {
             if (city) {
+              if (city.need_to_meet === '1') {
+                this.isNeedToMeet = true
+              } else {
+                this.isNeedToMeet = false
+              }
+
               //TODO: Check is that way correct, maybe need switch to map
               this.store.dispatch(changeCityAction({city}))
               this.store.dispatch(getOfficesAction({id: city.office_id}))
@@ -142,7 +149,7 @@ export class EndPointComponent implements OnInit, OnDestroy {
     city: this.city,
     get: this.get,
     delivery: this.delivery,
-    // needToMeet: this.needToMeet,
+    needToMeet: this.needToMeet,
   })
 
   formValuesSub: Subscription
@@ -195,13 +202,24 @@ export class EndPointComponent implements OnInit, OnDestroy {
       tap((index: number) => {
         switch (index) {
           case 0:
-            this.get.enable()
+            if (this.isNeedToMeet) {
+              this.needToMeet.enable()
+              this.get.disable()
+            } else {
+              this.get.enable()
+              this.needToMeet.disable()
+            }
+
             this.delivery.disable()
             this.store.dispatch(changeCourierAction({delivery: null}))
             break
           case 1:
             this.delivery.enable()
             this.get.disable()
+            this.needToMeet.disable()
+
+            //TODO: may be dont dispatch
+            this.store.dispatch(changeBusAction({needToMeet: false}))
             this.store.dispatch(changeOfficeAction({get: null}))
             break
         }

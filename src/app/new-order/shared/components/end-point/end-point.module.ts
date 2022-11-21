@@ -10,6 +10,7 @@ import {
   TuiTextfieldControllerModule,
 } from '@taiga-ui/core'
 import {
+  TuiCheckboxLabeledModule,
   TuiComboBoxModule,
   TuiDataListWrapperModule,
   TuiFieldErrorPipeModule,
@@ -44,6 +45,7 @@ import {END_POINT_FEATURE} from './store/state'
     PatchFormGroupValuesModule,
     TuiInputModule,
     TuiRadioListModule,
+    TuiCheckboxLabeledModule,
   ],
   exports: [EndPointComponent],
 })

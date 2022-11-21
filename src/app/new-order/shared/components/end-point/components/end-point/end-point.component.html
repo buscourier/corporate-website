@@ -49,8 +49,27 @@
               >
                 <span *ngIf="!isOfficesLoading">{{ TabName[tab] }}</span>
               </button>
+              <button
+                *ngIf="isNeedToMeet"
+                type="button"
+                class="radius flex-grow py-3 px-1 text-center text-xs"
+                [class]="
+                  activeTabIndex === 0 && !tabs.length
+                    ? 'bg-yellow'
+                    : 'bg-gray-100'
+                "
+              >
+                <span>Встретить с автобуса</span>
+              </button>
             </div>
           </tui-loader>
+          <div *ngIf="activeTabIndex === 0 && isNeedToMeet">
+            <tui-checkbox-labeled
+              [formControl]="needToMeet"
+            >
+              Встретить с автобуса
+            </tui-checkbox-labeled>
+          </div>
           <div *ngIf="activeTabIndex === 0 && findTab('get')">
             <label class="w-full">
               <span class="mb-1 inline-block text-xs">
