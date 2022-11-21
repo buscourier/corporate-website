@@ -4,6 +4,7 @@ import {map, Observable, of, zip} from 'rxjs'
 import {OrderStateInterface} from 'src/app/new-order/shared/components/order/types/order-state.interface'
 import {environment} from '../../../../../environments/environment'
 import {ParcelInterface} from '../../../shared/components/order/types/parcel.interface'
+import {CargoInterface} from '../../../shared/types/cargo.interface'
 
 interface TotalSumInterface {
   price: number
@@ -65,34 +66,37 @@ export class TotalSumService {
     endCourierId,
     order
   ) {
-    if (!order || !order.cargo.type) {
+    if (!order || !order.cargo.active) {
       return new Observable<TotalSumInterface>()
-      // return
     }
 
-    let cargoId = order.cargo.type.id
+    let activeCargoType: CargoInterface = order.cargo.active
+    let formattedCargoId = ''
     let result = null
 
-    //TODO: refactor after validation well be ok
-    switch (order.cargo.type.id) {
+    switch (activeCargoType.id) {
       case '1':
-        cargoId = order.cargo.value
-          ? `${order.cargo.type.id}, ${order.cargo.value}`
-          : null
+        formattedCargoId =
+          order.cargo.docs && order.cargo.docs.places
+            ? `${activeCargoType.id}, ${order.cargo.docs.places}`
+            : null
         break
       case '2':
-        cargoId = order.cargo.type.id
+        formattedCargoId = activeCargoType.id
         break
       case '5':
+        formattedCargoId =
+          order.cargo.auto && order.cargo.auto.detail
+            ? `${order.cargo.auto.detail.id}, ${order.cargo.auto.detail.places}`
+            : null
+        break
       case '21':
-        cargoId =
-          order.cargo.value && order.cargo.value.detail
-            ? `${order.cargo.value.detail.id}, ${order.cargo.value?.places}`
+        formattedCargoId =
+          order.cargo.other && order.cargo.other.detail
+            ? `${order.cargo.other.detail.id}, ${order.cargo.other.detail.places}`
             : null
         break
     }
-
-    console.log('cargo', cargoId)
 
     const allServiceIds = [
       startCourierId,
@@ -100,8 +104,8 @@ export class TotalSumService {
       ...this.getAllServiceIds(order),
     ].filter(Boolean)
 
-    if (order.cargo.type.id === '2') {
-      const parcels = order.cargo.value ? order.cargo.value.parcels : []
+    if (activeCargoType.id === '2') {
+      const parcels = order.cargo.parcels ? order.cargo.parcels.parcels : []
 
       console.log('order.cargo.value', order.cargo.value)
       console.log('parcels', parcels)
@@ -110,7 +114,7 @@ export class TotalSumService {
         result = this.getParcelsSum(
           startCityId,
           endCityId,
-          cargoId,
+          formattedCargoId,
           allServiceIds,
           parcels
         )
@@ -119,7 +123,7 @@ export class TotalSumService {
       result = this.getResult(
         startCityId,
         endCityId,
-        cargoId,
+        formattedCargoId,
         allServiceIds,
         0,
         0
