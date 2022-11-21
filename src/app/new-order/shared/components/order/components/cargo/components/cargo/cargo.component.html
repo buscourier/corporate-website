@@ -1,4 +1,5 @@
 <form [formGroup]="form">
+  docsInvalid: {{ docs.invalid }}
   <div
     *tuiLet="cargoTypes$ | async as cargoTypes"
     class="mt-10 mb-5 flex items-center"

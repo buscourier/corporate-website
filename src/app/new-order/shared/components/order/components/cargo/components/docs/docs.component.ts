@@ -1,12 +1,15 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
+import {ChangeDetectionStrategy, Component} from '@angular/core'
 import {
-  AbstractControl,
   FormBuilder,
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
   ValidationErrors,
+  Validators,
 } from '@angular/forms'
+import {TUI_VALIDATION_ERRORS} from '@taiga-ui/kit'
 import {Subscription} from 'rxjs'
+
+const MIN = 4
 
 @Component({
   selector: 'app-docs',
@@ -23,21 +26,26 @@ import {Subscription} from 'rxjs'
       useExisting: DocsComponent,
       multi: true,
     },
+    {
+      provide: TUI_VALIDATION_ERRORS,
+      useValue: {
+        required: `Укажите количество мест`,
+        min: (error) => {
+          return `Минимальное количество мест ${error.min}`
+        },
+      },
+    },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DocsComponent implements OnInit {
-  places = this.fb.control(1)
+export class DocsComponent {
+  places = this.fb.control(0, [Validators.required, Validators.min(MIN)])
 
   form = this.fb.group({
     places: this.places,
   })
 
   constructor(private fb: FormBuilder) {}
-
-  ngOnInit(): void {
-    console.log('docs')
-  }
 
   onTouched = () => {}
   onChangeSub: Subscription
@@ -64,14 +72,29 @@ export class DocsComponent implements OnInit {
     }
   }
 
-  allRequiredFieldsFilled(control: AbstractControl): ValidationErrors | null {
-    const controlValue = control.value
-    const isValid = controlValue?.email && controlValue?.name
-    return isValid ? null : {required: true}
+  requiredError(): ValidationErrors | null {
+    const error = this.places.errors && this.places.errors['required']
+
+    if (error) {
+      this.form.setErrors({required: true})
+      return {required: true}
+    } else {
+      return null
+    }
   }
 
-  validate(control: AbstractControl): ValidationErrors | null {
-    return null
-    // return this.allRequiredFieldsFilled(control)
+  minError(): ValidationErrors | null {
+    const error = this.places.errors && this.places.errors['min']
+
+    if (error) {
+      this.form.setErrors({min: {error: true, min: MIN}})
+      return {min: true}
+    } else {
+      return null
+    }
+  }
+
+  validate(): ValidationErrors | null {
+    return this.minError()
   }
 }
