@@ -81,7 +81,7 @@
             </label>
           </div>
           <div
-            *ngIf="activeTabIndex === 1  && findTab('delivery')"
+            *ngIf="activeTabIndex === 1 && findTab('delivery')"
             [formGroup]="delivery"
             [patchFormGroupValues]="deliveryValues$ | async"
             class="mb-4 space-y-4"
