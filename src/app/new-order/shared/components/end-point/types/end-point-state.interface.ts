@@ -6,6 +6,7 @@ export interface EndPointStateInterface {
   isCitiesLoading: boolean
   isOfficesLoading: boolean
   isCitiesLoaded: boolean
+  isValid: boolean
   cities: EndCityInterface[] | null
   offices: OfficeInterface[] | null
   city: EndCityInterface | null

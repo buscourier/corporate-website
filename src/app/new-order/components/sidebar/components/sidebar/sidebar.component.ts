@@ -13,6 +13,7 @@ import {StartCityInterface} from '../../../../../shared/types/start-city.interfa
 import {
   endCitySelector,
   endCourierSelector,
+  isEndPointValidSelector,
 } from '../../../../shared/components/end-point/store/selectors'
 import {OrderStateInterface} from '../../../../shared/components/order/types/order-state.interface'
 import {ordersSelector} from '../../../../shared/components/orders/store/selectors'
@@ -32,6 +33,7 @@ import {TotalSumService} from '../../services/total-sum.service'
 })
 export class SidebarComponent implements OnInit, OnDestroy {
   isStartPointValid$: Observable<boolean>
+  isEndPointValid$: Observable<boolean>
 
   combineAllSub: Subscription
   totalSum = 0
@@ -52,6 +54,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   initializeValues() {
     this.isStartPointValid$ = this.store.select(isStartPointValidSelector)
+    this.isEndPointValid$ = this.store.select(isEndPointValidSelector)
 
     this.combineAllSub = combineLatest([
       this.store.select(startCitySelector),

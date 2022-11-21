@@ -14,4 +14,6 @@ export enum ActionTypes {
   CHANGE_COURIER = '[End point] Change courier',
   CHANGE_BUS = '[End point] Bus changed',
   CHANGE_ACTIVE_TAB = '[End point] Active tab changed',
+
+  CHANGE_VALIDITY = '[End point] Validity changes',
 }

@@ -62,3 +62,8 @@ export const activeTabSelector = createSelector(
   endPointFeatureSelector,
   (state: EndPointStateInterface) => state.activeTabIndex
 )
+
+export const isEndPointValidSelector = createSelector(
+  endPointFeatureSelector,
+  (state: EndPointStateInterface) => state.isValid
+)

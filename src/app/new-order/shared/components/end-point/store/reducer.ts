@@ -17,6 +17,7 @@ import {
   getOfficesSuccessAction,
 } from './actions/get-offices.action'
 import {initialState} from './state'
+import {changeValidityAction} from './actions/change-validity.action'
 
 const endPointReducer = createReducer(
   initialState,
@@ -74,7 +75,11 @@ const endPointReducer = createReducer(
       ...state,
       activeTabIndex,
     })
-  )
+  ),
+  on(changeValidityAction, (state: EndPointStateInterface, {isValid}) => ({
+    ...state,
+    isValid,
+  }))
 )
 
 export function reducer(state: EndPointStateInterface, action: Action) {
