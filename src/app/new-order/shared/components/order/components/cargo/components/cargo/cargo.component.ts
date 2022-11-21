@@ -11,7 +11,6 @@ import {filter, Observable, of, Subscription, switchMap} from 'rxjs'
 import {concatAll, tap, toArray} from 'rxjs/operators'
 import {CargoInterface} from '../../../../../../types/cargo.interface'
 import {allCargosSelector} from '../../../../../orders/store/selectors'
-import {CargoFormInterface} from '../../types/cargo-form.interface'
 
 @Component({
   selector: 'app-cargo',
@@ -37,9 +36,18 @@ export class CargoComponent implements OnInit {
   onTouched = () => {}
   onChangeSub: Subscription
 
-  form = this.fb.group<CargoFormInterface>({
-    type: null,
-    value: null,
+  active = this.fb.control(null)
+  docs = this.fb.control({value: null, disabled: true})
+  parcels = this.fb.control({value: null, disabled: true})
+  auto = this.fb.control({value: null, disabled: true})
+  other = this.fb.control({value: null, disabled: true})
+
+  form = this.fb.group({
+    active: this.active,
+    docs: this.docs,
+    parcels: this.parcels,
+    auto: this.auto,
+    other: this.other,
   })
 
   constructor(private fb: FormBuilder, private store: Store) {}
@@ -73,9 +81,34 @@ export class CargoComponent implements OnInit {
   }
 
   changeCargoType() {
-    // this.form.patchValue({
-    //   value: null,
-    // })
+    switch (this.active.value.id) {
+      case '1':
+        this.docs.enable()
+        this.parcels.disable()
+        this.auto.disable()
+        this.other.disable()
+        break
+      case '2':
+        this.parcels.enable()
+        this.docs.disable()
+        this.auto.disable()
+        this.other.disable()
+        break
+      case '5':
+        this.auto.enable()
+        this.parcels.disable()
+        this.docs.disable()
+        this.other.disable()
+        break
+      case '21':
+        this.other.enable()
+        this.auto.disable()
+        this.parcels.disable()
+        this.docs.disable()
+        break
+    }
+
+    console.log('this.form', this.form.value)
   }
 
   writeValue(value: any) {

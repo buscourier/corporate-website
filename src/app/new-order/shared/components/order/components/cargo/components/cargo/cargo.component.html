@@ -6,7 +6,7 @@
     <div class="mr-12 text-lg font-semibold">Тип груза:</div>
     <tui-radio-list
       orientation="horizontal"
-      formControlName="type"
+      [formControl]="active"
       [items]="cargoTypes"
       [itemContent]="cargoTypesContent"
       (change)="changeCargoType()"
@@ -15,11 +15,11 @@
       {{ data.name }}
     </ng-template>
   </div>
-  <div *ngIf="this.form.get('type').value?.id === '1'">
+  <div *ngIf="this.form.get('active').value?.id === '1'">
     <label class="mb-3 block max-w-[200px]">
       <span class="mb-1 inline-block text-xs">Количество мест</span>
       <tui-input-count
-        formControlName="value"
+        [formControl]="docs"
         [tuiTextfieldLabelOutside]="true"
         [min]="1"
         [max]="20"
@@ -27,18 +27,18 @@
         <input tuiTextfield />
       </tui-input-count>
       <tui-error
-        formControlName="value"
+        [formControl]="docs"
         [error]="[] | tuiFieldError | async"
       ></tui-error>
     </label>
   </div>
-  <div *ngIf="this.form.get('type').value?.id === '2'">
-    <app-parcels formControlName="value"></app-parcels>
+  <div *ngIf="active.value?.id === '2'">
+    <app-parcels [formControl]="parcels"></app-parcels>
   </div>
-  <div *ngIf="this.form.get('type').value?.id === '5'">
-    <app-auto-parts formControlName="value"></app-auto-parts>
+  <div *ngIf="active.value?.id === '5'">
+    <app-auto-parts [formControl]="auto"></app-auto-parts>
   </div>
-  <div *ngIf="this.form.get('type').value?.id === '21'">
-    <app-other-cargos formControlName="value"></app-other-cargos>
+  <div *ngIf="active.value?.id === '21'">
+    <app-other-cargos [formControl]="other"></app-other-cargos>
   </div>
 </form>
