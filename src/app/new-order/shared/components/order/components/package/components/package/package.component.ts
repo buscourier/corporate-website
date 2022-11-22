@@ -7,13 +7,10 @@ import {
   OnInit,
 } from '@angular/core'
 import {
-  AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
-  NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
-  ValidationErrors,
 } from '@angular/forms'
 import {Store} from '@ngrx/store'
 import {TuiDialogContext, TuiDialogService} from '@taiga-ui/core'
@@ -32,11 +29,6 @@ import {ServiceInterface} from '../../../../../../types/service.interface'
       provide: NG_VALUE_ACCESSOR,
       multi: true,
       useExisting: PackageComponent,
-    },
-    {
-      provide: NG_VALIDATORS,
-      useExisting: PackageComponent,
-      multi: true,
     },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -218,16 +210,5 @@ export class PackageComponent implements OnInit, OnDestroy {
     } else {
       this.form.enable()
     }
-  }
-
-  allRequiredFieldsFilled(control: AbstractControl): ValidationErrors | null {
-    const controlValue = control.value
-    const isValid = controlValue?.email && controlValue?.name
-    return isValid ? null : {required: true}
-  }
-
-  validate(control: AbstractControl): ValidationErrors | null {
-    return null
-    // return this.allRequiredFieldsFilled(control)
   }
 }
