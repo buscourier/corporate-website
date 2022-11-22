@@ -108,4 +108,15 @@ export class SidebarComponent implements OnInit, OnDestroy {
         return isCheckboxActive && obj.count >= 1
       })
   }
+
+  getServices(services) {
+    const arr = services ? services.services : []
+
+    return arr.filter((obj) => {
+      const isCheckboxActive = Object.entries(obj)[0][1]
+      const value = obj.sum || obj.phone
+
+      return isCheckboxActive && value
+    })
+  }
 }
