@@ -19,7 +19,7 @@
     <div *ngIf="orders && orders.length">
       <ng-container *ngFor="let order of orders">
         <b class="mb-3 block text-sm">Заказ №1</b>
-        <p class="mt-1.5 mb-1.5 text-2xs text-gray-700">Тип груза:</p>
+        <p class="mt-1.5 mb-0.5 text-2xs text-gray-700">Тип груза:</p>
         <ng-container *ngIf="order.cargo.docs">
           <p class="text-2xs">
             Документы (мест: {{ order.cargo.docs.places }})
@@ -41,6 +41,19 @@
           <p class="text-2xs">
             Другое - {{ order.cargo.other.detail?.name }} (мест:
             {{ order.cargo.other.places }})
+          </p>
+        </ng-container>
+        <ng-container *ngIf="getPackages(order.packages).length">
+          <p class="mt-3 mb-0.5 text-2xs text-gray-700">Упаковка:</p>
+          <p
+            *ngFor="let package of getPackages(order.packages)"
+            class="text-2xs"
+          >
+            {{ package.data.short_name }} {{ package.data.site_name }} ({{
+              package.count
+            }}
+            места):
+            <b>{{ package.count * package.data.price }} руб.</b>
           </p>
         </ng-container>
       </ng-container>

@@ -95,4 +95,17 @@ export class SidebarComponent implements OnInit, OnDestroy {
       )
       .subscribe()
   }
+
+  //TODO: Нужно будет пройти по всем функциям в проекте и указать тип, который они возвращают
+  getPackages(packages) {
+    let arr: any[] = packages ? Object.values(packages) : []
+
+    return arr
+      .reduce((acc, val) => acc.concat(val), [])
+      .filter((obj) => {
+        const isCheckboxActive = Object.entries(obj)[0][1]
+
+        return isCheckboxActive && obj.count >= 1
+      })
+  }
 }
