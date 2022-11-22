@@ -17,54 +17,70 @@
       >
         {{ service.get('data').value.name }}
       </tui-checkbox-labeled>
-      <label
+      <div
         *ngIf="
           service.get('phone') &&
           service.get(service.get('data').value.id).value
         "
       >
-        <span>
-          Номер телефона
-          <sup
-            class="text-red"
-            *ngIf="
-              service.get('phone').errors &&
-              service.get('phone').hasError('required')
-            "
-            >*</sup
+        <label>
+          <span>
+            Номер телефона
+            <sup
+              class="text-red"
+              *ngIf="
+                service.get('phone').errors &&
+                service.get('phone').hasError('required')
+              "
+              >*</sup
+            >
+          </span>
+          <tui-input-phone
+            formControlName="phone"
+            tuiTextfieldSize="m"
+            [tuiTextfieldLabelOutside]="true"
+            phoneMaskAfterCountryCode="(###) ###-####"
           >
-        </span>
-        <tui-input-phone
+            <input tuiTextfield autocomplete="tel" />
+          </tui-input-phone>
+        </label>
+        <tui-error
           formControlName="phone"
-          tuiTextfieldSize="m"
-          [tuiTextfieldLabelOutside]="true"
-        >
-          <input tuiTextfield autocomplete="tel" />
-        </tui-input-phone>
-      </label>
-      <label
+          [error]="[] | tuiFieldError | async"
+        ></tui-error>
+      </div>
+
+      <div
         *ngIf="
           service.get('sum') && service.get(service.get('data').value.id).value
         "
       >
-        <span>
-          Объявленная ценность
-          <sup
-            class="text-red"
-            *ngIf="
-              service.get('sum').errors &&
-              service.get('sum').hasError('required')
-            "
-            >*</sup
+        <label>
+          <span>
+            Объявленная ценность
+            <sup
+              class="text-red"
+              *ngIf="
+                service.get('sum').errors &&
+                service.get('sum').hasError('required')
+              "
+              >*</sup
+            >
+          </span>
+          <tui-input-number
+            formControlName="sum"
+            tuiTextfieldSize="m"
+            postfix="₽"
+            [tuiTextfieldLabelOutside]="true"
+            [max]="30001"
           >
-        </span>
-        <tui-input-number
+          </tui-input-number>
+        </label>
+        <tui-error
           formControlName="sum"
-          tuiTextfieldSize="m"
-          [tuiTextfieldLabelOutside]="true"
-        >
-        </tui-input-number>
-      </label>
+          [error]="[] | tuiFieldError | async"
+        ></tui-error>
+      </div>
     </div>
   </ng-container>
 </div>

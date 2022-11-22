@@ -6,7 +6,6 @@ import {
   OnInit,
 } from '@angular/core'
 import {
-  AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
@@ -16,6 +15,7 @@ import {
   Validators,
 } from '@angular/forms'
 import {Store} from '@ngrx/store'
+import {TUI_VALIDATION_ERRORS} from '@taiga-ui/kit'
 import {
   concatAll,
   filter,
@@ -50,6 +50,19 @@ const INSURANCE_MAX = 30000
       provide: NG_VALIDATORS,
       useExisting: ServicesComponent,
       multi: true,
+    },
+    {
+      provide: TUI_VALIDATION_ERRORS,
+      useValue: {
+        required: `Поле обязательно для заполнения`,
+        pattern: (error) => {
+          console.log('error', error)
+          return `Телефон указан некорректно`
+        },
+        max: (error) => {
+          return `Максимальная сумма страхования ${error.max} руб.`
+        },
+      },
     },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -125,7 +138,10 @@ export class ServicesComponent implements OnInit, OnDestroy {
                         [service.id]: false,
                         phone: [
                           {value: '', disabled: true},
-                          [Validators.required],
+                          [
+                            Validators.required,
+                            // Validators.pattern(Pattern.Phone),
+                          ],
                         ],
                         data: service,
                       })
@@ -136,7 +152,7 @@ export class ServicesComponent implements OnInit, OnDestroy {
                       this.fb.group({
                         [service.id]: false,
                         sum: [
-                          {value: '', disabled: true},
+                          {value: 0, disabled: true},
                           [Validators.required, Validators.max(INSURANCE_MAX)],
                         ],
                         data: service,
@@ -148,6 +164,7 @@ export class ServicesComponent implements OnInit, OnDestroy {
           )
         }),
         tap(() => {
+          console.log('services form', this.form)
           this.cdr.markForCheck()
         })
       )
@@ -167,7 +184,7 @@ export class ServicesComponent implements OnInit, OnDestroy {
   }
 
   open() {
-    console.log('services form', this.form.value)
+    // console.log('services form', this.form.value)
   }
 
   onTouched = () => {}
@@ -195,14 +212,17 @@ export class ServicesComponent implements OnInit, OnDestroy {
     }
   }
 
-  allRequiredFieldsFilled(control: AbstractControl): ValidationErrors | null {
-    const controlValue = control.value
-    const isValid = controlValue?.email && controlValue?.name
-    return isValid ? null : {required: true}
+  invalid(): ValidationErrors | null {
+    const invalid = this.form.controls.services.invalid
+
+    if (invalid) {
+      return {invalid: true}
+    } else {
+      return null
+    }
   }
 
-  validate(control: AbstractControl): ValidationErrors | null {
-    return null
-    // return this.allRequiredFieldsFilled(control)
+  validate(): ValidationErrors | null {
+    return this.invalid()
   }
 }
