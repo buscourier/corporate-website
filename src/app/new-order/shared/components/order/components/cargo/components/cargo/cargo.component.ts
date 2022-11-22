@@ -1,6 +1,5 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
 import {
-  AbstractControl,
   FormBuilder,
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
@@ -107,8 +106,6 @@ export class CargoComponent implements OnInit {
         this.docs.disable()
         break
     }
-
-    console.log('this.form', this.form.value)
   }
 
   writeValue(value: any) {
@@ -133,14 +130,21 @@ export class CargoComponent implements OnInit {
     }
   }
 
-  allRequiredFieldsFilled(control: AbstractControl): ValidationErrors | null {
-    const controlValue = control.value
-    const isValid = controlValue?.email && controlValue?.name
-    return isValid ? null : {required: true}
+  invalid(): ValidationErrors | null {
+    const invalid =
+      this.docs.invalid ||
+      this.parcels.invalid ||
+      this.auto.invalid ||
+      this.other.invalid
+
+    if (invalid) {
+      return {invalid: true}
+    } else {
+      return null
+    }
   }
 
-  validate(control: AbstractControl): ValidationErrors | null {
-    return null
-    // return this.allRequiredFieldsFilled(control)
+  validate(): ValidationErrors | null {
+    return this.invalid()
   }
 }

@@ -18,7 +18,13 @@
           [removable]="true"
           [hoverable]="true"
           [disabled]="false"
-          [status]="activeOrderIndex === i ? 'primary' : 'default'"
+          [status]="
+            control.invalid
+              ? 'error'
+              : activeOrderIndex === i
+              ? 'primary'
+              : 'default'
+          "
           [showLoader]=""
           (edited)="removeOrder()"
           (click)="selectOrder(i)"

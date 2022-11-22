@@ -45,7 +45,6 @@ export class OrderComponent implements OnInit, OnDestroy {
   constructor(private fb: FormBuilder, private store: Store) {}
 
   ngOnInit(): void {
-    // this.form.updateValueAndValidity()
     this.initializeValues()
   }
 
@@ -85,12 +84,20 @@ export class OrderComponent implements OnInit, OnDestroy {
     return isValid ? null : {required: true}
   }
 
-  validate(control: AbstractControl): ValidationErrors | null {
-    return null
-    // return this.allRequiredFieldsFilled(control)
+  invalid(): ValidationErrors | null {
+    const invalid =
+      this.form.get('cargo').invalid ||
+      this.form.get('packages').invalid ||
+      this.form.get('services').invalid
+
+    if (invalid) {
+      return {invalid: true}
+    } else {
+      return null
+    }
   }
 
-  changeCargoType($event: any) {
-    console.log('$event', $event)
+  validate(): ValidationErrors | null {
+    return this.invalid()
   }
 }

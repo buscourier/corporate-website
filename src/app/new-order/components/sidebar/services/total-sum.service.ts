@@ -213,7 +213,7 @@ export class TotalSumService {
   }
 
   getPackageIds(packages: any) {
-    let arr: any[] = Object.values(packages)
+    let arr: any[] = packages ? Object.values(packages) : []
 
     arr = arr
       .reduce((acc, val) => acc.concat(val), [])
@@ -241,7 +241,7 @@ export class TotalSumService {
     const INSURANCE_30 = '59'
     const LIMIT_MIN = 15000
 
-    return services.services
+    return (services ? services.services : [])
       .map((obj) => {
         const id = Object.entries(obj)[0][0]
         const checked = Object.entries(obj)[0][1]
