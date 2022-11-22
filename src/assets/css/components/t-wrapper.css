@@ -21,3 +21,9 @@
 ._disabled {
   pointer-events: auto !important;
 }
+
+tui-checkbox[data-size='m'],
+tui-primitive-checkbox[data-size='m'] {
+  width: 1.25rem !important;
+  height: 1.25rem !important;
+}

@@ -9,5 +9,6 @@
 @import './assets/css/components/t-wrapper.css';
 @import './assets/css/components/t-tabs.css';
 @import './assets/css/components/input.css';
+@import './assets/css/components/checkbox.css';
 
 @import 'tailwindcss/utilities';

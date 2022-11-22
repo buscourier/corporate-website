@@ -15,12 +15,15 @@
           }}
           <tui-checkbox-labeled
             [formControlName]="box.get('data').value.id"
+            [readOnly]="false"
             (change)="
               openDialog(
                 getControl(box.get(box.get('data').value.id)),
                 template
               )
             "
+            size="m"
+            [class.opacity-80]="false"
           >
             <div class="relative inline">
               <button
@@ -40,15 +43,18 @@
                   class="h-[10px] !w-[10px]"
                 ></tui-svg>
               </button>
-              <span class="first-letter:uppercase">{{
+              <span class="checkbox-name">{{
                 box.get('data').value.site_name
               }}</span>
             </div>
             <div class="mt-1.5 text-gray-700">
-              {{
-                box.get('data').value.price * getControl(box.get('count')).value
-              }}
-              руб. за {{ getControl(box.get('count')).value }} шт.
+              <span class="checkbox-label">
+                {{
+                  box.get('data').value.price *
+                    getControl(box.get('count')).value
+                }}
+                руб. за {{ getControl(box.get('count')).value }} шт.
+              </span>
               <small
                 *ngIf="getControl(box.get(box.get('data').value.id)).disabled"
                 class="mt-1 block text-[10px] text-red"
