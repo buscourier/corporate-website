@@ -69,7 +69,18 @@
         <span class="text-gray-500">Итого: </span>
         <b>{{ totalSum }} руб.</b>
       </div>
-      <button type="button" tuiButton class="mt-5 w-[270px]">
+      <button
+        type="button"
+        tuiButton
+        class="mt-5 w-[270px]"
+        [disabled]="
+          !(
+            (isStartPointValid$ | async) ||
+            (isEndPointValid$ | async) ||
+            (isOrdersValid$ | async)
+          )
+        "
+      >
         Оформить заказ
       </button>
       <button type="button" class="text-red" class="mt-2">
