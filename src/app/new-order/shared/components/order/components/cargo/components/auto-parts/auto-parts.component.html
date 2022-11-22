@@ -36,7 +36,7 @@
       <input tuiTextfield />
     </tui-input-count>
   </label>
-  <div *ngIf="detail.value" class="flex flex-col justify-center">
+  <div *ngIf="detail.value && form.valid" class="flex flex-col justify-center">
     <span>&#160;</span>
     <button type="button" (click)="delete()">Delete</button>
   </div>

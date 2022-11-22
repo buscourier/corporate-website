@@ -183,9 +183,11 @@ export class AutoPartsComponent implements OnInit, OnDestroy {
     if (error) {
       this.form.setErrors({startOffice: true})
       this.detail.disable({onlySelf: true, emitEvent: false})
+      this.places.disable({onlySelf: true, emitEvent: false})
       return {startOffice: true}
     } else {
       this.detail.enable({onlySelf: true, emitEvent: false})
+      this.places.enable({onlySelf: true, emitEvent: false})
       return null
     }
   }
@@ -196,9 +198,11 @@ export class AutoPartsComponent implements OnInit, OnDestroy {
     if (error) {
       this.form.setErrors({endOffice: true})
       this.detail.disable({onlySelf: true, emitEvent: false})
+      this.places.disable({onlySelf: true, emitEvent: false})
       return {endOffice: true}
     } else {
       this.detail.enable({onlySelf: true, emitEvent: false})
+      this.places.enable({onlySelf: true, emitEvent: false})
       return null
     }
   }
@@ -209,9 +213,11 @@ export class AutoPartsComponent implements OnInit, OnDestroy {
     if (error) {
       this.form.setErrors({courier: true})
       this.detail.disable({onlySelf: true, emitEvent: false})
+      this.places.disable({onlySelf: true, emitEvent: false})
       return {courier: true}
     } else {
       this.detail.enable({onlySelf: true, emitEvent: false})
+      this.places.enable({onlySelf: true, emitEvent: false})
       return null
     }
   }
