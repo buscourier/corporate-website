@@ -11,6 +11,7 @@
         tuiTextfieldSize="m"
         [formControl]="detail"
         [tuiTextfieldLabelOutside]="true"
+        [pseudoInvalid]="!!(form.errors && form.errors['required'])"
       >
         <tui-data-list-wrapper
           *tuiDataList

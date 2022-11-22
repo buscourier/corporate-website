@@ -46,6 +46,7 @@ import {VladivostokOffice} from '../../../../enums/vladivostokOffice'
     {
       provide: TUI_VALIDATION_ERRORS,
       useValue: {
+        required: `Поле обязательно для заполнения`,
         startOffice: `Из выбранного офиса габаритные посылки не отправляются`,
         endOffice: `Выбранный офис габаритные посылки не принимает`,
         courier: `Доставка габаритные посылкок курьером невозможна`,
@@ -173,6 +174,17 @@ export class OtherCargosComponent implements OnInit {
     }
   }
 
+  requiredError(): ValidationErrors | null {
+    const error = this.detail.errors && this.detail.errors['required']
+
+    if (error) {
+      this.form.setErrors({required: true})
+      return {required: true}
+    } else {
+      return null
+    }
+  }
+
   startOfficeError(): ValidationErrors | null {
     const error = this.startOfficeLimits
 
@@ -220,7 +232,10 @@ export class OtherCargosComponent implements OnInit {
 
   validate(): ValidationErrors | null {
     return (
-      this.startOfficeError() || this.endOfficeError() || this.courierError()
+      this.requiredError() ||
+      this.startOfficeError() ||
+      this.endOfficeError() ||
+      this.courierError()
     )
   }
 }
