@@ -6,7 +6,7 @@ import {
   ValidationErrors,
 } from '@angular/forms'
 import {Store} from '@ngrx/store'
-import {filter, Observable, of, Subscription, switchMap} from 'rxjs'
+import {filter, map, Observable, of, Subscription, switchMap} from 'rxjs'
 import {concatAll, tap, toArray} from 'rxjs/operators'
 import {CargoInterface} from '../../../../../../types/cargo.interface'
 import {allCargosSelector} from '../../../../../orders/store/selectors'
@@ -68,11 +68,24 @@ export class CargoComponent implements OnInit {
         return of(cargos).pipe(
           concatAll(),
           filter((cargo: CargoInterface) => cargo.parent_id === '0'),
+          map((cargo: CargoInterface) => {
+            if (cargo.id === '1') {
+              return {
+                ...cargo,
+                name: 'Документы',
+              }
+            } else {
+              return cargo
+            }
+          }),
           toArray(),
           tap((types: CargoInterface[]) => {
-            //TODO: may be move doc control in separate form
-            // this.form.get('type').patchValue(types[0])
-            // this.form.get('value').patchValue(1)
+            if (!this.active.value) {
+              const docs = types[0]
+
+              this.active.setValue(docs)
+              this.changeCargoType()
+            }
           })
         )
       })

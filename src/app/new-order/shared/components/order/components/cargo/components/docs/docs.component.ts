@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core'
+import {AfterViewInit, ChangeDetectionStrategy, Component} from '@angular/core'
 import {
   FormBuilder,
   NG_VALIDATORS,
@@ -9,7 +9,7 @@ import {
 import {TUI_VALIDATION_ERRORS} from '@taiga-ui/kit'
 import {Subscription} from 'rxjs'
 
-const MIN = 4
+const MIN = 1
 
 @Component({
   selector: 'app-docs',
@@ -38,7 +38,7 @@ const MIN = 4
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DocsComponent {
+export class DocsComponent implements AfterViewInit {
   places = this.fb.control(0, [Validators.required, Validators.min(MIN)])
 
   form = this.fb.group({
@@ -46,6 +46,12 @@ export class DocsComponent {
   })
 
   constructor(private fb: FormBuilder) {}
+
+  ngAfterViewInit(): void {
+    if (!this.places.value) {
+      this.places.setValue(1)
+    }
+  }
 
   onTouched = () => {}
   onChangeSub: Subscription

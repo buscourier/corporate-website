@@ -3,6 +3,7 @@
   <tui-input-count
     [formControl]="places"
     [tuiTextfieldLabelOutside]="true"
+    tuiTextfieldSize="m"
     [min]="1"
     [max]="20"
     [pseudoInvalid]="!!(form.touched && form.errors && form.errors['min'])"
