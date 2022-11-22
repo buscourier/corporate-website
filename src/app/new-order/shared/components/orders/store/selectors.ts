@@ -49,3 +49,8 @@ export const backendErrorsSelector = createSelector(
   ordersFeatureSelector,
   (state: OrdersStateInterface) => state.backendErrors
 )
+
+export const isOrdersValidSelector = createSelector(
+  ordersFeatureSelector,
+  (state: OrdersStateInterface) => state.isValid
+)

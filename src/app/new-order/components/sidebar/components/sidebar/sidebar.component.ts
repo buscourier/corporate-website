@@ -8,21 +8,20 @@ import {
 import {Store} from '@ngrx/store'
 import {combineLatest, debounceTime, Observable, Subscription} from 'rxjs'
 import {tap} from 'rxjs/operators'
-import {EndCityInterface} from '../../../../../shared/types/end-city.interface'
-import {StartCityInterface} from '../../../../../shared/types/start-city.interface'
 import {
   endCitySelector,
   endCourierSelector,
   isEndPointValidSelector,
 } from '../../../../shared/components/end-point/store/selectors'
-import {OrderStateInterface} from '../../../../shared/components/order/types/order-state.interface'
-import {ordersSelector} from '../../../../shared/components/orders/store/selectors'
+import {
+  isOrdersValidSelector,
+  ordersSelector,
+} from '../../../../shared/components/orders/store/selectors'
 import {
   isStartPointValidSelector,
   startCitySelector,
   startCourierSelector,
 } from '../../../../shared/components/start-point/store/selectors'
-import {CourierInterface} from '../../../../shared/types/courier.interface'
 import {TotalSumService} from '../../services/total-sum.service'
 
 @Component({
@@ -34,6 +33,7 @@ import {TotalSumService} from '../../services/total-sum.service'
 export class SidebarComponent implements OnInit, OnDestroy {
   isStartPointValid$: Observable<boolean>
   isEndPointValid$: Observable<boolean>
+  isOrdersValid$: Observable<boolean>
 
   combineAllSub: Subscription
   totalSum = 0
@@ -55,6 +55,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   initializeValues() {
     this.isStartPointValid$ = this.store.select(isStartPointValidSelector)
     this.isEndPointValid$ = this.store.select(isEndPointValidSelector)
+    this.isOrdersValid$ = this.store.select(isOrdersValidSelector)
 
     this.combineAllSub = combineLatest([
       this.store.select(startCitySelector),

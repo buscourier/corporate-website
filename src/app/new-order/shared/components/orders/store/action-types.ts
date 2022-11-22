@@ -11,4 +11,6 @@ export enum ActionTypes {
 
   CHANGE_ORDERS = '[New order] Change orders',
   CHANGE_ACTIVE_ORDER = '[New order] CHANGE_ACTIVE_ORDER',
+
+  CHANGE_VALIDITY = '[New order] Validity changes',
 }

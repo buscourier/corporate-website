@@ -3,6 +3,7 @@ import {OrdersStateInterface} from '../types/orders-state.interface'
 import {allCargosLoadedAction} from './actions/all-cargos-loaded.action'
 import {allServicesLoadedAction} from './actions/all-services-loaded.action'
 import {changeActiveOrderAction} from './actions/change-active-order.action'
+import {changeValidityAction} from './actions/change-validity.action'
 import {
   getAllCargosAction,
   getAllCargosFailureAction,
@@ -67,7 +68,11 @@ const ordersReducer = createReducer(
       ...state,
       activeOrderIndex,
     })
-  )
+  ),
+  on(changeValidityAction, (state: OrdersStateInterface, {isValid}) => ({
+    ...state,
+    isValid,
+  }))
 )
 
 export function reducer(state: OrdersStateInterface, action: Action) {

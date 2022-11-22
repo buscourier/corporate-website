@@ -7,6 +7,7 @@ export const initialState: OrdersStateInterface = {
   isAllServicesLoading: false,
   isAllCargosLoaded: false,
   isAllServicesLoaded: false,
+  isValid: false,
   allCargos: null,
   allServices: null,
   orders: null,

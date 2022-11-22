@@ -9,6 +9,7 @@ export interface OrdersStateInterface {
   allServices: ServiceInterface[] | null
   isAllCargosLoaded: boolean
   isAllServicesLoaded: boolean
+  isValid: boolean
   orders: OrderStateInterface[] | null
   activeOrderIndex: number
   backendErrors: string | null

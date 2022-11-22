@@ -6,22 +6,13 @@ import {
 } from '@angular/core'
 import {FormArray, FormBuilder, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
-import {
-  filter,
-  map,
-  Observable,
-  of,
-  Subscription,
-  switchMap,
-  take,
-  using,
-  zip,
-} from 'rxjs'
-import {concatAll, tap} from 'rxjs/operators'
+import {filter, map, Observable, Subscription, switchMap, take, zip} from 'rxjs'
+import {tap} from 'rxjs/operators'
 import {endCitySelector} from '../../../end-point/store/selectors'
 import {OrderStateInterface} from '../../../order/types/order-state.interface'
 import {startCitySelector} from '../../../start-point/store/selectors'
 import {changeActiveOrderAction} from '../../store/actions/change-active-order.action'
+import {changeValidityAction} from '../../store/actions/change-validity.action'
 import {getAllCargosAction} from '../../store/actions/get-all-cargos.action'
 import {getAllServicesAction} from '../../store/actions/get-all-services.action'
 import {ordersValueChangesAction} from '../../store/actions/orders-value-changes.action'
@@ -78,6 +69,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
       .pipe(
         tap((orders: any) => {
           this.store.dispatch(ordersValueChangesAction({orders}))
+          this.store.dispatch(changeValidityAction({isValid: this.form.valid}))
         })
       )
       .subscribe()
