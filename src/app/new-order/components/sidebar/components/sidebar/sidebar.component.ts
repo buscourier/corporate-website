@@ -37,6 +37,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   combineAllSub: Subscription
   totalSum = 0
+  orders = null
 
   constructor(
     private store: Store,
@@ -71,6 +72,12 @@ export class SidebarComponent implements OnInit, OnDestroy {
           const endCityId = endCity ? endCity.id : null
           const startCourierId = startCourier ? '1' : null
           const endCourierId = endCourier ? '2' : null
+
+          if (orders) {
+            this.orders = orders
+          }
+
+          console.log('orders', orders)
 
           this.totalSumService
             .calculateTotalSum(

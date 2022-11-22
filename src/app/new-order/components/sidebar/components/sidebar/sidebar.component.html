@@ -1,6 +1,32 @@
-<p>{{ totalSum }}</p>
-isStartPointValid: <b>{{ isStartPointValid$ | async }}</b> isEndPointValid:
-<b>{{ isEndPointValid$ | async }}</b>
-
-isOrdersValid:
-<b>{{ isOrdersValid$ | async }}</b>
+<aside class="sticky top-0 mt-32 w-[400px] pt-7 pb-5 pl-7 pr-11 shadow-md">
+  <tui-loader [showLoader]="false">
+    <b class="mb-6 block text-lg">Расчет</b>
+    <div class="hidden">
+      <p class="mb-3">
+        Для расчета стоимости отправления, укажите место отправления и прибытия,
+        а также тип груза.
+      </p>
+      <p class="mb-3">
+        <b>Внимание!</b> Информация, приведенная в калькуляторе справочная,
+        точную информацию по доставкам в населенные пункты вы можете уточнить в
+        чате на сайте или у диспетчера.
+      </p>
+      <p class="mb-3">
+        Если вам необходимо отправить посылку между разными регионами России,
+        воспользуйтесь другим калькулятором - расчет перевозки по России.
+      </p>
+    </div>
+    <div *ngIf="orders && orders.length">
+      <ng-container *ngFor="let order of orders">
+        <b class="mb-3 block text-sm">Заказ №1</b>
+        <ng-container *ngIf="order.cargo.docs">
+          <p class="mt-1.5 mb-1.5 text-2xs text-gray-700">Тип груза:</p>
+          <p class="text-2xs">
+            Документы (мест: {{ order.cargo.docs.places }})
+          </p>
+        </ng-container>
+      </ng-container>
+      <b>{{ totalSum }}</b>
+    </div>
+  </tui-loader>
+</aside>
