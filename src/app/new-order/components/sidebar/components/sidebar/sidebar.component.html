@@ -18,52 +18,56 @@
     </div>
     <div *ngIf="orders && orders.length">
       <ng-container *ngFor="let order of orders">
-        <b class="mb-3 block text-sm">Заказ №1</b>
-        <p class="mt-1.5 mb-0.5 text-2xs text-gray-700">Тип груза:</p>
-        <ng-container *ngIf="order.cargo.docs">
-          <p class="text-2xs">
-            Документы (мест: {{ order.cargo.docs.places }})
-          </p>
-        </ng-container>
-        <ng-container *ngIf="order.cargo.parcels">
-          <p class="text-2xs">
-            Посылка (мест:
-            {{ order.cargo.parcels.parcels.length }})
-          </p>
-        </ng-container>
-        <ng-container *ngIf="order.cargo.auto">
-          <p class="text-2xs">
-            Автозапчасть - {{ order.cargo.auto.detail?.name }} (мест:
-            {{ order.cargo.auto.places }})
-          </p>
-        </ng-container>
-        <ng-container *ngIf="order.cargo.other">
-          <p class="text-2xs">
-            Другое - {{ order.cargo.other.detail?.name }} (мест:
-            {{ order.cargo.other.places }})
-          </p>
-        </ng-container>
-        <ng-container *ngIf="getPackages(order.packages).length">
-          <p class="mt-2.5 mb-0.5 text-2xs text-gray-700">Упаковка:</p>
-          <p
-            *ngFor="let package of getPackages(order.packages)"
-            class="text-2xs"
-          >
-            {{ package.data.short_name }} {{ package.data.site_name }} ({{
-              package.count
-            }}
-            места):
-            <b class="text-sm">{{ package.count * package.data.price }} руб.</b>
-          </p>
-        </ng-container>
-        <div class="mt-2.5">
-          <ng-container *ngFor="let service of getServices(order.services)">
-            <p class="mt-0.5 mb-0.5 text-2xs text-gray-700">
-              {{ service.data.name }}
+        <ng-container *ngIf="order">
+          <b class="mb-3 block text-sm">Заказ №1</b>
+          <p class="mt-1.5 mb-0.5 text-2xs text-gray-700">Тип груза:</p>
+          <ng-container *ngIf="order.cargo.docs">
+            <p class="text-2xs">
+              Документы (мест: {{ order.cargo.docs.places }})
             </p>
-            <b class="text-sm">{{ service.data.price }} руб.</b>
           </ng-container>
-        </div>
+          <ng-container *ngIf="order.cargo.parcels">
+            <p class="text-2xs">
+              Посылка (мест:
+              {{ order.cargo.parcels.parcels.length }})
+            </p>
+          </ng-container>
+          <ng-container *ngIf="order.cargo.auto">
+            <p class="text-2xs">
+              Автозапчасть - {{ order.cargo.auto.detail?.name }} (мест:
+              {{ order.cargo.auto.places }})
+            </p>
+          </ng-container>
+          <ng-container *ngIf="order.cargo.other">
+            <p class="text-2xs">
+              Другое - {{ order.cargo.other.detail?.name }} (мест:
+              {{ order.cargo.other.places }})
+            </p>
+          </ng-container>
+          <ng-container *ngIf="getPackages(order.packages).length">
+            <p class="mt-2.5 mb-0.5 text-2xs text-gray-700">Упаковка:</p>
+            <p
+              *ngFor="let package of getPackages(order.packages)"
+              class="text-2xs"
+            >
+              {{ package.data.short_name }} {{ package.data.site_name }} ({{
+                package.count
+              }}
+              места):
+              <b class="text-sm"
+                >{{ package.count * package.data.price }} руб.</b
+              >
+            </p>
+          </ng-container>
+          <div class="mt-2.5">
+            <ng-container *ngFor="let service of getServices(order.services)">
+              <p class="mt-0.5 mb-0.5 text-2xs text-gray-700">
+                {{ service.data.name }}
+              </p>
+              <b class="text-sm">{{ service.data.price }} руб.</b>
+            </ng-container>
+          </div>
+        </ng-container>
       </ng-container>
       <div class="mt-5 text-xl">
         <span class="text-gray-500">Итого: </span>
