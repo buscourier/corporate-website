@@ -102,7 +102,12 @@ export class AutoPartsComponent implements OnInit, OnDestroy {
         return of(cargos).pipe(
           concatAll(),
           filter((cargo: CargoInterface) => cargo.parent_id === '5'),
-          toArray()
+          toArray(),
+          tap((cargos: CargoInterface[]) => {
+            if (!this.detail.value) {
+              this.detail.setValue(cargos[0])
+            }
+          })
         )
       })
     )
