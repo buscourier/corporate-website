@@ -5,6 +5,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core'
+import {Router} from '@angular/router'
 import {Store} from '@ngrx/store'
 import {combineLatest, debounceTime, Observable, Subscription} from 'rxjs'
 import {tap} from 'rxjs/operators'
@@ -42,11 +43,13 @@ export class SidebarComponent implements OnInit, OnDestroy {
   orders = null
 
   isTotalSumCalculated = false
+  isCheckout = false
 
   constructor(
     private store: Store,
     private totalSumService: TotalSumService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -126,5 +129,10 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
       return isCheckboxActive && value
     })
+  }
+
+  goToCheckout() {
+    this.isCheckout = true
+    this.router.navigate(['new-order', 'checkout'])
   }
 }

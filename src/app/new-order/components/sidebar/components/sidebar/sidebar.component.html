@@ -143,20 +143,22 @@
                 <span class="text-gray-500">Итого: </span>
                 <b>{{ totalSum }} руб.</b>
               </div>
-              <button
-                type="button"
-                tuiButton
-                class="mt-5 w-[270px]"
-                [disabled]="
-                  !(startPoint.isValid || endPoint.isValid || isOrdersValid)
-                "
-                [routerLink]="['checkout']"
-              >
-                Оформить заказ
-              </button>
-              <button type="button" class="text-red" class="mt-2">
-                Сбросить расчет
-              </button>
+              <ng-container *ngIf="!isCheckout">
+                <button
+                  type="button"
+                  tuiButton
+                  class="mt-5 w-[270px]"
+                  [disabled]="
+                    !(startPoint.isValid || endPoint.isValid || isOrdersValid)
+                  "
+                  (click)="goToCheckout()"
+                >
+                  Оформить заказ
+                </button>
+                <button type="button" class="text-red" class="mt-2">
+                  Сбросить расчет
+                </button>
+              </ng-container>
             </div>
           </ng-container>
         </tui-loader>
