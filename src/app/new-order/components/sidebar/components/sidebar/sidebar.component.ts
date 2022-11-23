@@ -12,7 +12,6 @@ import {
   endCitySelector,
   endCourierSelector,
   endPointSelector,
-  isEndPointValidSelector,
 } from '../../../../shared/components/end-point/store/selectors'
 import {EndPointStateInterface} from '../../../../shared/components/end-point/types/end-point-state.interface'
 import {
@@ -20,7 +19,6 @@ import {
   ordersSelector,
 } from '../../../../shared/components/orders/store/selectors'
 import {
-  isStartPointValidSelector,
   startCitySelector,
   startCourierSelector,
   startPointSelector,
@@ -35,8 +33,6 @@ import {TotalSumService} from '../../services/total-sum.service'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarComponent implements OnInit, OnDestroy {
-  isStartPointValid$: Observable<boolean>
-  isEndPointValid$: Observable<boolean>
   isOrdersValid$: Observable<boolean>
   startPoint$: Observable<StartPointStateInterface>
   endPoint$: Observable<EndPointStateInterface>
@@ -60,8 +56,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
 
   initializeValues() {
-    this.isStartPointValid$ = this.store.select(isStartPointValidSelector)
-    this.isEndPointValid$ = this.store.select(isEndPointValidSelector)
     this.isOrdersValid$ = this.store.select(isOrdersValidSelector)
 
     this.startPoint$ = this.store.select(startPointSelector)

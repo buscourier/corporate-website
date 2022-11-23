@@ -1,143 +1,145 @@
-<aside class="sticky top-0 mt-32 w-[400px] pt-7 pb-5 pl-7 pr-11 shadow-md">
-  <tui-loader [showLoader]="false">
-    <b class="mb-6 block text-lg">Расчет</b>
-    <div class="hidden">
-      <p class="mb-3">
-        Для расчета стоимости отправления, укажите место отправления и прибытия,
-        а также тип груза.
-      </p>
-      <p class="mb-3">
-        <b>Внимание!</b> Информация, приведенная в калькуляторе справочная,
-        точную информацию по доставкам в населенные пункты вы можете уточнить в
-        чате на сайте или у диспетчера.
-      </p>
-      <p class="mb-3">
-        Если вам необходимо отправить посылку между разными регионами России,
-        воспользуйтесь другим калькулятором - расчет перевозки по России.
-      </p>
-    </div>
-    <ng-container *tuiLet="startPoint$ | async as startPoint">
-      <ng-container *tuiLet="endPoint$ | async as endPoint">
-        <ng-container *ngIf="startPoint && endPoint">
-          <ng-container *ngIf="startPoint.city && endPoint.city">
-            <p class="mt-1.5 mb-0.5 text-2xs text-gray-700">
-              Направление перевозки:
-            </p>
-            <p class="text-2xs">
-              {{ startPoint.city.name }} &#8212; {{ endPoint.city.name }}
-            </p>
-          </ng-container>
-          <div
-            *ngIf="startPoint.give || startPoint.pickup"
-            class="mt-1.5 mb-0.5"
-          >
-            <span class="text-2xs text-gray-700"
-              >Забор посылки у отправителя</span
-            >
-            &#45;
-            <span *ngIf="startPoint.give" class="text-2xs"
-              >Cдать в отделение</span
-            >
-            <span *ngIf="startPoint.pickup" class="text-2xs"
-              >Вызвать курьера</span
-            >
-          </div>
-          <div
-            *ngIf="endPoint.get || endPoint.delivery || endPoint.needToMeet"
-            class="mt-1.5 mb-3"
-          >
-            <span class="text-2xs text-gray-700"
-              >Доставка посылки до получателя</span
-            >
-            &#45;
-            <span *ngIf="endPoint.get" class="text-2xs"
-              >Забрать в отделении</span
-            >
-            <span *ngIf="endPoint.delivery" class="text-2xs"
-              >Вызвать курьера</span
-            >
-            <span *ngIf="endPoint.needToMeet" class="text-2xs"
-              >Встретить с автобуса</span
-            >
-          </div>
-        </ng-container>
-      </ng-container>
-    </ng-container>
-    <div *ngIf="orders && orders.length">
-      <ng-container *ngFor="let order of orders">
-        <ng-container *ngIf="order">
-          <b class="mb-3 block text-sm">Заказ №1</b>
-          <p class="mt-1.5 mb-0.5 text-2xs text-gray-700">Тип груза:</p>
-          <ng-container *ngIf="order.cargo.docs">
-            <p class="text-2xs">
-              Документы (мест: {{ order.cargo.docs.places }})
-            </p>
-          </ng-container>
-          <ng-container *ngIf="order.cargo.parcels">
-            <p class="text-2xs">
-              Посылка (мест:
-              {{ order.cargo.parcels.parcels.length }})
-            </p>
-          </ng-container>
-          <ng-container *ngIf="order.cargo.auto">
-            <p class="text-2xs">
-              Автозапчасть - {{ order.cargo.auto.detail?.name }} (мест:
-              {{ order.cargo.auto.places }})
-            </p>
-          </ng-container>
-          <ng-container *ngIf="order.cargo.other">
-            <p class="text-2xs">
-              Другое - {{ order.cargo.other.detail?.name }} (мест:
-              {{ order.cargo.other.places }})
-            </p>
-          </ng-container>
-          <ng-container *ngIf="getPackages(order.packages).length">
-            <p class="mt-2.5 mb-0.5 text-2xs text-gray-700">Упаковка:</p>
-            <p
-              *ngFor="let package of getPackages(order.packages)"
-              class="text-2xs"
-            >
-              {{ package.data.short_name }} {{ package.data.site_name }} ({{
-                package.count
-              }}
-              шт.):
-              <b class="text-sm"
-                >{{ package.count * package.data.price }} руб.</b
-              >
-            </p>
-          </ng-container>
-          <div class="mt-2.5">
-            <ng-container *ngFor="let service of getServices(order.services)">
-              <p class="mt-0.5 mb-0.5 text-2xs text-gray-700">
-                {{ service.data.name }}
-              </p>
-              <b class="text-sm">{{ service.data.price }} руб.</b>
-            </ng-container>
-          </div>
-        </ng-container>
-      </ng-container>
-      <div class="mt-5 text-xl">
-        <span class="text-gray-500">Итого: </span>
-        <b>{{ totalSum }} руб.</b>
-      </div>
-      <button
-        type="button"
-        tuiButton
-        class="mt-5 w-[270px]"
-        [disabled]="
-          !(
-            (isStartPointValid$ | async) ||
-            (isEndPointValid$ | async) ||
-            (isOrdersValid$ | async)
-          )
-        "
-        [routerLink]="['checkout']"
+<ng-container *tuiLet="startPoint$ | async as startPoint">
+  <ng-container *tuiLet="endPoint$ | async as endPoint">
+    <ng-container *tuiLet="isOrdersValid$ | async as isOrdersValid">
+      <aside
+        class="sticky top-0 mt-32 w-[400px] pt-7 pb-5 pl-7 pr-11 shadow-md"
       >
-        Оформить заказ
-      </button>
-      <button type="button" class="text-red" class="mt-2">
-        Сбросить расчет
-      </button>
-    </div>
-  </tui-loader>
-</aside>
+        <tui-loader [showLoader]="false">
+          <b class="mb-6 block text-lg">Расчет</b>
+          <div class="hidden">
+            <p class="mb-3">
+              Для расчета стоимости отправления, укажите место отправления и
+              прибытия, а также тип груза.
+            </p>
+            <p class="mb-3">
+              <b>Внимание!</b> Информация, приведенная в калькуляторе
+              справочная, точную информацию по доставкам в населенные пункты вы
+              можете уточнить в чате на сайте или у диспетчера.
+            </p>
+            <p class="mb-3">
+              Если вам необходимо отправить посылку между разными регионами
+              России, воспользуйтесь другим калькулятором - расчет перевозки по
+              России.
+            </p>
+          </div>
+          <ng-container *ngIf="startPoint && endPoint">
+            <ng-container *ngIf="startPoint.city && endPoint.city">
+              <p class="mt-1.5 mb-0.5 text-2xs text-gray-700">
+                Направление перевозки:
+              </p>
+              <p class="text-2xs">
+                {{ startPoint.city.name }} &#8212; {{ endPoint.city.name }}
+              </p>
+            </ng-container>
+            <div
+              *ngIf="startPoint.give || startPoint.pickup"
+              class="mt-1.5 mb-0.5"
+            >
+              <span class="text-2xs text-gray-700"
+                >Забор посылки у отправителя</span
+              >
+              &#45;
+              <span *ngIf="startPoint.give" class="text-2xs"
+                >Cдать в отделение</span
+              >
+              <span *ngIf="startPoint.pickup" class="text-2xs"
+                >Вызвать курьера</span
+              >
+            </div>
+            <div
+              *ngIf="endPoint.get || endPoint.delivery || endPoint.needToMeet"
+              class="mt-1.5 mb-3"
+            >
+              <span class="text-2xs text-gray-700"
+                >Доставка посылки до получателя</span
+              >
+              &#45;
+              <span *ngIf="endPoint.get" class="text-2xs"
+                >Забрать в отделении</span
+              >
+              <span *ngIf="endPoint.delivery" class="text-2xs"
+                >Вызвать курьера</span
+              >
+              <span *ngIf="endPoint.needToMeet" class="text-2xs"
+                >Встретить с автобуса</span
+              >
+            </div>
+          </ng-container>
+          <div *ngIf="orders && orders.length">
+            <ng-container *ngFor="let order of orders">
+              <ng-container *ngIf="order">
+                <b class="mb-3 block text-sm">Заказ №1</b>
+                <p class="mt-1.5 mb-0.5 text-2xs text-gray-700">Тип груза:</p>
+                <ng-container *ngIf="order.cargo.docs">
+                  <p class="text-2xs">
+                    Документы (мест: {{ order.cargo.docs.places }})
+                  </p>
+                </ng-container>
+                <ng-container *ngIf="order.cargo.parcels">
+                  <p class="text-2xs">
+                    Посылка (мест:
+                    {{ order.cargo.parcels.parcels.length }})
+                  </p>
+                </ng-container>
+                <ng-container *ngIf="order.cargo.auto">
+                  <p class="text-2xs">
+                    Автозапчасть - {{ order.cargo.auto.detail?.name }} (мест:
+                    {{ order.cargo.auto.places }})
+                  </p>
+                </ng-container>
+                <ng-container *ngIf="order.cargo.other">
+                  <p class="text-2xs">
+                    Другое - {{ order.cargo.other.detail?.name }} (мест:
+                    {{ order.cargo.other.places }})
+                  </p>
+                </ng-container>
+                <ng-container *ngIf="getPackages(order.packages).length">
+                  <p class="mt-2.5 mb-0.5 text-2xs text-gray-700">Упаковка:</p>
+                  <p
+                    *ngFor="let package of getPackages(order.packages)"
+                    class="text-2xs"
+                  >
+                    {{ package.data.short_name }}
+                    {{ package.data.site_name }} ({{ package.count }}
+                    шт.):
+                    <b class="text-sm"
+                      >{{ package.count * package.data.price }} руб.</b
+                    >
+                  </p>
+                </ng-container>
+                <div class="mt-2.5">
+                  <ng-container
+                    *ngFor="let service of getServices(order.services)"
+                  >
+                    <p class="mt-0.5 mb-0.5 text-2xs text-gray-700">
+                      {{ service.data.name }}
+                    </p>
+                    <b class="text-sm">{{ service.data.price }} руб.</b>
+                  </ng-container>
+                </div>
+              </ng-container>
+            </ng-container>
+            <div class="mt-5 text-xl">
+              <span class="text-gray-500">Итого: </span>
+              <b>{{ totalSum }} руб.</b>
+            </div>
+            <button
+              type="button"
+              tuiButton
+              class="mt-5 w-[270px]"
+              [disabled]="
+                !(startPoint.isValid || endPoint.isValid || isOrdersValid)
+              "
+              [routerLink]="['checkout']"
+            >
+              Оформить заказ
+            </button>
+            <button type="button" class="text-red" class="mt-2">
+              Сбросить расчет
+            </button>
+          </div>
+        </tui-loader>
+      </aside>
+    </ng-container>
+  </ng-container>
+</ng-container>
