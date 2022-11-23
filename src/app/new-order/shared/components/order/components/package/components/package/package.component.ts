@@ -108,8 +108,8 @@ export class PackageComponent implements OnInit, OnDestroy {
                     this.safePacks.push(
                       this.fb.group({
                         [service.id]: false,
-                        count: 0,
-                        data: service,
+                        count: 1,
+                        data: {...service, short_name: 'Сейф-пакет'},
                       })
                     )
                     break
@@ -117,19 +117,17 @@ export class PackageComponent implements OnInit, OnDestroy {
                     this.plasticPacks.push(
                       this.fb.group({
                         [service.id]: false,
-                        count: 0,
-                        data: service,
+                        count: 1,
+                        data: {...service, short_name: 'Полиэтиленовый пакет'},
                       })
                     )
-
-                    console.log('this.plasticPacks', this.plasticPacks)
                     break
                   case '6':
                     this.skins.push(
                       this.fb.group({
                         [service.id]: false,
-                        count: 0,
-                        data: service,
+                        count: 1,
+                        data: {...service, short_name: 'Пленка'},
                       })
                     )
                     break
@@ -137,7 +135,7 @@ export class PackageComponent implements OnInit, OnDestroy {
                     this.other.push(
                       this.fb.group({
                         [service.id]: false,
-                        count: 0,
+                        count: 1,
                         data: service,
                       })
                     )
