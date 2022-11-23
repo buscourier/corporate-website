@@ -102,7 +102,7 @@ export class PackageComponent implements OnInit, OnDestroy {
                     this.boxes.push(
                       this.fb.group({
                         [service.id]: false,
-                        count: 1,
+                        count: 0,
                         data: {...service, short_name: 'Коробка'},
                       })
                     )
@@ -161,22 +161,33 @@ export class PackageComponent implements OnInit, OnDestroy {
     return control as FormControl
   }
 
-  openDialog(checkboxControl, content: PolymorpheusContent<TuiDialogContext>) {
+  openDialog(
+    countControl,
+    checkboxControl,
+    content: PolymorpheusContent<TuiDialogContext>
+  ) {
+    checkboxControl.setValue(null)
     checkboxControl.updateValueAndValidity()
 
+    if (!countControl.value) {
+      countControl.setValue(1)
+    }
+
+    //TODO: need unsubscribe?
     this.dialogService
       .open(content, {
         size: 's',
         closeable: false,
+        dismissible: false,
       })
       .subscribe()
   }
 
   closeDialog(countControl, checkboxControl) {
-    if ((countControl.value && countControl.dirty) || countControl.value > 1) {
-      checkboxControl.disable({onlySelf: true, emitEvent: false})
+    if (countControl.value) {
+      checkboxControl.setValue(true)
     } else {
-      checkboxControl.enable({emitEvent: false})
+      checkboxControl.setValue(false)
     }
   }
 

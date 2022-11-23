@@ -18,8 +18,28 @@
   background-color: rgba(199, 65, 65, 0.05);
 }
 
-._disabled {
+/*._disabled {*/
+/*  pointer-events: auto !important;*/
+/*}*/
+
+._readonly {
+  opacity: 0.5;
   pointer-events: auto !important;
+}
+
+._readonly tui-checkbox,
+._readonly p,
+._readonly span
+{
+  filter: grayscale(1);
+}
+
+._readonly:hover tui-checkbox,
+._readonly:hover p,
+._readonly:hover span
+{
+  opacity: 1;
+  cursor: pointer;
 }
 
 tui-checkbox[data-size='m'],

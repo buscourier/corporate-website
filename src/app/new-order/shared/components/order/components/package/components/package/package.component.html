@@ -12,17 +12,23 @@
         [formGroup]="box"
       >
         <div class="">
-          {{ closeDialog(box.get('count'), box.get(box.get('data').value.id)) }}
+          <!--          {{ closeDialog(box.get('count'), box.get(box.get('data').value.id)) }}-->
           <tui-checkbox-labeled
             [formControlName]="box.get('data').value.id"
-            [readOnly]="false"
-            (change)="openDialog(box.get(box.get('data').value.id), template)"
+            [readOnly]="box.get('count').value"
+            (change)="
+              openDialog(
+                box.get('count'),
+                box.get(box.get('data').value.id),
+                template
+              )
+            "
             size="m"
             [class.opacity-80]="false"
           >
             <div class="relative inline">
               <button
-                *ngIf="box.get(box.get('data').value.id).disabled"
+                *ngIf="box.get('count').value"
                 type="button"
                 class="absolute -top-3 -right-3 text-red"
                 (click)="
@@ -44,14 +50,20 @@
             </div>
             <div class="mt-1.5 text-gray-700">
               <span class="checkbox-label">
-                {{ box.get('data').value.price * box.get('count').value }}
-                руб. за {{ box.get('count').value }} шт.
+                {{
+                  box.get('data').value.price * (box.get('count').value || 1)
+                }}
+                руб. за {{ box.get('count').value || 1 }} шт.
               </span>
               <small
                 *ngIf="box.get(box.get('data').value.id).disabled"
                 class="mt-1 block text-[10px] text-red"
                 (click)="
-                  openDialog(box.get(box.get('data').value.id), template)
+                  openDialog(
+                    box.get('count'),
+                    box.get(box.get('data').value.id),
+                    template
+                  )
                 "
                 >изменить</small
               >
@@ -97,384 +109,384 @@
       </ng-container>
     </div>
   </div>
-  <div *ngIf="safePacks.length" formArrayName="safePacks">
-    <b class="mb-5 block">Сейф-пакет:</b>
-    <div class="mb-10 flex flex-wrap gap-4">
-      <ng-container
-        *ngFor="let pack of safePacks.controls; let i = index"
-        [formGroup]="pack"
-      >
-        <div class="">
-          {{
-            closeDialog(pack.get('count'), pack.get(pack.get('data').value.id))
-          }}
-          <tui-checkbox-labeled
-            [formControlName]="pack.get('data').value.id"
-            [readOnly]="false"
-            (change)="openDialog(pack.get(pack.get('data').value.id), template)"
-            size="m"
-            [class.opacity-80]="false"
-          >
-            <div class="relative inline">
-              <button
-                *ngIf="pack.get(pack.get('data').value.id).disabled"
-                type="button"
-                class="absolute -top-3 -right-3 text-red"
-                (click)="
-                  clear(
-                    $event,
-                    pack.get('count'),
-                    pack.get(pack.get('data').value.id)
-                  )
-                "
-              >
-                <tui-svg
-                  src="tuiIconClose"
-                  class="h-[10px] !w-[10px]"
-                ></tui-svg>
-              </button>
-              <span class="checkbox-name">{{
-                pack.get('data').value.site_name
-              }}</span>
-            </div>
-            <div class="mt-1.5 text-gray-700">
-              <span class="checkbox-label">
-                {{ pack.get('data').value.price * pack.get('count').value }}
-                руб. за {{ pack.get('count').value }} шт.
-              </span>
-              <small
-                *ngIf="pack.get(pack.get('data').value.id).disabled"
-                class="mt-1 block text-[10px] text-red"
-                (click)="
-                  openDialog(pack.get(pack.get('data').value.id), template)
-                "
-                >изменить</small
-              >
-            </div>
-          </tui-checkbox-labeled>
-        </div>
-        <ng-template #template let-observer>
-          <article>
-            <h1 class="text-lg font-medium">
-              {{ pack.get('data').value.short_name }} ({{
-                pack.get('data').value.site_name
-              }})
-            </h1>
-            <p class="mb-4 text-sm">{{ pack.get('data').value.property }}</p>
-            <div class="flex items-end space-x-2">
-              <label class="block flex-grow">
-                <span class="mb-1 inline-block text-xs">Сколько штук?</span>
-                <tui-input-count
-                  [formControl]="getControl(pack.get('count'))"
-                  [tuiTextfieldLabelOutside]="true"
-                  [min]="1"
-                  [max]="20"
-                >
-                  <input tuiTextfield />
-                </tui-input-count>
-              </label>
-              <button
-                type="button"
-                tuiButton
-                (click)="
-                  observer.complete();
-                  closeDialog(
-                    pack.get('count'),
-                    pack.get(pack.get('data').value.id)
-                  )
-                "
-              >
-                Ok
-              </button>
-            </div>
-          </article>
-        </ng-template>
-      </ng-container>
-    </div>
-  </div>
-  <div *ngIf="plasticPacks.length" formArrayName="plasticPacks">
-    <b class="mb-5 block">Полиэтиленовый пакет:</b>
-    <div class="mb-10 flex flex-wrap gap-4">
-      <ng-container
-        *ngFor="let pack of plasticPacks.controls; let i = index"
-        [formGroup]="pack"
-      >
-        <div class="">
-          {{
-            closeDialog(pack.get('count'), pack.get(pack.get('data').value.id))
-          }}
-          <tui-checkbox-labeled
-            [formControlName]="pack.get('data').value.id"
-            [readOnly]="false"
-            (change)="openDialog(pack.get(pack.get('data').value.id), template)"
-            size="m"
-            [class.opacity-80]="false"
-          >
-            <div class="relative inline">
-              <button
-                *ngIf="pack.get(pack.get('data').value.id).disabled"
-                type="button"
-                class="absolute -top-3 -right-3 text-red"
-                (click)="
-                  clear(
-                    $event,
-                    pack.get('count'),
-                    pack.get(pack.get('data').value.id)
-                  )
-                "
-              >
-                <tui-svg
-                  src="tuiIconClose"
-                  class="h-[10px] !w-[10px]"
-                ></tui-svg>
-              </button>
-              <span class="checkbox-name">{{
-                pack.get('data').value.site_name
-              }}</span>
-            </div>
-            <div class="mt-1.5 text-gray-700">
-              <span class="checkbox-label">
-                {{ pack.get('data').value.price * pack.get('count').value }}
-                руб. за {{ pack.get('count').value }} шт.
-              </span>
-              <small
-                *ngIf="pack.get(pack.get('data').value.id).disabled"
-                class="mt-1 block text-[10px] text-red"
-                (click)="
-                  openDialog(pack.get(pack.get('data').value.id), template)
-                "
-                >изменить</small
-              >
-            </div>
-          </tui-checkbox-labeled>
-        </div>
-        <ng-template #template let-observer>
-          <article>
-            <h1 class="text-lg font-medium">
-              {{ pack.get('data').value.short_name }} ({{
-                pack.get('data').value.site_name
-              }})
-            </h1>
-            <p class="mb-4 text-sm">{{ pack.get('data').value.property }}</p>
-            <div class="flex items-end space-x-2">
-              <label class="block flex-grow">
-                <span class="mb-1 inline-block text-xs">Сколько штук?</span>
-                <tui-input-count
-                  [formControl]="getControl(pack.get('count'))"
-                  [tuiTextfieldLabelOutside]="true"
-                  [min]="1"
-                  [max]="20"
-                >
-                  <input tuiTextfield />
-                </tui-input-count>
-              </label>
-              <button
-                type="button"
-                tuiButton
-                (click)="
-                  observer.complete();
-                  closeDialog(
-                    pack.get('count'),
-                    pack.get(pack.get('data').value.id)
-                  )
-                "
-              >
-                Ok
-              </button>
-            </div>
-          </article>
-        </ng-template>
-      </ng-container>
-    </div>
-  </div>
-  <div *ngIf="skins.length" formArrayName="skins">
-    <b class="mb-5 block">Пленка:</b>
-    <div class="mb-10 flex flex-wrap gap-4">
-      <ng-container
-        *ngFor="let skin of skins.controls; let i = index"
-        [formGroup]="skin"
-      >
-        <div class="">
-          {{
-            closeDialog(skin.get('count'), skin.get(skin.get('data').value.id))
-          }}
-          <tui-checkbox-labeled
-            [formControlName]="skin.get('data').value.id"
-            [readOnly]="false"
-            (change)="openDialog(skin.get(skin.get('data').value.id), template)"
-            size="m"
-            [class.opacity-80]="false"
-          >
-            <div class="relative inline">
-              <button
-                *ngIf="skin.get(skin.get('data').value.id).disabled"
-                type="button"
-                class="absolute -top-3 -right-3 text-red"
-                (click)="
-                  clear(
-                    $event,
-                    skin.get('count'),
-                    skin.get(skin.get('data').value.id)
-                  )
-                "
-              >
-                <tui-svg
-                  src="tuiIconClose"
-                  class="h-[10px] !w-[10px]"
-                ></tui-svg>
-              </button>
-              <span class="checkbox-name">{{
-                skin.get('data').value.site_name
-              }}</span>
-            </div>
-            <div class="mt-1.5 text-gray-700">
-              <span class="checkbox-label">
-                {{ skin.get('data').value.price * skin.get('count').value }}
-                руб. за {{ skin.get('count').value }} шт.
-              </span>
-              <small
-                *ngIf="skin.get(skin.get('data').value.id).disabled"
-                class="mt-1 block text-[10px] text-red"
-                (click)="
-                  openDialog(skin.get(skin.get('data').value.id), template)
-                "
-                >изменить</small
-              >
-            </div>
-          </tui-checkbox-labeled>
-        </div>
-        <ng-template #template let-observer>
-          <article>
-            <h1 class="text-lg font-medium">
-              {{ skin.get('data').value.short_name }} ({{
-                skin.get('data').value.site_name
-              }})
-            </h1>
-            <p class="mb-4 text-sm">{{ skin.get('data').value.property }}</p>
-            <div class="flex items-end space-x-2">
-              <label class="block flex-grow">
-                <span class="mb-1 inline-block text-xs">Сколько штук?</span>
-                <tui-input-count
-                  [formControl]="getControl(skin.get('count'))"
-                  [tuiTextfieldLabelOutside]="true"
-                  [min]="1"
-                  [max]="20"
-                >
-                  <input tuiTextfield />
-                </tui-input-count>
-              </label>
-              <button
-                type="button"
-                tuiButton
-                (click)="
-                  observer.complete();
-                  closeDialog(
-                    skin.get('count'),
-                    skin.get(skin.get('data').value.id)
-                  )
-                "
-              >
-                Ok
-              </button>
-            </div>
-          </article>
-        </ng-template>
-      </ng-container>
-    </div>
-  </div>
-  <div *ngIf="other.length" formArrayName="other">
-    <b class="mb-5 block">Другая:</b>
-    <div class="mb-10 flex flex-wrap gap-4">
-      <ng-container
-        *ngFor="let item of other.controls; let i = index"
-        [formGroup]="item"
-      >
-        <div class="">
-          {{
-            closeDialog(item.get('count'), item.get(item.get('data').value.id))
-          }}
-          <tui-checkbox-labeled
-            [formControlName]="item.get('data').value.id"
-            [readOnly]="false"
-            (change)="openDialog(item.get(item.get('data').value.id), template)"
-            size="m"
-            [class.opacity-80]="false"
-          >
-            <div class="relative inline">
-              <button
-                *ngIf="item.get(item.get('data').value.id).disabled"
-                type="button"
-                class="absolute -top-3 -right-3 text-red"
-                (click)="
-                  clear(
-                    $event,
-                    item.get('count'),
-                    item.get(item.get('data').value.id)
-                  )
-                "
-              >
-                <tui-svg
-                  src="tuiIconClose"
-                  class="h-[10px] !w-[10px]"
-                ></tui-svg>
-              </button>
-              <span class="checkbox-name">{{
-                item.get('data').value.site_name
-              }}</span>
-            </div>
-            <div class="mt-1.5 text-gray-700">
-              <span class="checkbox-label">
-                {{ item.get('data').value.price * item.get('count').value }}
-                руб. за {{ item.get('count').value }} шт.
-              </span>
-              <small
-                *ngIf="item.get(item.get('data').value.id).disabled"
-                class="mt-1 block text-[10px] text-red"
-                (click)="
-                  openDialog(item.get(item.get('data').value.id), template)
-                "
-                >изменить</small
-              >
-            </div>
-          </tui-checkbox-labeled>
-        </div>
-        <ng-template #template let-observer>
-          <article>
-            <h1 class="text-lg font-medium">
-              {{ item.get('data').value.short_name }} ({{
-                item.get('data').value.site_name
-              }})
-            </h1>
-            <p class="mb-4 text-sm">{{ item.get('data').value.property }}</p>
-            <div class="flex items-end space-x-2">
-              <label class="block flex-grow">
-                <span class="mb-1 inline-block text-xs">Сколько штук?</span>
-                <tui-input-count
-                  [formControl]="getControl(item.get('count'))"
-                  [tuiTextfieldLabelOutside]="true"
-                  [min]="1"
-                  [max]="20"
-                >
-                  <input tuiTextfield />
-                </tui-input-count>
-              </label>
-              <button
-                type="button"
-                tuiButton
-                (click)="
-                  observer.complete();
-                  closeDialog(
-                    item.get('count'),
-                    item.get(item.get('data').value.id)
-                  )
-                "
-              >
-                Ok
-              </button>
-            </div>
-          </article>
-        </ng-template>
-      </ng-container>
-    </div>
-  </div>
+  <!--  <div *ngIf="safePacks.length" formArrayName="safePacks">-->
+  <!--    <b class="mb-5 block">Сейф-пакет:</b>-->
+  <!--    <div class="mb-10 flex flex-wrap gap-4">-->
+  <!--      <ng-container-->
+  <!--        *ngFor="let pack of safePacks.controls; let i = index"-->
+  <!--        [formGroup]="pack"-->
+  <!--      >-->
+  <!--        <div class="">-->
+  <!--          {{-->
+  <!--            closeDialog(pack.get('count'), pack.get(pack.get('data').value.id))-->
+  <!--          }}-->
+  <!--          <tui-checkbox-labeled-->
+  <!--            [formControlName]="pack.get('data').value.id"-->
+  <!--            [readOnly]="false"-->
+  <!--            (change)="openDialog(pack.get(pack.get('data').value.id), template)"-->
+  <!--            size="m"-->
+  <!--            [class.opacity-80]="false"-->
+  <!--          >-->
+  <!--            <div class="relative inline">-->
+  <!--              <button-->
+  <!--                *ngIf="pack.get(pack.get('data').value.id).disabled"-->
+  <!--                type="button"-->
+  <!--                class="absolute -top-3 -right-3 text-red"-->
+  <!--                (click)="-->
+  <!--                  clear(-->
+  <!--                    $event,-->
+  <!--                    pack.get('count'),-->
+  <!--                    pack.get(pack.get('data').value.id)-->
+  <!--                  )-->
+  <!--                "-->
+  <!--              >-->
+  <!--                <tui-svg-->
+  <!--                  src="tuiIconClose"-->
+  <!--                  class="h-[10px] !w-[10px]"-->
+  <!--                ></tui-svg>-->
+  <!--              </button>-->
+  <!--              <span class="checkbox-name">{{-->
+  <!--                pack.get('data').value.site_name-->
+  <!--              }}</span>-->
+  <!--            </div>-->
+  <!--            <div class="mt-1.5 text-gray-700">-->
+  <!--              <span class="checkbox-label">-->
+  <!--                {{ pack.get('data').value.price * pack.get('count').value }}-->
+  <!--                руб. за {{ pack.get('count').value }} шт.-->
+  <!--              </span>-->
+  <!--              <small-->
+  <!--                *ngIf="pack.get(pack.get('data').value.id).disabled"-->
+  <!--                class="mt-1 block text-[10px] text-red"-->
+  <!--                (click)="-->
+  <!--                  openDialog(pack.get(pack.get('data').value.id), template)-->
+  <!--                "-->
+  <!--                >изменить</small-->
+  <!--              >-->
+  <!--            </div>-->
+  <!--          </tui-checkbox-labeled>-->
+  <!--        </div>-->
+  <!--        <ng-template #template let-observer>-->
+  <!--          <article>-->
+  <!--            <h1 class="text-lg font-medium">-->
+  <!--              {{ pack.get('data').value.short_name }} ({{-->
+  <!--                pack.get('data').value.site_name-->
+  <!--              }})-->
+  <!--            </h1>-->
+  <!--            <p class="mb-4 text-sm">{{ pack.get('data').value.property }}</p>-->
+  <!--            <div class="flex items-end space-x-2">-->
+  <!--              <label class="block flex-grow">-->
+  <!--                <span class="mb-1 inline-block text-xs">Сколько штук?</span>-->
+  <!--                <tui-input-count-->
+  <!--                  [formControl]="getControl(pack.get('count'))"-->
+  <!--                  [tuiTextfieldLabelOutside]="true"-->
+  <!--                  [min]="1"-->
+  <!--                  [max]="20"-->
+  <!--                >-->
+  <!--                  <input tuiTextfield />-->
+  <!--                </tui-input-count>-->
+  <!--              </label>-->
+  <!--              <button-->
+  <!--                type="button"-->
+  <!--                tuiButton-->
+  <!--                (click)="-->
+  <!--                  observer.complete();-->
+  <!--                  closeDialog(-->
+  <!--                    pack.get('count'),-->
+  <!--                    pack.get(pack.get('data').value.id)-->
+  <!--                  )-->
+  <!--                "-->
+  <!--              >-->
+  <!--                Ok-->
+  <!--              </button>-->
+  <!--            </div>-->
+  <!--          </article>-->
+  <!--        </ng-template>-->
+  <!--      </ng-container>-->
+  <!--    </div>-->
+  <!--  </div>-->
+  <!--  <div *ngIf="plasticPacks.length" formArrayName="plasticPacks">-->
+  <!--    <b class="mb-5 block">Полиэтиленовый пакет:</b>-->
+  <!--    <div class="mb-10 flex flex-wrap gap-4">-->
+  <!--      <ng-container-->
+  <!--        *ngFor="let pack of plasticPacks.controls; let i = index"-->
+  <!--        [formGroup]="pack"-->
+  <!--      >-->
+  <!--        <div class="">-->
+  <!--          {{-->
+  <!--            closeDialog(pack.get('count'), pack.get(pack.get('data').value.id))-->
+  <!--          }}-->
+  <!--          <tui-checkbox-labeled-->
+  <!--            [formControlName]="pack.get('data').value.id"-->
+  <!--            [readOnly]="false"-->
+  <!--            (change)="openDialog(pack.get(pack.get('data').value.id), template)"-->
+  <!--            size="m"-->
+  <!--            [class.opacity-80]="false"-->
+  <!--          >-->
+  <!--            <div class="relative inline">-->
+  <!--              <button-->
+  <!--                *ngIf="pack.get(pack.get('data').value.id).disabled"-->
+  <!--                type="button"-->
+  <!--                class="absolute -top-3 -right-3 text-red"-->
+  <!--                (click)="-->
+  <!--                  clear(-->
+  <!--                    $event,-->
+  <!--                    pack.get('count'),-->
+  <!--                    pack.get(pack.get('data').value.id)-->
+  <!--                  )-->
+  <!--                "-->
+  <!--              >-->
+  <!--                <tui-svg-->
+  <!--                  src="tuiIconClose"-->
+  <!--                  class="h-[10px] !w-[10px]"-->
+  <!--                ></tui-svg>-->
+  <!--              </button>-->
+  <!--              <span class="checkbox-name">{{-->
+  <!--                pack.get('data').value.site_name-->
+  <!--              }}</span>-->
+  <!--            </div>-->
+  <!--            <div class="mt-1.5 text-gray-700">-->
+  <!--              <span class="checkbox-label">-->
+  <!--                {{ pack.get('data').value.price * pack.get('count').value }}-->
+  <!--                руб. за {{ pack.get('count').value }} шт.-->
+  <!--              </span>-->
+  <!--              <small-->
+  <!--                *ngIf="pack.get(pack.get('data').value.id).disabled"-->
+  <!--                class="mt-1 block text-[10px] text-red"-->
+  <!--                (click)="-->
+  <!--                  openDialog(pack.get(pack.get('data').value.id), template)-->
+  <!--                "-->
+  <!--                >изменить</small-->
+  <!--              >-->
+  <!--            </div>-->
+  <!--          </tui-checkbox-labeled>-->
+  <!--        </div>-->
+  <!--        <ng-template #template let-observer>-->
+  <!--          <article>-->
+  <!--            <h1 class="text-lg font-medium">-->
+  <!--              {{ pack.get('data').value.short_name }} ({{-->
+  <!--                pack.get('data').value.site_name-->
+  <!--              }})-->
+  <!--            </h1>-->
+  <!--            <p class="mb-4 text-sm">{{ pack.get('data').value.property }}</p>-->
+  <!--            <div class="flex items-end space-x-2">-->
+  <!--              <label class="block flex-grow">-->
+  <!--                <span class="mb-1 inline-block text-xs">Сколько штук?</span>-->
+  <!--                <tui-input-count-->
+  <!--                  [formControl]="getControl(pack.get('count'))"-->
+  <!--                  [tuiTextfieldLabelOutside]="true"-->
+  <!--                  [min]="1"-->
+  <!--                  [max]="20"-->
+  <!--                >-->
+  <!--                  <input tuiTextfield />-->
+  <!--                </tui-input-count>-->
+  <!--              </label>-->
+  <!--              <button-->
+  <!--                type="button"-->
+  <!--                tuiButton-->
+  <!--                (click)="-->
+  <!--                  observer.complete();-->
+  <!--                  closeDialog(-->
+  <!--                    pack.get('count'),-->
+  <!--                    pack.get(pack.get('data').value.id)-->
+  <!--                  )-->
+  <!--                "-->
+  <!--              >-->
+  <!--                Ok-->
+  <!--              </button>-->
+  <!--            </div>-->
+  <!--          </article>-->
+  <!--        </ng-template>-->
+  <!--      </ng-container>-->
+  <!--    </div>-->
+  <!--  </div>-->
+  <!--  <div *ngIf="skins.length" formArrayName="skins">-->
+  <!--    <b class="mb-5 block">Пленка:</b>-->
+  <!--    <div class="mb-10 flex flex-wrap gap-4">-->
+  <!--      <ng-container-->
+  <!--        *ngFor="let skin of skins.controls; let i = index"-->
+  <!--        [formGroup]="skin"-->
+  <!--      >-->
+  <!--        <div class="">-->
+  <!--          {{-->
+  <!--            closeDialog(skin.get('count'), skin.get(skin.get('data').value.id))-->
+  <!--          }}-->
+  <!--          <tui-checkbox-labeled-->
+  <!--            [formControlName]="skin.get('data').value.id"-->
+  <!--            [readOnly]="false"-->
+  <!--            (change)="openDialog(skin.get(skin.get('data').value.id), template)"-->
+  <!--            size="m"-->
+  <!--            [class.opacity-80]="false"-->
+  <!--          >-->
+  <!--            <div class="relative inline">-->
+  <!--              <button-->
+  <!--                *ngIf="skin.get(skin.get('data').value.id).disabled"-->
+  <!--                type="button"-->
+  <!--                class="absolute -top-3 -right-3 text-red"-->
+  <!--                (click)="-->
+  <!--                  clear(-->
+  <!--                    $event,-->
+  <!--                    skin.get('count'),-->
+  <!--                    skin.get(skin.get('data').value.id)-->
+  <!--                  )-->
+  <!--                "-->
+  <!--              >-->
+  <!--                <tui-svg-->
+  <!--                  src="tuiIconClose"-->
+  <!--                  class="h-[10px] !w-[10px]"-->
+  <!--                ></tui-svg>-->
+  <!--              </button>-->
+  <!--              <span class="checkbox-name">{{-->
+  <!--                skin.get('data').value.site_name-->
+  <!--              }}</span>-->
+  <!--            </div>-->
+  <!--            <div class="mt-1.5 text-gray-700">-->
+  <!--              <span class="checkbox-label">-->
+  <!--                {{ skin.get('data').value.price * skin.get('count').value }}-->
+  <!--                руб. за {{ skin.get('count').value }} шт.-->
+  <!--              </span>-->
+  <!--              <small-->
+  <!--                *ngIf="skin.get(skin.get('data').value.id).disabled"-->
+  <!--                class="mt-1 block text-[10px] text-red"-->
+  <!--                (click)="-->
+  <!--                  openDialog(skin.get(skin.get('data').value.id), template)-->
+  <!--                "-->
+  <!--                >изменить</small-->
+  <!--              >-->
+  <!--            </div>-->
+  <!--          </tui-checkbox-labeled>-->
+  <!--        </div>-->
+  <!--        <ng-template #template let-observer>-->
+  <!--          <article>-->
+  <!--            <h1 class="text-lg font-medium">-->
+  <!--              {{ skin.get('data').value.short_name }} ({{-->
+  <!--                skin.get('data').value.site_name-->
+  <!--              }})-->
+  <!--            </h1>-->
+  <!--            <p class="mb-4 text-sm">{{ skin.get('data').value.property }}</p>-->
+  <!--            <div class="flex items-end space-x-2">-->
+  <!--              <label class="block flex-grow">-->
+  <!--                <span class="mb-1 inline-block text-xs">Сколько штук?</span>-->
+  <!--                <tui-input-count-->
+  <!--                  [formControl]="getControl(skin.get('count'))"-->
+  <!--                  [tuiTextfieldLabelOutside]="true"-->
+  <!--                  [min]="1"-->
+  <!--                  [max]="20"-->
+  <!--                >-->
+  <!--                  <input tuiTextfield />-->
+  <!--                </tui-input-count>-->
+  <!--              </label>-->
+  <!--              <button-->
+  <!--                type="button"-->
+  <!--                tuiButton-->
+  <!--                (click)="-->
+  <!--                  observer.complete();-->
+  <!--                  closeDialog(-->
+  <!--                    skin.get('count'),-->
+  <!--                    skin.get(skin.get('data').value.id)-->
+  <!--                  )-->
+  <!--                "-->
+  <!--              >-->
+  <!--                Ok-->
+  <!--              </button>-->
+  <!--            </div>-->
+  <!--          </article>-->
+  <!--        </ng-template>-->
+  <!--      </ng-container>-->
+  <!--    </div>-->
+  <!--  </div>-->
+  <!--  <div *ngIf="other.length" formArrayName="other">-->
+  <!--    <b class="mb-5 block">Другая:</b>-->
+  <!--    <div class="mb-10 flex flex-wrap gap-4">-->
+  <!--      <ng-container-->
+  <!--        *ngFor="let item of other.controls; let i = index"-->
+  <!--        [formGroup]="item"-->
+  <!--      >-->
+  <!--        <div class="">-->
+  <!--          {{-->
+  <!--            closeDialog(item.get('count'), item.get(item.get('data').value.id))-->
+  <!--          }}-->
+  <!--          <tui-checkbox-labeled-->
+  <!--            [formControlName]="item.get('data').value.id"-->
+  <!--            [readOnly]="false"-->
+  <!--            (change)="openDialog(item.get(item.get('data').value.id), template)"-->
+  <!--            size="m"-->
+  <!--            [class.opacity-80]="false"-->
+  <!--          >-->
+  <!--            <div class="relative inline">-->
+  <!--              <button-->
+  <!--                *ngIf="item.get(item.get('data').value.id).disabled"-->
+  <!--                type="button"-->
+  <!--                class="absolute -top-3 -right-3 text-red"-->
+  <!--                (click)="-->
+  <!--                  clear(-->
+  <!--                    $event,-->
+  <!--                    item.get('count'),-->
+  <!--                    item.get(item.get('data').value.id)-->
+  <!--                  )-->
+  <!--                "-->
+  <!--              >-->
+  <!--                <tui-svg-->
+  <!--                  src="tuiIconClose"-->
+  <!--                  class="h-[10px] !w-[10px]"-->
+  <!--                ></tui-svg>-->
+  <!--              </button>-->
+  <!--              <span class="checkbox-name">{{-->
+  <!--                item.get('data').value.site_name-->
+  <!--              }}</span>-->
+  <!--            </div>-->
+  <!--            <div class="mt-1.5 text-gray-700">-->
+  <!--              <span class="checkbox-label">-->
+  <!--                {{ item.get('data').value.price * item.get('count').value }}-->
+  <!--                руб. за {{ item.get('count').value }} шт.-->
+  <!--              </span>-->
+  <!--              <small-->
+  <!--                *ngIf="item.get(item.get('data').value.id).disabled"-->
+  <!--                class="mt-1 block text-[10px] text-red"-->
+  <!--                (click)="-->
+  <!--                  openDialog(item.get(item.get('data').value.id), template)-->
+  <!--                "-->
+  <!--                >изменить</small-->
+  <!--              >-->
+  <!--            </div>-->
+  <!--          </tui-checkbox-labeled>-->
+  <!--        </div>-->
+  <!--        <ng-template #template let-observer>-->
+  <!--          <article>-->
+  <!--            <h1 class="text-lg font-medium">-->
+  <!--              {{ item.get('data').value.short_name }} ({{-->
+  <!--                item.get('data').value.site_name-->
+  <!--              }})-->
+  <!--            </h1>-->
+  <!--            <p class="mb-4 text-sm">{{ item.get('data').value.property }}</p>-->
+  <!--            <div class="flex items-end space-x-2">-->
+  <!--              <label class="block flex-grow">-->
+  <!--                <span class="mb-1 inline-block text-xs">Сколько штук?</span>-->
+  <!--                <tui-input-count-->
+  <!--                  [formControl]="getControl(item.get('count'))"-->
+  <!--                  [tuiTextfieldLabelOutside]="true"-->
+  <!--                  [min]="1"-->
+  <!--                  [max]="20"-->
+  <!--                >-->
+  <!--                  <input tuiTextfield />-->
+  <!--                </tui-input-count>-->
+  <!--              </label>-->
+  <!--              <button-->
+  <!--                type="button"-->
+  <!--                tuiButton-->
+  <!--                (click)="-->
+  <!--                  observer.complete();-->
+  <!--                  closeDialog(-->
+  <!--                    item.get('count'),-->
+  <!--                    item.get(item.get('data').value.id)-->
+  <!--                  )-->
+  <!--                "-->
+  <!--              >-->
+  <!--                Ok-->
+  <!--              </button>-->
+  <!--            </div>-->
+  <!--          </article>-->
+  <!--        </ng-template>-->
+  <!--      </ng-container>-->
+  <!--    </div>-->
+  <!--  </div>-->
 </div>
