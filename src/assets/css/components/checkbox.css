@@ -3,9 +3,10 @@
   line-height: 100%;
 }
 
-.checkbox-name:first-letter {
-  @apply text-red;
+.checkbox-name::first-letter {
+  display: block;
   text-transform: uppercase;
+  @apply text-red;
 }
 
 .checkbox-label {

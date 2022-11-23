@@ -1,40 +1,30 @@
 <div [formGroup]="form">
   <div *ngIf="boxes.length" formArrayName="boxes">
-    <div class="mb-5">Коробки:</div>
+    <b class="mb-5 block">Коробки:</b>
     <div class="mb-10 flex flex-wrap gap-4">
       <ng-container
         *ngFor="let box of boxes.controls; let i = index"
         [formGroup]="box"
       >
         <div class="">
-          {{
-            closeDialog(
-              getControl(box.get('count')),
-              getControl(box.get(box.get('data').value.id))
-            )
-          }}
+          {{ closeDialog(box.get('count'), box.get(box.get('data').value.id)) }}
           <tui-checkbox-labeled
             [formControlName]="box.get('data').value.id"
             [readOnly]="false"
-            (change)="
-              openDialog(
-                getControl(box.get(box.get('data').value.id)),
-                template
-              )
-            "
+            (change)="openDialog(box.get(box.get('data').value.id), template)"
             size="m"
             [class.opacity-80]="false"
           >
             <div class="relative inline">
               <button
-                *ngIf="getControl(box.get(box.get('data').value.id)).disabled"
+                *ngIf="box.get(box.get('data').value.id).disabled"
                 type="button"
                 class="absolute -top-3 -right-3 text-red"
                 (click)="
                   clear(
                     $event,
-                    getControl(box.get('count')),
-                    getControl(box.get(box.get('data').value.id))
+                    box.get('count'),
+                    box.get(box.get('data').value.id)
                   )
                 "
               >
@@ -49,20 +39,14 @@
             </div>
             <div class="mt-1.5 text-gray-700">
               <span class="checkbox-label">
-                {{
-                  box.get('data').value.price *
-                    getControl(box.get('count')).value
-                }}
-                руб. за {{ getControl(box.get('count')).value }} шт.
+                {{ box.get('data').value.price * box.get('count').value }}
+                руб. за {{ box.get('count').value }} шт.
               </span>
               <small
-                *ngIf="getControl(box.get(box.get('data').value.id)).disabled"
+                *ngIf="box.get(box.get('data').value.id).disabled"
                 class="mt-1 block text-[10px] text-red"
                 (click)="
-                  openDialog(
-                    getControl(box.get(box.get('data').value.id)),
-                    template
-                  )
+                  openDialog(box.get(box.get('data').value.id), template)
                 "
                 >изменить</small
               >
@@ -95,8 +79,8 @@
                 (click)="
                   observer.complete();
                   closeDialog(
-                    getControl(box.get('count')),
-                    getControl(box.get(box.get('data').value.id))
+                    box.get('count'),
+                    box.get(box.get('data').value.id)
                   )
                 "
               >

@@ -38,14 +38,14 @@ export class PackageComponent implements OnInit, OnDestroy {
 
   boxes = this.fb.array<FormGroup>([])
   safePacks = this.fb.array<FormGroup>([])
-  placticPacks = this.fb.array<FormGroup>([])
+  plasticPacks = this.fb.array<FormGroup>([])
   skins = this.fb.array<FormGroup>([])
   other = this.fb.array<FormGroup>([])
 
   form = this.fb.group({
     boxes: this.boxes,
     safePacks: this.safePacks,
-    placticPacks: this.placticPacks,
+    plasticPacks: this.plasticPacks,
     skins: this.skins,
     other: this.other,
   })
@@ -72,7 +72,7 @@ export class PackageComponent implements OnInit, OnDestroy {
   initializeValues() {
     const packages = [
       ...this.boxes.value,
-      ...this.placticPacks.value,
+      ...this.plasticPacks.value,
       ...this.safePacks.value,
       ...this.skins.value,
       ...this.other.value,
@@ -114,13 +114,15 @@ export class PackageComponent implements OnInit, OnDestroy {
                     )
                     break
                   case '3':
-                    this.placticPacks.push(
+                    this.plasticPacks.push(
                       this.fb.group({
                         [service.id]: false,
                         count: 0,
                         data: service,
                       })
                     )
+
+                    console.log('this.plasticPacks', this.plasticPacks)
                     break
                   case '6':
                     this.skins.push(
