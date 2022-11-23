@@ -26,6 +26,8 @@ import {
 } from '../../../../shared/components/start-point/store/selectors'
 import {StartPointStateInterface} from '../../../../shared/components/start-point/types/start-point-state.interface'
 import {TotalSumService} from '../../services/total-sum.service'
+import {calculateTotalSumAction} from '../../store/actions/calculate-total-sum.action'
+import {isTotalSumCalculatedSelector} from '../../store/selectors'
 
 @Component({
   selector: 'app-sidebar',
@@ -37,6 +39,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   isOrdersValid$: Observable<boolean>
   startPoint$: Observable<StartPointStateInterface>
   endPoint$: Observable<EndPointStateInterface>
+  totalSumCalculatedSub: Subscription
 
   combineAllSub: Subscription
   totalSum = 0
@@ -58,11 +61,11 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.combineAllSub.unsubscribe()
+    this.totalSumCalculatedSub.unsubscribe()
   }
 
   initializeValues() {
     this.isOrdersValid$ = this.store.select(isOrdersValidSelector)
-
     this.startPoint$ = this.store.select(startPointSelector)
     this.endPoint$ = this.store.select(endPointSelector)
 
@@ -93,15 +96,29 @@ export class SidebarComponent implements OnInit, OnDestroy {
               endCourierId,
               orders
             )
-            .subscribe((totalSum) => {
-              this.totalSum = totalSum
+            .pipe(
+              tap((totalSum) => {
+                this.totalSum = totalSum
 
-              if (!this.isTotalSumCalculated && totalSum) {
-                this.isTotalSumCalculated = true
-              }
-
+                if (!this.isTotalSumCalculated && totalSum) {
+                  this.store.dispatch(
+                    calculateTotalSumAction({isTotalSumCalculated: true})
+                  )
+                }
+              })
+            )
+            .subscribe(() => {
               this.cdr.markForCheck()
             })
+        })
+      )
+      .subscribe()
+
+    this.totalSumCalculatedSub = this.store
+      .select(isTotalSumCalculatedSelector)
+      .pipe(
+        tap((isCalculated: boolean) => {
+          this.isTotalSumCalculated = isCalculated
         })
       )
       .subscribe()
@@ -132,7 +149,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
 
   goToCheckout() {
-    this.isCheckout = true
     this.router.navigate(['new-order', 'checkout'])
   }
 }
