@@ -92,6 +92,9 @@ export class PackageComponent implements OnInit, OnDestroy {
             concatAll(),
             filter((service: ServiceInterface) => service.group_id === '1'),
             toArray(),
+            tap((arr) => {
+              console.log('arr', arr)
+            }),
             map((services: ServiceInterface[]) => {
               services.forEach((service: ServiceInterface) => {
                 switch (service.subgroup_id) {
@@ -122,21 +125,22 @@ export class PackageComponent implements OnInit, OnDestroy {
                       })
                     )
                     break
+                  case '4':
+                  case '5':
+                    this.other.push(
+                      this.fb.group({
+                        [service.id]: false,
+                        count: 1,
+                        data: service,
+                      })
+                    )
+                    break
                   case '6':
                     this.skins.push(
                       this.fb.group({
                         [service.id]: false,
                         count: 1,
                         data: {...service, short_name: 'Пленка'},
-                      })
-                    )
-                    break
-                  default:
-                    this.other.push(
-                      this.fb.group({
-                        [service.id]: false,
-                        count: 1,
-                        data: service,
                       })
                     )
                     break
