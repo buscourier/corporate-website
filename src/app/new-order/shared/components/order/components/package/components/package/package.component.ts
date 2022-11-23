@@ -111,7 +111,7 @@ export class PackageComponent implements OnInit, OnDestroy {
                     this.safePacks.push(
                       this.fb.group({
                         [service.id]: false,
-                        count: 1,
+                        count: 0,
                         data: {...service, short_name: 'Сейф-пакет'},
                       })
                     )
@@ -120,7 +120,7 @@ export class PackageComponent implements OnInit, OnDestroy {
                     this.plasticPacks.push(
                       this.fb.group({
                         [service.id]: false,
-                        count: 1,
+                        count: 0,
                         data: {...service, short_name: 'Полиэтиленовый пакет'},
                       })
                     )
@@ -130,7 +130,7 @@ export class PackageComponent implements OnInit, OnDestroy {
                     this.other.push(
                       this.fb.group({
                         [service.id]: false,
-                        count: 1,
+                        count: 0,
                         data: service,
                       })
                     )
@@ -139,7 +139,7 @@ export class PackageComponent implements OnInit, OnDestroy {
                     this.skins.push(
                       this.fb.group({
                         [service.id]: false,
-                        count: 1,
+                        count: 0,
                         data: {...service, short_name: 'Пленка'},
                       })
                     )
