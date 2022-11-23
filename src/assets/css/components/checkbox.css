@@ -12,5 +12,5 @@
 .checkbox-label {
   font-size: 14px;
   line-height: 20px;
-  @apply text-gray-700
+  @apply text-gray-700;
 }
