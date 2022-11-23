@@ -1,4 +1,9 @@
-<div [formGroup]="form">
+<div [formGroup]="form" class="mt-13 mb-13 border border-gray-100 p-5 pb-0">
+  <h2
+    class="relative -mt-9 mb-7 w-[105px] bg-white text-lg font-semibold text-gray-600"
+  >
+    Упаковка
+  </h2>
   <div *ngIf="boxes.length" formArrayName="boxes">
     <b class="mb-5 block">Коробка:</b>
     <div class="mb-10 flex flex-wrap gap-4">
