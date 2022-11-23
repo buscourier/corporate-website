@@ -8,9 +8,15 @@ import {FormArray, FormBuilder, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
 import {filter, map, Observable, Subscription, switchMap, take, zip} from 'rxjs'
 import {tap} from 'rxjs/operators'
-import {endCitySelector} from '../../../end-point/store/selectors'
+import {
+  endCitySelector,
+  isEndPointValidSelector,
+} from '../../../end-point/store/selectors'
 import {OrderStateInterface} from '../../../order/types/order-state.interface'
-import {startCitySelector} from '../../../start-point/store/selectors'
+import {
+  isStartPointValidSelector,
+  startCitySelector,
+} from '../../../start-point/store/selectors'
 import {changeActiveOrderAction} from '../../store/actions/change-active-order.action'
 import {changeValidityAction} from '../../store/actions/change-validity.action'
 import {getAllCargosAction} from '../../store/actions/get-all-cargos.action'
@@ -139,29 +145,33 @@ export class OrdersComponent implements OnInit, OnDestroy {
 
     this.dataLoadingSubscription$ = zip(
       this.store.select(startCitySelector),
-      this.store.select(endCitySelector)
+      this.store.select(endCitySelector),
+      this.store.select(isStartPointValidSelector),
+      this.store.select(isEndPointValidSelector)
     )
       .pipe(
-        switchMap(([startCity, endCity]) => {
-          //TODO: maybe need to load like a sequence -> switchToMap ->switchToMap
+        switchMap(
+          ([startCity, endCity, isStartPointValid, isEndPointValid]) => {
+            //TODO: maybe need to load like a sequence -> switchToMap ->switchToMap
 
-          if (startCity && endCity) {
-            this.store.dispatch(
-              getAllCargosAction({
-                startCityId: startCity.id,
-                endCityId: endCity.id,
-              })
-            )
+            if (startCity && endCity && isStartPointValid && isEndPointValid) {
+              this.store.dispatch(
+                getAllCargosAction({
+                  startCityId: startCity.id,
+                  endCityId: endCity.id,
+                })
+              )
 
-            this.store.dispatch(
-              getAllServicesAction({
-                startCityId: startCity.id,
-              })
-            )
+              this.store.dispatch(
+                getAllServicesAction({
+                  startCityId: startCity.id,
+                })
+              )
+            }
+
+            return [startCity, endCity]
           }
-
-          return [startCity, endCity]
-        })
+        )
       )
       .subscribe()
   }

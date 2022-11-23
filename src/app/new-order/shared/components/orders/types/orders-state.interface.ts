@@ -10,6 +10,7 @@ export interface OrdersStateInterface {
   isAllCargosLoaded: boolean
   isAllServicesLoaded: boolean
   isValid: boolean
+  // isInitialized
   orders: OrderStateInterface[] | null
   activeOrderIndex: number
   backendErrors: string | null

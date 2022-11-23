@@ -73,6 +73,10 @@ const ordersReducer = createReducer(
     ...state,
     isValid,
   }))
+  // on(initOrdersAction, (state: OrdersStateInterface, {isInitialized}) => ({
+  //   ...state,
+  //   isInitialized,
+  // }))
 )
 
 export function reducer(state: OrdersStateInterface, action: Action) {
