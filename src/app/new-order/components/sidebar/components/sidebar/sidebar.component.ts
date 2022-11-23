@@ -41,6 +41,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
   totalSum = 0
   orders = null
 
+  isTotalSumCalculated = false
+
   constructor(
     private store: Store,
     private totalSumService: TotalSumService,
@@ -80,8 +82,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
             this.orders = orders
           }
 
-          console.log('orders', orders)
-
           this.totalSumService
             .calculateTotalSum(
               startCityId,
@@ -92,6 +92,11 @@ export class SidebarComponent implements OnInit, OnDestroy {
             )
             .subscribe((totalSum) => {
               this.totalSum = totalSum
+
+              if (!this.isTotalSumCalculated && totalSum) {
+                this.isTotalSumCalculated = true
+              }
+
               this.cdr.markForCheck()
             })
         })

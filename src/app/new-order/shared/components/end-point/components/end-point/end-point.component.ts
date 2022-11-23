@@ -30,6 +30,7 @@ import {changeBusAction} from '../../store/actions/change-bus.action'
 import {changeCityAction} from '../../store/actions/change-city.action'
 import {changeCourierAction} from '../../store/actions/change-courier.action'
 import {changeOfficeAction} from '../../store/actions/change-office.action'
+import {changeValidityAction} from '../../store/actions/change-validity.action'
 import {getCitiesAction} from '../../store/actions/get-cities.action'
 import {getOfficesAction} from '../../store/actions/get-offices.action'
 import {
@@ -247,7 +248,7 @@ export class EndPointComponent implements OnInit, OnDestroy {
       .pipe(
         debounceTime(500),
         tap(() => {
-          // this.store.dispatch(changeValidityAction({isValid: this.form.valid}));
+          this.store.dispatch(changeValidityAction({isValid: this.form.valid}))
         })
       )
       .subscribe()
