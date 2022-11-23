@@ -161,12 +161,6 @@ export class PackageComponent implements OnInit, OnDestroy {
     return control as FormControl
   }
 
-  open() {
-    alert(1)
-    console.log('form', this.form.value)
-    // this.dialogService.open('hello').subscribe()
-  }
-
   openDialog(checkboxControl, content: PolymorpheusContent<TuiDialogContext>) {
     checkboxControl.updateValueAndValidity()
 

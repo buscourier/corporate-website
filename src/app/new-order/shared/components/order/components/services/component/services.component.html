@@ -1,4 +1,6 @@
 <div [formGroup]="form" class="mt-5">
+  <h2 class="mb-7 text-lg font-semibold">Дополнительные услуги:</h2>
+
   <ng-container formArrayName="services">
     <div
       *ngFor="let service of services.controls"
@@ -84,5 +86,3 @@
     </div>
   </ng-container>
 </div>
-
-<button tuiButton (click)="open()">Services form</button>

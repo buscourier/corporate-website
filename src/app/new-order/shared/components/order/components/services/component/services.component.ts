@@ -183,10 +183,6 @@ export class ServicesComponent implements OnInit, OnDestroy {
     }
   }
 
-  open() {
-    // console.log('services form', this.form.value)
-  }
-
   onTouched = () => {}
   onChangeSub: Subscription
 
