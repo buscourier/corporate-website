@@ -67,3 +67,8 @@ export const isEndPointValidSelector = createSelector(
   endPointFeatureSelector,
   (state: EndPointStateInterface) => state.isValid
 )
+
+export const endPointSelector = createSelector(
+  endPointFeatureSelector,
+  (state: EndPointStateInterface) => state
+)

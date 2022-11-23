@@ -16,6 +16,53 @@
         воспользуйтесь другим калькулятором - расчет перевозки по России.
       </p>
     </div>
+    <ng-container *tuiLet="startPoint$ | async as startPoint">
+      <ng-container *tuiLet="endPoint$ | async as endPoint">
+        <ng-container *ngIf="startPoint && endPoint">
+          <ng-container *ngIf="startPoint.city && endPoint.city">
+            <p class="mt-1.5 mb-0.5 text-2xs text-gray-700">
+              Направление перевозки:
+            </p>
+            <p class="text-2xs">
+              {{ startPoint.city.name }} &#8212; {{ endPoint.city.name }}
+            </p>
+          </ng-container>
+          <div
+            *ngIf="startPoint.give || startPoint.pickup"
+            class="mt-1.5 mb-0.5"
+          >
+            <span class="text-2xs text-gray-700"
+              >Забор посылки у отправителя</span
+            >
+            &#45;
+            <span *ngIf="startPoint.give" class="text-2xs"
+              >Cдать в отделение</span
+            >
+            <span *ngIf="startPoint.pickup" class="text-2xs"
+              >Вызвать курьера</span
+            >
+          </div>
+          <div
+            *ngIf="endPoint.get || endPoint.delivery || endPoint.needToMeet"
+            class="mt-1.5 mb-0.5"
+          >
+            <span class="text-2xs text-gray-700"
+              >Доставка посылки до получателя</span
+            >
+            &#45;
+            <span *ngIf="endPoint.get" class="text-2xs"
+              >Забрать в отделении</span
+            >
+            <span *ngIf="endPoint.delivery" class="text-2xs"
+              >Вызвать курьера</span
+            >
+            <span *ngIf="endPoint.needToMeet" class="text-2xs"
+              >Встретить с автобуса</span
+            >
+          </div>
+        </ng-container>
+      </ng-container>
+    </ng-container>
     <div *ngIf="orders && orders.length">
       <ng-container *ngFor="let order of orders">
         <ng-container *ngIf="order">

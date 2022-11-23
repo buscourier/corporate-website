@@ -11,8 +11,10 @@ import {tap} from 'rxjs/operators'
 import {
   endCitySelector,
   endCourierSelector,
+  endPointSelector,
   isEndPointValidSelector,
 } from '../../../../shared/components/end-point/store/selectors'
+import {EndPointStateInterface} from '../../../../shared/components/end-point/types/end-point-state.interface'
 import {
   isOrdersValidSelector,
   ordersSelector,
@@ -21,7 +23,9 @@ import {
   isStartPointValidSelector,
   startCitySelector,
   startCourierSelector,
+  startPointSelector,
 } from '../../../../shared/components/start-point/store/selectors'
+import {StartPointStateInterface} from '../../../../shared/components/start-point/types/start-point-state.interface'
 import {TotalSumService} from '../../services/total-sum.service'
 
 @Component({
@@ -34,6 +38,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
   isStartPointValid$: Observable<boolean>
   isEndPointValid$: Observable<boolean>
   isOrdersValid$: Observable<boolean>
+  startPoint$: Observable<StartPointStateInterface>
+  endPoint$: Observable<EndPointStateInterface>
 
   combineAllSub: Subscription
   totalSum = 0
@@ -57,6 +63,9 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.isStartPointValid$ = this.store.select(isStartPointValidSelector)
     this.isEndPointValid$ = this.store.select(isEndPointValidSelector)
     this.isOrdersValid$ = this.store.select(isOrdersValidSelector)
+
+    this.startPoint$ = this.store.select(startPointSelector)
+    this.endPoint$ = this.store.select(endPointSelector)
 
     this.combineAllSub = combineLatest([
       this.store.select(startCitySelector),
