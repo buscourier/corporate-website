@@ -192,11 +192,10 @@ export class PackageComponent implements OnInit, OnDestroy {
   }
 
   clear(e: Event, countControl, checkboxControl) {
-    e.preventDefault()
     e.stopPropagation()
-    countControl.setValue(1)
+    e.preventDefault()
+    countControl.setValue(0)
     checkboxControl.setValue(false)
-    checkboxControl.enable()
   }
 
   writeValue(value: any) {

@@ -23,20 +23,20 @@
 /*}*/
 
 ._readonly {
-  opacity: 0.5;
   pointer-events: auto !important;
 }
 
 ._readonly tui-checkbox,
-._readonly p,
-._readonly span {
+._readonly .checkbox-name,
+._readonly .checkbox-label {
   filter: grayscale(1);
+  opacity: 0.4;
 }
 
 ._readonly:hover tui-checkbox,
-._readonly:hover p,
-._readonly:hover span {
-  opacity: 1;
+._readonly:hover .checkbox-name,
+._readonly:hover .checkbox-label {
+  opacity: 0.7;
   cursor: pointer;
 }
 
