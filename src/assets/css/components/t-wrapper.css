@@ -29,15 +29,13 @@
 
 ._readonly tui-checkbox,
 ._readonly p,
-._readonly span
-{
+._readonly span {
   filter: grayscale(1);
 }
 
 ._readonly:hover tui-checkbox,
 ._readonly:hover p,
-._readonly:hover span
-{
+._readonly:hover span {
   opacity: 1;
   cursor: pointer;
 }
