@@ -123,7 +123,8 @@ export class CargoComponent implements OnInit {
 
   writeValue(value: any) {
     if (value) {
-      this.form.setValue(value)
+      this.form.patchValue(value)
+      this.changeCargoType()
     }
   }
 
