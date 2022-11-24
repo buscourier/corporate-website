@@ -4,7 +4,7 @@ import {ReactiveFormsModule} from '@angular/forms'
 import {RouterModule} from '@angular/router'
 import {TuiStepperModule} from '@taiga-ui/kit'
 import {CheckoutComponent} from './checkout.component'
-import {StepFourComponent} from './components/step-four/step-four.component'
+import {StepFourModule} from './components/step-four/step-four.module'
 import {StepOneModule} from './components/step-one/step-one.module'
 import {StepThreeModule} from './components/step-three/step-three.module'
 import {StepTwoModule} from './components/step-two/step-two.module'
@@ -12,7 +12,7 @@ import {StepTwoModule} from './components/step-two/step-two.module'
 //TODO: Think need StepOne, StepTwo, StepThree, StepFour modules or not
 
 @NgModule({
-  declarations: [CheckoutComponent, StepFourComponent],
+  declarations: [CheckoutComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -20,6 +20,7 @@ import {StepTwoModule} from './components/step-two/step-two.module'
     StepOneModule,
     StepTwoModule,
     StepThreeModule,
+    StepFourModule,
     TuiStepperModule,
   ],
   // providers: [NewOrderService],

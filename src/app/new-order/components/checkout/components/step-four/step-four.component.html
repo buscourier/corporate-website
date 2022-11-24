@@ -1,8 +1,31 @@
-<p>step-four works!</p>
-
-<div class="mt-5 flex justify-between">
-  <button [routerLink]="['/new-order', 'checkout', '3']" tuiButton size="m">
-    Назад
-  </button>
-  <button tuiButton size="m">Оформить заказ</button>
-</div>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <label class="mb-3 block">
+    <span class="mb-1 inline-block text-xs">
+      Комментарий к заявке
+      <sup
+        class="text-red"
+        *ngIf="
+          form.get('message').errors && form.get('message').hasError('required')
+        "
+        >*</sup
+      >
+    </span>
+    <tui-text-area [formControl]="message"></tui-text-area>
+    <tui-error
+      formControlName="message"
+      [error]="[] | tuiFieldError | async"
+    ></tui-error>
+  </label>
+  <tui-checkbox-labeled [formControl]="policy">
+    <span class="text-2xs">
+      Нажимая кнопку «Отправить», я даю свое согласие на
+      <a class="text-blue">обработку моих персональных данных</a>
+    </span>
+  </tui-checkbox-labeled>
+  <div class="mt-11 flex justify-between">
+    <button [routerLink]="['/new-order', 'checkout', '3']" tuiButton size="m">
+      Назад
+    </button>
+    <button type="submit" tuiButton size="m">Оформить заказ</button>
+  </div>
+</form>

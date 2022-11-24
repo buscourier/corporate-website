@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core'
 import {RouterModule, Routes} from '@angular/router'
 import {CalculatorComponent} from './components/calculator/calculator.component'
 import {CheckoutComponent} from './components/checkout/checkout.component'
+import {StepFourComponent} from './components/checkout/components/step-four/step-four.component'
 import {StepOneComponent} from './components/checkout/components/step-one/step-one.component'
 import {StepThreeComponent} from './components/checkout/components/step-three/step-three.component'
 import {StepTwoComponent} from './components/checkout/components/step-two/step-two.component'
@@ -35,7 +36,7 @@ const routes: Routes = [
           },
           {
             path: '3',
-            component: StepThreeComponent,
+            component: StepFourComponent,
           },
         ],
       },
