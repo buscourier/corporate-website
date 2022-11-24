@@ -3,10 +3,10 @@ import {FormBuilder, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
 import {using} from 'rxjs'
 import {tap} from 'rxjs/operators'
-import {PersonInterface} from '../../types/person.interface'
 import {changeValuesAction} from './store/actions/change-values.action'
 import {personSelector} from './store/selectors'
 import {initialState} from './store/state'
+import {PersonStateInterface} from './types/person-state.interface'
 
 @Component({
   selector: 'app-person',
@@ -30,7 +30,7 @@ export class PersonComponent {
     () =>
       this.form.valueChanges
         .pipe(
-          tap((values: PersonInterface) => {
+          tap((values: PersonStateInterface) => {
             this.store.dispatch(changeValuesAction(values))
           })
         )

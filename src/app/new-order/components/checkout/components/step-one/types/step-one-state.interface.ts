@@ -1,8 +1,8 @@
 import {EntityInterface} from './entity.interface'
-import {PersonInterface} from './person.interface'
+import {PersonStateInterface} from '../components/person/types/person-state.interface'
 
 export interface StepOneStateInterface {
   activeTabIndex: number
-  person?: PersonInterface
+  person?: PersonStateInterface
   entity?: EntityInterface
 }

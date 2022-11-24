@@ -5,11 +5,6 @@ import {STEP_ONE_FEATURE} from './state'
 export const stepOneFeatureSelector =
   createFeatureSelector<StepOneStateInterface>(STEP_ONE_FEATURE)
 
-export const personSelector = createSelector(
-  stepOneFeatureSelector,
-  (state: StepOneStateInterface) => state.person
-)
-
 export const activeTabSelector = createSelector(
   stepOneFeatureSelector,
   (state: StepOneStateInterface) => state.activeTabIndex
