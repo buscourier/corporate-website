@@ -4,7 +4,8 @@ import {RouterLink} from '@angular/router'
 import {TuiButtonModule} from '@taiga-ui/core'
 import {EndPointModule} from 'src/app/new-order/shared/components/end-point/end-point.module'
 import {OrdersModule} from '../../../../shared/components/orders/orders.module'
-import {StepThreeComponent} from './components/step-three/step-three.component'
+import {StepThreeComponent} from './step-three.component'
+import {RecipientModule} from './components/recipient/recipient.module'
 
 @NgModule({
   declarations: [StepThreeComponent],
@@ -12,6 +13,7 @@ import {StepThreeComponent} from './components/step-three/step-three.component'
     CommonModule,
     EndPointModule,
     OrdersModule,
+    RecipientModule,
     RouterLink,
     TuiButtonModule,
   ],
