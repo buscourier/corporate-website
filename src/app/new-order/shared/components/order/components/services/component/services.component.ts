@@ -23,6 +23,7 @@ import {
   of,
   Subscription,
   switchMap,
+  take,
   toArray,
 } from 'rxjs'
 import {tap} from 'rxjs/operators'
@@ -95,6 +96,7 @@ export class ServicesComponent implements OnInit, OnDestroy {
       .select(allServicesSelector)
       .pipe(
         filter(Boolean),
+        take(1),
         switchMap((services: ServiceInterface[]) => {
           return of(services).pipe(
             concatAll(),
@@ -188,7 +190,9 @@ export class ServicesComponent implements OnInit, OnDestroy {
 
   writeValue(value: any) {
     if (value) {
-      this.form.setValue(value)
+      console.log('services value', value)
+      console.log('services form', this.form.value)
+      this.form.patchValue(value)
     }
   }
 
