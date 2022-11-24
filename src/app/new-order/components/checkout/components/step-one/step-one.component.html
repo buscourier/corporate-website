@@ -1,0 +1,72 @@
+<div
+  *tuiLet="activeTabIndex$ | async as activeTabIndex"
+>
+  <h2 class="text-lg font-medium">Ваши данные</h2>
+  <div class="mt-4 flex h-11">
+    <button
+      type="button"
+      class="radius flex-grow rounded-tl-sm rounded-bl-sm py-3 px-1 text-center text-xs hover:opacity-80"
+      [class]="activeTabIndex === 0 ? 'bg-yellow' : 'bg-gray-100'"
+      (click)="setActiveTabIndex(0)"
+    >
+      <span>Физическое лицо</span>
+    </button>
+    <button
+      *ngIf="isLoggedIn$ | async; else checkTabButton"
+      type="button"
+      class="flex-grow rounded-tr-sm rounded-br-sm py-3 px-1 text-center text-xs hover:opacity-90"
+      [class]="activeTabIndex === 1 ? 'bg-yellow' : 'bg-gray-100'"
+      [routerLink]="['/account']"
+    >
+      <span>Юридическое лицо</span>
+    </button>
+    <ng-template #checkTabButton>
+      <button
+        type="button"
+        class="flex-grow rounded-tr-sm rounded-br-sm py-3 px-1 text-center text-xs hover:opacity-90"
+        [class]="activeTabIndex === 1 ? 'bg-yellow' : 'bg-gray-100'"
+        (click)="setActiveTabIndex(1)"
+      >
+        <span>Юридическое лицо</span>
+      </button>
+    </ng-template>
+  </div>
+  <div
+    *ngIf="activeTabIndex === 0"
+    class="mt-9"
+  >
+    <app-person></app-person>
+  </div>
+  <div *ngIf="activeTabIndex === 1"></div>
+
+  <p
+    *ngIf="activeTabIndex === -1"
+    class="mt-12 text-center text-md text-gray-500"
+  >
+    Выберите статус лица для<br />
+    перехода на следующий шаг
+  </p>
+
+  <p
+    *ngIf="activeTabIndex === 1 && (isAnonymous$ | async)"
+    class="mt-11 text-center text-md"
+  >
+    Чтобы оформить заказ как юридическое лицо, вам необходимо
+    <a [routerLink]="['/account']" class="text-blue hover:cursor-pointer"
+      >войти</a
+    >,<br />
+    затем вы сможете указать ваши данные.
+  </p>
+
+  <div *ngIf="activeTabIndex === 0" class="mt-5 grid grid-cols-3 gap-x-5">
+    <button
+      [routerLink]="['/new-order', 'checkout', '1']"
+      tuiButton
+      size="m"
+      [disabled]=""
+      class="col-start-3 w-full"
+    >
+      Дальше
+    </button>
+  </div>
+</div>

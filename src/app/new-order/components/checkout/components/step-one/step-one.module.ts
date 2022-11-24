@@ -19,9 +19,10 @@ import {
   TuiTabsModule,
 } from '@taiga-ui/kit'
 import {PatchFormGroupValuesModule} from '../../../../../shared/directives/patch-form-group-values/patch-form-group-values.module'
-import {StepOneComponent} from './components/step-one/step-one.component'
+import {StepOneComponent} from './step-one.component'
 import {reducer} from './store/reducer'
 import {STEP_ONE_FEATURE} from './store/state'
+import {PersonModule} from './components/person/person.module'
 
 @NgModule({
   declarations: [StepOneComponent],
@@ -29,6 +30,7 @@ import {STEP_ONE_FEATURE} from './store/state'
     CommonModule,
     ReactiveFormsModule,
     RouterModule,
+    PersonModule,
     StoreModule.forFeature(STEP_ONE_FEATURE, reducer),
     PatchFormGroupValuesModule,
     TuiButtonModule,

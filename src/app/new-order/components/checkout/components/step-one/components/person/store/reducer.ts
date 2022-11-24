@@ -1,11 +1,11 @@
 import {Action, createReducer, on} from '@ngrx/store'
-import {PersonStateInterface} from '../types/person-state.interface'
-import {valueChangesAction} from './actions/value-chages.action'
 import {initialState} from './state'
+import {changeValuesAction} from './actions/change-values.action'
+import {PersonStateInterface} from '../types/person-state.interface'
 
-const personReducer = createReducer(
+export const personReducer = createReducer(
   initialState,
-  on(valueChangesAction, (state, action) => ({
+  on(changeValuesAction, (state: PersonStateInterface, action) => ({
     ...state,
     ...action,
   }))

@@ -1,0 +1,149 @@
+<form [formGroup]="form" [patchFormGroupValues]="formValues$ | async" class="grid grid-cols-3 gap-x-5 gap-y-4">
+  <label class="mb-3 block">
+      <span class="mb-1 inline-block text-xs">
+        Фамилия
+        <sup
+          class="text-red"
+          *ngIf="
+            form.get('lastName').errors &&
+            form.get('lastName').hasError('required')
+          "
+        >*</sup
+        >
+      </span>
+    <tui-input
+      tuiTextfieldSize="m"
+      formControlName="lastName"
+      [tuiTextfieldLabelOutside]="true"
+    >
+      <input tuiTextfield type="text" />
+    </tui-input>
+    <tui-error
+      formControlName="lastName"
+      [error]="[] | tuiFieldError | async"
+    ></tui-error>
+  </label>
+  <label class="mb-3 block">
+      <span class="mb-1 inline-block text-xs">
+        Имя
+        <sup
+          class="text-red"
+          *ngIf="
+            form.get('firstName').errors &&
+            form.get('firstName').hasError('required')
+          "
+        >*</sup
+        >
+      </span>
+    <tui-input
+      tuiTextfieldSize="m"
+      formControlName="firstName"
+      [tuiTextfieldLabelOutside]="true"
+    >
+      <input tuiTextfield type="text" />
+    </tui-input>
+    <tui-error
+      formControlName="firstName"
+      [error]="[] | tuiFieldError | async"
+    ></tui-error>
+  </label>
+  <label class="mb-3 block">
+      <span class="mb-1 inline-block text-xs">
+        Отчество
+        <sup
+          class="text-red"
+          *ngIf="
+            form.get('middleName').errors &&
+            form.get('middleName').hasError('required')
+          "
+        >*</sup
+        >
+      </span>
+    <tui-input
+      tuiTextfieldSize="m"
+      formControlName="middleName"
+      [tuiTextfieldLabelOutside]="true"
+    >
+      <input tuiTextfield type="text" />
+    </tui-input>
+    <tui-error
+      formControlName="middleName"
+      [error]="[] | tuiFieldError | async"
+    ></tui-error>
+  </label>
+  <label class="mb-3 block">
+      <span class="mb-1 inline-block text-xs">
+        Email
+        <sup
+          class="text-red"
+          *ngIf="
+            form.get('email').errors &&
+            form.get('email').hasError('required')
+          "
+        >*</sup
+        >
+      </span>
+    <tui-input
+      tuiTextfieldSize="m"
+      formControlName="email"
+      [tuiTextfieldLabelOutside]="true"
+    >
+      <input tuiTextfield type="email" />
+    </tui-input>
+    <tui-error
+      formControlName="email"
+      [error]="[] | tuiFieldError | async"
+    ></tui-error>
+  </label>
+  <label class="mb-3 block">
+      <span class="mb-1 inline-block text-xs">
+        Телефон
+        <sup
+          class="text-red"
+          *ngIf="
+            form.get('phone').errors &&
+            form.get('phone').hasError('required')
+          "
+        >*</sup
+        >
+      </span>
+    <tui-input-phone
+      formControlName="phone"
+      tuiTextfieldSize="m"
+      [tuiTextfieldLabelOutside]="true"
+    >
+      <input tuiTextfield autocomplete="tel" />
+    </tui-input-phone>
+    <tui-error
+      formControlName="phone"
+      [error]="[] | tuiFieldError | async"
+    ></tui-error>
+  </label>
+  <label class="mb-3 block">
+      <span class="mb-1 inline-block text-xs">
+        Роль
+        <sup
+          class="text-red"
+          *ngIf="
+            form.get('role').errors &&
+            form.get('role').hasError('required')
+          "
+        >*</sup
+        >
+      </span>
+    <tui-select
+      tuiTextfieldSize="m"
+      formControlName="role"
+      [tuiTextfieldLabelOutside]="true"
+    >
+      <tui-data-list-wrapper
+        *tuiDataList
+        [items]="roles"
+      ></tui-data-list-wrapper>
+    </tui-select>
+    <tui-error
+      formControlName="role"
+      [error]="[] | tuiFieldError | async"
+    ></tui-error>
+  </label>
+</form>
