@@ -6,7 +6,15 @@ import {
 } from '@angular/core'
 import {FormArray, FormBuilder, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
-import {filter, map, Observable, Subscription, switchMap, take, zip} from 'rxjs'
+import {
+  combineLatest,
+  filter,
+  map,
+  Observable,
+  Subscription,
+  switchMap,
+  take,
+} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {
   endCitySelector,
@@ -143,12 +151,12 @@ export class OrdersComponent implements OnInit, OnDestroy {
     //     console.log('orders', orders)
     //   })
 
-    this.dataLoadingSubscription$ = zip(
+    this.dataLoadingSubscription$ = combineLatest([
       this.store.select(startCitySelector),
       this.store.select(endCitySelector),
       this.store.select(isStartPointValidSelector),
-      this.store.select(isEndPointValidSelector)
-    )
+      this.store.select(isEndPointValidSelector),
+    ])
       .pipe(
         switchMap(
           ([startCity, endCity, isStartPointValid, isEndPointValid]) => {
