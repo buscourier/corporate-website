@@ -5,7 +5,7 @@ import {CheckoutComponent} from './components/checkout/checkout.component'
 import {StepOneComponent} from './components/checkout/components/step-one/step-one.component'
 import {StepThreeComponent} from './components/checkout/components/step-three/components/step-three/step-three.component'
 import {StepTwoComponent} from './components/checkout/components/step-two/step-two.component'
-import {IndexComponent} from './components/index/index.component'
+import {IndexComponent} from './index.component'
 
 const routes: Routes = [
   {
