@@ -1,4 +1,9 @@
-<form [formGroup]="form" [patchFormGroupValues]="formValues$ | async">
+<form
+  [formGroup]="form"
+  [patchFormGroupValues]="formValues$ | async"
+  class="mt-12"
+>
+  <h2 class="mb-7 text-lg font-semibold">Дополнительные услуги:</h2>
   <label class="mb-3 block">
     <span class="mb-1 inline-block text-xs">
       ФИО
