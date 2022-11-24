@@ -1,8 +1,10 @@
 <div>
+  <app-sender #sender></app-sender>
   <app-start-point #start></app-start-point>
 </div>
 
-valid {{ start.form.valid }}
+StartValid {{ start.form.valid }}
+senderValid {{ sender.form.valid }}
 
 <div class="mt-5 flex justify-between">
   <button
