@@ -5,7 +5,7 @@
       <sup
         class="text-red"
         *ngIf="form.get('fio').errors && form.get('fio').hasError('required')"
-      >*</sup
+        >*</sup
       >
     </span>
     <tui-input
@@ -28,7 +28,7 @@
         *ngIf="
           form.get('phone').errors && form.get('phone').hasError('required')
         "
-      >*</sup
+        >*</sup
       >
     </span>
     <tui-input-phone
