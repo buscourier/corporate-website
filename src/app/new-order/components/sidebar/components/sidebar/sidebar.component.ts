@@ -5,9 +5,15 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core'
-import {Router} from '@angular/router'
+import {NavigationEnd, Router, RouterEvent} from '@angular/router'
 import {Store} from '@ngrx/store'
-import {combineLatest, debounceTime, Observable, Subscription} from 'rxjs'
+import {
+  combineLatest,
+  debounceTime,
+  filter,
+  Observable,
+  Subscription,
+} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {
   endCitySelector,
@@ -46,7 +52,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   orders = null
 
   isTotalSumCalculated = false
-  isCheckout = false
+  isCheckoutPage = false
 
   constructor(
     private store: Store,
@@ -122,6 +128,15 @@ export class SidebarComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe()
+
+    this.isCheckoutPage = this.isCheckout(this.router.url)
+
+    //TODO: need unsubscribe?
+    this.router.events
+      .pipe(filter((event: RouterEvent) => event instanceof NavigationEnd))
+      .subscribe((event: RouterEvent) => {
+        this.isCheckoutPage = this.isCheckout(event.url)
+      })
   }
 
   //TODO: Нужно будет пройти по всем функциям в проекте и указать тип, который они возвращают
@@ -146,6 +161,10 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
       return isCheckboxActive && value
     })
+  }
+
+  isCheckout(url) {
+    return url.split('/').indexOf('checkout') !== -1
   }
 
   goToCheckout() {
