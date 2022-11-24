@@ -1,16 +1,20 @@
-<form [formGroup]="form" [patchFormGroupValues]="formValues$ | async" class="grid grid-cols-3 gap-x-5 gap-y-4">
+<form
+  [formGroup]="form"
+  [patchFormGroupValues]="formValues$ | async"
+  class="grid grid-cols-3 gap-x-5 gap-y-4"
+>
   <label class="mb-3 block">
-      <span class="mb-1 inline-block text-xs">
-        Фамилия
-        <sup
-          class="text-red"
-          *ngIf="
-            form.get('lastName').errors &&
-            form.get('lastName').hasError('required')
-          "
+    <span class="mb-1 inline-block text-xs">
+      Фамилия
+      <sup
+        class="text-red"
+        *ngIf="
+          form.get('lastName').errors &&
+          form.get('lastName').hasError('required')
+        "
         >*</sup
-        >
-      </span>
+      >
+    </span>
     <tui-input
       tuiTextfieldSize="m"
       formControlName="lastName"
@@ -24,17 +28,17 @@
     ></tui-error>
   </label>
   <label class="mb-3 block">
-      <span class="mb-1 inline-block text-xs">
-        Имя
-        <sup
-          class="text-red"
-          *ngIf="
-            form.get('firstName').errors &&
-            form.get('firstName').hasError('required')
-          "
+    <span class="mb-1 inline-block text-xs">
+      Имя
+      <sup
+        class="text-red"
+        *ngIf="
+          form.get('firstName').errors &&
+          form.get('firstName').hasError('required')
+        "
         >*</sup
-        >
-      </span>
+      >
+    </span>
     <tui-input
       tuiTextfieldSize="m"
       formControlName="firstName"
@@ -48,17 +52,17 @@
     ></tui-error>
   </label>
   <label class="mb-3 block">
-      <span class="mb-1 inline-block text-xs">
-        Отчество
-        <sup
-          class="text-red"
-          *ngIf="
-            form.get('middleName').errors &&
-            form.get('middleName').hasError('required')
-          "
+    <span class="mb-1 inline-block text-xs">
+      Отчество
+      <sup
+        class="text-red"
+        *ngIf="
+          form.get('middleName').errors &&
+          form.get('middleName').hasError('required')
+        "
         >*</sup
-        >
-      </span>
+      >
+    </span>
     <tui-input
       tuiTextfieldSize="m"
       formControlName="middleName"
@@ -72,17 +76,16 @@
     ></tui-error>
   </label>
   <label class="mb-3 block">
-      <span class="mb-1 inline-block text-xs">
-        Email
-        <sup
-          class="text-red"
-          *ngIf="
-            form.get('email').errors &&
-            form.get('email').hasError('required')
-          "
+    <span class="mb-1 inline-block text-xs">
+      Email
+      <sup
+        class="text-red"
+        *ngIf="
+          form.get('email').errors && form.get('email').hasError('required')
+        "
         >*</sup
-        >
-      </span>
+      >
+    </span>
     <tui-input
       tuiTextfieldSize="m"
       formControlName="email"
@@ -96,17 +99,16 @@
     ></tui-error>
   </label>
   <label class="mb-3 block">
-      <span class="mb-1 inline-block text-xs">
-        Телефон
-        <sup
-          class="text-red"
-          *ngIf="
-            form.get('phone').errors &&
-            form.get('phone').hasError('required')
-          "
+    <span class="mb-1 inline-block text-xs">
+      Телефон
+      <sup
+        class="text-red"
+        *ngIf="
+          form.get('phone').errors && form.get('phone').hasError('required')
+        "
         >*</sup
-        >
-      </span>
+      >
+    </span>
     <tui-input-phone
       formControlName="phone"
       tuiTextfieldSize="m"
@@ -120,17 +122,14 @@
     ></tui-error>
   </label>
   <label class="mb-3 block">
-      <span class="mb-1 inline-block text-xs">
-        Роль
-        <sup
-          class="text-red"
-          *ngIf="
-            form.get('role').errors &&
-            form.get('role').hasError('required')
-          "
+    <span class="mb-1 inline-block text-xs">
+      Роль
+      <sup
+        class="text-red"
+        *ngIf="form.get('role').errors && form.get('role').hasError('required')"
         >*</sup
-        >
-      </span>
+      >
+    </span>
     <tui-select
       tuiTextfieldSize="m"
       formControlName="role"

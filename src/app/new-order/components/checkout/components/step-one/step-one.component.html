@@ -1,6 +1,4 @@
-<div
-  *tuiLet="activeTabIndex$ | async as activeTabIndex"
->
+<div *tuiLet="activeTabIndex$ | async as activeTabIndex">
   <h2 class="text-lg font-medium">Ваши данные</h2>
   <div class="mt-4 flex h-11">
     <button
@@ -31,10 +29,7 @@
       </button>
     </ng-template>
   </div>
-  <div
-    *ngIf="activeTabIndex === 0"
-    class="mt-9"
-  >
+  <div *ngIf="activeTabIndex === 0" class="mt-9">
     <app-person></app-person>
   </div>
   <div *ngIf="activeTabIndex === 1"></div>
