@@ -2,21 +2,17 @@
   <label class="mb-3 block">
     <span class="mb-1 inline-block text-xs">
       ФИО
-     <sup
-       class="text-red"
-       *ngIf="
-            form.get('fio').errors &&
-            form.get('fio').hasError('required')
-          "
-     >*</sup
-     >
+      <sup
+        class="text-red"
+        *ngIf="form.get('fio').errors && form.get('fio').hasError('required')"
+        >*</sup
+      >
     </span>
     <tui-input
       tuiTextfieldSize="m"
       formControlName="fio"
       [tuiTextfieldLabelOutside]="true"
     >
-
       <input tuiTextfield type="text" />
     </tui-input>
     <tui-error
@@ -25,17 +21,16 @@
     ></tui-error>
   </label>
   <label class="mb-3 block">
-      <span class="mb-1 inline-block text-xs">
-        Документ
-        <sup
-          class="text-red"
-          *ngIf="
-            form.get('docType').errors &&
-            form.get('docType').hasError('required')
-          "
+    <span class="mb-1 inline-block text-xs">
+      Документ
+      <sup
+        class="text-red"
+        *ngIf="
+          form.get('docType').errors && form.get('docType').hasError('required')
+        "
         >*</sup
-        >
-      </span>
+      >
+    </span>
     <tui-select
       tuiTextfieldSize="m"
       formControlName="docType"
@@ -54,21 +49,20 @@
   <label class="mb-3 block">
     <span class="mb-1 inline-block text-xs">
       Номер документа
-     <sup
-       class="text-red"
-       *ngIf="
-            form.get('docNumber').errors &&
-            form.get('docNumber').hasError('required')
-          "
-     >*</sup
-     >
+      <sup
+        class="text-red"
+        *ngIf="
+          form.get('docNumber').errors &&
+          form.get('docNumber').hasError('required')
+        "
+        >*</sup
+      >
     </span>
     <tui-input
       tuiTextfieldSize="m"
       formControlName="docNumber"
       [tuiTextfieldLabelOutside]="true"
     >
-
       <input tuiTextfield type="text" />
     </tui-input>
     <tui-error
@@ -77,17 +71,16 @@
     ></tui-error>
   </label>
   <label class="mb-3 block">
-      <span class="mb-1 inline-block text-xs">
-        Телефон
-        <sup
-          class="text-red"
-          *ngIf="
-            form.get('phone').errors &&
-            form.get('phone').hasError('required')
-          "
+    <span class="mb-1 inline-block text-xs">
+      Телефон
+      <sup
+        class="text-red"
+        *ngIf="
+          form.get('phone').errors && form.get('phone').hasError('required')
+        "
         >*</sup
-        >
-      </span>
+      >
+    </span>
     <tui-input-phone
       formControlName="phone"
       tuiTextfieldSize="m"
