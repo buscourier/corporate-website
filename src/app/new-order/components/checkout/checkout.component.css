@@ -1,5 +1,5 @@
 .stepper {
-  @apply mb-16 grid gap-x-2.5 justify-between;
+  @apply mb-16 grid justify-between gap-x-2.5;
   grid-template-columns: repeat(3, 1fr) auto;
 }
 
