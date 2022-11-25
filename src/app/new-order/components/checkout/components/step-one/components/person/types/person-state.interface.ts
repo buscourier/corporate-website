@@ -5,4 +5,5 @@ export interface PersonStateInterface {
   phone: string
   email: string
   role: string
+  isValid: boolean
 }

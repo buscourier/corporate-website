@@ -9,4 +9,5 @@ export const initialState: PersonStateInterface = {
   email: '',
   phone: '',
   role: '',
+  isValid: false,
 }

@@ -1,11 +1,16 @@
 import {createFeatureSelector, createSelector} from '@ngrx/store'
-import {PERSON_FEATURE} from './state'
 import {PersonStateInterface} from '../types/person-state.interface'
+import {PERSON_FEATURE} from './state'
 
-export const senderFeatureSelector =
+export const personFeatureSelector =
   createFeatureSelector<PersonStateInterface>(PERSON_FEATURE)
 
 export const personSelector = createSelector(
-  senderFeatureSelector,
+  personFeatureSelector,
   (state: PersonStateInterface) => state
+)
+
+export const isPersonValidSelector = createSelector(
+  personFeatureSelector,
+  (state: PersonStateInterface) => state.isValid
 )

@@ -1,13 +1,18 @@
 import {Action, createReducer, on} from '@ngrx/store'
-import {initialState} from './state'
-import {changeValuesAction} from './actions/change-values.action'
 import {PersonStateInterface} from '../types/person-state.interface'
+import {changeValidityAction} from './actions/change-validity.action'
+import {changeValuesAction} from './actions/change-values.action'
+import {initialState} from './state'
 
 export const personReducer = createReducer(
   initialState,
   on(changeValuesAction, (state: PersonStateInterface, action) => ({
     ...state,
     ...action,
+  })),
+  on(changeValidityAction, (state: PersonStateInterface, {isValid}) => ({
+    ...state,
+    isValid,
   }))
 )
 

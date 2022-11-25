@@ -1,8 +1,9 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
+import {ChangeDetectionStrategy, Component} from '@angular/core'
 import {FormBuilder, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
 import {using} from 'rxjs'
 import {tap} from 'rxjs/operators'
+import {changeValidityAction} from './store/actions/change-validity.action'
 import {changeValuesAction} from './store/actions/change-values.action'
 import {personSelector} from './store/selectors'
 import {initialState} from './store/state'
@@ -32,6 +33,13 @@ export class PersonComponent {
         .pipe(
           tap((values: PersonStateInterface) => {
             this.store.dispatch(changeValuesAction(values))
+          }),
+          // debounceTime(1000),
+          tap(() => {
+            //TODO: consider switch map, concat map or smth else?
+            this.store.dispatch(
+              changeValidityAction({isValid: this.form.valid})
+            )
           })
         )
         .subscribe(),

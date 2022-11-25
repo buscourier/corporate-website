@@ -1,0 +1,64 @@
+<ng-container *ngIf="person$ | async as person">
+  <ng-container *ngIf="person.isValid">
+    <h2 class="mb-5 text-lg font-bold">
+      <span class="text-gray-500">01.</span> Отправитель
+    </h2>
+    <div
+      class="mb-14 max-w-[400px] space-y-4 border-b-2 border-b border-b-gray-100 pb-10"
+    >
+      <app-data key="ФИО" [value]="person.firstName"></app-data>
+      <!--    <app-data key="Документ" [value]="sender.docType"></app-data>-->
+      <!--    <app-data key="Номер документа" [value]="sender.docNumber"></app-data>-->
+      <!--    <app-data key="Телефон" [value]="sender.phone"></app-data>-->
+    </div>
+  </ng-container>
+</ng-container>
+<ng-container *ngIf="startPoint$ | async as startPoint">
+  <h2 class="mb-5 text-lg font-bold">
+    <span class="text-gray-500">02.</span> Пункт отправления
+  </h2>
+  <div
+    class="mb-14 max-w-[400px] space-y-4 border-b-2 border-b border-b-gray-100 pb-10"
+  >
+    <app-data key="Населенный пункт" [value]=""></app-data>
+    <app-data key="Документ" [value]=""></app-data>
+    <app-data key="Номер документа" [value]=""></app-data>
+  </div>
+</ng-container>
+<ng-container *ngIf="recipient$ | async as recipient">
+  <h2 class="mb-5 text-lg font-bold">
+    <span class="text-gray-500">03.</span> Получатель
+  </h2>
+  <div
+    class="mb-14 max-w-[400px] space-y-4 border-b-2 border-b border-b-gray-100 pb-10"
+  >
+    <app-data key="ФИО" [value]=""></app-data>
+    <app-data key="Документ" [value]=""></app-data>
+    <app-data key="Номер документа" [value]=""></app-data>
+    <app-data key="Телефон" [value]=""></app-data>
+  </div>
+</ng-container>
+<ng-container *ngIf="startPoint$ | async as startPoint">
+  <h2 class="mb-5 text-lg font-bold">
+    <span class="text-gray-500">04.</span> Пункт получения
+  </h2>
+  <div
+    class="mb-14 max-w-[400px] space-y-4 border-b-2 border-b border-b-gray-100 pb-10"
+  >
+    <app-data key="Населенный пункт" [value]=""></app-data>
+    <app-data key="Документ" [value]=""></app-data>
+    <app-data key="Номер документа" [value]=""></app-data>
+  </div>
+</ng-container>
+<ng-container *ngIf="orders$ | async as orders">
+  <h2 class="mb-5 text-lg font-bold">
+    <span class="text-gray-500">05.</span> Заказ
+  </h2>
+  <div
+    class="mb-14 max-w-[400px] space-y-4 border-b-2 border-b border-b-gray-100 pb-10"
+  >
+    <app-data key="Населенный пункт" [value]=""></app-data>
+    <app-data key="Документ" [value]=""></app-data>
+    <app-data key="Номер документа" [value]=""></app-data>
+  </div>
+</ng-container>

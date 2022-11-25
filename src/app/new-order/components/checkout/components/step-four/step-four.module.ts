@@ -8,6 +8,7 @@ import {
   TuiFieldErrorPipeModule,
   TuiTextAreaModule,
 } from '@taiga-ui/kit'
+import {ReportModule} from './components/report/report.module'
 import {StepFourComponent} from './step-four.component'
 
 @NgModule({
@@ -16,6 +17,7 @@ import {StepFourComponent} from './step-four.component'
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
+    ReportModule,
     TuiButtonModule,
     TuiTextAreaModule,
     TuiErrorModule,
