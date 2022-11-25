@@ -14,10 +14,18 @@ import {initialState} from './state'
 const checkoutReducer = createReducer(
   initialState,
   on(setCurrentStepAction, (state: CheckoutStateInterface, {step}) => {
+    if (!step) {
+      return {
+        ...state,
+      }
+    }
+
     const previousStep = step - 1
     const finishedSteps = {...state.finishedSteps}
 
-    finishedSteps[previousStep] = true
+    if (previousStep >= 0) {
+      finishedSteps[previousStep] = true
+    }
 
     return {
       ...state,

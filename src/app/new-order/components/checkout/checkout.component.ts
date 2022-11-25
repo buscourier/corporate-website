@@ -45,11 +45,7 @@ export class CheckoutComponent implements OnInit {
 
   getCurrentStep(url: string): number {
     const arr = url.split('/').map((step: string) => {
-      return step === 'checkout'
-        ? 0
-        : step === 'account'
-        ? Number(step)
-        : Number(step)
+      return step === 'checkout' ? 0 : step === 'account' ? 1 : Number(step)
     })
 
     return arr[arr.length - 1]
