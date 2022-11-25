@@ -117,7 +117,7 @@ module.exports = {
       addVariant('step-invalid', '.stepper-item.invalid &')
     }),
     plugin(function ({addVariant}) {
-      addVariant('step-success', '.stepper-item.success &')
+      addVariant('step-active', '.stepper-item.active &')
     }),
     plugin(function ({addVariant}) {
       addVariant('step-done', '.stepper-item.done &')

@@ -1,0 +1,68 @@
+.stepper {
+  @apply mb-16 grid justify-between gap-x-2.5;
+  grid-template-columns: repeat(3, 1fr) auto;
+}
+
+.stepper-item {
+  @apply relative grid gap-2.5;
+  grid-template-columns: 50px 1fr;
+
+  @apply before:h-2;
+  @apply before:self-center;
+  @apply before:col-start-2;
+  @apply before:col-end-3;
+  @apply before:row-start-1;
+  @apply before:row-end-2;
+  @apply before:bg-gray-100;
+  @apply before:transition-all;
+  @apply before:duration-500;
+
+  @apply after:h-2;
+  @apply after:w-0;
+  @apply after:self-center;
+  @apply after:col-start-2;
+  @apply after:col-end-3;
+  @apply after:row-start-1;
+  @apply after:row-end-2;
+  @apply after:bg-yellow;
+  @apply after:transition-all;
+  @apply after:duration-500;
+}
+
+.stepper-item.done::after {
+  @apply w-full;
+}
+
+.stepper-point {
+  @apply h-[50px] w-[50px] rounded-full bg-gray-100;
+  @apply flex items-center justify-center;
+  @apply text-[24px] font-bold text-gray-500;
+  @apply row-start-1 row-end-2;
+
+  @apply before:content-[attr(data-step)];
+
+  @apply step-active:bg-yellow;
+  @apply step-active:text-black;
+
+  @apply step-done:bg-yellow;
+  @apply step-done:text-black;
+  @apply step-done:before:content-[''];
+
+  @apply step-invalid:text-white;
+  @apply step-invalid:bg-red;
+}
+
+.stepper-label {
+  @apply text-[10px] font-bold text-gray-500;
+  @apply uppercase leading-5 tracking-widest;
+  @apply col-start-1 col-end-3 row-start-2 row-end-3;
+
+  @apply step-invalid:text-red;
+  @apply step-active:text-black;
+  @apply step-done:text-black;
+}
+
+tui-svg {
+  @apply hidden;
+  @apply step-done:block;
+}

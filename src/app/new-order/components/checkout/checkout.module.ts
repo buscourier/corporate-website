@@ -11,6 +11,7 @@ import {StepFourModule} from './components/step-four/step-four.module'
 import {StepOneModule} from './components/step-one/step-one.module'
 import {StepThreeModule} from './components/step-three/step-three.module'
 import {StepTwoModule} from './components/step-two/step-two.module'
+import {StepperModule} from './components/stepper/stepper.module'
 import {SendOrderEffect} from './store/effects/send-order.effect'
 import {reducer} from './store/reducer'
 import {CHECKOUT_FEATURE} from './store/state'
@@ -31,6 +32,7 @@ import {CHECKOUT_FEATURE} from './store/state'
     StepFourModule,
     TuiStepperModule,
     TuiSvgModule,
+    StepperModule,
   ],
 })
 export class CheckoutModule {}
