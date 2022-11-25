@@ -1,16 +1,43 @@
 .stepper {
-
+  @apply mb-16 grid gap-x-2.5 justify-between;
+  grid-template-columns: repeat(3, 1fr) auto;
 }
 
 .stepper-item {
-  /*@apply relative grid gap-[10px] cursor-not-allowed;*/
-  /*grid-template-columns: 50px 1fr;*/
+  @apply relative grid gap-2.5;
+  grid-template-columns: 50px 1fr;
+
+  @apply before:h-2;
+  @apply before:self-center;
+  @apply before:col-start-2;
+  @apply before:col-end-3;
+  @apply before:row-start-1;
+  @apply before:row-end-2;
+  @apply before:bg-gray-100;
+  @apply before:transition;
+  @apply before:duration-75;
+
+  @apply after:h-2;
+  @apply after:w-0;
+  @apply after:self-center;
+  @apply after:col-start-2;
+  @apply after:col-end-3;
+  @apply after:row-start-1;
+  @apply after:row-end-2;
+  @apply after:bg-yellow;
+  @apply after:transition;
+  @apply after:duration-75;
+}
+
+.stepper-item.done::after {
+  @apply after:w-full;
 }
 
 .stepper-point {
-  @apply mb-2 h-[50px] w-[50px] rounded-full bg-gray-100;
+  @apply h-[50px] w-[50px] rounded-full bg-gray-100;
   @apply flex items-center justify-center;
-  @apply text-[24px] text-gray-500 font-bold;
+  @apply text-[24px] font-bold text-gray-500;
+  @apply row-start-1 row-end-2;
 
   @apply before:content-[attr(data-step)];
 
@@ -26,8 +53,9 @@
 }
 
 .stepper-label {
-  @apply text-[10px] text-gray-500 font-bold;
+  @apply text-[10px] font-bold text-gray-500;
   @apply uppercase leading-5 tracking-widest;
+  @apply col-start-1 col-end-3 row-start-2 row-end-3;
 
   @apply step-invalid:text-red;
   @apply step-success:text-black;

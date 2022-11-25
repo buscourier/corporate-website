@@ -2,50 +2,34 @@
   Заявка на перевозку
 </h1>
 
-<p class="mb-10 text-xs text-gray-700">
+<p class="mb-11 text-xs text-gray-700">
   Заполните форму необходимыми данными и отправьте
 </p>
 
-<!--<tui-stepper [activeItemIndex]="activeItemIndex" class="mb-14">-->
-<!--  <button tuiStep stepState="pass">Finished step</button>-->
-<!--  <button tuiStep>Simple step</button>-->
-<!--  <button tuiStep stepState="error">Error step</button>-->
-<!--  <button tuiStep disabled>Disabled step</button>-->
-<!--</tui-stepper>-->
-
 <ul class="stepper">
-  <li class="stepper-item success">
+  <li class="stepper-item done">
     <div class="stepper-point" data-step="1">
       <tui-svg src="tuiIconCheckLarge"></tui-svg>
     </div>
     <span class="stepper-label">Автор заявки</span>
   </li>
-  <li>
-    <div
-      class="flex h-[50px] w-[50px] items-center justify-center rounded-full bg-gray-100 text-[24px] font-bold text-gray-500"
-    >
-      <span>2</span>
-      <tui-svg *ngIf="false" src="tuiIconCheckLarge"></tui-svg>
+  <li class="stepper-item invalid">
+    <div class="stepper-point" data-step="2">
+      <tui-svg src="tuiIconCheckLarge"></tui-svg>
     </div>
-    <span>Отправитель груза</span>
+    <span class="stepper-label">Отправитель груза</span>
   </li>
-  <li>
-    <div
-      class="flex h-[50px] w-[50px] items-center justify-center rounded-full bg-gray-100 text-[24px] font-bold text-gray-500"
-    >
-      <span>3</span>
-      <tui-svg *ngIf="false" src="tuiIconCheckLarge"></tui-svg>
+  <li class="stepper-item success">
+    <div class="stepper-point" data-step="3">
+      <tui-svg src="tuiIconCheckLarge"></tui-svg>
     </div>
-    <span>Параметры груза</span>
+    <span class="stepper-label">Параметры груза</span>
   </li>
-  <li>
-    <div
-      class="flex h-[50px] w-[50px] items-center justify-center rounded-full bg-gray-100 text-[24px] font-bold text-gray-500"
-    >
-      <span>4</span>
-      <tui-svg *ngIf="false" src="tuiIconCheckLarge"></tui-svg>
+  <li class="stepper-item before:hidden after:hidden">
+    <div class="stepper-point" data-step="4">
+      <tui-svg src="tuiIconCheckLarge"></tui-svg>
     </div>
-    <span>Завершение</span>
+    <span class="stepper-label">Завершение</span>
   </li>
 </ul>
 
