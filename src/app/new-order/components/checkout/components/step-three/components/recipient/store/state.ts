@@ -5,4 +5,5 @@ export const RECIPIENT_FEATURE = 'recipient'
 export const initialState: RecipientStateInterface = {
   fio: '',
   phone: '',
+  isValid: false,
 }

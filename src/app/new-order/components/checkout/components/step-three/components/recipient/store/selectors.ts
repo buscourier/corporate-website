@@ -1,6 +1,6 @@
 import {createFeatureSelector, createSelector} from '@ngrx/store'
-import {RECIPIENT_FEATURE} from './state'
 import {RecipientStateInterface} from '../types/recipient-state.interface'
+import {RECIPIENT_FEATURE} from './state'
 
 export const recipientFeatureSelector =
   createFeatureSelector<RecipientStateInterface>(RECIPIENT_FEATURE)
@@ -8,4 +8,9 @@ export const recipientFeatureSelector =
 export const recipientSelector = createSelector(
   recipientFeatureSelector,
   (state: RecipientStateInterface) => state
+)
+
+export const isRecipientValidSelector = createSelector(
+  recipientFeatureSelector,
+  (state: RecipientStateInterface) => state.isValid
 )

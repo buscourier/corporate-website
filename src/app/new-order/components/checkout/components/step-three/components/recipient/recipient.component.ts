@@ -1,10 +1,11 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core'
 import {FormBuilder, Validators} from '@angular/forms'
-import {tap, using} from 'rxjs'
 import {Store} from '@ngrx/store'
-import {RecipientStateInterface} from './types/recipient-state.interface'
+import {tap, using} from 'rxjs'
+import {changeValidityAction} from './store/actions/change-validity.action'
 import {changeValuesAction} from './store/actions/change-values.action'
 import {recipientSelector} from './store/selectors'
+import {RecipientStateInterface} from './types/recipient-state.interface'
 
 @Component({
   selector: 'app-recipient',
@@ -24,6 +25,12 @@ export class RecipientComponent {
         .pipe(
           tap((values: RecipientStateInterface) => {
             this.store.dispatch(changeValuesAction(values))
+          }),
+          tap(() => {
+            //TODO: consider switch map, concat map or smth else?
+            this.store.dispatch(
+              changeValidityAction({isValid: this.form.valid})
+            )
           })
         )
         .subscribe(),
