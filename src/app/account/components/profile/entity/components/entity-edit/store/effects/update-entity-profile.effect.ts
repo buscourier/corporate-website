@@ -20,6 +20,7 @@ export class UpdateEntityProfileEffect {
     private entityService: EntityService
   ) {}
 
+  //TODO: Need to refactor all arrow returns in effects
   updateProfile = createEffect(() =>
     this.actions$.pipe(
       ofType(updateEntityProfileAction),

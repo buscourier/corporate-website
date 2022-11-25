@@ -50,5 +50,9 @@ export class NewOrderService {
     )
   }
 
-  calculate() {}
+  sendOrder(order: any) {
+    const url = `${environment.apiUrl}`
+
+    return this.http.post(`${url}/${environment.apiKey}`, JSON.stringify(order))
+  }
 }
