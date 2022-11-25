@@ -8,7 +8,8 @@ import {FormBuilder} from '@angular/forms'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CheckoutComponent {
-  activeItemIndex = 0
+  activeItemIndex = 1
+  invalid = false
 
   goToStep(index) {
     this.activeItemIndex = index

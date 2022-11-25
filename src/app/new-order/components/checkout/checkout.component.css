@@ -1,4 +1,40 @@
-.t-maker {
-  width: 60px;
-  height: 60px;
+.stepper {
+
+}
+
+.stepper-item {
+  /*@apply relative grid gap-[10px] cursor-not-allowed;*/
+  /*grid-template-columns: 50px 1fr;*/
+}
+
+.stepper-point {
+  @apply mb-2 h-[50px] w-[50px] rounded-full bg-gray-100;
+  @apply flex items-center justify-center;
+  @apply text-[24px] text-gray-500 font-bold;
+
+  @apply before:content-[attr(data-step)];
+
+  @apply step-success:bg-yellow;
+  @apply step-success:text-black;
+
+  @apply step-done:bg-yellow;
+  @apply step-done:text-black;
+  @apply step-done:before:content-[''];
+
+  @apply step-invalid:text-white;
+  @apply step-invalid:bg-red;
+}
+
+.stepper-label {
+  @apply text-[10px] text-gray-500 font-bold;
+  @apply uppercase leading-5 tracking-widest;
+
+  @apply step-invalid:text-red;
+  @apply step-success:text-black;
+  @apply step-done:text-black;
+}
+
+tui-svg {
+  @apply hidden;
+  @apply step-done:block;
 }

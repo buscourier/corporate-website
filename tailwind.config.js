@@ -113,5 +113,14 @@ module.exports = {
     plugin(function ({addVariant}) {
       addVariant('sticky-header', '.sticky-header &')
     }),
+    plugin(function ({addVariant}) {
+      addVariant('step-invalid', '.stepper-item.invalid &')
+    }),
+    plugin(function ({addVariant}) {
+      addVariant('step-success', '.stepper-item.success &')
+    }),
+    plugin(function ({addVariant}) {
+      addVariant('step-done', '.stepper-item.done &')
+    }),
   ],
 }
