@@ -9,13 +9,9 @@ export class PatchFormGroupValuesDirective {
   @Input() formGroup: any
   @Input()
   set patchFormGroupValues(val: any) {
-    console.log('this.formGroup', this.formGroup)
-    console.log('val', val)
     if (!val) return
-    this.formGroup.patchValue(val)
-    // this.formGroup.patchValue(val, {emitEvent: false})
-    // this.formGroupDirective.form.patchValue(val)
-    // this.formGroup.markAsPristine()
+    this.formGroup.patchValue(val, {emitEvent: false})
+    // this.formGroup.patchValue(val)
   }
 
   constructor(private formGroupDirective: FormGroupDirective) {}

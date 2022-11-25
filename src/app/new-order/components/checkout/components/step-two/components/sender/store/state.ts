@@ -7,4 +7,5 @@ export const initialState: SenderStateInterface = {
   docType: '',
   docNumber: '',
   phone: '',
+  isValid: false,
 }
