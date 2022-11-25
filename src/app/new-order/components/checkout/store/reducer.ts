@@ -23,9 +23,7 @@ const checkoutReducer = createReducer(
     const previousStep = step - 1
     const finishedSteps = {...state.finishedSteps}
 
-    if (previousStep >= 0) {
-      finishedSteps[previousStep] = true
-    }
+    finishedSteps[previousStep] = true
 
     return {
       ...state,
