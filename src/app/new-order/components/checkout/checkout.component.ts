@@ -1,7 +1,9 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
 import {FormBuilder} from '@angular/forms'
 import {NavigationEnd, Router, RouterEvent} from '@angular/router'
+import {Store} from '@ngrx/store'
 import {filter} from 'rxjs'
+import {setCurrentStepAction} from './store/actions/set-current-step.action'
 
 @Component({
   selector: 'app-checkout',
@@ -14,20 +16,26 @@ export class CheckoutComponent implements OnInit {
 
   form = this.fb.group({})
 
-  constructor(private fb: FormBuilder, private router: Router) {}
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private store: Store
+  ) {}
 
   ngOnInit(): void {
     this.initializeValues()
   }
 
   initializeValues(): void {
-    this.currentStepIndex = this.getCurrentStep(this.router.url)
+    this.currentStepIndex = this.getCurrentStep(this.router.url) //??
+    this.store.dispatch(setCurrentStepAction({step: this.currentStepIndex}))
 
     //TODO: need unsubscribe?
     this.router.events
       .pipe(filter((event: RouterEvent) => event instanceof NavigationEnd))
       .subscribe((event: RouterEvent) => {
-        this.currentStepIndex = this.getCurrentStep(event.url)
+        this.currentStepIndex = this.getCurrentStep(event.url) //??
+        this.store.dispatch(setCurrentStepAction({step: this.currentStepIndex}))
       })
   }
 

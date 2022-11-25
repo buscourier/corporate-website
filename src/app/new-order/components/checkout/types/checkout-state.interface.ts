@@ -2,7 +2,9 @@ export interface CheckoutStateInterface {
   currentStep: number
   previousStep: number
   isCurrentStepValid: boolean
-  finishedSteps: number[]
+  finishedSteps: {
+    [key: number]: boolean
+  }
   isSubmitting: boolean
   backendErrors: string
 }

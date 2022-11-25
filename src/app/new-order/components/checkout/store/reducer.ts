@@ -13,9 +13,9 @@ import {initialState} from './state'
 
 const checkoutReducer = createReducer(
   initialState,
-  on(setCurrentStepAction, (state: CheckoutStateInterface, {currentStep}) => ({
+  on(setCurrentStepAction, (state: CheckoutStateInterface, {step}) => ({
     ...state,
-    currentStep,
+    currentStep: step,
   })),
   on(
     setPreviousStepAction,
@@ -43,7 +43,7 @@ const checkoutReducer = createReducer(
   })),
   on(updateFinishedStepsAction, (state: CheckoutStateInterface, {steps}) => ({
     ...state,
-    finishedSteps: [...steps],
+    finishedSteps: {...steps},
   }))
 )
 
