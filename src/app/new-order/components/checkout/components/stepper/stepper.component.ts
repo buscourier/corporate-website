@@ -5,9 +5,13 @@ import {
   ElementRef,
   Input,
   OnChanges,
+  OnInit,
   SimpleChanges,
   ViewChild,
 } from '@angular/core'
+import {Store} from '@ngrx/store'
+import {Observable} from 'rxjs'
+import {isCurrentStepValidSelector} from '../../store/selectors'
 
 @Component({
   selector: 'app-stepper',
@@ -15,14 +19,20 @@ import {
   styleUrls: ['./stepper.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StepperComponent implements OnChanges, AfterViewInit {
+export class StepperComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() currentStepIndex = 0
   @ViewChild('stepper', {read: ElementRef}) stepper: ElementRef
+
+  isCurrentStepValid$: Observable<boolean>
 
   steps = ['Автор заявки', 'Отправитель груза', 'Параметры груза', 'Завершение']
   nodes = []
 
-  constructor() {}
+  constructor(private store: Store) {}
+
+  ngOnInit(): void {
+    this.isCurrentStepValid$ = this.store.select(isCurrentStepValidSelector)
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     const previousStep =

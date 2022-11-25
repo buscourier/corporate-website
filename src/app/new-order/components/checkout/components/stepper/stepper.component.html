@@ -1,8 +1,13 @@
-<ul #stepper class="stepper">
+<ul
+  #stepper
+  class="stepper"
+  *tuiLet="isCurrentStepValid$ | async as isCurrentStepValid"
+>
   <li
     *ngFor="let step of steps; let i = index"
     class="stepper-item last-of-type:before:hidden last-of-type:after:hidden"
     [class.active]="i === currentStepIndex"
+    [class.invalid]="!isCurrentStepValid && i === currentStepIndex"
   >
     <div class="stepper-point" [attr.data-step]="i + 1">
       <tui-svg src="tuiIconCheckLarge"></tui-svg>

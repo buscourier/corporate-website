@@ -5,8 +5,8 @@ import {
   sendOrderFailureAction,
   sendOrderSuccessAction,
 } from './actions/send-order.action'
+import {setCurrentStepStateAction} from './actions/set-current-step-state.action'
 import {setCurrentStepAction} from './actions/set-current-step.action'
-import {setInvalidStateAction} from './actions/set-invalid-state.action'
 import {initialState} from './state'
 
 const checkoutReducer = createReducer(
@@ -15,9 +15,9 @@ const checkoutReducer = createReducer(
     ...state,
     currentStep,
   })),
-  on(setInvalidStateAction, (state: CheckoutStateInterface, {isInvalid}) => ({
+  on(setCurrentStepStateAction, (state: CheckoutStateInterface, {isValid}) => ({
     ...state,
-    isCurrentStepInvalid: isInvalid,
+    isCurrentStepValid: isValid,
   })),
   on(sendOrderAction, (state: CheckoutStateInterface) => ({
     ...state,

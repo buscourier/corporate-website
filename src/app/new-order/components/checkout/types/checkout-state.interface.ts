@@ -1,6 +1,6 @@
 export interface CheckoutStateInterface {
   currentStep: number
-  isCurrentStepInvalid: boolean
+  isCurrentStepValid: boolean
   isSubmitting: boolean
   backendErrors: string
 }

@@ -10,7 +10,7 @@ export const currentStepSelector = createSelector(
   (state: CheckoutStateInterface) => state.currentStep
 )
 
-export const isCurrentStepInvalidSelector = createSelector(
+export const isCurrentStepValidSelector = createSelector(
   checkoutFeatureSelector,
-  (state: CheckoutStateInterface) => state.isCurrentStepInvalid
+  (state: CheckoutStateInterface) => state.isCurrentStepValid
 )
