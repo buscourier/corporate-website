@@ -17,13 +17,10 @@ const checkoutReducer = createReducer(
     ...state,
     currentStep: step,
   })),
-  on(
-    setPreviousStepAction,
-    (state: CheckoutStateInterface, {previousStep}) => ({
-      ...state,
-      previousStep,
-    })
-  ),
+  on(setPreviousStepAction, (state: CheckoutStateInterface, {step}) => ({
+    ...state,
+    previousStep: step,
+  })),
   on(setCurrentStepStateAction, (state: CheckoutStateInterface, {isValid}) => ({
     ...state,
     isCurrentStepValid: isValid,

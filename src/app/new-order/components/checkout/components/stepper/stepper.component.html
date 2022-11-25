@@ -1,6 +1,6 @@
-<ng-container *tuiLet="finishedSteps$ | async as finishedSteps">
+<ng-container *tuiLet="currentStep$ | async as currentStepIndex">
   <ng-container *tuiLet="isCurrentStepValid$ | async as isCurrentStepValid">
-    <ul #stepper class="stepper">
+    <ul class="stepper" *tuiLet="finishedSteps$ | async as finishedSteps">
       <li
         *ngFor="let step of steps; let i = index"
         class="stepper-item last-of-type:before:hidden last-of-type:after:hidden"
