@@ -4,7 +4,6 @@ import {NavigationEnd, Router, RouterEvent} from '@angular/router'
 import {Store} from '@ngrx/store'
 import {filter} from 'rxjs'
 import {setCurrentStepAction} from './store/actions/set-current-step.action'
-import {setPreviousStepAction} from './store/actions/set-previous-step.action'
 
 @Component({
   selector: 'app-checkout',
@@ -28,29 +27,29 @@ export class CheckoutComponent implements OnInit {
   }
 
   initializeValues(): void {
-    this.currentStepIndex = this.getCurrentStep(this.router.url) //??
     this.navigate(this.router.url)
 
     //TODO: need unsubscribe?
     this.router.events
       .pipe(filter((event: RouterEvent) => event instanceof NavigationEnd))
       .subscribe((event: RouterEvent) => {
-        this.currentStepIndex = this.getCurrentStep(event.url) //??
         this.navigate(event.url)
       })
   }
 
   navigate(url: string): void {
     const currentStep = this.getCurrentStep(url)
-    const previousStep = currentStep - 1
 
     this.store.dispatch(setCurrentStepAction({step: currentStep}))
-    this.store.dispatch(setPreviousStepAction({step: previousStep}))
   }
 
   getCurrentStep(url: string): number {
     const arr = url.split('/').map((step: string) => {
-      return step === 'checkout' ? 0 : Number(step)
+      return step === 'checkout'
+        ? 0
+        : step === 'account'
+        ? Number(step)
+        : Number(step)
     })
 
     return arr[arr.length - 1]
