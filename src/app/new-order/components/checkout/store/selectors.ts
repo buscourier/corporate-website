@@ -10,7 +10,17 @@ export const currentStepSelector = createSelector(
   (state: CheckoutStateInterface) => state.currentStep
 )
 
+export const previousStepSelector = createSelector(
+  checkoutFeatureSelector,
+  (state: CheckoutStateInterface) => state.previousStep
+)
+
 export const isCurrentStepValidSelector = createSelector(
   checkoutFeatureSelector,
   (state: CheckoutStateInterface) => state.isCurrentStepValid
+)
+
+export const finishedStepsSelector = createSelector(
+  checkoutFeatureSelector,
+  (state: CheckoutStateInterface) => state.finishedSteps
 )

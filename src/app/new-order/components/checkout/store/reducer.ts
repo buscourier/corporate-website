@@ -7,6 +7,8 @@ import {
 } from './actions/send-order.action'
 import {setCurrentStepStateAction} from './actions/set-current-step-state.action'
 import {setCurrentStepAction} from './actions/set-current-step.action'
+import {setPreviousStepAction} from './actions/set-previous-step.action'
+import {updateFinishedStepsAction} from './actions/update-finished-steps.action'
 import {initialState} from './state'
 
 const checkoutReducer = createReducer(
@@ -15,6 +17,13 @@ const checkoutReducer = createReducer(
     ...state,
     currentStep,
   })),
+  on(
+    setPreviousStepAction,
+    (state: CheckoutStateInterface, {previousStep}) => ({
+      ...state,
+      previousStep,
+    })
+  ),
   on(setCurrentStepStateAction, (state: CheckoutStateInterface, {isValid}) => ({
     ...state,
     isCurrentStepValid: isValid,
@@ -31,6 +40,10 @@ const checkoutReducer = createReducer(
     ...state,
     isSubmitting: false,
     backendErrors: errors,
+  })),
+  on(updateFinishedStepsAction, (state: CheckoutStateInterface, {steps}) => ({
+    ...state,
+    finishedSteps: [...steps],
   }))
 )
 
