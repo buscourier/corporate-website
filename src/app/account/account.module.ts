@@ -10,6 +10,7 @@ import {reducer} from './store/reducer'
 import {EffectsModule} from '@ngrx/effects'
 import {GetUserProfileEffect} from './store/effects/get-user-profile.effect'
 import {GetBalanceEffect} from './store/effects/get-balance.effect'
+import {TuiCurrencyPipeModule} from '@taiga-ui/addon-commerce'
 
 @NgModule({
   declarations: [AccountComponent],
@@ -20,6 +21,7 @@ import {GetBalanceEffect} from './store/effects/get-balance.effect'
     EffectsModule.forFeature([GetUserProfileEffect, GetBalanceEffect]),
     TuiSvgModule,
     TuiButtonModule,
+    TuiCurrencyPipeModule,
   ],
   providers: [AccountService],
 })
