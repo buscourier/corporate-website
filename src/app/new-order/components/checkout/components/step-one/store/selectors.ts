@@ -9,3 +9,8 @@ export const activeTabSelector = createSelector(
   stepOneFeatureSelector,
   (state: StepOneStateInterface) => state.activeTabIndex
 )
+
+export const entitySelector = createSelector(
+  stepOneFeatureSelector,
+  (state: StepOneStateInterface) => state.entity
+)

@@ -7,9 +7,29 @@
       class="mb-14 max-w-[400px] space-y-4 border-b-2 border-b border-b-gray-100 pb-10"
     >
       <app-data key="ФИО" [value]="person.firstName"></app-data>
-      <!--    <app-data key="Документ" [value]="sender.docType"></app-data>-->
-      <!--    <app-data key="Номер документа" [value]="sender.docNumber"></app-data>-->
-      <!--    <app-data key="Телефон" [value]="sender.phone"></app-data>-->
+      <app-data key="Email" [value]="person.email"></app-data>
+      <app-data key="Телефон" [value]="person.phone"></app-data>
+    </div>
+  </ng-container>
+</ng-container>
+<ng-container *ngIf="entity$ | async as entity">
+  <ng-container *ngIf="entity">
+    <h2 class="mb-5 text-lg font-bold">
+      <span class="text-gray-500">01.</span> Отправитель
+    </h2>
+    <div
+      class="mb-14 max-w-[400px] space-y-4 border-b-2 border-b border-b-gray-100 pb-10"
+    >
+      <app-data
+        key="Название организации"
+        [value]="entity.name.value"
+      ></app-data>
+      <app-data
+        key="Контактное лицо"
+        [value]="entity.contactperson.value"
+      ></app-data>
+      <app-data key="Телефон" [value]="entity.phone.value"></app-data>
+      <app-data key="Email" [value]="entity.email.value"></app-data>
     </div>
   </ng-container>
 </ng-container>

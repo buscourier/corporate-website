@@ -12,6 +12,7 @@ import {recipientSelector} from '../../../step-three/components/recipient/store/
 import {RecipientStateInterface} from '../../../step-three/components/recipient/types/recipient-state.interface'
 import {senderSelector} from '../../../step-two/components/sender/store/selectors'
 import {SenderStateInterface} from '../../../step-two/components/sender/types/sender-state.interface'
+import {entitySelector} from '../../../step-one/store/selectors'
 
 @Component({
   selector: 'app-report',
@@ -23,6 +24,7 @@ export class ReportComponent implements OnInit {
   startPoint$: Observable<StartPointStateInterface>
   endPoint$: Observable<EndPointStateInterface>
   person$: Observable<PersonStateInterface>
+  entity$: Observable<any>
   sender$: Observable<SenderStateInterface>
   recipient$: Observable<RecipientStateInterface>
   orders$: Observable<any>
@@ -37,6 +39,7 @@ export class ReportComponent implements OnInit {
     this.startPoint$ = this.store.select(startPointSelector)
     this.endPoint$ = this.store.select(endPointSelector)
     this.person$ = this.store.select(personSelector)
+    this.entity$ = this.store.select(entitySelector)
     this.sender$ = this.store.select(senderSelector)
     this.recipient$ = this.store.select(recipientSelector)
     this.orders$ = this.store.select(ordersSelector)
