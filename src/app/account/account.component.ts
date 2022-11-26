@@ -2,9 +2,9 @@ import {ChangeDetectionStrategy, Component} from '@angular/core'
 import {TUI_SVG_SRC_PROCESSOR} from '@taiga-ui/core'
 
 @Component({
-  selector: 'app-index',
-  templateUrl: './index.component.html',
-  styleUrls: ['./index.component.css'],
+  selector: 'app-account',
+  templateUrl: './account.component.html',
+  styleUrls: ['./account.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
@@ -21,7 +21,7 @@ import {TUI_SVG_SRC_PROCESSOR} from '@taiga-ui/core'
     },
   ],
 })
-export class IndexComponent {
+export class AccountComponent {
   sections = [
     {
       icon: 'icons::catalog',
