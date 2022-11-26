@@ -16,6 +16,7 @@ import {BalanceInterface} from './types/balance.interface'
 import {getUserProfileAction} from './store/actions/get-user-profile.action'
 import {UserProfileInterface} from './types/user-profile.interface'
 import {Router} from '@angular/router'
+import {setEntityAction} from '../new-order/components/checkout/components/step-one/store/actions/set-entity.action'
 
 @Component({
   selector: 'app-account',
@@ -86,8 +87,9 @@ export class AccountComponent implements OnInit {
       .pipe(
         filter(Boolean),
         take(1),
-        tap((profile: UserProfileInterface) => {
-          console.log('profile', profile)
+        tap((entity: UserProfileInterface) => {
+          console.log('profile', entity)
+          this.store.dispatch(setEntityAction({entity}))
           this.router.navigate(['/new-order', 'checkout', '1'])
         })
       )
