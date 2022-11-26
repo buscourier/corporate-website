@@ -82,6 +82,7 @@ export class AccountComponent implements OnInit {
     this.isBalanceLoading$ = this.store.select(isBalanceLoadingSelector)
     this.isSubmitting$ = this.store.select(isSubmittingSelector)
 
+    //TODO: refactor throw effects
     this.store
       .select(userProfileSelector)
       .pipe(
