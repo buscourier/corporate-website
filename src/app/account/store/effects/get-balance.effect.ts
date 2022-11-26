@@ -8,6 +8,7 @@ import {
 } from '../actions/get-balance.action'
 import {catchError, map, of, switchMap} from 'rxjs'
 import {HttpErrorResponse} from '@angular/common/http'
+import {BalanceInterface} from '../../types/balance.interface'
 
 @Injectable()
 export class GetBalanceEffect {
@@ -22,7 +23,7 @@ export class GetBalanceEffect {
       ofType(getBalanceAction),
       switchMap(({userId}) => {
         return this.accountService.getBalance(userId).pipe(
-          map((balance: any) => {
+          map((balance: BalanceInterface) => {
             return getBalanceSuccessAction({balance})
           }),
           catchError((errorResponse: HttpErrorResponse) => {

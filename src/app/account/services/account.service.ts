@@ -4,6 +4,7 @@ import {EntityProfileInterface} from '../components/profile/entity/types/entity-
 import {environment} from '../../../environments/environment'
 import {ProfileInterface} from '../components/profile/shared/types/profile.interface'
 import {HttpClient} from '@angular/common/http'
+import {BalanceInterface} from '../types/balance.interface'
 
 @Injectable()
 export class AccountService {
@@ -29,9 +30,11 @@ export class AccountService {
       )
   }
 
-  getBalance(userId: string) {
+  getBalance(userId: string): Observable<BalanceInterface> {
     const url = `${this.url}/balance`
 
-    return this.http.get(`${url}/${environment.apiKey}/${userId}`)
+    return this.http.get<BalanceInterface>(
+      `${url}/${environment.apiKey}/${userId}`
+    )
   }
 }

@@ -1,5 +1,6 @@
 import {createAction, props} from '@ngrx/store'
 import {ActionTypes} from '../action-types'
+import {BalanceInterface} from '../../types/balance.interface'
 
 export const getBalanceAction = createAction(
   ActionTypes.GET_BALANCE,
@@ -8,7 +9,7 @@ export const getBalanceAction = createAction(
 
 export const getBalanceSuccessAction = createAction(
   ActionTypes.GET_BALANCE_SUCCESS,
-  props<{balance: any}>()
+  props<{balance: BalanceInterface}>()
 )
 
 export const getBalanceFailureAction = createAction(

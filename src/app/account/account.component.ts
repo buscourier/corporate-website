@@ -11,8 +11,8 @@ import {
 } from './store/selectors'
 import {currentUserSelector} from '../auth/store/selectors'
 import {CurrentUserInterface} from '../shared/types/current-user.interface'
-import {getEntityProfileAction} from './components/profile/entity/components/entity-view/store/actions/get-entity-profile.action'
 import {getBalanceAction} from './store/actions/get-balance.action'
+import {BalanceInterface} from './types/balance.interface'
 
 @Component({
   selector: 'app-account',
@@ -39,7 +39,7 @@ export class AccountComponent implements OnInit {
   isBalanceLoading$: Observable<boolean>
   isSubmitting$: Observable<boolean>
   userProfile$: Observable<any>
-  balance$: Observable<any>
+  balance$: Observable<number>
 
   sections = [
     {
@@ -79,8 +79,12 @@ export class AccountComponent implements OnInit {
     this.isSubmitting$ = this.store.select(isSubmittingSelector)
     this.userProfile$ = this.store.select(userProfileSelector)
     this.balance$ = this.store.select(accountBalanceSelector).pipe(
-      tap((balance) => {
-        console.log('balance', balance)
+      filter(Boolean),
+      map((balance: BalanceInterface) => {
+        return (
+          Number(balance.debet) -
+          (Number(balance.order_sum) + Number(balance.service_sum))
+        )
       })
     )
   }

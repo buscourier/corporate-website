@@ -1,6 +1,6 @@
 import {CommonModule} from '@angular/common'
 import {NgModule} from '@angular/core'
-import {TuiButtonModule, TuiSvgModule} from '@taiga-ui/core'
+import {TuiButtonModule, TuiLoaderModule, TuiSvgModule} from '@taiga-ui/core'
 import {AccountRoutingModule} from './account-routing.module'
 import {AccountComponent} from './account.component'
 import {AccountService} from './services/account.service'
@@ -11,6 +11,7 @@ import {EffectsModule} from '@ngrx/effects'
 import {GetUserProfileEffect} from './store/effects/get-user-profile.effect'
 import {GetBalanceEffect} from './store/effects/get-balance.effect'
 import {TuiCurrencyPipeModule} from '@taiga-ui/addon-commerce'
+import {TuiLetModule} from '@taiga-ui/cdk'
 
 @NgModule({
   declarations: [AccountComponent],
@@ -22,6 +23,8 @@ import {TuiCurrencyPipeModule} from '@taiga-ui/addon-commerce'
     TuiSvgModule,
     TuiButtonModule,
     TuiCurrencyPipeModule,
+    TuiLoaderModule,
+    TuiLetModule,
   ],
   providers: [AccountService],
 })

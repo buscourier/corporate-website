@@ -1,4 +1,5 @@
 import {AccountStateInterface} from '../types/account-state.interface'
+import {BalanceInterface} from '../types/balance.interface'
 
 export const ACCOUNT_FEATURE = 'account'
 
