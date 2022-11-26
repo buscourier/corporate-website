@@ -1,0 +1,14 @@
+<article class="relative grayscale">
+  <ya-map
+    [center]="[latitude, longitude]"
+    [zoom]="zoom"
+    [options]="{avoidFractionalZoom: true}"
+    [state]="{controls: []}"
+  >
+    <ya-placemark
+      *ngFor="let point of points"
+      [geometry]="[point.geo_x, point.geo_y]"
+    ></ya-placemark>
+  </ya-map>
+  <div class="absolute inset-0"></div>
+</article>
