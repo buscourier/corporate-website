@@ -4,10 +4,23 @@ import {TuiButtonModule, TuiSvgModule} from '@taiga-ui/core'
 import {AccountRoutingModule} from './account-routing.module'
 import {AccountComponent} from './account.component'
 import {AccountService} from './services/account.service'
+import {StoreModule} from '@ngrx/store'
+import {ACCOUNT_FEATURE} from './store/state'
+import {reducer} from './store/reducer'
+import {EffectsModule} from '@ngrx/effects'
+import {GetUserProfileEffect} from './store/effects/get-user-profile.effect'
+import {GetBalanceEffect} from './store/effects/get-balance.effect'
 
 @NgModule({
   declarations: [AccountComponent],
-  imports: [CommonModule, AccountRoutingModule, TuiSvgModule, TuiButtonModule],
+  imports: [
+    CommonModule,
+    AccountRoutingModule,
+    StoreModule.forFeature(ACCOUNT_FEATURE, reducer),
+    EffectsModule.forFeature([GetUserProfileEffect, GetBalanceEffect]),
+    TuiSvgModule,
+    TuiButtonModule,
+  ],
   providers: [AccountService],
 })
 export class AccountModule {}
