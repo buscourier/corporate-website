@@ -8,5 +8,5 @@ import {ChangeDetectionStrategy, Component, Input} from '@angular/core'
 })
 export class DataComponent {
   @Input('key') keyProps: string
-  @Input('value') valueProps: string
+  @Input('value') valueProps: any
 }
