@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core'
 import {filter, map, Observable} from 'rxjs'
-import {EntityProfileInterface} from '../components/profile/entity/types/entity-profile.interface'
 import {environment} from '../../../environments/environment'
 import {ProfileInterface} from '../components/profile/shared/types/profile.interface'
 import {HttpClient} from '@angular/common/http'
 import {BalanceInterface} from '../types/balance.interface'
+import {UserProfileInterface} from '../types/user-profile.interface'
 
 @Injectable()
 export class AccountService {
@@ -12,7 +12,7 @@ export class AccountService {
 
   constructor(private http: HttpClient) {}
 
-  getProfile(userId: string): Observable<EntityProfileInterface> {
+  getProfile(userId: string): Observable<UserProfileInterface> {
     const url = `${this.url}/details`
 
     return this.http

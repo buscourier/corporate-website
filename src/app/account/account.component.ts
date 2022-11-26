@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
 import {TUI_SVG_SRC_PROCESSOR} from '@taiga-ui/core'
-import {filter, map, Observable, tap} from 'rxjs'
+import {filter, map, Observable, take, tap} from 'rxjs'
 import {Store} from '@ngrx/store'
 import {
   accountBalanceSelector,
@@ -13,6 +13,9 @@ import {currentUserSelector} from '../auth/store/selectors'
 import {CurrentUserInterface} from '../shared/types/current-user.interface'
 import {getBalanceAction} from './store/actions/get-balance.action'
 import {BalanceInterface} from './types/balance.interface'
+import {getUserProfileAction} from './store/actions/get-user-profile.action'
+import {UserProfileInterface} from './types/user-profile.interface'
+import {Router} from '@angular/router'
 
 @Component({
   selector: 'app-account',
@@ -66,7 +69,7 @@ export class AccountComponent implements OnInit {
     },
   ]
 
-  constructor(private store: Store) {}
+  constructor(private store: Store, private router: Router) {}
 
   ngOnInit(): void {
     this.initializeValues()
@@ -77,7 +80,19 @@ export class AccountComponent implements OnInit {
     this.isUserProfileLoading$ = this.store.select(isUserProfileLoadingSelector)
     this.isBalanceLoading$ = this.store.select(isBalanceLoadingSelector)
     this.isSubmitting$ = this.store.select(isSubmittingSelector)
-    this.userProfile$ = this.store.select(userProfileSelector)
+
+    this.store
+      .select(userProfileSelector)
+      .pipe(
+        filter(Boolean),
+        take(1),
+        tap((profile: UserProfileInterface) => {
+          console.log('profile', profile)
+          this.router.navigate(['/new-order', 'checkout', '1'])
+        })
+      )
+      .subscribe()
+
     this.balance$ = this.store.select(accountBalanceSelector).pipe(
       filter(Boolean),
       map((balance: BalanceInterface) => {
@@ -94,8 +109,22 @@ export class AccountComponent implements OnInit {
       .select(currentUserSelector)
       .pipe(
         filter(Boolean),
+        //TODO: map or switchMap or smth else?
         map((user: CurrentUserInterface) => {
           return this.store.dispatch(getBalanceAction({userId: user.id}))
+        })
+      )
+      .subscribe()
+  }
+
+  proceedOrder() {
+    this.store
+      .select(currentUserSelector)
+      .pipe(
+        filter(Boolean),
+        //TODO: map or switchMap or smth else?
+        map((user: CurrentUserInterface) => {
+          return this.store.dispatch(getUserProfileAction({userId: user.id}))
         })
       )
       .subscribe()

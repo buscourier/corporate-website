@@ -82,7 +82,7 @@
         type="button"
         class="mb-5 w-[270px]"
         size="m"
-        [routerLink]="['/new-order', 'checkout', '1']"
+        (click)="proceedOrder()"
       >
         Оформить заказ
       </button>

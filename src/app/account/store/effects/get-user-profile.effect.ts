@@ -9,6 +9,7 @@ import {
 import {catchError, map, of, switchMap} from 'rxjs'
 import {HttpErrorResponse} from '@angular/common/http'
 import {getBalanceFailureAction} from '../actions/get-balance.action'
+import {UserProfileInterface} from '../../types/user-profile.interface'
 
 @Injectable()
 export class GetUserProfileEffect {
@@ -22,7 +23,7 @@ export class GetUserProfileEffect {
       ofType(getUserProfileAction),
       switchMap(({userId}) => {
         return this.accountService.getProfile(userId).pipe(
-          map((profile: any) => {
+          map((profile: UserProfileInterface) => {
             return getUserProfileSuccessAction({profile})
           }),
           catchError((errorResponse: HttpErrorResponse) => {
