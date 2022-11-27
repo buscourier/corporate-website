@@ -6,4 +6,5 @@ export const initialState: RecipientStateInterface = {
   fio: '',
   phone: '',
   isValid: false,
+  isPristine: true,
 }

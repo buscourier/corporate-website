@@ -14,3 +14,8 @@ export const isRecipientValidSelector = createSelector(
   recipientFeatureSelector,
   (state: RecipientStateInterface) => state.isValid
 )
+
+export const isRecipientPristineSelector = createSelector(
+  recipientFeatureSelector,
+  (state: RecipientStateInterface) => state.isPristine
+)

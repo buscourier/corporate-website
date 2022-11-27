@@ -1,10 +1,15 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core'
 import {FormBuilder, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
-import {tap, using} from 'rxjs'
+import {Subscription, tap, using} from 'rxjs'
 import {changeValidityAction} from './store/actions/change-validity.action'
 import {changeValuesAction} from './store/actions/change-values.action'
-import {recipientSelector} from './store/selectors'
+import {isRecipientPristineSelector, recipientSelector} from './store/selectors'
 import {RecipientStateInterface} from './types/recipient-state.interface'
 
 @Component({
@@ -13,7 +18,7 @@ import {RecipientStateInterface} from './types/recipient-state.interface'
   styleUrls: ['./recipient.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RecipientComponent {
+export class RecipientComponent implements OnInit, OnDestroy {
   form = this.fb.group({
     fio: ['', Validators.required],
     phone: ['', Validators.required],
@@ -37,5 +42,24 @@ export class RecipientComponent {
     () => this.store.select(recipientSelector)
   )
 
+  isRecipientPristineSub: Subscription
+
   constructor(private fb: FormBuilder, private store: Store) {}
+
+  ngOnInit(): void {
+    this.isRecipientPristineSub = this.store
+      .select(isRecipientPristineSelector)
+      .pipe(
+        tap((isPristine: boolean) => {
+          if (isPristine) {
+            this.form.reset()
+          }
+        })
+      )
+      .subscribe()
+  }
+
+  ngOnDestroy(): void {
+    this.isRecipientPristineSub.unsubscribe()
+  }
 }
