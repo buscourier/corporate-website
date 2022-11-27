@@ -229,6 +229,16 @@ export class StepFourComponent implements OnInit, OnDestroy {
     )
 
     this.isOrdersValid$ = this.store.select(isOrdersValidSelector)
+
+    this.policy.valueChanges
+      .pipe(
+        tap((value: boolean) => {
+          if (value) {
+            this.executeRecaptcha()
+          }
+        })
+      )
+      .subscribe()
   }
 
   getParcelDimension(parcel: ParcelInterface) {
@@ -277,13 +287,7 @@ export class StepFourComponent implements OnInit, OnDestroy {
     return formattedServices.length ? formattedServices.join(', ') : 'Нет'
   }
 
-  onSubmit() {
-    const {message} = this.form.value
-    // let note = this.note.unshift(message)
-    // note.join(', ')
-    //
-    // this.orderData.note = this.note
-
+  executeRecaptcha() {
     this.recaptchaSub = this.recaptchaService
       .execute('createNewOrder')
       .subscribe(
@@ -296,6 +300,14 @@ export class StepFourComponent implements OnInit, OnDestroy {
           this.tokenError = {error}
         }
       )
+  }
+
+  onSubmit() {
+    const {message} = this.form.value
+    // let note = this.note.unshift(message)
+    // note.join(', ')
+    //
+    // this.orderData.note = this.note
 
     this.store.dispatch(sendOrderAction({order: this.orderData}))
   }
