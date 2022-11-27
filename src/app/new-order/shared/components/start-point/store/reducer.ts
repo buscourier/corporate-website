@@ -60,6 +60,7 @@ const startPointReducer = createReducer(
   on(changeCityAction, (state: StartPointStateInterface, {city}) => ({
     ...state,
     city,
+    isPristine: false,
   })),
   on(changeOfficeAction, (state: StartPointStateInterface, {give}) => ({
     ...state,

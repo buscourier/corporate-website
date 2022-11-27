@@ -40,6 +40,7 @@ import {
   isCitiesLoadedSelector,
   isCitiesLoadingSelector,
   isOfficesLoadingSelector,
+  isPristineStartPointSelector,
   officesSelector,
   startCitySelector,
   startCourierSelector,
@@ -225,6 +226,18 @@ export class StartPointComponent implements OnInit, OnDestroy {
         debounceTime(500),
         tap(() => {
           this.store.dispatch(changeValidityAction({isValid: this.form.valid}))
+        })
+      )
+      .subscribe()
+
+    this.store
+      .select(isPristineStartPointSelector)
+      .pipe(
+        tap((isPristine: boolean) => {
+          if (isPristine) {
+            this.form.markAsPristine()
+            this.form.markAsUntouched()
+          }
         })
       )
       .subscribe()
