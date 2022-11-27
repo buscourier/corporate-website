@@ -14,3 +14,8 @@ export const isPersonValidSelector = createSelector(
   personFeatureSelector,
   (state: PersonStateInterface) => state.isValid
 )
+
+export const isPersonPristineSelector = createSelector(
+  personFeatureSelector,
+  (state: PersonStateInterface) => state.isPristine
+)

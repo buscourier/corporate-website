@@ -10,4 +10,5 @@ export const initialState: PersonStateInterface = {
   phone: '',
   role: '',
   isValid: false,
+  isPristine: true,
 }

@@ -1,11 +1,16 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core'
 import {FormBuilder, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
-import {using} from 'rxjs'
+import {Subscription, using} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {changeValidityAction} from './store/actions/change-validity.action'
 import {changeValuesAction} from './store/actions/change-values.action'
-import {personSelector} from './store/selectors'
+import {isPersonPristineSelector, personSelector} from './store/selectors'
 import {initialState} from './store/state'
 import {PersonStateInterface} from './types/person-state.interface'
 
@@ -15,7 +20,7 @@ import {PersonStateInterface} from './types/person-state.interface'
   styleUrls: ['./person.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PersonComponent {
+export class PersonComponent implements OnInit, OnDestroy {
   roles = ['Отправитель', 'Получатель']
 
   form = this.fb.group({
@@ -27,6 +32,8 @@ export class PersonComponent {
     role: [initialState.role, Validators.required],
   })
 
+  isPersonPristineSub: Subscription
+
   formValues$ = using(
     () =>
       this.form.valueChanges
@@ -34,7 +41,6 @@ export class PersonComponent {
           tap((values: PersonStateInterface) => {
             this.store.dispatch(changeValuesAction(values))
           }),
-          // debounceTime(1000),
           tap(() => {
             //TODO: consider switch map, concat map or smth else?
             this.store.dispatch(
@@ -47,4 +53,21 @@ export class PersonComponent {
   )
 
   constructor(private fb: FormBuilder, private store: Store) {}
+
+  ngOnInit(): void {
+    this.isPersonPristineSub = this.store
+      .select(isPersonPristineSelector)
+      .pipe(
+        tap((isPristine: boolean) => {
+          if (isPristine) {
+            this.form.reset()
+          }
+        })
+      )
+      .subscribe()
+  }
+
+  ngOnDestroy(): void {
+    this.isPersonPristineSub.unsubscribe()
+  }
 }

@@ -6,4 +6,5 @@ export interface PersonStateInterface {
   email: string
   role: string
   isValid: boolean
+  isPristine: boolean
 }
