@@ -178,6 +178,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.store.dispatch(resetStartPointAction())
     this.store.dispatch(resetEndPointAction())
     this.store.dispatch(resetOrdersAction())
-    this.isTotalSumCalculated = false
+    this.store.dispatch(calculateTotalSumAction({isTotalSumCalculated: false}))
   }
 }
