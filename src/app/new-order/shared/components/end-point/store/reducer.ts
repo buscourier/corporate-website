@@ -57,6 +57,7 @@ const endPointReducer = createReducer(
   on(changeCityAction, (state: EndPointStateInterface, {city}) => ({
     ...state,
     city,
+    isPristine: false,
   })),
   on(changeOfficeAction, (state: EndPointStateInterface, {get}) => ({
     ...state,

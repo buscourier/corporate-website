@@ -68,7 +68,7 @@ export const isStartPointValidSelector = createSelector(
   (state: StartPointStateInterface) => state.isValid
 )
 
-export const isPristineStartPointSelector = createSelector(
+export const isStartPointPristineSelector = createSelector(
   startPointFeatureSelector,
   (state: StartPointStateInterface) => state.isPristine
 )

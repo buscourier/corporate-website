@@ -42,6 +42,7 @@ import {
   endOfficeSelector,
   isCitiesLoadedSelector,
   isCitiesLoadingSelector,
+  isEndPointPristineSelector,
   isOfficesLoadingSelector,
   officesSelector,
 } from '../../store/selectors'
@@ -153,6 +154,7 @@ export class EndPointComponent implements OnInit, OnDestroy {
   })
 
   formValuesSub: Subscription
+  isEndPointPristineSub: Subscription
 
   readonly TabName = {
     get: 'Забрать в отделение',
@@ -249,6 +251,18 @@ export class EndPointComponent implements OnInit, OnDestroy {
         debounceTime(500),
         tap(() => {
           this.store.dispatch(changeValidityAction({isValid: this.form.valid}))
+        })
+      )
+      .subscribe()
+
+    this.isEndPointPristineSub = this.store
+      .select(isEndPointPristineSelector)
+      .pipe(
+        tap((isPristine: boolean) => {
+          if (isPristine) {
+            this.form.reset()
+            this.city.disable()
+          }
         })
       )
       .subscribe()

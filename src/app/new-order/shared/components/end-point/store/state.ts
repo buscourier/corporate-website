@@ -7,6 +7,7 @@ export const initialState: EndPointStateInterface = {
   isOfficesLoading: false,
   isCitiesLoaded: false,
   isValid: false,
+  isPristine: true,
   cities: null,
   offices: null,
   city: null,

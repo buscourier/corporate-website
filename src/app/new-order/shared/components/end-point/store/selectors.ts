@@ -68,6 +68,11 @@ export const isEndPointValidSelector = createSelector(
   (state: EndPointStateInterface) => state.isValid
 )
 
+export const isEndPointPristineSelector = createSelector(
+  endPointFeatureSelector,
+  (state: EndPointStateInterface) => state.isPristine
+)
+
 export const endPointSelector = createSelector(
   endPointFeatureSelector,
   (state: EndPointStateInterface) => state

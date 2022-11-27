@@ -24,7 +24,6 @@ import {STRINGIFY_CITIES} from '../../../../../../shared/handlers/string-handler
 import {OfficeInterface} from '../../../../../../shared/types/office.interface'
 import {StartCityInterface} from '../../../../../../shared/types/start-city.interface'
 import {CourierInterface} from '../../../../types/courier.interface'
-import {resetOrdersAction} from '../../../orders/store/actions/reset-orders.action'
 import {changeActiveTabAction} from '../../store/actions/change-active-tab.action'
 import {changeCityAction} from '../../store/actions/change-city.action'
 import {changeCourierAction} from '../../store/actions/change-courier.action'
@@ -40,7 +39,7 @@ import {
   isCitiesLoadedSelector,
   isCitiesLoadingSelector,
   isOfficesLoadingSelector,
-  isPristineStartPointSelector,
+  isStartPointPristineSelector,
   officesSelector,
   startCitySelector,
   startCourierSelector,
@@ -146,6 +145,7 @@ export class StartPointComponent implements OnInit, OnDestroy {
   })
 
   formValuesSub: Subscription
+  isStartPointPristineSub: Subscription
 
   tabs: string[]
 
@@ -163,6 +163,10 @@ export class StartPointComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.formValuesSub.unsubscribe()
+
+    if (this.isStartPointPristineSub) {
+      this.isStartPointPristineSub.unsubscribe()
+    }
   }
 
   fetchData() {
@@ -230,13 +234,13 @@ export class StartPointComponent implements OnInit, OnDestroy {
       )
       .subscribe()
 
-    this.store
-      .select(isPristineStartPointSelector)
+    this.isStartPointPristineSub = this.store
+      .select(isStartPointPristineSelector)
       .pipe(
         tap((isPristine: boolean) => {
           if (isPristine) {
-            this.form.markAsPristine()
-            this.form.markAsUntouched()
+            this.form.reset()
+            this.date.setValue(this.setCurrentDate())
           }
         })
       )
@@ -280,11 +284,8 @@ export class StartPointComponent implements OnInit, OnDestroy {
     this.store.dispatch(changeActiveTabAction({activeTabIndex: index}))
   }
 
-  resetForm() {
-    console.log('thiiiis', this.city.value)
-
-    if (this.city.value) {
-      this.store.dispatch(resetOrdersAction())
-    }
+  setCurrentDate = () => {
+    const date = new Date()
+    return new TuiDay(date.getFullYear(), date.getMonth(), date.getDate())
   }
 }
