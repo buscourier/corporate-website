@@ -1,4 +1,5 @@
 import {NewOrderInputInterface} from './new-order-input.interface'
+import {NewOrderResponseInterface} from './new-order-response.interface'
 
 export interface CheckoutStateInterface {
   currentStep: number
@@ -9,6 +10,6 @@ export interface CheckoutStateInterface {
   }
   isSubmitting: boolean
   orderInput: NewOrderInputInterface
-  orderResponse: any
+  orderResponse: NewOrderResponseInterface
   backendErrors: string
 }

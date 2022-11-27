@@ -24,3 +24,13 @@ export const finishedStepsSelector = createSelector(
   checkoutFeatureSelector,
   (state: CheckoutStateInterface) => state.finishedSteps
 )
+
+export const newOrderInputSelector = createSelector(
+  checkoutFeatureSelector,
+  (state: CheckoutStateInterface) => state.orderInput
+)
+
+export const newOrderResponseSelector = createSelector(
+  checkoutFeatureSelector,
+  (state: CheckoutStateInterface) => state.orderResponse
+)

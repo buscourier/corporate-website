@@ -6,6 +6,8 @@ import {environment} from '../../../../environments/environment'
 import {EndCityInterface} from '../../../shared/types/end-city.interface'
 import {OfficeInterface} from '../../../shared/types/office.interface'
 import {StartCityInterface} from '../../../shared/types/start-city.interface'
+import {NewOrderInputInterface} from '../../components/checkout/types/new-order-input.interface'
+import {NewOrderResponseInterface} from '../../components/checkout/types/new-order-response.interface'
 import {CargoInterface} from '../types/cargo.interface'
 import {ServiceInterface} from '../types/service.interface'
 
@@ -50,9 +52,14 @@ export class NewOrderService {
     )
   }
 
-  sendOrder(order: any) {
+  sendOrder(
+    order: NewOrderInputInterface
+  ): Observable<NewOrderResponseInterface> {
     const url = `${environment.apiUrl}`
 
-    return this.http.post(`${url}/${environment.apiKey}`, JSON.stringify(order))
+    return this.http.post<NewOrderResponseInterface>(
+      `${url}/order/`,
+      JSON.stringify(order)
+    )
   }
 }
