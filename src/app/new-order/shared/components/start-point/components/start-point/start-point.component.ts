@@ -24,6 +24,7 @@ import {STRINGIFY_CITIES} from '../../../../../../shared/handlers/string-handler
 import {OfficeInterface} from '../../../../../../shared/types/office.interface'
 import {StartCityInterface} from '../../../../../../shared/types/start-city.interface'
 import {CourierInterface} from '../../../../types/courier.interface'
+import {resetOrdersAction} from '../../../orders/store/actions/reset-orders.action'
 import {changeActiveTabAction} from '../../store/actions/change-active-tab.action'
 import {changeCityAction} from '../../store/actions/change-city.action'
 import {changeCourierAction} from '../../store/actions/change-courier.action'
@@ -264,5 +265,13 @@ export class StartPointComponent implements OnInit, OnDestroy {
 
   setActiveTabIndex(index: number) {
     this.store.dispatch(changeActiveTabAction({activeTabIndex: index}))
+  }
+
+  resetForm() {
+    console.log('thiiiis', this.city.value)
+
+    if (this.city.value) {
+      this.store.dispatch(resetOrdersAction())
+    }
   }
 }

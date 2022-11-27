@@ -15,6 +15,7 @@ import {
   getAllServicesSuccessAction,
 } from './actions/get-all-services.action'
 import {ordersValueChangesAction} from './actions/orders-value-changes.action'
+import {resetOrdersAction} from './actions/reset-orders.action'
 import {initialState} from './state'
 
 const ordersReducer = createReducer(
@@ -72,6 +73,10 @@ const ordersReducer = createReducer(
   on(changeValidityAction, (state: OrdersStateInterface, {isValid}) => ({
     ...state,
     isValid,
+  })),
+  on(resetOrdersAction, (state: OrdersStateInterface) => ({
+    ...state,
+    ...initialState,
   }))
   // on(initOrdersAction, (state: OrdersStateInterface, {isInitialized}) => ({
   //   ...state,
