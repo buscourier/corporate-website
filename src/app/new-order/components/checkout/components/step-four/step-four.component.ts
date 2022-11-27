@@ -54,7 +54,19 @@ export class StepFourComponent implements OnInit {
   })
 
   totalServices = []
-  totalOrders = []
+  orderData = {
+    'api-key': '8aab09f6-c5b3-43be-8895-153ea164984e',
+    start_city: '',
+    end_city: '',
+    sending_date: null,
+    sender_name: '',
+    sender_phone: '',
+    sender_passport: '',
+    recipient_name: '',
+    recipient_phone: '',
+    orders: [],
+    note: '',
+  }
 
   constructor(
     private fb: FormBuilder,
@@ -77,8 +89,12 @@ export class StepFourComponent implements OnInit {
 
           this.totalServices.push({id: '1', value})
         }
+
+        this.orderData.start_city = point.city.id
+        this.orderData.sending_date = point.date
       })
     )
+
     this.endPoint$ = this.store.select(endPointSelector).pipe(
       tap((point: EndPointStateInterface) => {
         const courier: CourierInterface | null = point.delivery
@@ -89,12 +105,29 @@ export class StepFourComponent implements OnInit {
 
           this.totalServices.push({id: '2', value})
         }
+
+        this.orderData.end_city = point.city.name
       })
     )
+
     this.person$ = this.store.select(personSelector)
     this.entity$ = this.store.select(entitySelector)
-    this.sender$ = this.store.select(senderSelector)
-    this.recipient$ = this.store.select(recipientSelector)
+
+    this.sender$ = this.store.select(senderSelector).pipe(
+      tap((sender: SenderStateInterface) => {
+        this.orderData.sender_name = sender.fio
+        this.orderData.sender_passport = sender.docNumber
+        this.orderData.sender_phone = sender.phone
+      })
+    )
+
+    this.recipient$ = this.store.select(recipientSelector).pipe(
+      tap((recipient: RecipientStateInterface) => {
+        this.orderData.recipient_name = recipient.fio
+        this.orderData.recipient_phone = recipient.phone
+      })
+    )
+
     this.orders$ = this.store.select(ordersSelector).pipe(
       tap((orders: OrderStateInterface[]) => {
         orders.forEach((order: OrderStateInterface) => {
@@ -138,7 +171,7 @@ export class StepFourComponent implements OnInit {
               break
           }
 
-          this.totalOrders.push({
+          this.orderData.orders.push({
             cargo_type,
             cargo_count,
             dimensions,
@@ -147,6 +180,7 @@ export class StepFourComponent implements OnInit {
         })
       })
     )
+
     this.isOrdersValid$ = this.store.select(isOrdersValidSelector)
   }
 
@@ -197,6 +231,6 @@ export class StepFourComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('Step four', this.totalOrders)
+    // console.log('Step four', this.totalOrders)
   }
 }
