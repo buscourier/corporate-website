@@ -5,6 +5,7 @@ import {changeBusAction} from './actions/change-bus.action'
 import {changeCityAction} from './actions/change-city.action'
 import {changeCourierAction} from './actions/change-courier.action'
 import {changeOfficeAction} from './actions/change-office.action'
+import {changeValidityAction} from './actions/change-validity.action'
 import {citiesLoadedAction} from './actions/cities-loaded.action'
 import {
   getCitiesAction,
@@ -16,8 +17,8 @@ import {
   getOfficesFailureAction,
   getOfficesSuccessAction,
 } from './actions/get-offices.action'
+import {resetEndPointAction} from './actions/reset-end-point.action'
 import {initialState} from './state'
-import {changeValidityAction} from './actions/change-validity.action'
 
 const endPointReducer = createReducer(
   initialState,
@@ -79,6 +80,10 @@ const endPointReducer = createReducer(
   on(changeValidityAction, (state: EndPointStateInterface, {isValid}) => ({
     ...state,
     isValid,
+  })),
+  on(resetEndPointAction, (state: EndPointStateInterface) => ({
+    ...state,
+    ...initialState,
   }))
 )
 

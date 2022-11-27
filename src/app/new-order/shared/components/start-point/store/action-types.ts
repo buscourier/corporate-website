@@ -16,4 +16,5 @@ export enum ActionTypes {
   CHANGE_ACTIVE_TAB = '[Start point] Set active tab',
 
   CHANGE_VALIDITY = '[Start point] Validity changes',
+  RESET_START_POINT = '[Start point] reset',
 }

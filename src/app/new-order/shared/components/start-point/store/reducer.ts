@@ -5,6 +5,7 @@ import {changeCityAction} from './actions/change-city.action'
 import {changeCourierAction} from './actions/change-courier.action'
 import {changeDateAction} from './actions/change-date.action'
 import {changeOfficeAction} from './actions/change-office.action'
+import {changeValidityAction} from './actions/change-validity.action'
 import {citiesLoadedAction} from './actions/cities-loaded.action'
 import {
   getCitiesAction,
@@ -16,8 +17,8 @@ import {
   getOfficesFailureAction,
   getOfficesSuccessAction,
 } from './actions/get-offices.action'
+import {resetStartPointAction} from './actions/reset-start-point.action'
 import {initialState} from './state'
-import {changeValidityAction} from './actions/change-validity.action'
 
 const startPointReducer = createReducer(
   initialState,
@@ -82,6 +83,10 @@ const startPointReducer = createReducer(
   on(changeValidityAction, (state: StartPointStateInterface, {isValid}) => ({
     ...state,
     isValid,
+  })),
+  on(resetStartPointAction, (state: StartPointStateInterface) => ({
+    ...state,
+    ...initialState,
   }))
 )
 

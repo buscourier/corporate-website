@@ -15,16 +15,19 @@ import {
   Subscription,
 } from 'rxjs'
 import {tap} from 'rxjs/operators'
+import {resetEndPointAction} from '../../../../shared/components/end-point/store/actions/reset-end-point.action'
 import {
   endCitySelector,
   endCourierSelector,
   endPointSelector,
 } from '../../../../shared/components/end-point/store/selectors'
 import {EndPointStateInterface} from '../../../../shared/components/end-point/types/end-point-state.interface'
+import {resetOrdersAction} from '../../../../shared/components/orders/store/actions/reset-orders.action'
 import {
   isOrdersValidSelector,
   ordersSelector,
 } from '../../../../shared/components/orders/store/selectors'
+import {resetStartPointAction} from '../../../../shared/components/start-point/store/actions/reset-start-point.action'
 import {
   startCitySelector,
   startCourierSelector,
@@ -169,5 +172,12 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   goToCheckout() {
     this.router.navigate(['new-order', 'checkout'])
+  }
+
+  reset() {
+    this.store.dispatch(resetStartPointAction())
+    this.store.dispatch(resetEndPointAction())
+    this.store.dispatch(resetOrdersAction())
+    this.isTotalSumCalculated = false
   }
 }
