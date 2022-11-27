@@ -3,7 +3,10 @@ import {Store} from '@ngrx/store'
 import {Observable} from 'rxjs'
 import {endPointSelector} from '../../../../../../shared/components/end-point/store/selectors'
 import {EndPointStateInterface} from '../../../../../../shared/components/end-point/types/end-point-state.interface'
-import {ordersSelector} from '../../../../../../shared/components/orders/store/selectors'
+import {
+  isOrdersValidSelector,
+  ordersSelector,
+} from '../../../../../../shared/components/orders/store/selectors'
 import {startPointSelector} from '../../../../../../shared/components/start-point/store/selectors'
 import {StartPointStateInterface} from '../../../../../../shared/components/start-point/types/start-point-state.interface'
 import {personSelector} from '../../../step-one/components/person/store/selectors'
@@ -13,6 +16,7 @@ import {RecipientStateInterface} from '../../../step-three/components/recipient/
 import {senderSelector} from '../../../step-two/components/sender/store/selectors'
 import {SenderStateInterface} from '../../../step-two/components/sender/types/sender-state.interface'
 import {entitySelector} from '../../../step-one/store/selectors'
+import {ParcelInterface} from '../../../../../../shared/components/order/types/parcel.interface'
 
 @Component({
   selector: 'app-report',
@@ -28,6 +32,7 @@ export class ReportComponent implements OnInit {
   sender$: Observable<SenderStateInterface>
   recipient$: Observable<RecipientStateInterface>
   orders$: Observable<any>
+  isOrdersValid$: Observable<boolean>
 
   constructor(private store: Store) {}
 
@@ -43,5 +48,12 @@ export class ReportComponent implements OnInit {
     this.sender$ = this.store.select(senderSelector)
     this.recipient$ = this.store.select(recipientSelector)
     this.orders$ = this.store.select(ordersSelector)
+    this.isOrdersValid$ = this.store.select(isOrdersValidSelector)
+  }
+
+  getParcelDimension(parcel: ParcelInterface) {
+    return `Ширина: <b>${parcel.width} см.</b>,
+            Высота: <b>${parcel.height} см.</b>,
+            Длина: <b>${parcel.length} см.</b>`
   }
 }
