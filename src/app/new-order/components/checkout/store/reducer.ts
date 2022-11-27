@@ -38,13 +38,15 @@ const checkoutReducer = createReducer(
     ...state,
     isCurrentStepValid: isValid,
   })),
-  on(sendOrderAction, (state: CheckoutStateInterface) => ({
+  on(sendOrderAction, (state: CheckoutStateInterface, {order}) => ({
     ...state,
     isSubmitting: true,
+    orderInput: order,
   })),
-  on(sendOrderSuccessAction, (state: CheckoutStateInterface) => ({
+  on(sendOrderSuccessAction, (state: CheckoutStateInterface, {order}) => ({
     ...state,
     isSubmitting: false,
+    orderResponse: order,
   })),
   on(sendOrderFailureAction, (state: CheckoutStateInterface, {errors}) => ({
     ...state,

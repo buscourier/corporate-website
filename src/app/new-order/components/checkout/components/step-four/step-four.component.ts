@@ -1,29 +1,32 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
 import {FormBuilder} from '@angular/forms'
-import {BehaviorSubject, filter, map, Observable, tap} from 'rxjs'
-import {StartPointStateInterface} from '../../../../shared/components/start-point/types/start-point-state.interface'
-import {EndPointStateInterface} from '../../../../shared/components/end-point/types/end-point-state.interface'
-import {PersonStateInterface} from '../step-one/components/person/types/person-state.interface'
-import {SenderStateInterface} from '../step-two/components/sender/types/sender-state.interface'
-import {RecipientStateInterface} from '../step-three/components/recipient/types/recipient-state.interface'
-import {startPointSelector} from '../../../../shared/components/start-point/store/selectors'
+import {Store} from '@ngrx/store'
+import {filter, Observable, tap} from 'rxjs'
+import {EndCityInterface} from '../../../../../shared/types/end-city.interface'
+import {OfficeInterface} from '../../../../../shared/types/office.interface'
+import {StartCityInterface} from '../../../../../shared/types/start-city.interface'
 import {endPointSelector} from '../../../../shared/components/end-point/store/selectors'
-import {personSelector} from '../step-one/components/person/store/selectors'
-import {entitySelector} from '../step-one/store/selectors'
-import {senderSelector} from '../step-two/components/sender/store/selectors'
-import {recipientSelector} from '../step-three/components/recipient/store/selectors'
+import {EndPointStateInterface} from '../../../../shared/components/end-point/types/end-point-state.interface'
+import {OrderStateInterface} from '../../../../shared/components/order/types/order-state.interface'
+import {ParcelInterface} from '../../../../shared/components/order/types/parcel.interface'
 import {
   isOrdersValidSelector,
   ordersSelector,
 } from '../../../../shared/components/orders/store/selectors'
-import {Store} from '@ngrx/store'
-import {ParcelInterface} from '../../../../shared/components/order/types/parcel.interface'
+import {startPointSelector} from '../../../../shared/components/start-point/store/selectors'
+import {StartPointStateInterface} from '../../../../shared/components/start-point/types/start-point-state.interface'
 import {CourierInterface} from '../../../../shared/types/courier.interface'
-import {OrderStateInterface} from '../../../../shared/components/order/types/order-state.interface'
 import {TotalSumService} from '../../../sidebar/services/total-sum.service'
-import {OfficeInterface} from '../../../../../shared/types/office.interface'
-import {StartCityInterface} from '../../../../../shared/types/start-city.interface'
-import {EndCityInterface} from '../../../../../shared/types/end-city.interface'
+import {sendOrderAction} from '../../store/actions/send-order.action'
+import {NewOrderInputInterface} from '../../types/new-order-input.interface'
+import {personSelector} from '../step-one/components/person/store/selectors'
+import {PersonStateInterface} from '../step-one/components/person/types/person-state.interface'
+import {entitySelector} from '../step-one/store/selectors'
+import {recipientSelector} from '../step-three/components/recipient/store/selectors'
+import {RecipientStateInterface} from '../step-three/components/recipient/types/recipient-state.interface'
+import {senderSelector} from '../step-two/components/sender/store/selectors'
+import {SenderStateInterface} from '../step-two/components/sender/types/sender-state.interface'
+import {isSubmittingSelector} from './store/selectors'
 
 interface TotalServicesInterface {
   id: string
@@ -45,6 +48,7 @@ export class StepFourComponent implements OnInit {
   recipient$: Observable<RecipientStateInterface>
   orders$: Observable<any>
   isOrdersValid$: Observable<boolean>
+  isSubmitting$: Observable<boolean>
 
   message = this.fb.control('')
   policy = this.fb.control(false)
@@ -57,18 +61,18 @@ export class StepFourComponent implements OnInit {
   //TODO: need interface
   totalServices = []
   note = []
-  orderData = {
+  orderData: NewOrderInputInterface = {
     'api-key': '8aab09f6-c5b3-43be-8895-153ea164984e',
     start_city: '',
     end_city: '',
-    sending_date: null,
+    sending_date: '',
     sender_name: '',
     sender_phone: '',
     sender_passport: '',
     recipient_name: '',
     recipient_phone: '',
     orders: [],
-    note: [],
+    note: '',
   }
 
   constructor(
@@ -82,6 +86,7 @@ export class StepFourComponent implements OnInit {
   }
 
   initializeValues() {
+    this.isSubmitting$ = this.store.select(isSubmittingSelector) //TODO: maybe use checkout store?
     this.startPoint$ = this.store.select(startPointSelector).pipe(
       filter(Boolean),
       tap((point: StartPointStateInterface) => {
@@ -102,7 +107,9 @@ export class StepFourComponent implements OnInit {
         }
 
         this.orderData.start_city = city.id
-        this.orderData.sending_date = point.date
+        //TODO: sending date
+        // this.orderData.sending_date = point.date
+        this.orderData.sending_date = '28.11.2022'
       })
     )
 
@@ -254,11 +261,11 @@ export class StepFourComponent implements OnInit {
 
   onSubmit() {
     const {message} = this.form.value
-    this.note.unshift(message)
-    this.note.join(', ')
+    // let note = this.note.unshift(message)
+    // note.join(', ')
+    //
+    // this.orderData.note = this.note
 
-    this.orderData.note = this.note
-
-    console.log('Step four', this.orderData)
+    this.store.dispatch(sendOrderAction({order: this.orderData}))
   }
 }

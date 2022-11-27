@@ -7,6 +7,8 @@ import {StepOneComponent} from './components/checkout/components/step-one/step-o
 import {StepThreeComponent} from './components/checkout/components/step-three/step-three.component'
 import {StepTwoComponent} from './components/checkout/components/step-two/step-two.component'
 import {ValidateGuard} from './components/checkout/services/validate.guard'
+import {FailureComponent} from './components/failure/failure.component'
+import {SuccessComponent} from './components/success/success.component'
 import {IndexComponent} from './index.component'
 
 const routes: Routes = [
@@ -46,6 +48,14 @@ const routes: Routes = [
         ],
       },
     ],
+  },
+  {
+    path: 'success',
+    component: SuccessComponent,
+  },
+  {
+    path: 'failure',
+    component: FailureComponent,
   },
 ]
 

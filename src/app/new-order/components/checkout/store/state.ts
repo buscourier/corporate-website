@@ -8,5 +8,7 @@ export const initialState: CheckoutStateInterface = {
   finishedSteps: {},
   isCurrentStepValid: false,
   isSubmitting: false,
+  orderInput: null,
+  orderResponse: null,
   backendErrors: null,
 }

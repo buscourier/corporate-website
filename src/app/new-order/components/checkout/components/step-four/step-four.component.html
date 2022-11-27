@@ -165,6 +165,13 @@
     <button [routerLink]="['/new-order', 'checkout', '2']" tuiButton size="m">
       Назад
     </button>
-    <button type="submit" tuiButton size="m">Оформить заказ</button>
+    <button
+      type="submit"
+      tuiButton
+      size="m"
+      [showLoader]="isSubmitting$ | async"
+    >
+      Оформить заказ
+    </button>
   </div>
 </form>
