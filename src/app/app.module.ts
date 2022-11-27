@@ -13,6 +13,7 @@ import {
 } from '@taiga-ui/core'
 import {TUI_LANGUAGE, TUI_RUSSIAN_LANGUAGE} from '@taiga-ui/i18n'
 import {NgDompurifySanitizer} from '@tinkoff/ng-dompurify'
+import {RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module} from 'ng-recaptcha'
 import {of} from 'rxjs'
 import {environment} from '../environments/environment'
 import {AppRoutingModule} from './app-routing.module'
@@ -40,6 +41,7 @@ import {PageHeaderModule} from './shared/components/page-header/page-header.modu
     TuiRootModule,
     TuiDialogModule,
     TuiAlertModule,
+    RecaptchaV3Module,
   ],
   providers: [
     // {
@@ -66,6 +68,10 @@ import {PageHeaderModule} from './shared/components/page-header/page-header.modu
     //   deps: [TUI_DATE_VALUE_TRANSFORMER],
     //   useFactory: getDateRangeTransformer,
     // },
+    {
+      provide: RECAPTCHA_V3_SITE_KEY,
+      useValue: '6LcTi20dAAAAAL2vjBwFpAGHt2PU5qY7HM003S_E',
+    },
   ],
   bootstrap: [AppComponent],
 })

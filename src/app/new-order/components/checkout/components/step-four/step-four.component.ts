@@ -1,7 +1,13 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core'
 import {FormBuilder} from '@angular/forms'
 import {Store} from '@ngrx/store'
-import {filter, Observable, tap} from 'rxjs'
+import {ReCaptchaV3Service} from 'ng-recaptcha'
+import {filter, Observable, Subscription, tap} from 'rxjs'
 import {EndCityInterface} from '../../../../../shared/types/end-city.interface'
 import {OfficeInterface} from '../../../../../shared/types/office.interface'
 import {StartCityInterface} from '../../../../../shared/types/start-city.interface'
@@ -39,7 +45,7 @@ interface TotalServicesInterface {
   styleUrls: ['./step-four.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StepFourComponent implements OnInit {
+export class StepFourComponent implements OnInit, OnDestroy {
   startPoint$: Observable<StartPointStateInterface>
   endPoint$: Observable<EndPointStateInterface>
   person$: Observable<PersonStateInterface>
@@ -61,6 +67,7 @@ export class StepFourComponent implements OnInit {
   //TODO: need interface
   totalServices = []
   note = []
+
   orderData: NewOrderInputInterface = {
     'api-key': '8aab09f6-c5b3-43be-8895-153ea164984e',
     start_city: '',
@@ -75,14 +82,25 @@ export class StepFourComponent implements OnInit {
     note: '',
   }
 
+  token = ''
+  tokenError?: {error: any}
+  recaptchaSub: Subscription
+
   constructor(
     private fb: FormBuilder,
     private store: Store,
-    private totalSumService: TotalSumService
+    private totalSumService: TotalSumService,
+    private recaptchaService: ReCaptchaV3Service
   ) {}
 
   ngOnInit(): void {
     this.initializeValues()
+  }
+
+  ngOnDestroy(): void {
+    if (this.recaptchaSub) {
+      this.recaptchaSub.unsubscribe()
+    }
   }
 
   initializeValues() {
@@ -265,6 +283,19 @@ export class StepFourComponent implements OnInit {
     // note.join(', ')
     //
     // this.orderData.note = this.note
+
+    this.recaptchaSub = this.recaptchaService
+      .execute('createNewOrder')
+      .subscribe(
+        (token: string) => {
+          this.token = token
+          this.tokenError = undefined
+        },
+        (error) => {
+          this.token = ''
+          this.tokenError = {error}
+        }
+      )
 
     this.store.dispatch(sendOrderAction({order: this.orderData}))
   }

@@ -42,6 +42,7 @@
     "@tinkoff/ng-dompurify": "3.0.0",
     "angular8-yandex-maps": "^14.0.3",
     "dompurify": "2.2.9",
+    "ng-recaptcha": "^10.0.0",
     "rollup-plugin-typescript2": "^0.34.1",
     "rxjs": "~7.5.0",
     "svgo": "^2.8.0",
