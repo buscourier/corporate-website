@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
 import {FormBuilder} from '@angular/forms'
-import {BehaviorSubject, map, Observable, tap} from 'rxjs'
+import {BehaviorSubject, filter, map, Observable, tap} from 'rxjs'
 import {StartPointStateInterface} from '../../../../shared/components/start-point/types/start-point-state.interface'
 import {EndPointStateInterface} from '../../../../shared/components/end-point/types/end-point-state.interface'
 import {PersonStateInterface} from '../step-one/components/person/types/person-state.interface'
@@ -19,10 +19,11 @@ import {
 import {Store} from '@ngrx/store'
 import {ParcelInterface} from '../../../../shared/components/order/types/parcel.interface'
 import {CourierInterface} from '../../../../shared/types/courier.interface'
-import {OrdersStateInterface} from '../../../../shared/components/orders/types/orders-state.interface'
 import {OrderStateInterface} from '../../../../shared/components/order/types/order-state.interface'
 import {TotalSumService} from '../../../sidebar/services/total-sum.service'
-import {CargoInterface} from '../../../../shared/types/cargo.interface'
+import {OfficeInterface} from '../../../../../shared/types/office.interface'
+import {StartCityInterface} from '../../../../../shared/types/start-city.interface'
+import {EndCityInterface} from '../../../../../shared/types/end-city.interface'
 
 interface TotalServicesInterface {
   id: string
@@ -53,7 +54,9 @@ export class StepFourComponent implements OnInit {
     policy: this.policy,
   })
 
+  //TODO: need interface
   totalServices = []
+  note = []
   orderData = {
     'api-key': '8aab09f6-c5b3-43be-8895-153ea164984e',
     start_city: '',
@@ -65,7 +68,7 @@ export class StepFourComponent implements OnInit {
     recipient_name: '',
     recipient_phone: '',
     orders: [],
-    note: '',
+    note: [],
   }
 
   constructor(
@@ -80,6 +83,7 @@ export class StepFourComponent implements OnInit {
 
   initializeValues() {
     this.startPoint$ = this.store.select(startPointSelector).pipe(
+      filter(Boolean),
       tap((point: StartPointStateInterface) => {
         const courier: CourierInterface | null = point.pickup
 
@@ -90,12 +94,20 @@ export class StepFourComponent implements OnInit {
           this.totalServices.push({id: '1', value})
         }
 
-        this.orderData.start_city = point.city.id
+        const city: StartCityInterface = point.city
+        const office: OfficeInterface = point.give
+
+        if (office) {
+          this.note.push(`Место отправления: ${city.name}, ${office.address}`)
+        }
+
+        this.orderData.start_city = city.id
         this.orderData.sending_date = point.date
       })
     )
 
     this.endPoint$ = this.store.select(endPointSelector).pipe(
+      filter(Boolean),
       tap((point: EndPointStateInterface) => {
         const courier: CourierInterface | null = point.delivery
 
@@ -106,7 +118,14 @@ export class StepFourComponent implements OnInit {
           this.totalServices.push({id: '2', value})
         }
 
-        this.orderData.end_city = point.city.name
+        const city: EndCityInterface = point.city
+        const office: OfficeInterface = point.get
+
+        if (office) {
+          this.note.push(`Место получения: ${city.name}, ${office.address}`)
+        }
+
+        this.orderData.end_city = city.id
       })
     )
 
@@ -114,6 +133,7 @@ export class StepFourComponent implements OnInit {
     this.entity$ = this.store.select(entitySelector)
 
     this.sender$ = this.store.select(senderSelector).pipe(
+      filter(Boolean),
       tap((sender: SenderStateInterface) => {
         this.orderData.sender_name = sender.fio
         this.orderData.sender_passport = sender.docNumber
@@ -122,6 +142,7 @@ export class StepFourComponent implements OnInit {
     )
 
     this.recipient$ = this.store.select(recipientSelector).pipe(
+      filter(Boolean),
       tap((recipient: RecipientStateInterface) => {
         this.orderData.recipient_name = recipient.fio
         this.orderData.recipient_phone = recipient.phone
@@ -129,6 +150,7 @@ export class StepFourComponent implements OnInit {
     )
 
     this.orders$ = this.store.select(ordersSelector).pipe(
+      filter(Boolean),
       tap((orders: OrderStateInterface[]) => {
         orders.forEach((order: OrderStateInterface) => {
           const packageIds = this.totalSumService.getPackageIds(order.packages)
@@ -231,6 +253,12 @@ export class StepFourComponent implements OnInit {
   }
 
   onSubmit() {
-    // console.log('Step four', this.totalOrders)
+    const {message} = this.form.value
+    this.note.unshift(message)
+    this.note.join(', ')
+
+    this.orderData.note = this.note
+
+    console.log('Step four', this.orderData)
   }
 }
