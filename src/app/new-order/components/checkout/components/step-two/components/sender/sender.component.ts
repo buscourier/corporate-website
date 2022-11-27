@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   OnDestroy,
@@ -7,6 +8,8 @@ import {
 import {FormBuilder, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
 import {Subscription, tap, using} from 'rxjs'
+import {personSelector} from '../../../step-one/components/person/store/selectors'
+import {PersonStateInterface} from '../../../step-one/components/person/types/person-state.interface'
 import {changeValidityAction} from './store/actions/change-validity.action'
 import {changeValuesAction} from './store/actions/change-values.action'
 import {isSenderPristineSelector, senderSelector} from './store/selectors'
@@ -18,8 +21,10 @@ import {SenderStateInterface} from './types/sender-state.interface'
   styleUrls: ['./sender.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SenderComponent implements OnInit, OnDestroy {
+export class SenderComponent implements OnInit, AfterViewInit, OnDestroy {
   documents = ['Паспорт РФ', 'Водительское удостоверение', 'Другое']
+  personSub: Subscription
+  isSenderPristineSub: Subscription
 
   form = this.fb.group({
     fio: ['', Validators.required],
@@ -27,8 +32,6 @@ export class SenderComponent implements OnInit, OnDestroy {
     docNumber: ['', Validators.required],
     phone: ['', Validators.required],
   })
-
-  isSenderPristineSub: Subscription
 
   formValues$ = using(
     () =>
@@ -57,6 +60,24 @@ export class SenderComponent implements OnInit, OnDestroy {
         tap((isPristine: boolean) => {
           if (isPristine) {
             this.form.reset()
+          }
+        })
+      )
+      .subscribe()
+  }
+
+  ngAfterViewInit() {
+    this.form.get('docType').setValue(this.documents[0])
+
+    this.personSub = this.store
+      .select(personSelector)
+      .pipe(
+        tap((person: PersonStateInterface) => {
+          if (person.role === 'Отправитель') {
+            this.form.patchValue({
+              fio: `${person.lastName} ${person.firstName} ${person.middleName}`,
+              phone: person.phone,
+            })
           }
         })
       )

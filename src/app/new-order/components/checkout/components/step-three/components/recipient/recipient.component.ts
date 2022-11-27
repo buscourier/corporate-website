@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   OnDestroy,
@@ -7,6 +8,8 @@ import {
 import {FormBuilder, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
 import {Subscription, tap, using} from 'rxjs'
+import {personSelector} from '../../../step-one/components/person/store/selectors'
+import {PersonStateInterface} from '../../../step-one/components/person/types/person-state.interface'
 import {changeValidityAction} from './store/actions/change-validity.action'
 import {changeValuesAction} from './store/actions/change-values.action'
 import {isRecipientPristineSelector, recipientSelector} from './store/selectors'
@@ -18,7 +21,10 @@ import {RecipientStateInterface} from './types/recipient-state.interface'
   styleUrls: ['./recipient.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RecipientComponent implements OnInit, OnDestroy {
+export class RecipientComponent implements OnInit, AfterViewInit, OnDestroy {
+  personSub: Subscription
+  isRecipientPristineSub: Subscription
+
   form = this.fb.group({
     fio: ['', Validators.required],
     phone: ['', Validators.required],
@@ -42,8 +48,6 @@ export class RecipientComponent implements OnInit, OnDestroy {
     () => this.store.select(recipientSelector)
   )
 
-  isRecipientPristineSub: Subscription
-
   constructor(private fb: FormBuilder, private store: Store) {}
 
   ngOnInit(): void {
@@ -59,7 +63,24 @@ export class RecipientComponent implements OnInit, OnDestroy {
       .subscribe()
   }
 
+  ngAfterViewInit() {
+    this.personSub = this.store
+      .select(personSelector)
+      .pipe(
+        tap((person: PersonStateInterface) => {
+          if (person.role === 'Получатель') {
+            this.form.patchValue({
+              fio: `${person.lastName} ${person.firstName} ${person.middleName}`,
+              phone: person.phone,
+            })
+          }
+        })
+      )
+      .subscribe()
+  }
+
   ngOnDestroy(): void {
     this.isRecipientPristineSub.unsubscribe()
+    this.personSub.unsubscribe()
   }
 }
