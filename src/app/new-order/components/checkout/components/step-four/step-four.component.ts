@@ -22,6 +22,7 @@ import {CourierInterface} from '../../../../shared/types/courier.interface'
 import {OrdersStateInterface} from '../../../../shared/components/orders/types/orders-state.interface'
 import {OrderStateInterface} from '../../../../shared/components/order/types/order-state.interface'
 import {TotalSumService} from '../../../sidebar/services/total-sum.service'
+import {CargoInterface} from '../../../../shared/types/cargo.interface'
 
 interface TotalServicesInterface {
   id: string
@@ -44,8 +45,6 @@ export class StepFourComponent implements OnInit {
   orders$: Observable<any>
   isOrdersValid$: Observable<boolean>
 
-  totalServices = []
-
   message = this.fb.control('')
   policy = this.fb.control(false)
 
@@ -53,6 +52,9 @@ export class StepFourComponent implements OnInit {
     message: this.message,
     policy: this.policy,
   })
+
+  totalServices = []
+  totalOrders = []
 
   constructor(
     private fb: FormBuilder,
@@ -101,9 +103,47 @@ export class StepFourComponent implements OnInit {
             return {id, value: ''}
           })
 
-          const services = this.totalSumService.getExtServices(order.services)
+          const extServices = this.totalSumService.getExtServices(
+            order.services
+          )
+          this.totalServices = [
+            ...this.totalServices,
+            ...packages,
+            ...extServices,
+          ]
 
-          this.totalServices = [...this.totalServices, ...packages, ...services]
+          //TODO: need cargo interface
+          const cargo = order.cargo
+          let cargo_type = order.cargo.active.id
+          let cargo_count = null
+          //TODO: maybe change to null
+          let dimensions = ''
+
+          switch (cargo_type) {
+            case '1':
+              cargo_count = cargo.docs.places
+              break
+            case '2':
+              cargo_count = this.totalSumService.getParcelPlaces(cargo.parcels)
+              dimensions = cargo.parcels.length
+              break
+            case '5':
+              //TODO: need interface
+              cargo_type = cargo.auto.detail.id //TODO: auto.id or auto.detail.id
+              cargo_count = cargo.auto.places
+              break
+            case '21':
+              cargo_type = cargo.other.detail.id
+              cargo_count = cargo.other.places
+              break
+          }
+
+          this.totalOrders.push({
+            cargo_type,
+            cargo_count,
+            dimensions,
+            services: this.totalServices,
+          })
         })
       })
     )
@@ -157,6 +197,6 @@ export class StepFourComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('Step four', this.totalServices)
+    console.log('Step four', this.totalOrders)
   }
 }
