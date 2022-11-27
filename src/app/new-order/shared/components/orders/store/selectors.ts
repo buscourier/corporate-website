@@ -55,6 +55,11 @@ export const isOrdersValidSelector = createSelector(
   (state: OrdersStateInterface) => state.isValid
 )
 
+export const isOrdersPristineSelector = createSelector(
+  ordersFeatureSelector,
+  (state: OrdersStateInterface) => state.isPristine
+)
+
 // export const isOrdersInitializedSelector = createSelector(
 //   ordersFeatureSelector,
 //   (state: OrdersStateInterface) => state.isInitialized

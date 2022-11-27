@@ -36,6 +36,7 @@ import {
   isAllCargosLoadingSelector,
   isAllServicesLoadedSelector,
   isAllServicesLoadingSelector,
+  isOrdersPristineSelector,
   ordersSelector,
 } from '../../store/selectors'
 
@@ -53,8 +54,9 @@ export class OrdersComponent implements OnInit, OnDestroy {
   orders$: Observable<any>
   activeOrderIndex$: Observable<number>
 
-  formChangesSubscription$: Subscription
-  dataLoadingSubscription$: Subscription
+  formChangesSub: Subscription
+  dataLoadingSub: Subscription
+  isOrdersPristineSub: Subscription
 
   orders = this.fb.array([])
 
@@ -79,7 +81,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.initializeValues()
 
-    this.formChangesSubscription$ = this.form.valueChanges
+    this.formChangesSub = this.form.valueChanges
       .pipe(
         tap((orders: any) => {
           this.store.dispatch(ordersValueChangesAction({orders}))
@@ -117,15 +119,18 @@ export class OrdersComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.formChangesSubscription$.unsubscribe()
-    this.dataLoadingSubscription$.unsubscribe()
-  }
+    if (this.formChangesSub) {
+      this.formChangesSub.unsubscribe()
+    }
 
-  // ngAfterViewInit(): void {
-  //   this.orders.push(
-  //     this.fb.control<OrderStateInterface>(null, Validators.required)
-  //   )
-  // }
+    if (this.dataLoadingSub) {
+      this.dataLoadingSub.unsubscribe()
+    }
+
+    if (this.isOrdersPristineSub) {
+      this.isOrdersPristineSub.unsubscribe()
+    }
+  }
 
   initializeValues(): void {
     this.isAllCargosLoading$ = this.store.select(isAllCargosLoadingSelector)
@@ -133,25 +138,8 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this.isAllCargosLoaded$ = this.store.select(isAllCargosLoadedSelector)
     this.isAllServicesLoaded$ = this.store.select(isAllServicesLoadedSelector)
     this.activeOrderIndex$ = this.store.select(activeOrderSelector)
-    // this.store
-    //   .select(ordersSelector)
-    //   .pipe(
-    //     filter(Boolean),
-    //     map((orders: OrderStateInterface[]) => {
-    //       return orders.forEach((order: OrderStateInterface) => {
-    //         this.orders.push(this.fb.control(null))
-    //       })
-    //     })
-    //     // map((orders) => {
-    //     //   console.log('ordersssss', orders)
-    //     //   // this.orders.push(this.fb.control(null))
-    //     // })
-    //   )
-    //   .subscribe((orders: any) => {
-    //     console.log('orders', orders)
-    //   })
 
-    this.dataLoadingSubscription$ = combineLatest([
+    this.dataLoadingSub = combineLatest([
       this.store.select(startCitySelector),
       this.store.select(endCitySelector),
       this.store.select(isStartPointValidSelector),
@@ -180,6 +168,17 @@ export class OrdersComponent implements OnInit, OnDestroy {
             return [startCity, endCity]
           }
         )
+      )
+      .subscribe()
+
+    this.isOrdersPristineSub = this.store
+      .select(isOrdersPristineSelector)
+      .pipe(
+        tap((isPristine: boolean) => {
+          if (isPristine) {
+            this.form.reset()
+          }
+        })
       )
       .subscribe()
   }

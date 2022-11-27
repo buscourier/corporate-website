@@ -62,6 +62,7 @@ const ordersReducer = createReducer(
   on(ordersValueChangesAction, (state: OrdersStateInterface, {orders}) => ({
     ...state,
     ...orders,
+    isPristine: false,
   })),
   on(
     changeActiveOrderAction,
