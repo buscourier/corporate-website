@@ -1,4 +1,141 @@
-<app-report></app-report>
+<ng-container *tuiLet="sender$ | async as sender">
+  <ng-container *ngIf="sender.isValid">
+    <h2 class="mb-5 text-lg font-bold">
+      <span class="text-gray-500">01.</span> Отправитель
+    </h2>
+    <div class="mb-14 space-y-4 border-b-2 border-b border-b-gray-100 pb-10">
+      <app-data key="ФИО" [value]="sender.fio"></app-data>
+      <app-data key="Документ" [value]="sender.docType"></app-data>
+      <app-data key="Номер документа" [value]="sender.docNumber"></app-data>
+      <app-data key="Телефон" [value]="sender.phone"></app-data>
+    </div>
+  </ng-container>
+</ng-container>
+<ng-container *tuiLet="entity$ | async as entity">
+  <ng-container *ngIf="entity">
+    <h2 class="mb-5 text-lg font-bold">
+      <span class="text-gray-500">01.</span> Отправитель
+    </h2>
+    <div class="mb-14 space-y-4 border-b-2 border-b border-b-gray-100 pb-10">
+      <app-data
+        key="Название организации"
+        [value]="entity.name.value"
+      ></app-data>
+      <app-data
+        key="Контактное лицо"
+        [value]="entity.contactperson.value"
+      ></app-data>
+      <app-data key="Телефон" [value]="entity.phone.value"></app-data>
+      <app-data key="Email" [value]="entity.email.value"></app-data>
+    </div>
+  </ng-container>
+</ng-container>
+<ng-container *tuiLet="startPoint$ | async as startPoint">
+  <ng-container *ngIf="startPoint.isValid">
+    <h2 class="mb-5 text-lg font-bold">
+      <span class="text-gray-500">02.</span> Пункт отправления
+    </h2>
+    <div class="mb-14 space-y-4 border-b-2 border-b border-b-gray-100 pb-10">
+      <app-data
+        key="Населенный пункт"
+        [value]="startPoint.city.name"
+      ></app-data>
+      <app-data key="Дата" [value]="startPoint.date"></app-data>
+      <app-data key="Отделение" [value]="startPoint.give.name"></app-data>
+    </div>
+  </ng-container>
+</ng-container>
+<ng-container *tuiLet="recipient$ | async as recipient">
+  <ng-container *ngIf="recipient.isValid">
+    <h2 class="mb-5 text-lg font-bold">
+      <span class="text-gray-500">03.</span> Получатель
+    </h2>
+    <div class="mb-14 space-y-4 border-b-2 border-b border-b-gray-100 pb-10">
+      <app-data key="ФИО" [value]="recipient.fio"></app-data>
+      <app-data key="Телефон" [value]="recipient.phone"></app-data>
+    </div>
+  </ng-container>
+</ng-container>
+<ng-container *tuiLet="endPoint$ | async as endPoint">
+  <ng-container *ngIf="endPoint.isValid">
+    <h2 class="mb-5 text-lg font-bold">
+      <span class="text-gray-500">04.</span> Пункт получения
+    </h2>
+    <div class="mb-14 space-y-4 border-b-2 border-b border-b-gray-100 pb-10">
+      <app-data key="Населенный пункт" [value]="endPoint.city.name"></app-data>
+      <app-data key="Отделение" [value]="endPoint.get.name"></app-data>
+    </div>
+  </ng-container>
+</ng-container>
+<ng-container *ngIf="isOrdersValid$ | async">
+  <ng-container *tuiLet="orders$ | async as orders">
+    <h2 class="mb-5 text-lg font-bold">
+      <span class="text-gray-500">05.</span> Заказ
+    </h2>
+    <div class="mb-14 space-y-4 border-b-2 border-b border-b-gray-100 pb-10">
+      <ng-container *ngFor="let order of orders">
+        <ng-container *ngIf="order">
+          <ng-container *ngIf="order.cargo">
+            <app-data
+              *ngIf="order.cargo.docs"
+              [key]="order.cargo.active.name"
+              [value]="order.cargo.docs.places + ' мест.'"
+            ></app-data>
+            <ng-container *ngIf="order.cargo.parcels">
+              <ng-container
+                *ngFor="
+                  let parcel of order.cargo.parcels.parcels;
+                  let i = index
+                "
+              >
+                <span class="inline-block rounded-sm bg-yellow py-1.5 px-2"
+                  >Посылка №{{ i + 1 }}</span
+                >
+                <app-data
+                  key="Габариты"
+                  [value]="getParcelDimension(parcel)"
+                ></app-data>
+                <app-data key="Вес" [value]="parcel.weight + ' кг.'"></app-data>
+              </ng-container>
+            </ng-container>
+            <app-data
+              *ngIf="order.cargo.auto"
+              [key]="order.cargo.active.name"
+              [value]="
+                order.cargo.auto.detail.name +
+                ' (' +
+                order.cargo.auto.places +
+                ' мест.)'
+              "
+            ></app-data>
+            <app-data
+              *ngIf="order.cargo.other"
+              [key]="order.cargo.active.name"
+              [value]="
+                order.cargo.other.detail.name +
+                ' (' +
+                order.cargo.other.places +
+                ' мест.)'
+              "
+            ></app-data>
+          </ng-container>
+          <ng-container *ngIf="order.packages">
+            <app-data
+              key="Упаковка"
+              [value]="getPackages(order.packages)"
+            ></app-data>
+          </ng-container>
+          <ng-container *ngIf="order.services">
+            <app-data
+              key="Доп. услуги"
+              [value]="getServices(order.services)"
+            ></app-data>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </div>
+  </ng-container>
+</ng-container>
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <label class="mb-3 block">
     <span class="mb-1 inline-block text-xs">
