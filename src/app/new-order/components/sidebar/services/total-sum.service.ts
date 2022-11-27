@@ -207,7 +207,9 @@ export class TotalSumService {
 
   getAllServiceIds({packages, services}: OrderStateInterface) {
     const packageIds = this.getPackageIds(packages)
-    const extServiceIds = this.getExtServiceIds(services)
+    const extServiceIds = this.getExtServices(services).map(
+      (service) => service.id
+    )
 
     return [...packageIds, ...extServiceIds]
   }
@@ -236,7 +238,7 @@ export class TotalSumService {
     return arr
   }
 
-  getExtServiceIds(services) {
+  getExtServices(services) {
     const INSURANCE_15 = '58'
     const INSURANCE_30 = '59'
     const LIMIT_MIN = 15000
@@ -257,7 +259,6 @@ export class TotalSumService {
         return checked && value ? {id: formattedId, value} : null
       })
       .filter((service) => service)
-      .map((service) => service.id)
   }
 
   getResult<T>(

@@ -41,7 +41,7 @@
         [value]="startPoint.city.name"
       ></app-data>
       <app-data key="Дата" [value]="startPoint.date"></app-data>
-      <app-data key="Отделение" [value]="startPoint.give.name"></app-data>
+      <app-data key="Отделение" [value]="startPoint.give?.name"></app-data>
     </div>
   </ng-container>
 </ng-container>
@@ -63,7 +63,7 @@
     </h2>
     <div class="mb-14 space-y-4 border-b-2 border-b border-b-gray-100 pb-10">
       <app-data key="Населенный пункт" [value]="endPoint.city.name"></app-data>
-      <app-data key="Отделение" [value]="endPoint.get.name"></app-data>
+      <app-data key="Отделение" [value]="endPoint.get?.name"></app-data>
     </div>
   </ng-container>
 </ng-container>
@@ -122,13 +122,13 @@
           <ng-container *ngIf="order.packages">
             <app-data
               key="Упаковка"
-              [value]="getPackages(order.packages)"
+              [value]="getPackagesForReport(order.packages)"
             ></app-data>
           </ng-container>
           <ng-container *ngIf="order.services">
             <app-data
               key="Доп. услуги"
-              [value]="getServices(order.services)"
+              [value]="getServicesForReport(order.services)"
             ></app-data>
           </ng-container>
         </ng-container>
@@ -136,6 +136,7 @@
     </div>
   </ng-container>
 </ng-container>
+
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <label class="mb-3 block">
     <span class="mb-1 inline-block text-xs">

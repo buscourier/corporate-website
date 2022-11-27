@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
 import {FormBuilder} from '@angular/forms'
-import {Observable} from 'rxjs'
+import {BehaviorSubject, map, Observable, tap} from 'rxjs'
 import {StartPointStateInterface} from '../../../../shared/components/start-point/types/start-point-state.interface'
 import {EndPointStateInterface} from '../../../../shared/components/end-point/types/end-point-state.interface'
 import {PersonStateInterface} from '../step-one/components/person/types/person-state.interface'
@@ -18,6 +18,15 @@ import {
 } from '../../../../shared/components/orders/store/selectors'
 import {Store} from '@ngrx/store'
 import {ParcelInterface} from '../../../../shared/components/order/types/parcel.interface'
+import {CourierInterface} from '../../../../shared/types/courier.interface'
+import {OrdersStateInterface} from '../../../../shared/components/orders/types/orders-state.interface'
+import {OrderStateInterface} from '../../../../shared/components/order/types/order-state.interface'
+import {TotalSumService} from '../../../sidebar/services/total-sum.service'
+
+interface TotalServicesInterface {
+  id: string
+  value: string
+}
 
 @Component({
   selector: 'app-step-four',
@@ -35,6 +44,8 @@ export class StepFourComponent implements OnInit {
   orders$: Observable<any>
   isOrdersValid$: Observable<boolean>
 
+  totalServices = []
+
   message = this.fb.control('')
   policy = this.fb.control(false)
 
@@ -43,20 +54,59 @@ export class StepFourComponent implements OnInit {
     policy: this.policy,
   })
 
-  constructor(private fb: FormBuilder, private store: Store) {}
+  constructor(
+    private fb: FormBuilder,
+    private store: Store,
+    private totalSumService: TotalSumService
+  ) {}
 
   ngOnInit(): void {
     this.initializeValues()
   }
 
   initializeValues() {
-    this.startPoint$ = this.store.select(startPointSelector)
-    this.endPoint$ = this.store.select(endPointSelector)
+    this.startPoint$ = this.store.select(startPointSelector).pipe(
+      tap((point: StartPointStateInterface) => {
+        const courier: CourierInterface | null = point.pickup
+
+        if (courier) {
+          const value = `ул. ${courier.street},
+             дом. ${courier.building}, офис./кв. ${courier.apartment}`
+
+          this.totalServices.push({id: '1', value})
+        }
+      })
+    )
+    this.endPoint$ = this.store.select(endPointSelector).pipe(
+      tap((point: EndPointStateInterface) => {
+        const courier: CourierInterface | null = point.delivery
+
+        if (courier) {
+          const value = `ул. ${courier.street},
+             дом. ${courier.building}, офис./кв. ${courier.apartment}`
+
+          this.totalServices.push({id: '2', value})
+        }
+      })
+    )
     this.person$ = this.store.select(personSelector)
     this.entity$ = this.store.select(entitySelector)
     this.sender$ = this.store.select(senderSelector)
     this.recipient$ = this.store.select(recipientSelector)
-    this.orders$ = this.store.select(ordersSelector)
+    this.orders$ = this.store.select(ordersSelector).pipe(
+      tap((orders: OrderStateInterface[]) => {
+        orders.forEach((order: OrderStateInterface) => {
+          const packageIds = this.totalSumService.getPackageIds(order.packages)
+          const packages = packageIds.map((id) => {
+            return {id, value: ''}
+          })
+
+          const services = this.totalSumService.getExtServices(order.services)
+
+          this.totalServices = [...this.totalServices, ...packages, ...services]
+        })
+      })
+    )
     this.isOrdersValid$ = this.store.select(isOrdersValidSelector)
   }
 
@@ -67,20 +117,23 @@ export class StepFourComponent implements OnInit {
   }
 
   getPackages(packages): any {
-    let arr: any[] = packages ? Object.values(packages) : []
+    const arr: any[] = packages ? Object.values(packages) : []
 
-    const formattedPackages = arr
+    return arr
       .reduce((acc, val) => acc.concat(val), [])
       .filter((obj) => {
         const isCheckboxActive = Object.entries(obj)[0][1]
 
         return isCheckboxActive && obj.count >= 1
       })
-      .map((obj) => {
-        return `${obj.data.short_name || ''} ${obj.data.site_name} (${
-          obj.count
-        } шт.)`
-      })
+  }
+
+  getPackagesForReport(packages) {
+    const formattedPackages = this.getPackages(packages).map((obj) => {
+      return `${obj.data.short_name || ''} ${obj.data.site_name} (${
+        obj.count
+      } шт.)`
+    })
 
     return formattedPackages.length ? formattedPackages.join(', ') : 'Нет'
   }
@@ -88,21 +141,22 @@ export class StepFourComponent implements OnInit {
   getServices(services): any {
     const arr = services ? services.services : []
 
-    const formattedServices = arr
-      .filter((obj) => {
-        const isCheckboxActive = Object.entries(obj)[0][1]
-        const value = obj.sum || obj.phone
+    return arr.filter((obj) => {
+      const isCheckboxActive = Object.entries(obj)[0][1]
+      const value = obj.sum || obj.phone
 
-        return isCheckboxActive && value
-      })
-      .map((obj) => {
-        return obj.data.name
-      })
+      return isCheckboxActive && value
+    })
+  }
 
+  getServicesForReport(services) {
+    const formattedServices = this.getServices(services).map((obj) => {
+      return obj.data.name
+    })
     return formattedServices.length ? formattedServices.join(', ') : 'Нет'
   }
 
   onSubmit() {
-    console.log('Step four', this.form.value)
+    console.log('Step four', this.totalServices)
   }
 }
