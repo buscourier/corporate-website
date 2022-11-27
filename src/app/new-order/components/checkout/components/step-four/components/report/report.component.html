@@ -125,16 +125,14 @@
               [value]="getPackages(order.packages)"
             ></app-data>
           </ng-container>
+          <ng-container *ngIf="order.services">
+            <app-data
+              key="Доп. услуги"
+              [value]="getServices(order.services)"
+            ></app-data>
+          </ng-container>
         </ng-container>
-        <app-data
-          *ngIf="order && order.cargo.docs"
-          key="Населенный пункт"
-          [value]=""
-        ></app-data>
       </ng-container>
-
-      <!--     <app-data key="Документ" [value]=""></app-data>-->
-      <!--     <app-data key="Номер документа" [value]=""></app-data>-->
     </div>
   </ng-container>
 </ng-container>

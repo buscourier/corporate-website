@@ -57,10 +57,10 @@ export class ReportComponent implements OnInit {
             Длина: <b>${parcel.length} см.</b>`
   }
 
-  getPackages(packages) {
+  getPackages(packages): any {
     let arr: any[] = packages ? Object.values(packages) : []
 
-    return arr
+    const formattedPackages = arr
       .reduce((acc, val) => acc.concat(val), [])
       .filter((obj) => {
         const isCheckboxActive = Object.entries(obj)[0][1]
@@ -72,17 +72,24 @@ export class ReportComponent implements OnInit {
           obj.count
         } шт.)`
       })
-      .join(', ')
+
+    return formattedPackages.length ? formattedPackages.join(', ') : 'Нет'
   }
 
-  getServices(services) {
+  getServices(services): any {
     const arr = services ? services.services : []
 
-    return arr.filter((obj) => {
-      const isCheckboxActive = Object.entries(obj)[0][1]
-      const value = obj.sum || obj.phone
+    const formattedServices = arr
+      .filter((obj) => {
+        const isCheckboxActive = Object.entries(obj)[0][1]
+        const value = obj.sum || obj.phone
 
-      return isCheckboxActive && value
-    })
+        return isCheckboxActive && value
+      })
+      .map((obj) => {
+        return obj.data.name
+      })
+
+    return formattedServices.length ? formattedServices.join(', ') : 'Нет'
   }
 }
