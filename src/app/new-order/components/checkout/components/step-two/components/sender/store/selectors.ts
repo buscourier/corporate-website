@@ -14,3 +14,8 @@ export const isSenderValidSelector = createSelector(
   senderFeatureSelector,
   (state: SenderStateInterface) => state.isValid
 )
+
+export const isSenderPristineSelector = createSelector(
+  senderFeatureSelector,
+  (state: SenderStateInterface) => state.isPristine
+)

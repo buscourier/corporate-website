@@ -4,4 +4,5 @@ export interface SenderStateInterface {
   docNumber: string
   phone: string
   isValid: boolean
+  isPristine: boolean
 }

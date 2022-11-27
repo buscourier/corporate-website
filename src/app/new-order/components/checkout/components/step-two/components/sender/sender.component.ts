@@ -1,10 +1,15 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core'
 import {FormBuilder, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
-import {tap, using} from 'rxjs'
+import {Subscription, tap, using} from 'rxjs'
 import {changeValidityAction} from './store/actions/change-validity.action'
 import {changeValuesAction} from './store/actions/change-values.action'
-import {senderSelector} from './store/selectors'
+import {isSenderPristineSelector, senderSelector} from './store/selectors'
 import {SenderStateInterface} from './types/sender-state.interface'
 
 @Component({
@@ -13,7 +18,7 @@ import {SenderStateInterface} from './types/sender-state.interface'
   styleUrls: ['./sender.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SenderComponent {
+export class SenderComponent implements OnInit, OnDestroy {
   documents = ['Паспорт РФ', 'Водительское удостоверение', 'Другое']
 
   form = this.fb.group({
@@ -22,6 +27,8 @@ export class SenderComponent {
     docNumber: ['', Validators.required],
     phone: ['', Validators.required],
   })
+
+  isSenderPristineSub: Subscription
 
   formValues$ = using(
     () =>
@@ -43,6 +50,20 @@ export class SenderComponent {
 
   constructor(private fb: FormBuilder, private store: Store) {}
 
-  // ngOnInit(): void {
-  // }
+  ngOnInit(): void {
+    this.isSenderPristineSub = this.store
+      .select(isSenderPristineSelector)
+      .pipe(
+        tap((isPristine: boolean) => {
+          if (isPristine) {
+            this.form.reset()
+          }
+        })
+      )
+      .subscribe()
+  }
+
+  ngOnDestroy(): void {
+    this.isSenderPristineSub.unsubscribe()
+  }
 }

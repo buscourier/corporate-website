@@ -8,4 +8,5 @@ export const initialState: SenderStateInterface = {
   docNumber: '',
   phone: '',
   isValid: false,
+  isPristine: true,
 }
