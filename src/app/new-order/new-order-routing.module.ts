@@ -6,6 +6,7 @@ import {StepFourComponent} from './components/checkout/components/step-four/step
 import {StepOneComponent} from './components/checkout/components/step-one/step-one.component'
 import {StepThreeComponent} from './components/checkout/components/step-three/step-three.component'
 import {StepTwoComponent} from './components/checkout/components/step-two/step-two.component'
+import {ValidateGuard} from './components/checkout/services/validate.guard'
 import {IndexComponent} from './index.component'
 
 const routes: Routes = [
@@ -25,18 +26,22 @@ const routes: Routes = [
             path: '',
             component: StepOneComponent,
             pathMatch: 'full',
+            canActivate: [ValidateGuard],
           },
           {
             path: '1',
             component: StepTwoComponent,
+            canActivate: [ValidateGuard],
           },
           {
             path: '2',
             component: StepThreeComponent,
+            canActivate: [ValidateGuard],
           },
           {
             path: '3',
             component: StepFourComponent,
+            canActivate: [ValidateGuard],
           },
         ],
       },
