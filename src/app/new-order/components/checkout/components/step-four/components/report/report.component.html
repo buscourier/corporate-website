@@ -119,15 +119,18 @@
               "
             ></app-data>
           </ng-container>
-
-          <!--        <ng-container *ngIf="order.cargo && order.cargo.auto">-->
-
-          <!--        </ng-container>-->
-          <!--        <ng-container *ngIf="order.cargo && order.cargo.other">-->
-
-          <!--        </ng-container>-->
+          <ng-container *ngIf="order.packages">
+            <app-data
+              key="Упаковка"
+              [value]="getPackages(order.packages)"
+            ></app-data>
+          </ng-container>
         </ng-container>
-        <!--      <app-data *ngIf="order && order.cargo.docs" key="Населенный пункт" [value]=""></app-data>-->
+        <app-data
+          *ngIf="order && order.cargo.docs"
+          key="Населенный пункт"
+          [value]=""
+        ></app-data>
       </ng-container>
 
       <!--     <app-data key="Документ" [value]=""></app-data>-->

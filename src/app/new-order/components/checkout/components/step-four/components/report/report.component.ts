@@ -56,4 +56,33 @@ export class ReportComponent implements OnInit {
             Высота: <b>${parcel.height} см.</b>,
             Длина: <b>${parcel.length} см.</b>`
   }
+
+  getPackages(packages) {
+    let arr: any[] = packages ? Object.values(packages) : []
+
+    return arr
+      .reduce((acc, val) => acc.concat(val), [])
+      .filter((obj) => {
+        const isCheckboxActive = Object.entries(obj)[0][1]
+
+        return isCheckboxActive && obj.count >= 1
+      })
+      .map((obj) => {
+        return `${obj.data.short_name || ''} ${obj.data.site_name} (${
+          obj.count
+        } шт.)`
+      })
+      .join(', ')
+  }
+
+  getServices(services) {
+    const arr = services ? services.services : []
+
+    return arr.filter((obj) => {
+      const isCheckboxActive = Object.entries(obj)[0][1]
+      const value = obj.sum || obj.phone
+
+      return isCheckboxActive && value
+    })
+  }
 }
