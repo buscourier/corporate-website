@@ -1,0 +1,4 @@
+:host {
+  @apply w-full rounded-md bg-yellow p-12 pb-14;
+  @apply md:p-11 md:pb-12;
+}

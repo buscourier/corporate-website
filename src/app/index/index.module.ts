@@ -3,6 +3,7 @@ import {NgModule} from '@angular/core'
 import {TuiSvgModule} from '@taiga-ui/core'
 import {ImageModule} from '../shared/components/image/image.module'
 import {CitiesFormModule} from './components/cities-form/cities-form.module'
+import {TaskFormModule} from './components/task-form/task-form.module'
 import {IndexRoutingModule} from './index-routing.module'
 import {IndexComponent} from './index.component'
 
@@ -13,6 +14,7 @@ import {IndexComponent} from './index.component'
     IndexRoutingModule,
     TuiSvgModule,
     CitiesFormModule,
+    TaskFormModule,
     ImageModule,
   ],
 })
