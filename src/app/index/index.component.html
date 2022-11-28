@@ -1,4 +1,4 @@
-<div class="mx-auto mt-10 max-w-[1170px]">
+<div class="mx-auto mt-10 max-w-[1170px] lg:mt-16">
   <div class="mb-16 flex flex-col items-start sm:px-4 md:flex-row md:space-x-8">
     <div
       class="px-4 sm:mx-auto sm:max-w-md sm:px-0 sm:text-center md:mx-0 md:max-w-full md:flex-grow md:text-left"
@@ -36,7 +36,7 @@
     <app-cities-form></app-cities-form>
   </div>
   <div class="mb-16 px-4 md:mb-20 xl:mb-32">
-    <h2 class="mb-3 text-2xl font-bold">
+    <h2 class="mb-4 text-2xl font-bold lg:text-3xl">
       Охватываем всю территорию<br />
       Приморского края
     </h2>
@@ -108,8 +108,85 @@
     </div>
   </div>
   <div class="px-4">
-    <h2 class="mb-3 text-2xl font-bold">
-      Предлагаем удобный сервис для вашего комфорта
+    <h2 class="mb-8 text-2xl font-bold lg:mb-11 lg:text-3xl">
+      Предлагаем удобный сервис<br class="hidden sm:block" />
+      для вашего комфорта
     </h2>
+    <div
+      class="flex flex-col space-y-7 md:grid md:grid-cols-2 md:gap-y-9 md:gap-x-14 md:space-y-0 lg:grid-cols-3"
+    >
+      <!--      item-1-->
+      <div class="flex max-w-sm md:max-w-full">
+        <tui-svg
+          src="icons::to-door"
+          class="mr-8 !h-[50px] !w-[50px]"
+        ></tui-svg>
+        <div>
+          <b class="mb-2.5 block text-lg">Доставка от двери до двери</b>
+          <p>Курьер заберет вашу посылку и доставит её до двери получателя.</p>
+        </div>
+      </div>
+      <!--      item-1-->
+      <div class="flex max-w-sm md:max-w-full">
+        <tui-svg src="icons::sms" class="mr-8 !h-[50px] !w-[50px]"></tui-svg>
+        <div>
+          <b class="mb-2.5 block text-lg">SMS-уведомления о статусе доставки</b>
+          <p>
+            Вы знаете о всех этапах движения посылки. SMS-уведомления получают
+            отправитель и получатель.
+          </p>
+        </div>
+      </div>
+      <!--      item-1-->
+      <div class="flex max-w-sm md:max-w-full">
+        <tui-svg src="icons::to-box" class="mr-8 !h-[50px] !w-[50px]"></tui-svg>
+        <div>
+          <b class="mb-2.5 block text-lg">Упаковка грузов</b>
+          <p class="mb-2.5">
+            Подберем оптимальную упаковку для вашего груза и бережно запакуем
+            его.
+          </p>
+          <button type="button" class="text-left">
+            <tui-svg
+              src="icons::help"
+              class="mr-2.5 !h-[21px] !w-[22px]"
+            ></tui-svg>
+            <span class="border-b border-dotted text-xs text-gray-600"
+              >Виды упаковки и стоимость
+            </span>
+          </button>
+        </div>
+      </div>
+      <!--      item-1-->
+      <div class="flex max-w-sm md:max-w-full">
+        <tui-svg src="icons::to-box" class="mr-8 !h-[50px] !w-[50px]"></tui-svg>
+        <div>
+          <b class="mb-2.5 block text-lg">Складское хранение грузов</b>
+          <p>Бесплатное хранение вашего груза в течение суток.</p>
+        </div>
+      </div>
+      <!--      item-1-->
+      <div class="flex max-w-sm md:max-w-full">
+        <tui-svg
+          src="icons::from-airport"
+          class="mr-8 !h-[50px] !w-[50px]"
+        ></tui-svg>
+        <div>
+          <b class="mb-2.5 block text-lg">Доставка из аэропорта</b>
+          <p>
+            Забор груза из Аэропорта и Карго-Владивосток, прохождение
+            необходимых процедур.
+          </p>
+        </div>
+      </div>
+      <!--      item-1-->
+      <div class="flex max-w-sm md:max-w-full">
+        <tui-svg src="icons::disk" class="mr-8 !h-[50px] !w-[50px]"></tui-svg>
+        <div>
+          <b class="mb-2.5 block text-lg">Страхование груза</b>
+          <p>Страховая защита груза и максимально быстрое возмещение ущерба.</p>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

@@ -24,7 +24,7 @@ module.exports = {
       xl: ['1.75rem', {lineHeight: '2.1rem'}], // 28 / 33.6
       '2xl': ['2rem', {lineHeight: '2.4rem'}], // 32 / 38.4
       '3xl': ['2.625rem', {lineHeight: '3.25rem'}], // 42 / 52
-      '4xl': ['3.563rem', {lineHeight: '4.25rem'}], // 42 / 52
+      '4xl': ['3.563rem', {lineHeight: '4.25rem'}], // 57 / 52
     },
     borderRadius: {
       none: '0px',
