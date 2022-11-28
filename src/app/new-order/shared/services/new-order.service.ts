@@ -58,7 +58,7 @@ export class NewOrderService {
     const url = `${environment.apiUrl}`
 
     return this.http.post<NewOrderResponseInterface>(
-      `${url}/order/`,
+      `${url}/orde/`,
       JSON.stringify(order)
     )
   }

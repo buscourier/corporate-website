@@ -34,3 +34,13 @@ export const newOrderResponseSelector = createSelector(
   checkoutFeatureSelector,
   (state: CheckoutStateInterface) => state.orderResponse
 )
+
+export const createOrderSuccessSelector = createSelector(
+  checkoutFeatureSelector,
+  (state: CheckoutStateInterface) => state.orderResponse !== null
+)
+
+export const createOrderFailureSelector = createSelector(
+  checkoutFeatureSelector,
+  (state: CheckoutStateInterface) => state.backendErrors !== null
+)

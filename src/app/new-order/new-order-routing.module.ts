@@ -6,10 +6,11 @@ import {StepFourComponent} from './components/checkout/components/step-four/step
 import {StepOneComponent} from './components/checkout/components/step-one/step-one.component'
 import {StepThreeComponent} from './components/checkout/components/step-three/step-three.component'
 import {StepTwoComponent} from './components/checkout/components/step-two/step-two.component'
-import {ValidateGuard} from './components/checkout/services/validate.guard'
 import {FailureComponent} from './components/failure/failure.component'
 import {SuccessComponent} from './components/success/success.component'
 import {IndexComponent} from './index.component'
+import {FailurePageGuard} from './shared/services/failure-page.guard'
+import {SuccessPageGuard} from './shared/services/success-page.guard'
 
 const routes: Routes = [
   {
@@ -28,22 +29,22 @@ const routes: Routes = [
             path: '',
             component: StepOneComponent,
             pathMatch: 'full',
-            canActivate: [ValidateGuard],
+            canActivate: [],
           },
           {
             path: '1',
             component: StepTwoComponent,
-            canActivate: [ValidateGuard],
+            canActivate: [],
           },
           {
             path: '2',
             component: StepThreeComponent,
-            canActivate: [ValidateGuard],
+            canActivate: [],
           },
           {
             path: '3',
             component: StepFourComponent,
-            canActivate: [ValidateGuard],
+            canActivate: [],
           },
         ],
       },
@@ -52,10 +53,12 @@ const routes: Routes = [
   {
     path: 'success',
     component: SuccessComponent,
+    canActivate: [SuccessPageGuard],
   },
   {
     path: 'failure',
     component: FailureComponent,
+    canActivate: [FailurePageGuard],
   },
 ]
 
