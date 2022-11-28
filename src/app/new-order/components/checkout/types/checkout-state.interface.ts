@@ -8,6 +8,10 @@ export interface CheckoutStateInterface {
   finishedSteps: {
     [key: number]: boolean
   }
+  validSteps: {
+    [key: number]: boolean
+  }
+  isCheckoutValid: boolean
   isSubmitting: boolean
   orderInput: NewOrderInputInterface
   orderResponse: NewOrderResponseInterface

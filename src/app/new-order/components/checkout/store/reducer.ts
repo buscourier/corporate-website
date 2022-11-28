@@ -16,6 +16,7 @@ const checkoutReducer = createReducer(
   on(setCurrentStepAction, (state: CheckoutStateInterface, {step}) => {
     const previousStep = step - 1
     const finishedSteps = {...state.finishedSteps}
+    const validSteps = {...state.validSteps}
 
     if (finishedSteps[previousStep]) {
       delete finishedSteps[previousStep + 1]
@@ -23,11 +24,23 @@ const checkoutReducer = createReducer(
       finishedSteps[previousStep] = true
     }
 
+    if (state.isCurrentStepValid) {
+      validSteps[state.currentStep] = true
+    }
+
+    const isCheckoutValid = !(
+      Object.keys(finishedSteps).length === 1 &&
+      !finishedSteps[-1] &&
+      Object.keys(validSteps).length
+    )
+
     return {
       ...state,
       currentStep: step,
       previousStep,
       finishedSteps,
+      validSteps,
+      isCheckoutValid,
     }
   }),
   on(setPreviousStepAction, (state: CheckoutStateInterface, {step}) => ({

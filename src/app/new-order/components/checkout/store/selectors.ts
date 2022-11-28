@@ -44,3 +44,10 @@ export const createOrderFailureSelector = createSelector(
   checkoutFeatureSelector,
   (state: CheckoutStateInterface) => state && state.backendErrors !== null
 )
+
+export const isCheckoutValidSelector = createSelector(
+  checkoutFeatureSelector,
+  (state: CheckoutStateInterface) => {
+    return state.isCheckoutValid
+  }
+)

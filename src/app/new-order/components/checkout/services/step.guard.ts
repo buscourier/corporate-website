@@ -7,8 +7,9 @@ import {
   UrlTree,
 } from '@angular/router'
 import {Store} from '@ngrx/store'
-import {Observable, of} from 'rxjs'
+import {Observable} from 'rxjs'
 import {tap} from 'rxjs/operators'
+import {isCheckoutValidSelector} from '../store/selectors'
 
 @Injectable()
 export class StepGuard implements CanActivate {
@@ -18,9 +19,9 @@ export class StepGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean | Observable<boolean | UrlTree> {
-    return of(true).pipe(
-      tap((ok) => {
-        if (!ok) {
+    return this.store.select(isCheckoutValidSelector).pipe(
+      tap((isValid: boolean) => {
+        if (!isValid) {
           this.router.navigateByUrl('/new-order/checkout')
         }
       })
