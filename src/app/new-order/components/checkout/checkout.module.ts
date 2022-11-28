@@ -6,6 +6,7 @@ import {EffectsModule} from '@ngrx/effects'
 import {StoreModule} from '@ngrx/store'
 import {TuiSvgModule} from '@taiga-ui/core'
 import {TuiStepperModule} from '@taiga-ui/kit'
+import {CheckoutRoutingModule} from './checkout-routing.module'
 import {CheckoutComponent} from './checkout.component'
 import {StepFourModule} from './components/step-four/step-four.module'
 import {StepOneModule} from './components/step-one/step-one.module'
@@ -24,6 +25,7 @@ import {CHECKOUT_FEATURE} from './store/state'
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
+    CheckoutRoutingModule,
     StoreModule.forFeature(CHECKOUT_FEATURE, reducer),
     EffectsModule.forFeature([SendOrderEffect]),
     StepOneModule,
@@ -34,5 +36,6 @@ import {CHECKOUT_FEATURE} from './store/state'
     TuiSvgModule,
     StepperModule,
   ],
+  exports: [CheckoutComponent],
 })
 export class CheckoutModule {}

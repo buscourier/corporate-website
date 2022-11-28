@@ -37,10 +37,10 @@ export const newOrderResponseSelector = createSelector(
 
 export const createOrderSuccessSelector = createSelector(
   checkoutFeatureSelector,
-  (state: CheckoutStateInterface) => state.orderResponse !== null
+  (state: CheckoutStateInterface) => state && state.orderResponse !== null
 )
 
 export const createOrderFailureSelector = createSelector(
   checkoutFeatureSelector,
-  (state: CheckoutStateInterface) => state.backendErrors !== null
+  (state: CheckoutStateInterface) => state && state.backendErrors !== null
 )

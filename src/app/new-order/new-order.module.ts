@@ -19,7 +19,7 @@ import {SuccessPageGuard} from './shared/services/success-page.guard'
     CommonModule,
     NewOrderRoutingModule,
     CalculatorModule,
-    CheckoutModule,
+    CheckoutModule, //TODO: Later remove checkout module
     SuccessModule,
     FailureModule,
     TuiStepperModule,
