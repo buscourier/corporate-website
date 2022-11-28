@@ -5,6 +5,7 @@ import {StepFourComponent} from './components/step-four/step-four.component'
 import {StepOneComponent} from './components/step-one/step-one.component'
 import {StepThreeComponent} from './components/step-three/step-three.component'
 import {StepTwoComponent} from './components/step-two/step-two.component'
+import {StepGuard} from './services/step.guard'
 
 const routes: Routes = [
   {
@@ -15,22 +16,21 @@ const routes: Routes = [
         path: '',
         component: StepOneComponent,
         pathMatch: 'full',
-        canActivate: [],
       },
       {
         path: '1',
         component: StepTwoComponent,
-        canActivate: [],
+        canActivate: [StepGuard],
       },
       {
         path: '2',
         component: StepThreeComponent,
-        canActivate: [],
+        canActivate: [StepGuard],
       },
       {
         path: '3',
         component: StepFourComponent,
-        canActivate: [],
+        canActivate: [StepGuard],
       },
     ],
   },

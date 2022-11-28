@@ -13,6 +13,7 @@ import {StepOneModule} from './components/step-one/step-one.module'
 import {StepThreeModule} from './components/step-three/step-three.module'
 import {StepTwoModule} from './components/step-two/step-two.module'
 import {StepperModule} from './components/stepper/stepper.module'
+import {StepGuard} from './services/step.guard'
 import {SendOrderEffect} from './store/effects/send-order.effect'
 import {reducer} from './store/reducer'
 import {CHECKOUT_FEATURE} from './store/state'
@@ -37,5 +38,6 @@ import {CHECKOUT_FEATURE} from './store/state'
     StepperModule,
   ],
   exports: [CheckoutComponent],
+  providers: [StepGuard],
 })
 export class CheckoutModule {}
