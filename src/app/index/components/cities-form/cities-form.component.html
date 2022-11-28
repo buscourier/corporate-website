@@ -1,0 +1,48 @@
+<form
+  [formGroup]="form"
+  (ngSubmit)="onSubmit()"
+  class="rounded-md bg-yellow p-12 pb-14"
+>
+  <b class="mb-6 block text-[24px] font-bold leading-7"
+    >Рассчитайте стоимость</b
+  >
+  <label class="mb-4 block" *tuiLet="startCities$ | async as startCites">
+    <span class="mb-1 inline-block text-xs text-black opacity-30"
+      >Откуда отправляем?</span
+    >
+    <tui-loader [showLoader]="isStartCitiesLoading$ | async">
+      <tui-select
+        tuiTextfieldSize="m"
+        formControlName="startCity"
+        [tuiTextfieldLabelOutside]="true"
+      >
+        Выберите город
+        <tui-data-list-wrapper
+          *tuiDataList
+          [items]="startCites"
+        ></tui-data-list-wrapper>
+      </tui-select>
+    </tui-loader>
+  </label>
+  <label class="mb-7 block" *tuiLet="endCities$ | async as endCites">
+    <span class="mb-1 inline-block text-xs text-black opacity-30"
+      >Куда отправляем?</span
+    >
+    <tui-loader [showLoader]="isEndCitiesLoading$ | async">
+      <tui-select
+        tuiTextfieldSize="m"
+        formControlName="endCity"
+        [tuiTextfieldLabelOutside]="true"
+      >
+        Выберите город
+        <tui-data-list-wrapper
+          *tuiDataList
+          [items]="endCites"
+        ></tui-data-list-wrapper>
+      </tui-select>
+    </tui-loader>
+  </label>
+  <button type="submit" tuiButton appearance="accent" class="w-full">
+    Рассчитать
+  </button>
+</form>

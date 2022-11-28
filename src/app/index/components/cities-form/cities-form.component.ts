@@ -1,47 +1,42 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
   OnDestroy,
   OnInit,
-  Output,
 } from '@angular/core'
 import {FormBuilder} from '@angular/forms'
 import {Store} from '@ngrx/store'
 import {tuiItemsHandlersProvider} from '@taiga-ui/kit'
 import {Observable, Subscription} from 'rxjs'
 import {tap} from 'rxjs/operators'
-import {STRINGIFY_CITIES} from '../../../../../../../shared/handlers/string-handlers'
-import {EndCityInterface} from '../../../../../../../shared/types/end-city.interface'
-import {StartCityInterface} from '../../../../../../../shared/types/start-city.interface'
-import {getEndCitiesAction} from '../../store/actions/get-end-cities.action'
-import {getStartCitiesAction} from '../../store/actions/get-start-cities.action'
+import {STRINGIFY_CITIES} from '../../../shared/handlers/string-handlers'
+import {EndCityInterface} from '../../../shared/types/end-city.interface'
+import {StartCityInterface} from '../../../shared/types/start-city.interface'
+import {getEndCitiesAction} from './store/actions/get-end-cities.action'
+import {getStartCitiesAction} from './store/actions/get-start-cities.action'
 import {
   backendErrorsSelector,
   endCitiesSelector,
   isEndCitiesLoadingSelector,
   isStartCitiesLoadingSelector,
   startCitiesSelector,
-} from '../../store/selectors'
+} from './store/selectors'
 
 @Component({
-  selector: 'app-filter',
-  templateUrl: './filter.component.html',
-  styleUrls: ['./filter.component.css'],
+  selector: 'app-cities-form',
+  templateUrl: './cities-form.component.html',
+  styleUrls: ['./cities-form.component.css'],
   providers: [tuiItemsHandlersProvider({stringify: STRINGIFY_CITIES})],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FilterComponent implements OnInit, OnDestroy {
+export class CitiesFormComponent implements OnInit, OnDestroy {
   isStartCitiesLoading$: Observable<boolean>
   isEndCitiesLoading$: Observable<boolean>
   startCities$: Observable<StartCityInterface[]>
   endCities$: Observable<EndCityInterface[]>
   backendErrors$: Observable<null | string>
 
-  @Output('filterChanged') filterChangedEvent = new EventEmitter<any>()
-
   form = this.fb.group({
-    range: [],
     startCity: null,
     endCity: {value: null, disabled: true},
   })
@@ -82,7 +77,5 @@ export class FilterComponent implements OnInit, OnDestroy {
     this.store.dispatch(getStartCitiesAction())
   }
 
-  onSubmit() {
-    this.filterChangedEvent.emit(this.form.value)
-  }
+  onSubmit() {}
 }
