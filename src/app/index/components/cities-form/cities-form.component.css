@@ -1,0 +1,7 @@
+:host {
+  @apply max-w-md min-w-[360px] w-auto p-12 pb-14 rounded-md bg-yellow mx-auto w-full;
+  @apply md:max-w-full md:mx-0 md:p-11 md:pb-12 md:basis-1/2;
+  @apply lg:max-w-[375px] lg:relative lg:before:absolute lg:before:bottom-0 lg:before:-z-10
+  lg:before:-right-0 lg:before:w-[600px] lg:before:h-[360px] lg:before:bg-red
+  lg:before:bg-index-bus lg:before:bg-[length:600px_360px] lg:before:bg-no-repeat;
+}

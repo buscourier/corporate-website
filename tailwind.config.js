@@ -106,6 +106,9 @@ module.exports = {
         fadeIn: 'fadeIn 200ms ease-in-out forwards',
       },
     },
+    backgroundImage: {
+      'index-bus': "url('src/assets/images/index/bus-bg@3x.jpg')",
+    },
   },
   plugins: [
     require('@tailwindcss/forms'),

@@ -1,15 +1,23 @@
 <div class="mx-auto max-w-[1170px]">
-  <div class="mt-10 flex flex-col">
-    <div class="px-4">
-      <h1 class="mb-6 font-heading text-2xl">
-        Срочная доставка по Приморскому краю
+  <div class="mt-10 flex flex-col items-start sm:px-4 md:flex-row md:space-x-8">
+    <div
+      class="px-4 sm:mx-auto sm:max-w-md sm:px-0 sm:text-center md:mx-0 md:max-w-full md:flex-grow md:text-left"
+    >
+      <h1 class="mb-6 font-heading text-2xl font-bold lg:text-3xl">
+        Срочная доставка <br />
+        по Приморскому краю <br class="hidden sm:block" />
+        и в Хабаровск
       </h1>
-      <p class="mb-6 text-sm">
+      <p class="mb-6 text-sm md:mb-9 lg:text-lg">
         <b class="inline-block rounded-sm bg-yellow px-2 py-1 font-bold"
           >от 2 до 24 часов</b
         >
         рейсовыми автобусами
       </p>
+      <app-image
+        src="/assets/images/index/bus-sm"
+        class="hidden md:mb-8 md:block lg:hidden"
+      ></app-image>
       <div class="mb-14 flex">
         <div class="mr-6 space-x-2">
           <tui-svg src="icons::parcel" class="!h-[28px] !w-[28px]"></tui-svg>
