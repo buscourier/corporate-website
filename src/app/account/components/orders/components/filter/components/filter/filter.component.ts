@@ -25,7 +25,7 @@ export class FilterComponent implements OnInit, OnDestroy {
 
   form = this.fb.group({
     range: [],
-    status: null,
+    status: '',
   })
 
   valueChangesSub: Subscription

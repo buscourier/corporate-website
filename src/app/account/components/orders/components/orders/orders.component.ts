@@ -38,23 +38,14 @@ import {OrderDetailsComponent} from '../order-details/components/order-details/o
   ],
 })
 export class OrdersComponent implements OnInit {
-  columns = [
-    'order_id',
-    'date',
-    'sender_name',
-    'recipient_name',
-    'start_city',
-    'end_city',
-    'order_price',
-  ]
+  columns = ['date', 'order_id', 'order_price', 'status', 'print']
 
   isLoading$: Observable<boolean>
   orders$: Observable<any>
   filterParams: {
     'start-date': string | null
     'end-date': string | null
-    'start-city': string | null
-    'end-city': string | null
+    status: string | null
   }
   length = 8
   pageIndex = 0
@@ -92,12 +83,11 @@ export class OrdersComponent implements OnInit {
       .subscribe()
   }
 
-  fetchDataWithFilterParams({range, startCity, endCity}: FilterInterface) {
+  fetchDataWithFilterParams({range, status}: FilterInterface) {
     this.filterParams = {
       'start-date': range ? range[0] : null,
       'end-date': range ? range[1] : null,
-      'start-city': startCity ? startCity.id : null,
-      'end-city': endCity ? endCity.id : null,
+      status: status ? status : null,
     }
     this.fetchData()
   }

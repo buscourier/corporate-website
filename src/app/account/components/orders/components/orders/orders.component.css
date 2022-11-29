@@ -10,6 +10,7 @@ table td {
   font-size: 14px;
   border: none;
   white-space: nowrap;
+  width: 20%;
 }
 
 table td:nth-of-type(4) {
