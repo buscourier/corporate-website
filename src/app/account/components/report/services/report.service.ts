@@ -3,6 +3,7 @@ import {Injectable} from '@angular/core'
 import {map, Observable} from 'rxjs'
 import {concatAll, toArray} from 'rxjs/operators'
 import {environment} from '../../../../../environments/environment'
+import {OrderCancelInputInterface} from '../components/report-details/types/order-cancel-input.interface'
 import {OrderInterface} from '../types/order.interface'
 import {ReportInputInterface} from '../types/report-input.interface'
 
@@ -40,14 +41,14 @@ export class ReportService {
   }
 
   getOrderDetails(id: string): Observable<any> {
-    const url = `${environment.apiUrl}/order/getdetails/`
+    const url = `${environment.apiUrl}/order/getdetails`
 
     return this.http.get(`${url}/${environment.apiKey}/${id}`)
   }
 
-  cancelOrder(order: OrderInterface) {
-    const url = `${environment.apiUrl}/order/ordercancel/`
+  cancelOrder(data: OrderCancelInputInterface) {
+    const url = `${environment.apiUrl}/order/ordercancel`
 
-    return this.http.post(`${url}`, JSON.stringify(order))
+    return this.http.post(`${url}`, JSON.stringify(data))
   }
 }

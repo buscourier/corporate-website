@@ -1,8 +1,7 @@
 import {Inject, Injectable} from '@angular/core'
 import {Actions, createEffect, ofType} from '@ngrx/effects'
-import {TuiAlertService, TuiNotification} from '@taiga-ui/core'
+import {TuiAlertService} from '@taiga-ui/core'
 import {catchError, map, of, switchMap} from 'rxjs'
-import {tap} from 'rxjs/operators'
 import {ReportService} from '../../../../services/report.service'
 import {
   cancelOrderAction,
@@ -22,8 +21,8 @@ export class CancelOrderEffect {
   cancelOrder$ = createEffect(() =>
     this.actions$.pipe(
       ofType(cancelOrderAction),
-      switchMap(({order}) =>
-        this.reportService.cancelOrder(order).pipe(
+      switchMap(({data}) =>
+        this.reportService.cancelOrder(data).pipe(
           map(() => cancelOrderSuccessAction()),
           catchError(() => of(cancelOrderFailureAction()))
         )
@@ -31,35 +30,51 @@ export class CancelOrderEffect {
     )
   )
 
-  afterSuccessCancel$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(cancelOrderSuccessAction),
-        tap(() => {
-          this.alertService
-            .open(`Заказ успешно отменен`, {
-              label: `Изменения данных!`,
-              status: TuiNotification.Success,
-            })
-            .subscribe()
-        })
-      ),
-    {dispatch: false}
-  )
-
-  afterFailureCancel$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(cancelOrderFailureAction),
-        tap(() => {
-          this.alertService
-            .open(`Ошибка отменены заказа`, {
-              label: `Изменения данных!`,
-              status: TuiNotification.Error,
-            })
-            .subscribe()
-        })
-      ),
-    {dispatch: false}
-  )
+  // successCancel$ = createEffect(
+  //   () =>
+  //     this.actions$.pipe(
+  //       ofType(cancelOrderSuccessAction),
+  //       tap(() => {
+  //         this.dialogService
+  //           .open<any>(
+  //             new PolymorpheusComponent(AlertComponent, this.injector),
+  //             {
+  //               data: {
+  //                 heading: 'Заказ отменен',
+  //                 success: true,
+  //               },
+  //               dismissible: true,
+  //               closeable: false,
+  //               size: 'auto',
+  //             }
+  //           )
+  //           .subscribe()
+  //       })
+  //     ),
+  //   {dispatch: false}
+  // )
+  //
+  // failureCancel$ = createEffect(
+  //   () =>
+  //     this.actions$.pipe(
+  //       ofType(cancelOrderFailureAction),
+  //       tap(() => {
+  //         this.dialogService
+  //           .open<any>(
+  //             new PolymorpheusComponent(AlertComponent, this.injector),
+  //             {
+  //               data: {
+  //                 heading: 'Ошибка отмены заказа',
+  //                 failure: true,
+  //               },
+  //               dismissible: true,
+  //               closeable: false,
+  //               size: 'auto',
+  //             }
+  //           )
+  //           .subscribe()
+  //       })
+  //     ),
+  //   {dispatch: false}
+  // )
 }

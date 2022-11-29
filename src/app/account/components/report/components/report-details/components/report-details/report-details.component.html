@@ -1,1 +1,69 @@
-<p>order-details works!</p>
+<div *tuiLet="order$ | async as order" class="relative rounded-sm bg-white p-2">
+  <button
+    type="button"
+    class="absolute -top-2 -right-2 text-gray-800"
+    (click)="close()"
+  >
+    <tui-svg src="icons::close-2" class="!h-[22px] !w-[22px]"></tui-svg>
+  </button>
+
+  <ng-container *tuiLet="isLoading$ | async as isLoading">
+    <tui-loader [showLoader]="isLoading">
+      <div
+        *ngIf="order && order.order && !isLoading"
+        class="flex flex-col text-left font-base"
+      >
+        <b class="text-2xl font-bold">№ {{ order.order.order_id }}</b>
+
+        <div class="mt-8">
+          <p class="text-2xs text-gray-600">Тип груза:</p>
+          <p class="mb-3 text-2xs">
+            {{ order.order.cargo_type }} (мест: {{ order.order.cargo_count }})
+          </p>
+          <p class="text-2xs text-gray-600">Направление перевозки:</p>
+          <p class="mb-3 text-2xs">
+            г. {{ order.order.city_from }} &#8212; г. {{ order.order.city_to }}
+          </p>
+
+          <p class="mb-3">
+            <span class="text-2xs text-gray-600"
+              >Забор посылки у отправителя</span
+            >
+            &#45; <span class="text-2xs text-red">Вызов курьера</span>
+            <b class="block text-sm text-red">300 руб.</b>
+          </p>
+
+          <p class="mb-3">
+            <span class="text-2xs text-gray-600"
+              >Доставка посылки до получателя</span
+            >
+            &#45; <span class="text-2xs text-red">Вызов курьера</span>
+            <b class="block text-sm text-red">300 руб.</b>
+          </p>
+
+          <p class="text-2xs text-gray-600">
+            Страхование посылки на сумму 25 000 руб.
+          </p>
+          <b class="text-sm text-red">300 р</b>
+
+          <div class="mt-5 text-xl">
+            <span class="text-gray-500">Итого: </span>
+            <b>{{ order.order.order_price }} руб.</b>
+          </div>
+        </div>
+
+        <button
+          tuiButton
+          type="button"
+          appearance="accent"
+          size="m"
+          [showLoader]="isSubmitting$ | async"
+          class="col-span-2 mt-6 sm:col-span-1"
+          (click)="cancelOrder()"
+        >
+          Отменить заказ
+        </button>
+      </div>
+    </tui-loader>
+  </ng-container>
+</div>

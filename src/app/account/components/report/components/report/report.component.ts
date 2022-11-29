@@ -3,37 +3,25 @@ import {
   Component,
   HostListener,
   Inject,
+  Injector,
   OnInit,
 } from '@angular/core'
 import {Store} from '@ngrx/store'
-import {TUI_SVG_SRC_PROCESSOR} from '@taiga-ui/core'
+import {TuiDialogService} from '@taiga-ui/core'
+import {PolymorpheusComponent} from '@tinkoff/ng-polymorpheus'
 import {filter, map, Observable} from 'rxjs'
 import {currentUserSelector} from '../../../../../auth/store/selectors'
 import {CurrentUserInterface} from '../../../../../shared/types/current-user.interface'
 import {getOrdersAction} from '../../store/actions/get-orders.action'
 import {isLoadingSelector, ordersSelector} from '../../store/selectors'
 import {FilterInterface} from '../../types/filter.interface'
-import {ReportDetailsService} from '../report-details/services/report-details.service'
+import {ReportDetailsComponent} from '../report-details/components/report-details/report-details.component'
 
 @Component({
   selector: 'app-report',
   templateUrl: './report.component.html',
   styleUrls: ['./report.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
-    {
-      provide: TUI_SVG_SRC_PROCESSOR,
-      useFactory: () => {
-        return (src: string): string => {
-          const myCustomPrefix = `icons::`
-
-          return src.startsWith(myCustomPrefix)
-            ? `assets/icons/${src.replace(myCustomPrefix, ``)}.svg`
-            : src
-        }
-      },
-    },
-  ],
 })
 export class ReportComponent implements OnInit {
   columns = [
@@ -58,11 +46,12 @@ export class ReportComponent implements OnInit {
   pageIndex = 0
   breakpoint = window.matchMedia(`(min-width: 640px)`)
   isLargeScreen: boolean
+  userId: string
 
   constructor(
     private store: Store,
-    @Inject(ReportDetailsService)
-    private readonly orderDetailsService: ReportDetailsService
+    @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
+    @Inject(Injector) private readonly injector: Injector
   ) {}
 
   ngOnInit(): void {
@@ -76,6 +65,7 @@ export class ReportComponent implements OnInit {
       .pipe(
         filter(Boolean),
         map((user: CurrentUserInterface) => {
+          this.userId = user.id
           const ordersInput = {
             'user-id': user.id,
             'page-num': (this.pageIndex + 1).toString(),
@@ -105,8 +95,20 @@ export class ReportComponent implements OnInit {
   }
 
   showDetails(id: string) {
-    console.log('id', id)
-    this.orderDetailsService.open(null).subscribe()
+    this.dialogService
+      .open<any>(
+        new PolymorpheusComponent(ReportDetailsComponent, this.injector),
+        {
+          data: {
+            orderId: id,
+            userId: this.userId,
+          },
+          dismissible: true,
+          closeable: false,
+          size: 's',
+        }
+      )
+      .subscribe()
   }
 
   goToPage(index: number): void {

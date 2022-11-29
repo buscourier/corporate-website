@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core'
 import {Actions, createEffect, ofType} from '@ngrx/effects'
 import {catchError, map, of, switchMap} from 'rxjs'
-import {
-  getOrderDetailsFailureAction,
-  getOrderDetailsSuccessAction,
-} from '../../../../../orders/components/order-details/store/actions/get-order-details.action'
 import {ReportService} from '../../../../services/report.service'
 import {OrderDetailsInterface} from '../../types/order-details.interface'
-import {getOrderAction} from '../actions/get-order.action'
+import {
+  getOrderAction,
+  getOrderFailureAction,
+  getOrderSuccessAction,
+} from '../actions/get-order.action'
 
 @Injectable()
 export class GetOrderEffect {
@@ -22,9 +22,9 @@ export class GetOrderEffect {
       switchMap(({orderId}) =>
         this.reportService.getOrderDetails(orderId).pipe(
           map((details: OrderDetailsInterface) =>
-            getOrderDetailsSuccessAction({details})
+            getOrderSuccessAction({details})
           ),
-          catchError(() => of(getOrderDetailsFailureAction()))
+          catchError(() => of(getOrderFailureAction()))
         )
       )
     )
