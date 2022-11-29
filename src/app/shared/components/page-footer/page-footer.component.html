@@ -1,10 +1,26 @@
 <section class="mx-auto max-w-[1170px] px-4 pt-8">
-  <div class="mb-12 flex">
-    <a routerLink="/">
+  <div class="lg:mb-12 lg:flex">
+    <!--    mobile-contacts-->
+    <div class="mb-9 flex flex-wrap justify-between lg:hidden">
+      <a routerLink="/" class="">
+        <tui-svg src="icons::footer-logo" class="!h-[48px] !w-[83px]"></tui-svg>
+      </a>
+      <a
+        href="tel: 84232026532"
+        class="relative mb-7 block rounded-lg bg-white px-4 py-3 shadow-xs transition-shadow hover:shadow-sm active:top-0.5"
+      >
+        <tui-svg src="icons::phone" class="mr-2 !h-[15px] !w-[15px]"></tui-svg>
+        <span>+7 4232 026532</span>
+      </a>
+      <a href="mailto:inbox@busbox.guru" class="text-sm text-yellow"
+        >inbox@busbox.guru</a
+      >
+    </div>
+    <a routerLink="/" class="hidden lg:block">
       <tui-svg src="icons::footer-logo" class="!h-[75px] !w-[130px]"></tui-svg>
     </a>
     <div
-      class="ml-18 flex flex-grow items-center justify-between border-b border-gray-800 pb-4 text-sm text-white"
+      class="flex flex-col space-y-5 pb-11 text-sm text-white lg:ml-18 lg:flex-grow lg:items-center lg:justify-between lg:space-y-0 lg:border-b lg:border-gray-800 lg:pb-4"
     >
       <a
         *ngFor="let item of topNav"
@@ -16,9 +32,10 @@
     </div>
   </div>
   <!--  gap-x-20 grid grid-cols-4-->
-  <div class="mb-11 flex space-x-20">
+  <div class="lg:mb-11 lg:flex lg:space-x-20">
     <div
       *ngFor="let item of mainNav; let i = index"
+      class="hidden lg:block"
       [class.w-90]="i === 0"
       [class.w-46]="i > 0"
     >
@@ -51,7 +68,7 @@
         </li>
       </ul>
     </div>
-    <div class="w-50 text-center">
+    <div class="w-50 hidden text-center lg:block">
       <a
         href="tel: 84232026532"
         class="relative mb-7 block rounded-lg bg-white px-4 py-3 shadow-xs transition-shadow hover:shadow-sm active:top-0.5"
@@ -64,7 +81,9 @@
       >
     </div>
   </div>
-  <div class="flex justify-between border-t border-gray-800 pt-8 pb-9">
+  <div
+    class="flex flex-col space-y-2.5 border-t border-gray-800 pt-5 pb-7 lg:flex-row lg:justify-between lg:space-y-0 lg:pt-8 lg:pb-9"
+  >
     <small class="text-2xs text-gray-700">2013-2020 © ООО «Приморье»</small>
     <a routerLink="" class="text-2xs text-gray-700"
       >Политика конфиденциальности</a
