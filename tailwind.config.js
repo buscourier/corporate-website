@@ -106,9 +106,16 @@ module.exports = {
         wiggle: 'wiggle 1s ease-in-out infinite',
         fadeIn: 'fadeIn 200ms ease-in-out forwards',
       },
-    },
-    backgroundImage: {
-      'index-bus': "url('src/assets/images/index/bus-bg@3x.jpg')",
+      spacing: {
+        90: '22.5rem',
+        46: '11.5rem',
+      },
+      margin: {
+        18: '4.375rem',
+      },
+      backgroundImage: {
+        'index-bus': "url('src/assets/images/index/bus-bg@3x.jpg')",
+      },
     },
   },
   plugins: [

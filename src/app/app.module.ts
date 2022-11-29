@@ -7,6 +7,7 @@ import {StoreModule} from '@ngrx/store'
 import {StoreDevtoolsModule} from '@ngrx/store-devtools'
 import {
   TUI_SANITIZER,
+  TUI_SVG_SRC_PROCESSOR,
   TuiAlertModule,
   TuiDialogModule,
   TuiRootModule,
@@ -19,6 +20,7 @@ import {environment} from '../environments/environment'
 import {AppRoutingModule} from './app-routing.module'
 import {AppComponent} from './app.component'
 import {AuthModule} from './auth/auth.module'
+import {PageFooterModule} from './shared/components/page-footer/page-footer.module'
 import {PageHeaderModule} from './shared/components/page-header/page-header.module'
 
 @NgModule({
@@ -27,6 +29,7 @@ import {PageHeaderModule} from './shared/components/page-header/page-header.modu
     BrowserModule,
     AppRoutingModule,
     PageHeaderModule,
+    PageFooterModule,
     AuthModule.forRoot(),
     StoreModule.forRoot({}, {}),
     EffectsModule.forRoot([]),
@@ -71,6 +74,18 @@ import {PageHeaderModule} from './shared/components/page-header/page-header.modu
     {
       provide: RECAPTCHA_V3_SITE_KEY,
       useValue: '6LcTi20dAAAAAL2vjBwFpAGHt2PU5qY7HM003S_E',
+    },
+    {
+      provide: TUI_SVG_SRC_PROCESSOR,
+      useFactory: () => {
+        return (src: string): string => {
+          const myCustomPrefix = `icons::`
+
+          return src.startsWith(myCustomPrefix)
+            ? `assets/icons/${src.replace(myCustomPrefix, ``)}.svg`
+            : src
+        }
+      },
     },
   ],
   bootstrap: [AppComponent],

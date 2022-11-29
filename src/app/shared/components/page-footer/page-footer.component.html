@@ -1,0 +1,79 @@
+<section class="mx-auto max-w-[1170px] px-4 pt-8">
+  <div class="mb-12 flex">
+    <a routerLink="/">
+      <tui-svg src="icons::footer-logo" class="!h-[75px] !w-[130px]"></tui-svg>
+    </a>
+    <div
+      class="ml-18 flex flex-grow items-center justify-between border-b border-gray-800 pb-4 text-sm text-white"
+    >
+      <a
+        *ngFor="let item of topNav"
+        [routerLink]="item.link"
+        class="text-white"
+        routerLinkActive="active"
+        >{{ item.name }}</a
+      >
+    </div>
+  </div>
+  <!--  gap-x-20 grid grid-cols-4-->
+  <div class="mb-11 flex space-x-20">
+    <div
+      *ngFor="let item of mainNav; let i = index"
+      [class.w-90]="i === 0"
+      [class.w-46]="i > 0"
+    >
+      <b class="mb-5 block text-sm">
+        <a
+          class="text-white"
+          *ngIf="item.link; else noLink"
+          [routerLink]="item.link"
+          routerLinkActive="text-yellow"
+          >{{ item.name }}</a
+        >
+        <ng-template #noLink>
+          <a class="" routerLinkActive="active">{{ item.name }}</a>
+        </ng-template>
+      </b>
+      <ul class="">
+        <li
+          *ngFor="let item of item.dropdown"
+          class="mb-2"
+          [class.!mb-4]="!item.sm && i === 0"
+          [class.mt-8]="item.sub"
+        >
+          <a
+            class="text-sm text-white"
+            [routerLink]="item.link"
+            [ngClass]="{'text-2xs': item.sm, '!text-gray-700': item.sm}"
+            routerLinkActive="text-yellow"
+            >{{ item.name }}</a
+          >
+        </li>
+      </ul>
+    </div>
+    <div class="w-50 text-center">
+      <a
+        href="tel: 84232026532"
+        class="relative mb-7 block rounded-lg bg-white px-4 py-3 shadow-xs transition-shadow hover:shadow-sm active:top-0.5"
+      >
+        <tui-svg src="icons::phone" class="mr-2 !h-[15px] !w-[15px]"></tui-svg>
+        <span>+7 4232 026532</span>
+      </a>
+      <a href="mailto:inbox@busbox.guru" class="text-sm text-yellow"
+        >inbox@busbox.guru</a
+      >
+    </div>
+  </div>
+  <div class="flex justify-between border-t border-gray-800 pt-8 pb-9">
+    <small class="text-2xs text-gray-700">2013-2020 © ООО «Приморье»</small>
+    <a routerLink="" class="text-2xs text-gray-700"
+      >Политика конфиденциальности</a
+    >
+    <small class="text-2xs text-gray-700"
+      >Идея и дизайн сайта:
+      <a href="https:lead-wave.ru" class="uppercase text-white"
+        >LEAD WAVE</a
+      ></small
+    >
+  </div>
+</section>
