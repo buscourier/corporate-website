@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
-  OnDestroy,
   OnInit,
   Output,
 } from '@angular/core'
@@ -17,7 +16,7 @@ import {backendErrorsSelector} from '../../store/selectors'
   styleUrls: ['./filter.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FilterComponent implements OnInit, OnDestroy {
+export class FilterComponent implements OnInit {
   backendErrors$: Observable<null | string>
   statuses = ['Готов к выдаче', 'Подготовка к отправке', 'Возврат', 'Испорчено']
 
@@ -36,9 +35,11 @@ export class FilterComponent implements OnInit, OnDestroy {
     this.initializeValues()
   }
 
-  ngOnDestroy(): void {
-    this.valueChangesSub.unsubscribe()
-  }
+  // ngOnDestroy(): void {
+  //   if (this.valueChangesSub) {
+  //     this.valueChangesSub.unsubscribe()
+  //   }
+  // }
 
   initializeValues(): void {
     this.backendErrors$ = this.store.select(backendErrorsSelector)
