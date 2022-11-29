@@ -1,7 +1,13 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
+import {Router} from '@angular/router'
+import {Store} from '@ngrx/store'
 import {TUI_SVG_SRC_PROCESSOR} from '@taiga-ui/core'
 import {filter, map, Observable, take, tap} from 'rxjs'
-import {Store} from '@ngrx/store'
+import {currentUserSelector} from '../auth/store/selectors'
+import {setEntityAction} from '../new-order/components/checkout/components/step-one/store/actions/set-entity.action'
+import {CurrentUserInterface} from '../shared/types/current-user.interface'
+import {getBalanceAction} from './store/actions/get-balance.action'
+import {getUserProfileAction} from './store/actions/get-user-profile.action'
 import {
   accountBalanceSelector,
   isBalanceLoadingSelector,
@@ -9,14 +15,8 @@ import {
   isUserProfileLoadingSelector,
   userProfileSelector,
 } from './store/selectors'
-import {currentUserSelector} from '../auth/store/selectors'
-import {CurrentUserInterface} from '../shared/types/current-user.interface'
-import {getBalanceAction} from './store/actions/get-balance.action'
 import {BalanceInterface} from './types/balance.interface'
-import {getUserProfileAction} from './store/actions/get-user-profile.action'
 import {UserProfileInterface} from './types/user-profile.interface'
-import {Router} from '@angular/router'
-import {setEntityAction} from '../new-order/components/checkout/components/step-one/store/actions/set-entity.action'
 
 @Component({
   selector: 'app-account',
@@ -78,7 +78,7 @@ export class AccountComponent implements OnInit {
   }
 
   initializeValues() {
-    this.isUserProfileLoading$ = this.store.select(isUserProfileLoadingSelector)
+    this.isUserProfileLoading$ = this.store.select(isUserProfileLoadingSelector) //Todo: maybe load from orders?
     this.isBalanceLoading$ = this.store.select(isBalanceLoadingSelector)
     this.isSubmitting$ = this.store.select(isSubmittingSelector)
 
@@ -89,7 +89,6 @@ export class AccountComponent implements OnInit {
         filter(Boolean),
         take(1),
         tap((entity: UserProfileInterface) => {
-          console.log('profile', entity)
           this.store.dispatch(setEntityAction({entity}))
           this.router.navigate(['/new-order', 'checkout', '1'])
         })
@@ -108,6 +107,10 @@ export class AccountComponent implements OnInit {
   }
 
   fetchData(): void {
+    this.loadBalance()
+  }
+
+  loadBalance(): void {
     this.store
       .select(currentUserSelector)
       .pipe(
@@ -117,7 +120,7 @@ export class AccountComponent implements OnInit {
           return this.store.dispatch(getBalanceAction({userId: user.id}))
         })
       )
-      .subscribe()
+      .subscribe() //TODO: unsubscribe?
   }
 
   proceedOrder() {

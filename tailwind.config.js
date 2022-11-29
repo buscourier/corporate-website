@@ -101,10 +101,19 @@ module.exports = {
             transform: 'translateY(0)',
           },
         },
+        spin: {
+          '0%': {
+            transform: 'rotate(0deg)',
+          },
+          '100%': {
+            transform: 'rotate(360deg)',
+          },
+        },
       },
       animation: {
         wiggle: 'wiggle 1s ease-in-out infinite',
         fadeIn: 'fadeIn 200ms ease-in-out forwards',
+        spin: 'spin 500ms linear infinite',
       },
       spacing: {
         13: '3.25rem',
