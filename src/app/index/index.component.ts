@@ -21,4 +21,18 @@ import {TUI_SVG_SRC_PROCESSOR} from '@taiga-ui/core'
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class IndexComponent {}
+export class IndexComponent {
+  linesLimit = 8
+
+  toggleLinesClamp(): void {
+    this.linesLimit = this.collpasedLines ? 28 : 8
+  }
+
+  private get collpasedLines(): boolean {
+    return this.linesLimit === 8
+  }
+
+  get isClampActive() {
+    return this.linesLimit === 28
+  }
+}

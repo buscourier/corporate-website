@@ -3,4 +3,8 @@
     font: unset;
     @apply font-base text-base font-normal text-gray;
   }
+
+  img {
+    /*width: 100%;*/
+  }
 }

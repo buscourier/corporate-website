@@ -1,4 +1,4 @@
-import {Component, OnInit, ChangeDetectionStrategy, Input} from '@angular/core'
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core'
 
 interface Breakpoints {
   sm?: boolean
@@ -8,12 +8,12 @@ interface Breakpoints {
 }
 
 @Component({
-  selector: 'app-image',
-  templateUrl: './image.component.html',
-  styleUrls: ['./image.component.scss'],
+  selector: 'app-img',
+  templateUrl: './img.component.html',
+  styleUrls: ['./img.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ImageComponent {
+export class ImgComponent {
   @Input() width!: string
   @Input() height!: string
   @Input() maxWidth!: string
