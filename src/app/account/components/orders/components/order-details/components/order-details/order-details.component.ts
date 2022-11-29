@@ -68,6 +68,7 @@ export class OrderDetailsComponent implements OnInit {
         },
       })
     )
+    this.close()
   }
 
   close() {

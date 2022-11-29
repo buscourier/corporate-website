@@ -5,6 +5,7 @@ import {EffectsModule} from '@ngrx/effects'
 import {StoreModule} from '@ngrx/store'
 import {TuiLetModule} from '@taiga-ui/cdk'
 import {TuiButtonModule, TuiLoaderModule, TuiSvgModule} from '@taiga-ui/core'
+import {AlertModule} from 'src/app/shared/components/alert/alert.module'
 
 import {OrderDetailsComponent} from './components/order-details/order-details.component'
 import {ORDER_DETAILS_PROVIDER} from './services/order-details.service'
@@ -23,6 +24,7 @@ import {ORDER_DETAILS_FEATURE} from './store/state'
     TuiLoaderModule,
     TuiLetModule,
     TuiSvgModule,
+    AlertModule,
   ],
   exports: [OrderDetailsComponent],
   providers: [ORDER_DETAILS_PROVIDER],
