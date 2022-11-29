@@ -1,7 +1,7 @@
 <div class="mx-auto max-w-[1170px] px-4 pb-10">
   <a
     [routerLink]="['/account']"
-    class="mt-16 mb-6 flex items-center hover:opacity-70"
+    class="mt-16 mb-10 flex items-center hover:opacity-70"
   >
     <tui-svg
       src="icons::account-back"
@@ -15,7 +15,7 @@
   <app-filter (filterChanged)="fetchDataWithFilterParams($event)"></app-filter>
   <ng-container *appLet="orders$ | async as orders">
     <div *ngIf="isLargeScreen; else mobileData" class="mb-7 flex flex-col">
-      <div class="overflow-x-auto">
+      <div class="mb-4 overflow-x-auto">
         <div class="inline-block min-w-full align-middle">
           <div
             class="overflow-hidden shadow-sm ring-1 ring-black ring-opacity-5"
