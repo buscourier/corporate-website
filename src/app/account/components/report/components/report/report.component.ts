@@ -108,7 +108,7 @@ export class ReportComponent implements OnInit {
           size: 's',
         }
       )
-      .subscribe()
+      .subscribe() //TODO: unsubscribe?
   }
 
   goToPage(index: number): void {

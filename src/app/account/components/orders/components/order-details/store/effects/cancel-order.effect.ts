@@ -55,7 +55,7 @@ export class CancelOrderEffect implements OnDestroy {
                 size: 'auto',
               }
             )
-            .subscribe()
+            .subscribe() //TODO: unsubscribe?
         })
       ),
     {dispatch: false}
@@ -79,7 +79,7 @@ export class CancelOrderEffect implements OnDestroy {
                 size: 'auto',
               }
             )
-            .subscribe()
+            .subscribe() //TODO: unsubscribe?
         })
       ),
     {dispatch: false}

@@ -1,4 +1,5 @@
 export enum ActionTypes {
+  //TODO: GET_ORDERS instead GET_ORDER_DETAILS?
   GET_ORDER_DETAILS = `[User's order] Get order details`,
   GET_ORDER_DETAILS_SUCCESS = `[User's order] Get order details success`,
   GET_ORDER_DETAILS_FAILURE = `[User's order] Get order details failure`,

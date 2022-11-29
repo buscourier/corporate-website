@@ -9,7 +9,7 @@ export const getOrderAction = createAction(
 
 export const getOrderSuccessAction = createAction(
   ActionTypes.GET_ORDER_SUCCESS,
-  props<{details: OrderDetailsInterface}>()
+  props<{details: OrderDetailsInterface}>() //TODO: order instead details?
 )
 
 export const getOrderFailureAction = createAction(

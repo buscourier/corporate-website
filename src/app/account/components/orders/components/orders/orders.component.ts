@@ -80,7 +80,7 @@ export class OrdersComponent implements OnInit {
           return this.store.dispatch(getOrdersAction({ordersInput}))
         })
       )
-      .subscribe()
+      .subscribe() //TODO: unsubscribe?
   }
 
   fetchDataWithFilterParams({range, status}: FilterInterface) {
