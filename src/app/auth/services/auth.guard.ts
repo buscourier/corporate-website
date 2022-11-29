@@ -29,13 +29,11 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     this.isLoggedIn$ = this.store.select(isLoggedInSelector)
 
     return this.isLoggedIn$.pipe(
+      // filter(Boolean),
       tap((isLoggedIn: boolean) => {
         if (!isLoggedIn) {
           this.loginService.open(null).subscribe()
-          // return false
         }
-
-        // return true
       })
     )
   }
