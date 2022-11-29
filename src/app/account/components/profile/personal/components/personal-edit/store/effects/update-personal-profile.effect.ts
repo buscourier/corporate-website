@@ -1,8 +1,11 @@
-import {Inject, Injectable} from '@angular/core'
+import {Inject, Injectable, Injector} from '@angular/core'
+import {Router} from '@angular/router'
 import {Actions, createEffect, ofType} from '@ngrx/effects'
-import {TuiAlertService, TuiNotification} from '@taiga-ui/core'
+import {TuiDialogService} from '@taiga-ui/core'
+import {PolymorpheusComponent} from '@tinkoff/ng-polymorpheus'
 import {catchError, map, of, switchMap} from 'rxjs'
 import {tap} from 'rxjs/operators'
+import {AlertComponent} from '../../../../../../../../shared/components/alert/alert.component'
 import {PersonalService} from '../../../../services/personal.service'
 import {PersonalProfileInterface} from '../../../../types/personal-profile.interface'
 import {
@@ -15,9 +18,10 @@ import {
 export class UpdatePersonalProfileEffect {
   constructor(
     private actions$: Actions,
-    @Inject(TuiAlertService)
-    private readonly alertService: TuiAlertService,
-    private personalService: PersonalService
+    @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
+    @Inject(Injector) private readonly injector: Injector,
+    private personalService: PersonalService,
+    private router: Router
   ) {}
 
   updateProfile = createEffect(() =>
@@ -42,33 +46,36 @@ export class UpdatePersonalProfileEffect {
     )
   )
 
-  afterSuccessUpdate$ = createEffect(
+  successUpdate$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(updatePersonalProfileSuccessAction),
         tap(() => {
-          this.alertService
-            .open(`Данные успешно сохранены`, {
-              label: `Изменения данных!`,
-              status: TuiNotification.Success,
-            })
-            .subscribe()
+          this.router.navigate(['/account', 'profile', 'personal'])
         })
       ),
     {dispatch: false}
   )
 
-  afterFailureUpdate$ = createEffect(
+  failureUpdate$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(updatePersonalProfileFailureAction),
         tap(() => {
-          this.alertService
-            .open(`Ошибка сохранения данных`, {
-              label: `Изменения данных!`,
-              status: TuiNotification.Error,
-            })
-            .subscribe()
+          this.dialogService
+            .open<any>(
+              new PolymorpheusComponent(AlertComponent, this.injector),
+              {
+                data: {
+                  heading: 'Данные не обновлены',
+                  failure: true,
+                },
+                dismissible: true,
+                closeable: false,
+                size: 'auto',
+              }
+            )
+            .subscribe() //TODO: unsubscribe?
         })
       ),
     {dispatch: false}

@@ -1,8 +1,11 @@
-import {Inject, Injectable} from '@angular/core'
+import {Inject, Injectable, Injector} from '@angular/core'
+import {Router} from '@angular/router'
 import {Actions, createEffect, ofType} from '@ngrx/effects'
-import {TuiAlertService, TuiNotification} from '@taiga-ui/core'
+import {TuiDialogService} from '@taiga-ui/core'
+import {PolymorpheusComponent} from '@tinkoff/ng-polymorpheus'
 import {catchError, map, of, switchMap} from 'rxjs'
 import {tap} from 'rxjs/operators'
+import {AlertComponent} from '../../../../../../../../shared/components/alert/alert.component'
 import {EntityService} from '../../../../services/entity.service'
 import {EntityProfileInterface} from '../../../../types/entity-profile.interface'
 import {
@@ -15,9 +18,10 @@ import {
 export class UpdateEntityProfileEffect {
   constructor(
     private actions$: Actions,
-    @Inject(TuiAlertService)
-    private readonly alertService: TuiAlertService,
-    private entityService: EntityService
+    @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
+    @Inject(Injector) private readonly injector: Injector,
+    private entityService: EntityService,
+    private router: Router
   ) {}
 
   //TODO: Need to refactor all arrow returns in effects
@@ -43,33 +47,50 @@ export class UpdateEntityProfileEffect {
     )
   )
 
-  afterSuccessUpdate$ = createEffect(
+  successUpdate$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(updateEntityProfileSuccessAction),
         tap(() => {
-          this.alertService
-            .open(`Данные успешно сохранены`, {
-              label: `Изменения данных!`,
-              status: TuiNotification.Success,
-            })
-            .subscribe()
+          // this.dialogService
+          //   .open<any>(
+          //     new PolymorpheusComponent(AlertComponent, this.injector),
+          //     {
+          //       data: {
+          //         heading: 'Данные обновлены',
+          //         success: true,
+          //       },
+          //       dismissible: true,
+          //       closeable: false,
+          //       size: 'auto',
+          //     }
+          //   )
+          //   .subscribe() //TODO: unsubscribe?
+          this.router.navigate(['/account', 'profile', 'entity'])
         })
       ),
     {dispatch: false}
   )
 
-  afterFailureUpdate$ = createEffect(
+  failureUpdate$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(updateEntityProfileFailureAction),
         tap(() => {
-          this.alertService
-            .open(`Ошибка сохранения данных`, {
-              label: `Изменения данных!`,
-              status: TuiNotification.Error,
-            })
-            .subscribe()
+          this.dialogService
+            .open<any>(
+              new PolymorpheusComponent(AlertComponent, this.injector),
+              {
+                data: {
+                  heading: 'Данные не обновлены',
+                  failure: true,
+                },
+                dismissible: true,
+                closeable: false,
+                size: 'auto',
+              }
+            )
+            .subscribe() //TODO: unsubscribe?
         })
       ),
     {dispatch: false}
