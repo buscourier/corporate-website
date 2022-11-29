@@ -3,17 +3,19 @@ import {
   Component,
   HostListener,
   Inject,
+  Injector,
   OnInit,
 } from '@angular/core'
 import {Store} from '@ngrx/store'
-import {TUI_SVG_SRC_PROCESSOR} from '@taiga-ui/core'
+import {TUI_SVG_SRC_PROCESSOR, TuiDialogService} from '@taiga-ui/core'
+import {PolymorpheusComponent} from '@tinkoff/ng-polymorpheus'
 import {filter, map, Observable} from 'rxjs'
 import {currentUserSelector} from '../../../../../auth/store/selectors'
 import {CurrentUserInterface} from '../../../../../shared/types/current-user.interface'
 import {getOrdersAction} from '../../store/actions/get-orders.action'
 import {isLoadingSelector, ordersSelector} from '../../store/selectors'
 import {FilterInterface} from '../../types/filter.interface'
-import {OrderDetailsService} from '../order-details/services/order-details.service'
+import {OrderDetailsComponent} from '../order-details/components/order-details/order-details.component'
 
 @Component({
   selector: 'app-orders',
@@ -61,8 +63,8 @@ export class OrdersComponent implements OnInit {
 
   constructor(
     private store: Store,
-    @Inject(OrderDetailsService)
-    private readonly orderDetailsService: OrderDetailsService
+    @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
+    @Inject(Injector) private readonly injector: Injector
   ) {}
 
   ngOnInit(): void {
@@ -105,8 +107,17 @@ export class OrdersComponent implements OnInit {
   }
 
   showDetails(id: string) {
-    console.log('id', id)
-    this.orderDetailsService.open(null).subscribe()
+    this.dialogService
+      .open<number>(
+        new PolymorpheusComponent(OrderDetailsComponent, this.injector),
+        {
+          data: id,
+          dismissible: true,
+          closeable: false,
+          size: 's',
+        }
+      )
+      .subscribe()
   }
 
   goToPage(index: number): void {

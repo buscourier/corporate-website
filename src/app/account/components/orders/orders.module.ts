@@ -11,6 +11,7 @@ import {TuiPaginationModule} from '@taiga-ui/kit'
 import {MobileDataModule} from 'src/app/shared/components/mobile-data/mobile-data.module'
 import {LetModule} from 'src/app/shared/directives/let/let.module'
 import {FilterModule} from './components/filter/filter.module'
+import {OrderDetailsModule} from './components/order-details/order-details.module'
 import {OrdersComponent} from './components/orders/orders.component'
 import {OrdersRoutingModule} from './orders-routing.module'
 import {OrdersService} from './services/orders.service'
@@ -37,6 +38,7 @@ import {ORDERS_FEATURE} from './store/state'
     TuiPaginationModule,
     MobileDataModule,
     ScrollingModule,
+    OrderDetailsModule,
   ],
   providers: [OrdersService],
 })

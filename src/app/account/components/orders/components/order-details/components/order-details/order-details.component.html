@@ -1,1 +1,70 @@
-<p>order-details works!</p>
+<div *tuiLet="order$ | async as order" class="relative rounded-sm bg-white p-2">
+  <button
+    type="button"
+    class="absolute -top-2 -right-2 text-gray-800"
+    (click)="close()"
+  >
+    <tui-svg src="icons::close-2" class="!h-[22px] !w-[22px]"></tui-svg>
+  </button>
+
+  <tui-loader [showLoader]="isLoading$ | async">
+    <div *ngIf="order && order.order" class="flex flex-col text-left font-base">
+      <b class="text-2xl font-bold">№ {{ order.order.order_id }}</b>
+      <dl class="mt-8 grid grid-cols-2 gap-2">
+        <dt class="text-2xs text-gray-600">Дата заказа:</dt>
+        <dd class="text-2xs">{{ order.order.order_date.date }}</dd>
+
+        <dt class="text-2xs text-gray-600">Статус заказа:</dt>
+        <dd class="text-2xs">{{ order.order.order_name }}</dd>
+
+        <dt class="text-2xs text-gray-600">Пункт отправления:</dt>
+        <dd class="text-2xs">{{ order.order.city_from }}</dd>
+
+        <dt class="text-2xs text-gray-600">Пункт назначения:</dt>
+        <dd class="text-2xs">{{ order.order.city_to }}</dd>
+
+        <dt class="text-2xs text-gray-600">Получатель:</dt>
+        <dd class="text-2xs">{{ order.order.sender_name }}</dd>
+
+        <dt class="text-2xs text-gray-600">Телефон получателя:</dt>
+        <dd class="text-2xs">{{ order.order.sender_phone }}</dd>
+
+        <dt class="text-2xs text-gray-600">Тип груза:</dt>
+        <dd class="text-2xs">{{ order.order.cargo_type }}</dd>
+
+        <dt class="text-2xs text-gray-600">Количество мест:</dt>
+        <dd class="text-2xs">{{ order.order.cargo_count }}</dd>
+      </dl>
+
+      <dl class="mt-6 grid grid-cols-2 gap-2">
+        <dt class="text-2xs text-gray-600">Перевозчик:</dt>
+        <dd class="text-2xs">{{ order.carrier_info.carrier_name }}</dd>
+
+        <dt class="text-2xs text-gray-600">Время отправки:</dt>
+        <dd class="text-2xs">
+          {{ order.carrier_info.time_departure.date }}
+        </dd>
+
+        <dt class="text-2xs text-gray-600">Время доставки:</dt>
+        <dd class="text-2xs">{{ order.carrier_info.time_arrival.date }}</dd>
+      </dl>
+
+      <!--          <p class="text-2xs text-gray-600"></p>-->
+      <!--          <p class="text-2xs">{{}}</p>-->
+
+      <!--          <p class="text-2xs text-gray-600"></p>-->
+      <!--          <p class="text-2xs">{{}}</p>-->
+      <button
+        tuiButton
+        type="button"
+        appearance="accent"
+        size="m"
+        [showLoader]="isSubmitting$ | async"
+        class="col-span-2 mt-6 sm:col-span-1"
+        (click)="cancelOrder(order)"
+      >
+        Отменить заказ
+      </button>
+    </div>
+  </tui-loader>
+</div>

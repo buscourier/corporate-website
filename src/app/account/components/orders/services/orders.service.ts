@@ -40,13 +40,13 @@ export class OrdersService {
   }
 
   getOrderDetails(id: string): Observable<any> {
-    const url = `${environment.apiUrl}/order/getdetails/`
+    const url = `${environment.apiUrl}/order/getdetails`
 
     return this.http.get(`${url}/${environment.apiKey}/${id}`)
   }
 
   cancelOrder(order: OrderInterface) {
-    const url = `${environment.apiUrl}/order/ordercancel/`
+    const url = `${environment.apiUrl}/order/ordercancel`
 
     return this.http.post(`${url}`, JSON.stringify(order))
   }
