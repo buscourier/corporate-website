@@ -45,9 +45,9 @@ export class OrdersService {
     return this.http.get(`${url}/${environment.apiKey}/${id}`)
   }
 
-  cancelOrder(order: OrderInterface) {
+  cancelOrder(data) {
     const url = `${environment.apiUrl}/order/ordercancel`
 
-    return this.http.post(`${url}`, JSON.stringify(order))
+    return this.http.post(`${url}`, JSON.stringify(data))
   }
 }

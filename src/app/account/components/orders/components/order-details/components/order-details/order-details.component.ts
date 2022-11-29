@@ -3,6 +3,7 @@ import {Store} from '@ngrx/store'
 import {TuiDialogContext} from '@taiga-ui/core'
 import {POLYMORPHEUS_CONTEXT} from '@tinkoff/ng-polymorpheus'
 import {Observable} from 'rxjs'
+import {environment} from 'src/environments/environment'
 import {cancelOrderAction} from '../../store/actions/cancel-order.action'
 import {getOrderDetailsAction} from '../../store/actions/get-order-details.action'
 import {
@@ -27,12 +28,16 @@ export class OrderDetailsComponent implements OnInit {
 
   constructor(
     @Inject(POLYMORPHEUS_CONTEXT)
-    private readonly context: TuiDialogContext<number, number>,
+    private readonly context: TuiDialogContext<any, any>,
     private store: Store
   ) {}
 
   get orderId(): number {
-    return this.context.data
+    return this.context.data.orderId
+  }
+
+  get userId(): number {
+    return this.context.data.userId
   }
 
   ngOnInit(): void {
@@ -53,8 +58,16 @@ export class OrderDetailsComponent implements OnInit {
     this.order$ = this.store.select(detailsSelector)
   }
 
-  cancelOrder(order) {
-    this.store.dispatch(cancelOrderAction({order}))
+  cancelOrder() {
+    this.store.dispatch(
+      cancelOrderAction({
+        data: {
+          'api-key': environment.apiKey,
+          'user-id': this.userId.toString(),
+          'order-id': this.orderId.toString(),
+        },
+      })
+    )
   }
 
   close() {

@@ -60,6 +60,7 @@ export class OrdersComponent implements OnInit {
   pageIndex = 0
   breakpoint = window.matchMedia(`(min-width: 640px)`)
   isLargeScreen: boolean
+  userId: string
 
   constructor(
     private store: Store,
@@ -78,6 +79,7 @@ export class OrdersComponent implements OnInit {
       .pipe(
         filter(Boolean),
         map((user: CurrentUserInterface) => {
+          this.userId = user.id
           const ordersInput = {
             'user-id': user.id,
             'page-num': (this.pageIndex + 1).toString(),
@@ -108,10 +110,13 @@ export class OrdersComponent implements OnInit {
 
   showDetails(id: string) {
     this.dialogService
-      .open<number>(
+      .open<any>(
         new PolymorpheusComponent(OrderDetailsComponent, this.injector),
         {
-          data: id,
+          data: {
+            orderId: id,
+            userId: this.userId,
+          },
           dismissible: true,
           closeable: false,
           size: 's',

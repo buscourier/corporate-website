@@ -1,10 +1,10 @@
 import {createAction, props} from '@ngrx/store'
-import {OrderInterface} from '../../../../types/order.interface'
+import {OrderCancelInputInterface} from '../../types/order-cancel-input.interface'
 import {ActionTypes} from '../action-types'
 
 export const cancelOrderAction = createAction(
   ActionTypes.CANCEL_ORDER,
-  props<{order: OrderInterface}>()
+  props<{data: OrderCancelInputInterface}>()
 )
 
 export const cancelOrderSuccessAction = createAction(

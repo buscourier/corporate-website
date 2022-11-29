@@ -18,8 +18,8 @@ export class CancelOrderEffect {
   cancelOrder$ = createEffect(() =>
     this.actions$.pipe(
       ofType(cancelOrderAction),
-      switchMap(({order}) =>
-        this.ordersService.cancelOrder(order).pipe(
+      switchMap(({data}) =>
+        this.ordersService.cancelOrder(data).pipe(
           map(() => cancelOrderSuccessAction()),
           catchError(() => of(cancelOrderFailureAction()))
         )
