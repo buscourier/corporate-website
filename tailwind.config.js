@@ -107,6 +107,8 @@ module.exports = {
         fadeIn: 'fadeIn 200ms ease-in-out forwards',
       },
       spacing: {
+        13: '3.25rem',
+        18: '4.375rem',
         90: '22.5rem',
         46: '11.5rem',
       },
