@@ -1,4 +1,5 @@
 import {createFeatureSelector, createSelector} from '@ngrx/store'
+import {CurrentUserInterface} from '../../shared/types/current-user.interface'
 import {AuthStateInterface} from '../types/auth-state.interface'
 import {AUTH_FEATURE} from './state'
 
@@ -33,6 +34,16 @@ export const isAnonymousSelector = createSelector(
 export const currentUserSelector = createSelector(
   authFeatureSelector,
   (authState: AuthStateInterface) => authState.currentUser
+)
+
+export const isEntitySelector = createSelector(
+  currentUserSelector,
+  (user: CurrentUserInterface) => user.user_type === 'ur'
+)
+
+export const isPersonalSelector = createSelector(
+  currentUserSelector,
+  (user: CurrentUserInterface) => user.user_type !== 'ur'
 )
 
 export const validationErrorsSelector = createSelector(

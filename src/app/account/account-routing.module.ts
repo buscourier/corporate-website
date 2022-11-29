@@ -13,6 +13,7 @@ const routes: Routes = [
       import('./components/profile/profile.module').then(
         (m) => m.ProfileModule
       ),
+    // canActivate: [EntityGuard],
   },
   {
     path: 'orders',
