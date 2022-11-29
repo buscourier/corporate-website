@@ -3,7 +3,7 @@
   (ngSubmit)="onSubmit()"
   class="items-bottom mb-8 flex flex-col gap-4 px-4 sm:flex-row sm:flex-wrap md:mb-9 lg:mb-20 lg:flex-nowrap lg:pt-4 lg:pr-7 lg:pb-9 lg:pl-10 lg:shadow-md"
 >
-  <label class="lg:shrink-1 flex-grow sm:basis-[48%] lg:basis-1/4">
+  <label class="lg:shrink-1 flex-grow">
     <span class="mb-1 inline-block text-xs text-gray-500">Период:</span>
     <tui-input-date-range
       tuiUnfinishedValidator="Заполните данные"
@@ -14,44 +14,17 @@
       <input tuiTextfield placeholder="От - до" />
     </tui-input-date-range>
   </label>
-  <label
-    class="lg:shrink-2 flex-grow sm:basis-[48%] lg:basis-1/4 xl:flex-grow-0"
-    *appLet="startCities$ | async as startCites"
-  >
-    <span class="mb-1 inline-block text-xs text-gray-500"
-      >Город отправления:</span
-    >
-    <tui-loader [showLoader]="isStartCitiesLoading$ | async">
+  <label class="lg:shrink-2 flex-grow">
+    <span class="mb-1 inline-block text-xs text-gray-500">Статус:</span>
+    <tui-loader>
       <tui-select
         tuiTextfieldSize="m"
-        formControlName="startCity"
+        formControlName="status"
         [tuiTextfieldLabelOutside]="true"
       >
-        Выберите город
         <tui-data-list-wrapper
           *tuiDataList
-          [items]="startCites"
-        ></tui-data-list-wrapper>
-      </tui-select>
-    </tui-loader>
-  </label>
-  <label
-    class="lg:shrink-2 flex-grow sm:basis-[48%] lg:flex-grow-0 lg:basis-1/4"
-    *appLet="endCities$ | async as endCites"
-  >
-    <span class="mb-1 inline-block text-xs text-gray-500"
-      >Город получения:</span
-    >
-    <tui-loader [showLoader]="isEndCitiesLoading$ | async">
-      <tui-select
-        tuiTextfieldSize="m"
-        formControlName="endCity"
-        [tuiTextfieldLabelOutside]="true"
-      >
-        Выберите город
-        <tui-data-list-wrapper
-          *tuiDataList
-          [items]="endCites"
+          [items]="statuses"
         ></tui-data-list-wrapper>
       </tui-select>
     </tui-loader>
@@ -61,7 +34,7 @@
     type="submit"
     [showLoader]="false"
     size="m"
-    class="flex-grow sm:mt-auto sm:basis-[48%] lg:flex-grow-0 lg:basis-[210px]"
+    class="flex-grow sm:mt-auto sm:flex-grow-0 sm:basis-[210px]"
   >
     Показать
   </button>
