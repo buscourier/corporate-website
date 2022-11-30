@@ -260,12 +260,14 @@
       </h2>
       <tui-line-clamp
         [content]="template"
-        class="clamp"
+        class="mb-4"
         [linesLimit]="linesLimit"
         [lineHeight]="21"
       ></tui-line-clamp>
-      <button (click)="toggleLinesClamp()" [class.mt-3]="!isClampActive">
-        <span class="text-sm">Читать подробнее</span>
+      <button (click)="toggleLinesClamp()">
+        <span class="text-sm">{{
+          isClampActive ? 'Свернуть' : 'Читать подробнее'
+        }}</span>
         <tui-svg
           src="icons::expand"
           class="ml-2.5 !h-8 !w-8 transition-all duration-100"
