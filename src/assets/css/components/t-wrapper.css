@@ -45,3 +45,21 @@ tui-primitive-checkbox[data-size='m'] {
   width: 1.25rem !important;
   height: 1.25rem !important;
 }
+
+tui-radio[data-size='m'] {
+  width: 1.25rem !important;
+  height: 1.25rem !important;
+}
+
+tui-radio[data-size='m'] .t-mark {
+  width: 0.75rem !important;
+  height: 0.75rem !important;
+}
+
+tui-radio-labeled[data-size='m'] {
+  line-height: 1.25rem !important;
+}
+
+tui-checkbox-labeled[data-size='m'] .t-content {
+  line-height: 1.25rem !important;
+}

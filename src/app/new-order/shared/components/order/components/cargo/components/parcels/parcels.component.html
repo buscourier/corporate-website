@@ -8,8 +8,10 @@
         *ngIf="parcels.length > 1"
         type="button"
         (click)="deleteParcel(i)"
+        class="flex items-center"
       >
-        Delete
+        <tui-svg src="icons::delete" class="mr-2 !h-[16px] !w-[16px]"></tui-svg>
+        <span class="text-xs text-red">Удалить</span>
       </button>
     </app-parcel>
   </ng-container>

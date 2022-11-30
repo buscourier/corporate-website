@@ -1,12 +1,19 @@
 <form [formGroup]="form">
-  formValid {{ form.valid }}
   <label class="w-full" *tuiLet="isCitiesLoading$ | async as isCitiesLoading">
-    <span class="mb-1 inline-block text-xs text-gray-500">
-      Населенный пункт
+    <b *ngIf="boldCityLabel; else normal" class="mb-3.5 block text-lg">
+      Куда
       <sup class="text-red" *ngIf="city.errors && city.hasError('required')"
         >*</sup
       >
-    </span>
+    </b>
+    <ng-template #normal>
+      <span class="mb-1 inline-block text-xs text-gray-500">
+        Населенный пункт
+        <sup class="text-red" *ngIf="city.errors && city.hasError('required')"
+          >*</sup
+        >
+      </span>
+    </ng-template>
     <ng-container *tuiLet="cities$ | async as cities">
       <tui-loader [showLoader]="isCitiesLoading">
         <tui-combo-box

@@ -147,7 +147,7 @@
                 <button
                   type="button"
                   tuiButton
-                  class="mt-5 w-[270px]"
+                  class="mt-5 mb-2.5 w-[270px]"
                   [disabled]="
                     !(startPoint.isValid || endPoint.isValid || isOrdersValid)
                   "
@@ -155,12 +155,7 @@
                 >
                   Оформить заказ
                 </button>
-                <button
-                  type="button"
-                  class="text-red"
-                  class="mt-2"
-                  (click)="reset()"
-                >
+                <button type="button" class="text-red" (click)="reset()">
                   Сбросить расчет
                 </button>
               </ng-container>

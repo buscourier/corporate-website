@@ -19,14 +19,14 @@
       >
         {{ service.get('data').value.name }}
       </tui-checkbox-labeled>
-      <div
+      <ng-container
         *ngIf="
           service.get('phone') &&
           service.get(service.get('data').value.id).value
         "
       >
-        <label>
-          <span>
+        <label class="ml-7 block w-[240px]">
+          <div class="mb-1 text-gray-700">
             Номер телефона
             <sup
               class="text-red"
@@ -36,7 +36,7 @@
               "
               >*</sup
             >
-          </span>
+          </div>
           <tui-input-phone
             formControlName="phone"
             tuiTextfieldSize="m"
@@ -45,20 +45,20 @@
           >
             <input tuiTextfield autocomplete="tel" />
           </tui-input-phone>
+          <tui-error
+            formControlName="phone"
+            [error]="[] | tuiFieldError | async"
+          ></tui-error>
         </label>
-        <tui-error
-          formControlName="phone"
-          [error]="[] | tuiFieldError | async"
-        ></tui-error>
-      </div>
+      </ng-container>
 
-      <div
+      <ng-container
         *ngIf="
           service.get('sum') && service.get(service.get('data').value.id).value
         "
       >
-        <label>
-          <span>
+        <label class="ml-7 block w-[240px]">
+          <div class="mb-1 text-gray-700">
             Объявленная ценность
             <sup
               class="text-red"
@@ -68,7 +68,7 @@
               "
               >*</sup
             >
-          </span>
+          </div>
           <tui-input-number
             formControlName="sum"
             tuiTextfieldSize="m"
@@ -77,12 +77,12 @@
             [max]="30001"
           >
           </tui-input-number>
+          <tui-error
+            formControlName="sum"
+            [error]="[] | tuiFieldError | async"
+          ></tui-error>
         </label>
-        <tui-error
-          formControlName="sum"
-          [error]="[] | tuiFieldError | async"
-        ></tui-error>
-      </div>
+      </ng-container>
     </div>
   </ng-container>
 </div>

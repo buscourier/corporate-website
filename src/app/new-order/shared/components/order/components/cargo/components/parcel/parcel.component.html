@@ -1,5 +1,4 @@
 <div [formGroup]="form" class="mb-5">
-  parcelInvalid: {{ form.invalid }}
   <div class="mb-0.5 flex items-center space-x-4">
     <label class="mb-3 block w-24">
       <span class="mb-1 inline-block text-xs">
@@ -118,7 +117,9 @@
         <input tuiTextfield />
       </tui-input-number>
     </label>
-    <ng-content select="button"></ng-content>
+    <div class="mt-2">
+      <ng-content select="button"></ng-content>
+    </div>
   </div>
   <tui-error
     [formGroup]="form"

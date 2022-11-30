@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  Input,
   OnDestroy,
   OnInit,
 } from '@angular/core'
@@ -63,6 +64,8 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EndPointComponent implements OnInit, OnDestroy {
+  @Input() boldCityLabel: boolean
+
   isCitiesLoading$: Observable<boolean>
   isCitiesLoaded$: Observable<boolean>
   isOfficesLoading$: Observable<boolean>

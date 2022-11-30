@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  Input,
   OnDestroy,
   OnInit,
 } from '@angular/core'
@@ -63,6 +64,8 @@ import {initialState} from '../../store/state'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StartPointComponent implements OnInit, OnDestroy {
+  @Input() boldCityLabel: boolean
+
   isCitiesLoading$: Observable<boolean>
   isCitiesLoaded$: Observable<boolean>
   isOfficesLoading$: Observable<boolean>
