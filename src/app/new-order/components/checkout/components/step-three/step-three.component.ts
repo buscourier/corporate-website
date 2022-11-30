@@ -20,6 +20,7 @@ import {isRecipientValidSelector} from './components/recipient/store/selectors'
 export class StepThreeComponent implements OnInit, OnDestroy {
   combineAllSub: Subscription
   isEndpointValid = false
+  isCurrentStepValid = false
 
   constructor(private store: Store) {}
 
@@ -32,10 +33,12 @@ export class StepThreeComponent implements OnInit, OnDestroy {
       .pipe(
         map(([isEndpointValid, isOrdersValid, isRecipientValid]) => {
           this.isEndpointValid = isEndpointValid
+          this.isCurrentStepValid =
+            isEndpointValid && isOrdersValid && isRecipientValid
 
           return this.store.dispatch(
             setCurrentStepStateAction({
-              isValid: isEndpointValid && isOrdersValid && isRecipientValid,
+              isValid: this.isCurrentStepValid,
             })
           )
         })

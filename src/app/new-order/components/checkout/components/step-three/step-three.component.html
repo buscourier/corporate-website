@@ -7,7 +7,12 @@
   <button [routerLink]="['/new-order', 'checkout', '1']" tuiButton size="m">
     Назад
   </button>
-  <button [routerLink]="['/new-order', 'checkout', '3']" tuiButton size="m">
+  <button
+    [routerLink]="['/new-order', 'checkout', '3']"
+    tuiButton
+    size="m"
+    [disabled]="!isCurrentStepValid"
+  >
     Дальше
   </button>
 </div>

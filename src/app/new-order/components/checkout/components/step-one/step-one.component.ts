@@ -26,6 +26,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
   activeTabIndex$: Observable<number>
   isLoggedIn$: Observable<boolean>
   isAnonymous$: Observable<boolean>
+  isCurrentStepValid = false
 
   isPersonValidSub: Subscription
 
@@ -48,6 +49,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
       .select(isPersonValidSelector)
       .pipe(
         map((isValid: boolean) => {
+          this.isCurrentStepValid = isValid
           return this.store.dispatch(setCurrentStepStateAction({isValid}))
         })
       )

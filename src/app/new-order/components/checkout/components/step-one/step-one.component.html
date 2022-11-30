@@ -58,7 +58,7 @@
       [routerLink]="['/new-order', 'checkout', '1']"
       tuiButton
       size="m"
-      [disabled]=""
+      [disabled]="!isCurrentStepValid"
       class="col-start-3 w-full"
     >
       Дальше

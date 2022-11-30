@@ -52,7 +52,7 @@ export const main = [
     dropdown: [
       {link: 'orders/track-order', name: 'Поиск заказа', sm: true},
       {link: 'account', name: 'Личный кабинет', sm: true},
-      {link: 'orders/order', name: 'Онлайн-заявка', sm: true},
+      {link: 'new-order/checkout', name: 'Онлайн-заявка', sm: true},
       {link: 'orders/quick-order', name: 'Расчет тарифа по Приморью', sm: true},
       // {link: 'no', name: 'Расчет тарифа по Республике Татарстан', sm: true},
       {

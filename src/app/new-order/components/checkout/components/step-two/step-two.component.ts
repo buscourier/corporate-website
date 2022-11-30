@@ -17,6 +17,7 @@ import {isSenderValidSelector} from './components/sender/store/selectors'
 })
 export class StepTwoComponent implements OnInit, OnDestroy {
   combineAllSub: Subscription
+  isCurrentStepValid = false
 
   constructor(private store: Store) {}
 
@@ -27,9 +28,11 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     ])
       .pipe(
         map(([isSenderValid, isStartPointValid]) => {
+          this.isCurrentStepValid = isSenderValid && isStartPointValid
+
           return this.store.dispatch(
             setCurrentStepStateAction({
-              isValid: isSenderValid && isStartPointValid,
+              isValid: this.isCurrentStepValid,
             })
           )
         })
