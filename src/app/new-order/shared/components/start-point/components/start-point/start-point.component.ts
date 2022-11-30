@@ -303,15 +303,22 @@ export class StartPointComponent implements OnInit, OnDestroy {
   }
 
   showMap() {
+    const office: OfficeInterface = this.give.value
+
+    if (!office) {
+      return
+    }
+
+    const {geo_x, geo_y} = office
+
     this.dialogService
       .open<any>(new PolymorpheusComponent(ModalMapComponent, this.injector), {
         data: {
-          heading: 'Данные не обновлены',
-          failure: true,
+          points: [{geo_x, geo_y}],
         },
         dismissible: true,
-        closeable: false,
-        size: 'auto',
+        closeable: true,
+        size: 'fullscreen',
       })
       .subscribe() //TODO: unsubscribe?
   }

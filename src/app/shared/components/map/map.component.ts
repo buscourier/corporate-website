@@ -11,8 +11,8 @@ export class MapComponent {
   @Input() points: MapPointInterface[]
   @Input() latitude: number
   @Input() longitude: number
-  @Input() zoom: number
-  @Input() disableDefaultUI: boolean
+  @Input() zoom: number = 12
+  @Input() disableDefaultUI: boolean = true
   @Input() gestureHandling: boolean
   @Input() scrollwheel: boolean
 }

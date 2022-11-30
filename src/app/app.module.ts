@@ -15,6 +15,7 @@ import {
 import {TUI_LANGUAGE, TUI_RUSSIAN_LANGUAGE} from '@taiga-ui/i18n'
 import {TuiPdfViewerModule} from '@taiga-ui/kit'
 import {NgDompurifySanitizer} from '@tinkoff/ng-dompurify'
+import {AngularYandexMapsModule, YaConfig} from 'angular8-yandex-maps'
 import {RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module} from 'ng-recaptcha'
 import {of} from 'rxjs'
 import {environment} from '../environments/environment'
@@ -23,6 +24,11 @@ import {AppComponent} from './app.component'
 import {AuthModule} from './auth/auth.module'
 import {PageFooterModule} from './shared/components/page-footer/page-footer.module'
 import {PageHeaderModule} from './shared/components/page-header/page-header.module'
+
+const mapConfig: YaConfig = {
+  apikey: 'apiKey',
+  lang: 'ru_RU',
+}
 
 @NgModule({
   declarations: [AppComponent],
@@ -47,6 +53,7 @@ import {PageHeaderModule} from './shared/components/page-header/page-header.modu
     TuiDialogModule,
     TuiAlertModule,
     RecaptchaV3Module,
+    AngularYandexMapsModule.forRoot(mapConfig),
   ],
   providers: [
     // {

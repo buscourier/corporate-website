@@ -1,4 +1,5 @@
 <article class="relative grayscale">
+  points: {{ points | json }}
   <ya-map
     [center]="[latitude, longitude]"
     [zoom]="zoom"
