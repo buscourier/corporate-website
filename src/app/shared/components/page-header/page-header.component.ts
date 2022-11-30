@@ -15,15 +15,17 @@ import {
   TuiDurationOptions,
   tuiHeightCollapse,
 } from '@taiga-ui/core'
-import {Observable} from 'rxjs'
+import {filter, Observable} from 'rxjs'
 import {LoginService} from '../../../auth/components/login/services/login.service'
 import {logoutAction} from '../../../auth/store/actions/sync.action'
 import {
+  currentUserSelector,
   isAnonymousSelector,
   isLoggedInSelector,
 } from '../../../auth/store/selectors'
 import {fadeIn} from '../../animations/fade'
 import {PersistenceService} from '../../services/persistence.service'
+import {CurrentUserInterface} from '../../types/current-user.interface'
 import nav from './nav'
 
 const MAPPER: Record<string, string> = {
@@ -71,6 +73,7 @@ export class PageHeaderComponent implements OnInit {
 
   isLoggedIn$: Observable<boolean>
   isAnonymous$: Observable<boolean>
+  currentUser$: Observable<CurrentUserInterface>
 
   constructor(
     private store: Store,
@@ -85,6 +88,9 @@ export class PageHeaderComponent implements OnInit {
   initializeValues() {
     this.isLoggedIn$ = this.store.select(isLoggedInSelector)
     this.isAnonymous$ = this.store.select(isAnonymousSelector)
+    this.currentUser$ = this.store
+      .select(currentUserSelector)
+      .pipe(filter(Boolean))
     this.isBannerClosed = !!this.persistenceService.get('bannerClosed')
   }
 
