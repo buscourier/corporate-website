@@ -7,6 +7,7 @@ import {TuiLetModule} from '@taiga-ui/cdk'
 import {
   TuiErrorModule,
   TuiLoaderModule,
+  TuiSvgModule,
   TuiTextfieldControllerModule,
 } from '@taiga-ui/core'
 import {
@@ -46,6 +47,7 @@ import {END_POINT_FEATURE} from './store/state'
     TuiInputModule,
     TuiRadioListModule,
     TuiCheckboxLabeledModule,
+    TuiSvgModule,
   ],
   exports: [EndPointComponent],
 })

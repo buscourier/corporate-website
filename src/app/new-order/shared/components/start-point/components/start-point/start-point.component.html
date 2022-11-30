@@ -196,7 +196,12 @@
           </div>
         </ng-container>
       </ng-container>
-      <button type="button" class="mt-4 text-left" (click)="showMap()">
+      <button
+        *ngIf="give.value"
+        type="button"
+        class="mt-4 text-left"
+        (click)="showMap()"
+      >
         <tui-svg src="icons::map" class="mr-2.5 !h-[16px] !w-[16px]"></tui-svg>
         <span
           class="border-b border-dotted text-xs text-gray-700 hover:border-b-0"

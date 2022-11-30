@@ -22,6 +22,7 @@ import {
   of,
   Subscription,
   switchMap,
+  take,
   using,
 } from 'rxjs'
 import {concatAll, tap} from 'rxjs/operators'
@@ -320,6 +321,7 @@ export class StartPointComponent implements OnInit, OnDestroy {
         closeable: true,
         size: 'fullscreen',
       })
-      .subscribe() //TODO: unsubscribe?
+      .pipe(take(1))
+      .subscribe()
   }
 }

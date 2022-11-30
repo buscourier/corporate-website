@@ -1,13 +1,17 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  Inject,
+  Injector,
   Input,
   OnDestroy,
   OnInit,
 } from '@angular/core'
 import {FormBuilder, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
+import {TuiDialogService} from '@taiga-ui/core'
 import {TUI_VALIDATION_ERRORS, tuiItemsHandlersProvider} from '@taiga-ui/kit'
+import {PolymorpheusComponent} from '@tinkoff/ng-polymorpheus'
 import {
   debounceTime,
   filter,
@@ -17,9 +21,11 @@ import {
   of,
   Subscription,
   switchMap,
+  take,
   using,
 } from 'rxjs'
 import {concatAll, tap} from 'rxjs/operators'
+import {ModalMapComponent} from '../../../../../../shared/components/modal-map/modal-map.component'
 import {STRINGIFY_CITIES} from '../../../../../../shared/handlers/string-handlers'
 import {EndCityInterface} from '../../../../../../shared/types/end-city.interface'
 import {OfficeInterface} from '../../../../../../shared/types/office.interface'
@@ -165,7 +171,12 @@ export class EndPointComponent implements OnInit, OnDestroy {
     needToMeet: 'Встретить с автобуса',
   }
 
-  constructor(private fb: FormBuilder, private store: Store) {}
+  constructor(
+    private fb: FormBuilder,
+    private store: Store,
+    @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
+    @Inject(Injector) private readonly injector: Injector
+  ) {}
 
   ngOnInit(): void {
     this.fetchData()
@@ -312,5 +323,27 @@ export class EndPointComponent implements OnInit, OnDestroy {
 
   findTab(name) {
     return this.tabs.find((tabName: string) => tabName === name)
+  }
+
+  showMap() {
+    const office: OfficeInterface = this.get.value
+
+    if (!office) {
+      return
+    }
+
+    const {geo_x, geo_y} = office
+
+    this.dialogService
+      .open<any>(new PolymorpheusComponent(ModalMapComponent, this.injector), {
+        data: {
+          points: [{geo_x, geo_y}],
+        },
+        dismissible: true,
+        closeable: true,
+        size: 'fullscreen',
+      })
+      .pipe(take(1))
+      .subscribe()
   }
 }
