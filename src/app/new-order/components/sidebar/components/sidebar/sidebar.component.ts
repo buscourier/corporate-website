@@ -2,11 +2,16 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  Inject,
   OnDestroy,
   OnInit,
 } from '@angular/core'
+import {DomSanitizer} from '@angular/platform-browser'
 import {NavigationEnd, Router, RouterEvent} from '@angular/router'
 import {Store} from '@ngrx/store'
+import {TUI_IS_MOBILE} from '@taiga-ui/cdk'
+import {TuiPdfViewerOptions, TuiPdfViewerService} from '@taiga-ui/kit'
+import {PolymorpheusContent} from '@tinkoff/ng-polymorpheus'
 import {
   combineLatest,
   debounceTime,
@@ -54,6 +59,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
   totalSum = 0
   orders = null
 
+  private readonly pdf = `assets/media/bus_schedule.pdf`
+
   isTotalSumCalculated = false
   isCheckoutPage = false
 
@@ -61,7 +68,11 @@ export class SidebarComponent implements OnInit, OnDestroy {
     private store: Store,
     private totalSumService: TotalSumService,
     private cdr: ChangeDetectorRef,
-    private router: Router
+    private router: Router,
+    @Inject(DomSanitizer) private readonly sanitizer: DomSanitizer,
+    @Inject(TuiPdfViewerService)
+    private readonly pdfService: TuiPdfViewerService,
+    @Inject(TUI_IS_MOBILE) private readonly isMobile: boolean
   ) {}
 
   ngOnInit(): void {
@@ -179,5 +190,21 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.store.dispatch(resetEndPointAction())
     this.store.dispatch(resetOrdersAction())
     this.store.dispatch(calculateTotalSumAction({isTotalSumCalculated: false}))
+  }
+
+  showPdf(actions: PolymorpheusContent<TuiPdfViewerOptions>): void {
+    this.pdfService
+      .open(
+        this.sanitizer.bypassSecurityTrustResourceUrl(
+          this.isMobile
+            ? `https://busbox.guru/uploads/pages/Расписание_отправлений_Владивосток.pdf`
+            : this.pdf
+        ),
+        {
+          label: `Расписание автобусов`,
+          actions,
+        }
+      )
+      .subscribe()
   }
 }

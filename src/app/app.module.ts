@@ -13,6 +13,7 @@ import {
   TuiRootModule,
 } from '@taiga-ui/core'
 import {TUI_LANGUAGE, TUI_RUSSIAN_LANGUAGE} from '@taiga-ui/i18n'
+import {TuiPdfViewerModule} from '@taiga-ui/kit'
 import {NgDompurifySanitizer} from '@tinkoff/ng-dompurify'
 import {RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module} from 'ng-recaptcha'
 import {of} from 'rxjs'
@@ -30,6 +31,7 @@ import {PageHeaderModule} from './shared/components/page-header/page-header.modu
     AppRoutingModule,
     PageHeaderModule,
     PageFooterModule,
+    TuiPdfViewerModule,
     AuthModule.forRoot(),
     StoreModule.forRoot({}, {}),
     EffectsModule.forRoot([]),
