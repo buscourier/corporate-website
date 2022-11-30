@@ -1,6 +1,8 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  Inject,
+  Injector,
   Input,
   OnDestroy,
   OnInit,
@@ -8,7 +10,9 @@ import {
 import {FormBuilder, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
 import {TuiDay} from '@taiga-ui/cdk'
+import {TuiDialogService} from '@taiga-ui/core'
 import {TUI_VALIDATION_ERRORS, tuiItemsHandlersProvider} from '@taiga-ui/kit'
+import {PolymorpheusComponent} from '@tinkoff/ng-polymorpheus'
 import {
   debounceTime,
   filter,
@@ -21,6 +25,7 @@ import {
   using,
 } from 'rxjs'
 import {concatAll, tap} from 'rxjs/operators'
+import {ModalMapComponent} from '../../../../../../shared/components/modal-map/modal-map.component'
 import {STRINGIFY_CITIES} from '../../../../../../shared/handlers/string-handlers'
 import {OfficeInterface} from '../../../../../../shared/types/office.interface'
 import {StartCityInterface} from '../../../../../../shared/types/start-city.interface'
@@ -157,7 +162,12 @@ export class StartPointComponent implements OnInit, OnDestroy {
     pickup: 'Вызвать курьера',
   }
 
-  constructor(private fb: FormBuilder, private store: Store) {}
+  constructor(
+    private fb: FormBuilder,
+    private store: Store,
+    @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
+    @Inject(Injector) private readonly injector: Injector
+  ) {}
 
   ngOnInit(): void {
     this.fetchData()
@@ -290,5 +300,19 @@ export class StartPointComponent implements OnInit, OnDestroy {
   setCurrentDate = () => {
     const date = new Date()
     return new TuiDay(date.getFullYear(), date.getMonth(), date.getDate())
+  }
+
+  showMap() {
+    this.dialogService
+      .open<any>(new PolymorpheusComponent(ModalMapComponent, this.injector), {
+        data: {
+          heading: 'Данные не обновлены',
+          failure: true,
+        },
+        dismissible: true,
+        closeable: false,
+        size: 'auto',
+      })
+      .subscribe() //TODO: unsubscribe?
   }
 }
