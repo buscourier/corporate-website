@@ -127,6 +127,7 @@ module.exports = {
       },
       backgroundImage: {
         'index-bus': "url('src/assets/images/index/bus-bg@3x.jpg')",
+        'index-curve': "url('src/assets/images/index/curve.svg')",
       },
     },
   },
