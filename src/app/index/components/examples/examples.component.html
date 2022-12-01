@@ -5,7 +5,7 @@
       tuiIconButton
       icon="tuiIconChevronLeftLarge"
       title="Previous"
-      class="!absolute -left-1 top-20 z-10 !hidden lg:block"
+      class="!absolute -left-1 top-20 z-10 !hidden lg:!block"
       [class.cursor-not-allowed]="index === 0"
       [disabled]="index === 0"
       (click)="carousel.prev()"
@@ -35,7 +35,7 @@
       tuiIconButton
       icon="tuiIconChevronRightLarge"
       title="Next"
-      class="!absolute -right-1 top-20 !hidden lg:block"
+      class="!absolute -right-1 top-20 !hidden lg:!block"
       [class.cursor-not-allowed]="index === examples.length - 1"
       [disabled]="index === examples.length - 1"
       (click)="carousel.next()"
