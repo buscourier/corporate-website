@@ -1,46 +1,47 @@
-<div tuiCarouselButtons class="wrapper">
-  <button
-    tuiIconButton
-    icon="tuiIconChevronLeftLarge"
-    title="Previous"
-    (click)="carousel.prev()"
-  ></button>
-  <tui-carousel #carousel class="carousel">
-    <tui-island *tuiItem>
-      <h2 class="tui-island__title">Monty Python and the Holy Grail</h2>
-      <p>
-        King Arthur and his Knights of the Round Table embark on a surreal,
-        low-budget search for the Holy Grail, encountering many, very silly
-        obstacles.
-      </p>
-      <div>
-        <button tuiButton appearance="primary">
-          Buy $
-          <tui-money [value]="12.99"></tui-money>
-        </button>
-        <button tuiButton class="tui-space_left-2">
-          Rent $
-          <tui-money [value]="4.99"></tui-money>
-        </button>
-      </div>
-    </tui-island>
-    <tui-island *tuiItem>
-      <tui-loader></tui-loader>
-    </tui-island>
-    <tui-island *tuiItem class="tui-island_text-align_center">
-      <h2 class="tui-island__title">Failed to load</h2>
-      <p>
-        <tui-marker-icon
-          mode="error"
-          src="tuiIconRemoveLarge"
-        ></tui-marker-icon>
-      </p>
-    </tui-island>
-  </tui-carousel>
-  <button
-    tuiIconButton
-    icon="tuiIconChevronRightLarge"
-    title="Next"
-    (click)="carousel.next()"
-  ></button>
+<div tuiCarouselButtons class="w-[442px] border border-transparent">
+  <h3>Примеры</h3>
+  <div class="relative flex items-center">
+    <button
+      tuiIconButton
+      icon="tuiIconChevronLeftLarge"
+      title="Previous"
+      class="!absolute -left-1 top-20 z-10"
+      (click)="carousel.prev()"
+    ></button>
+    <tui-carousel #carousel [(index)]="index">
+      <ng-container *ngFor="let example of examples; let i = index">
+        <div *tuiItem>
+          <app-img
+            [src]="'/assets/images/index/examples/task-' + (i + 1)"
+            class="h-[200px] w-full rounded-md object-cover"
+          ></app-img>
+          <b class="text-md">{{ example.heading }}</b>
+          <a type="button" class="mb-4 ml-7 text-left hover:cursor-pointer">
+            <tui-svg
+              src="icons::help"
+              class="mr-2.5 !h-[21px] !w-[22px]"
+            ></tui-svg>
+            <span
+              class="border-b border-dotted text-xs text-gray-600 hover:border-b-0"
+              >Как мы решили эту задачу</span
+            >
+          </a>
+        </div>
+      </ng-container>
+    </tui-carousel>
+    <button
+      tuiIconButton
+      icon="tuiIconChevronRightLarge"
+      title="Next"
+      class="!absolute -right-1 top-20"
+      (click)="carousel.next()"
+    ></button>
+  </div>
+  <tui-pagination
+    size="s"
+    class="pagination"
+    [length]="examples.length"
+    [(index)]="index"
+    (indexChange)="onIndex($event)"
+  ></tui-pagination>
 </div>

@@ -1,3 +1,13 @@
-.full > img {
-  width: 100%;
+.picture {
+  border-radius: inherit;
+  width: inherit;
+  height: inherit;
+  object-fit: inherit;
+}
+
+img {
+  border-radius: inherit;
+  width: inherit;
+  height: inherit;
+  object-fit: inherit;
 }
