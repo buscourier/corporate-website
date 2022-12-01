@@ -1,5 +1,8 @@
-<div tuiCarouselButtons class="md:w-[370px] lg:w-[442px] border border-transparent">
-  <h3 class="text-xl lg:text-3xl ml-5 mb-5">Примеры</h3>
+<div
+  tuiCarouselButtons
+  class="border border-transparent md:w-[370px] lg:w-[442px]"
+>
+  <h3 class="ml-5 mb-5 text-xl lg:text-3xl">Примеры</h3>
   <div class="relative flex items-center sm:mb-7 lg:mb-0">
     <button
       tuiIconButton
@@ -17,7 +20,7 @@
             [src]="'/assets/images/index/examples/task-' + (i + 1)"
             class="h-[200px] w-full rounded-md object-cover"
           ></app-img>
-          <b class="text-md block mt-5 mb-2">{{ example.heading }}</b>
+          <b class="mt-5 mb-2 block text-md">{{ example.heading }}</b>
           <a type="button" class="hover:cursor-pointer">
             <tui-svg
               src="icons::help"
@@ -47,7 +50,6 @@
       [length]="examples.length"
       [(index)]="index"
       (indexChange)="onIndex($event)"
-
     ></tui-pagination>
   </div>
 </div>

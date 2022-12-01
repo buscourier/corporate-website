@@ -4,7 +4,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core'
-import {FormBuilder} from '@angular/forms'
+import {FormBuilder, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
 import {tuiItemsHandlersProvider} from '@taiga-ui/kit'
 import {Observable, Subscription} from 'rxjs'
@@ -37,8 +37,8 @@ export class CitiesFormComponent implements OnInit, OnDestroy {
   backendErrors$: Observable<null | string>
 
   form = this.fb.group({
-    startCity: null,
-    endCity: {value: null, disabled: true},
+    startCity: [null, Validators.required],
+    endCity: [{value: '', disabled: true}, Validators.required],
   })
 
   valueChangesSub: Subscription

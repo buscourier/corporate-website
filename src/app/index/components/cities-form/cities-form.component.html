@@ -38,7 +38,13 @@
       </tui-select>
     </tui-loader>
   </label>
-  <button type="submit" tuiButton appearance="accent" class="w-full">
+  <button
+    type="submit"
+    tuiButton
+    appearance="accent"
+    class="w-full"
+    [disabled]="form.invalid"
+  >
     Рассчитать
   </button>
 </form>
