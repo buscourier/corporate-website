@@ -1,21 +1,23 @@
-<div tuiCarouselButtons class="w-[442px] border border-transparent">
-  <h3 class="text-3xl ml-5 mb-5">Примеры</h3>
+<div tuiCarouselButtons class="md:w-[370px] lg:w-[442px] border border-transparent">
+  <h3 class="text-xl lg:text-3xl ml-5 mb-5">Примеры</h3>
   <div class="relative flex items-center sm:mb-7 lg:mb-0">
     <button
       tuiIconButton
       icon="tuiIconChevronLeftLarge"
       title="Previous"
-      class="!absolute -left-1 top-20 z-10"
+      class="!absolute -left-1 top-20 z-10 !hidden lg:block"
+      [class.cursor-not-allowed]="index === 0"
+      [disabled]="index === 0"
       (click)="carousel.prev()"
     ></button>
-    <tui-carousel #carousel [(index)]="index">
+    <tui-carousel #carousel [(index)]="index" [draggable]="true">
       <ng-container *ngFor="let example of examples; let i = index">
         <div *tuiItem>
           <app-img
             [src]="'/assets/images/index/examples/task-' + (i + 1)"
             class="h-[200px] w-full rounded-md object-cover"
           ></app-img>
-          <b class="text-md block mt-5 mb-5">{{ example.heading }}</b>
+          <b class="text-md block mt-5 mb-2">{{ example.heading }}</b>
           <a type="button" class="hover:cursor-pointer">
             <tui-svg
               src="icons::help"
@@ -33,11 +35,13 @@
       tuiIconButton
       icon="tuiIconChevronRightLarge"
       title="Next"
-      class="!absolute -right-1 top-20"
+      class="!absolute -right-1 top-20 !hidden lg:block"
+      [class.cursor-not-allowed]="index === examples.length - 1"
+      [disabled]="index === examples.length - 1"
       (click)="carousel.next()"
     ></button>
   </div>
-  <div class="lg:hidden">
+  <div class="mt-7 lg:hidden">
     <tui-pagination
       size="s"
       [length]="examples.length"
