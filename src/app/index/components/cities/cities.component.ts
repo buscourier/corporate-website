@@ -33,6 +33,7 @@ type CitiesInterface = []
 export class CitiesComponent implements OnInit {
   isLoading$: Observable<boolean>
   cities$: Observable<any>
+  searchResult$: Observable<any>
   backendErrors$: Observable<null | string>
 
   private letters = [
@@ -83,55 +84,51 @@ export class CitiesComponent implements OnInit {
     this.initializeValues()
     this.fetchData()
 
-    this.search.valueChanges
-      .pipe(
-        startWith(this.search.value),
-        mergeMap((search: string) => {
-          return this.cities$.pipe(
-            map((cities: StartCityInterface[] | EndCityInterface[] | any[]) => {
-              return cities.filter(
-                (city: StartCityInterface | EndCityInterface | any) => {
-                  return city.name.toLowerCase().includes(search.toLowerCase())
-                }
-              )
-            }),
-            map((cities: StartCityInterface[] | EndCityInterface[]) => {
-              return cities.map(
-                (city: StartCityInterface | EndCityInterface) => city.name
-              )
-            }),
-            map((names: CityNameType[]) => {
-              return this.letters.reduce(
-                (obj: object, letter: string) => ({
-                  ...obj,
-                  [letter]: names.filter(
-                    (city: CityNameType) => city.charAt(0) === letter
-                  ),
-                }),
-                {}
-              )
-            }),
-            map((cities: CityGroupInterface) => {
-              return Object.entries(cities)
-                .filter((obj: [string, any]) => {
-                  return obj[1].length
-                })
-                .map(([char, list]) => {
-                  return [
-                    char,
-                    list.sort((a: string, b: string) => a.localeCompare(b)),
-                  ]
-                })
-            }),
-            map((cities: any) => {
-              return [cities.splice(0, Math.ceil(cities.length / 2)), cities]
-            })
-          )
-        })
-      )
-      .subscribe((result) => {
-        console.log('result!!!', result)
+    this.searchResult$ = this.search.valueChanges.pipe(
+      startWith(this.search.value),
+      mergeMap((search: string) => {
+        return this.cities$.pipe(
+          map((cities: StartCityInterface[] | EndCityInterface[] | any[]) => {
+            return cities.filter(
+              (city: StartCityInterface | EndCityInterface | any) => {
+                return city.name.toLowerCase().includes(search.toLowerCase())
+              }
+            )
+          }),
+          map((cities: StartCityInterface[] | EndCityInterface[]) => {
+            return cities.map(
+              (city: StartCityInterface | EndCityInterface) => city.name
+            )
+          }),
+          map((names: CityNameType[]) => {
+            return this.letters.reduce(
+              (obj: object, letter: string) => ({
+                ...obj,
+                [letter]: names.filter(
+                  (city: CityNameType) => city.charAt(0) === letter
+                ),
+              }),
+              {}
+            )
+          }),
+          map((cities: CityGroupInterface) => {
+            return Object.entries(cities)
+              .filter((obj: [string, any]) => {
+                return obj[1].length
+              })
+              .map(([char, list]) => {
+                return [
+                  char,
+                  list.sort((a: string, b: string) => a.localeCompare(b)),
+                ]
+              })
+          }),
+          map((cities: any) => {
+            return [cities.splice(0, Math.ceil(cities.length / 2)), cities]
+          })
+        )
       })
+    )
   }
 
   initializeValues(): void {
