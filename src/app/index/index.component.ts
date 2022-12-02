@@ -1,5 +1,13 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core'
-import {TUI_SVG_SRC_PROCESSOR} from '@taiga-ui/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  Injector,
+} from '@angular/core'
+import {TUI_SVG_SRC_PROCESSOR, TuiDialogService} from '@taiga-ui/core'
+import {PolymorpheusComponent} from '@tinkoff/ng-polymorpheus'
+import {take} from 'rxjs'
+import {CitiesComponent} from './components/cities/cities.component'
 
 @Component({
   selector: 'app-index',
@@ -24,6 +32,11 @@ import {TUI_SVG_SRC_PROCESSOR} from '@taiga-ui/core'
 export class IndexComponent {
   linesLimit = 8
 
+  constructor(
+    @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
+    @Inject(Injector) private readonly injector: Injector
+  ) {}
+
   toggleLinesClamp(): void {
     this.linesLimit = this.collpasedLines ? 28 : 8
   }
@@ -34,5 +47,19 @@ export class IndexComponent {
 
   get isClampActive() {
     return this.linesLimit === 28
+  }
+
+  showCities(type) {
+    this.dialogService
+      .open<any>(new PolymorpheusComponent(CitiesComponent, this.injector), {
+        data: {
+          type,
+        },
+        dismissible: true,
+        closeable: false,
+        size: 'm',
+      })
+      .pipe(take(1))
+      .subscribe() //TODO: unsubscribe?
   }
 }
