@@ -11,14 +11,14 @@ import {
 } from '@taiga-ui/core'
 import {TuiInputModule} from '@taiga-ui/kit'
 import {CitiesComponent} from './cities.component'
-import {CitiesBlockComponent} from './components/cities-block/cities-block.component'
+import {CitiesGroupComponent} from './components/cities-group/cities-group.component'
 import {GetEndCitiesEffect} from './store/effects/get-end-cities.effect'
 import {GetStartCitiesEffect} from './store/effects/get-start-cities.effect'
 import {reducer} from './store/reducer'
 import {CITIES_FEATURE} from './store/state'
 
 @NgModule({
-  declarations: [CitiesComponent, CitiesBlockComponent],
+  declarations: [CitiesComponent, CitiesGroupComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

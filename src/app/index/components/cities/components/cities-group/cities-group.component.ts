@@ -1,12 +1,12 @@
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core'
 
 @Component({
-  selector: 'app-cities-block',
-  templateUrl: './cities-block.component.html',
-  styleUrls: ['./cities-block.component.css'],
+  selector: 'app-cities-group',
+  templateUrl: './cities-group.component.html',
+  styleUrls: ['./cities-group.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CitiesBlockComponent {
+export class CitiesGroupComponent {
   @Input() letter: string
   @Input() cities: any
 

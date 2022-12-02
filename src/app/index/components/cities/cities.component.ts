@@ -14,14 +14,8 @@ import {
   isLoadingSelector,
   startCitiesSelector,
 } from './store/selectors'
-
-type CityNameType = string
-
-interface CityGroupInterface {
-  [key: string]: CityNameType[]
-}
-
-type CitiesInterface = []
+import {CitiesGroupInterface} from './types/cities-group.interface'
+import {CityNameType} from './types/city-name.type'
 
 @Component({
   selector: 'app-cities',
@@ -31,7 +25,7 @@ type CitiesInterface = []
 })
 export class CitiesComponent implements OnInit {
   isLoading$: Observable<boolean>
-  cities$: Observable<any>
+  cities$: Observable<StartCityInterface[] | EndCityInterface[]>
   searchResult$: Observable<any>
   backendErrors$: Observable<null | string>
 
@@ -110,7 +104,7 @@ export class CitiesComponent implements OnInit {
               {}
             )
           }),
-          map((cities: CityGroupInterface) => {
+          map((cities: CitiesGroupInterface) => {
             return Object.entries(cities)
               .filter((obj: [string, any]) => {
                 return obj[1].length
@@ -123,7 +117,7 @@ export class CitiesComponent implements OnInit {
                 }
               })
           }),
-          map((cities: CityGroupInterface[]) => {
+          map((cities: CitiesGroupInterface[]) => {
             return [cities.splice(0, Math.ceil(cities.length / 2)), cities]
           })
         )

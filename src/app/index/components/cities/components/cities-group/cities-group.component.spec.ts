@@ -1,17 +1,17 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing'
 
-import {CitiesBlockComponent} from './cities-block.component'
+import {CitiesGroupComponent} from './cities-group.component'
 
-describe('CitiesBlockComponent', () => {
-  let component: CitiesBlockComponent
-  let fixture: ComponentFixture<CitiesBlockComponent>
+describe('CitiesGroupComponent', () => {
+  let component: CitiesGroupComponent
+  let fixture: ComponentFixture<CitiesGroupComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CitiesBlockComponent],
+      declarations: [CitiesGroupComponent],
     }).compileComponents()
 
-    fixture = TestBed.createComponent(CitiesBlockComponent)
+    fixture = TestBed.createComponent(CitiesGroupComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })
