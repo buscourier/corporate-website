@@ -1,5 +1,8 @@
-<ng-container *tuiLet="isLoading$ | async as isLoading">
-  <tui-loader [showLoader]="isLoading">
-    <div *ngIf="cities && !isLoading" class="">cities {{ cities | json }}</div>
-  </tui-loader>
-</ng-container>
+<!--<ng-container *tuiLet="isLoading$ | async as isLoading">-->
+<!--  <tui-loader [showLoader]="isLoading">-->
+<!--    <div *ngIf="cities && !isLoading" class="">cities {{ cities | json }}</div>-->
+<!--    <tui-scrollbar> </tui-scrollbar>-->
+<!--  </tui-loader>-->
+<!--</ng-container>-->
+
+cities {{ cities$ | async | json }}

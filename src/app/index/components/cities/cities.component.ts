@@ -3,13 +3,12 @@ import {
   ChangeDetectorRef,
   Component,
   Inject,
-  OnDestroy,
   OnInit,
 } from '@angular/core'
 import {Store} from '@ngrx/store'
 import {TuiDialogContext} from '@taiga-ui/core'
 import {POLYMORPHEUS_CONTEXT} from '@tinkoff/ng-polymorpheus'
-import {combineLatest, Observable, Subscription} from 'rxjs'
+import {combineLatest, map, Observable} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {EndCityInterface} from '../../../shared/types/end-city.interface'
 import {StartCityInterface} from '../../../shared/types/start-city.interface'
@@ -28,10 +27,9 @@ import {
   styleUrls: ['./cities.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CitiesComponent implements OnInit, OnDestroy {
+export class CitiesComponent implements OnInit {
   isLoading$: Observable<boolean>
-  cities: StartCityInterface[] | EndCityInterface[] = []
-  citiesSub: Subscription
+  cities$: Observable<StartCityInterface[] | EndCityInterface[]>
   backendErrors$: Observable<null | string>
 
   constructor(
@@ -46,31 +44,30 @@ export class CitiesComponent implements OnInit, OnDestroy {
     this.fetchData()
   }
 
-  ngOnDestroy(): void {
-    this.citiesSub.unsubscribe()
-  }
-
   initializeValues(): void {
     this.isLoading$ = this.store.select(isLoadingSelector)
     this.backendErrors$ = this.store.select(backendErrorsSelector)
-    this.citiesSub = combineLatest([
+    this.cities$ = combineLatest([
       this.store.select(startCitiesSelector),
       this.store.select(endCitiesSelector),
-    ])
-      .pipe(
-        tap(([startCities, endCities]) => {
-          if (this.type === 'start') {
-            this.cities = startCities
-          } else if (this.type === 'end') {
-            this.cities = endCities
-          } else {
-            this.cities = []
-          }
-        })
-      )
-      .subscribe(() => {
-        this.cdr.markForCheck()
+    ]).pipe(
+      map(([startCities, endCities]) => {
+        let cities = []
+
+        if (this.type === 'start') {
+          cities = startCities
+        } else if (this.type === 'end') {
+          cities = endCities
+        } else {
+          cities = []
+        }
+
+        return cities
+      }),
+      tap((cities: any) => {
+        // this.cities = cities
       })
+    )
   }
 
   fetchData(): void {
