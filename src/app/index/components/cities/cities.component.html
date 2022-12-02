@@ -28,7 +28,7 @@
   <ng-container *tuiLet="searchResult$ | async as searchResult">
     <tui-loader [showLoader]="isLoading">
       <tui-scrollbar *ngIf="searchResult && !isLoading" class="h-[330px]">
-        <div class="grid grid-cols-2">
+        <div class="grid gap-2.5 sm:grid-cols-2">
           <ng-container *ngFor="let col of searchResult">
             <div *ngIf="col.length">
               <app-cities-group

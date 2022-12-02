@@ -1,4 +1,4 @@
 :host {
-  @apply relative block pl-16 pr-16;
+  @apply relative block lg:pl-12 lg:pr-12;
   /*@apply  max-w-[570px]*/
 }
