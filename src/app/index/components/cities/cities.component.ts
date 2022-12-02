@@ -4,7 +4,6 @@ import {Store} from '@ngrx/store'
 import {TuiDialogContext} from '@taiga-ui/core'
 import {POLYMORPHEUS_CONTEXT} from '@tinkoff/ng-polymorpheus'
 import {combineLatest, filter, map, mergeMap, Observable, startWith} from 'rxjs'
-import {tap} from 'rxjs/operators'
 import {EndCityInterface} from '../../../shared/types/end-city.interface'
 import {StartCityInterface} from '../../../shared/types/start-city.interface'
 import {getEndCitiesAction} from './store/actions/get-end-cities.action'
@@ -117,13 +116,14 @@ export class CitiesComponent implements OnInit {
                 return obj[1].length
               })
               .map(([char, list]) => {
-                return [
-                  char,
-                  list.sort((a: string, b: string) => a.localeCompare(b)),
-                ]
+                return {
+                  [char]: list.sort((a: string, b: string) =>
+                    a.localeCompare(b)
+                  ),
+                }
               })
           }),
-          map((cities: any) => {
+          map((cities: CityGroupInterface[]) => {
             return [cities.splice(0, Math.ceil(cities.length / 2)), cities]
           })
         )
@@ -152,10 +152,7 @@ export class CitiesComponent implements OnInit {
 
         return cities
       }),
-      filter(Boolean),
-      tap((result: any) => {
-        console.log('cities', result)
-      })
+      filter(Boolean)
     )
   }
 

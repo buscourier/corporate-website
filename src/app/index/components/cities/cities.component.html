@@ -3,6 +3,7 @@
     <span class="mb-1 inline-block text-xs">Населенный пункт</span>
     <tui-input
       tuiTextfieldSize="m"
+      tuiAutoFocus
       [formControl]="search"
       [tuiTextfieldLabelOutside]="true"
       [tuiTextfieldCleaner]="true"
@@ -15,10 +16,9 @@
 <ng-container *tuiLet="isLoading$ | async as isLoading">
   <ng-container *tuiLet="searchResult$ | async as searchResult">
     <tui-loader [showLoader]="isLoading">
-      <div *ngIf="searchResult && !isLoading" class="">
-        cities {{ searchResult | json }}
-      </div>
-      <tui-scrollbar> </tui-scrollbar>
+      <tui-scrollbar *ngIf="searchResult && !isLoading">
+        <div class="">cities {{ searchResult | json }}</div>
+      </tui-scrollbar>
     </tui-loader>
   </ng-container>
 </ng-container>
