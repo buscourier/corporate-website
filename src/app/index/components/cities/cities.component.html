@@ -5,4 +5,18 @@
 <!--  </tui-loader>-->
 <!--</ng-container>-->
 
+<form [formGroup]="form">
+  <label class="mb-3 block">
+    <span class="mb-1 inline-block text-xs">Населенный пункт</span>
+    <tui-input
+      tuiTextfieldSize="m"
+      [formControl]="search"
+      [tuiTextfieldLabelOutside]="true"
+      [tuiTextfieldCleaner]="true"
+    >
+      <input tuiTextfield type="text" />
+    </tui-input>
+  </label>
+</form>
+
 cities {{ cities$ | async | json }}

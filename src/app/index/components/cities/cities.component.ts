@@ -1,14 +1,9 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  Inject,
-  OnInit,
-} from '@angular/core'
+import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core'
+import {FormBuilder} from '@angular/forms'
 import {Store} from '@ngrx/store'
 import {TuiDialogContext} from '@taiga-ui/core'
 import {POLYMORPHEUS_CONTEXT} from '@tinkoff/ng-polymorpheus'
-import {combineLatest, filter, map, Observable} from 'rxjs'
+import {combineLatest, filter, map, mergeMap, Observable, startWith} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {EndCityInterface} from '../../../shared/types/end-city.interface'
 import {StartCityInterface} from '../../../shared/types/start-city.interface'
@@ -21,10 +16,10 @@ import {
   startCitiesSelector,
 } from './store/selectors'
 
-type cityNameType = string
+type CityNameType = string
 
 interface CityGroupInterface {
-  [key: string]: cityNameType[]
+  [key: string]: CityNameType[]
 }
 
 type CitiesInterface = []
@@ -71,21 +66,78 @@ export class CitiesComponent implements OnInit {
     'Я',
   ]
 
+  search = this.fb.control('')
+
+  form = this.fb.group({
+    search: this.search,
+  })
+
   constructor(
     private store: Store,
     @Inject(POLYMORPHEUS_CONTEXT)
     private readonly context: TuiDialogContext<any, any>,
-    private cdr: ChangeDetectorRef
+    private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
     this.initializeValues()
     this.fetchData()
+
+    this.search.valueChanges
+      .pipe(
+        startWith(this.search.value),
+        mergeMap((search: string) => {
+          return this.cities$.pipe(
+            map((cities: StartCityInterface[] | EndCityInterface[] | any[]) => {
+              return cities.filter(
+                (city: StartCityInterface | EndCityInterface | any) => {
+                  return city.name.toLowerCase().includes(search.toLowerCase())
+                }
+              )
+            }),
+            map((cities: StartCityInterface[] | EndCityInterface[]) => {
+              return cities.map(
+                (city: StartCityInterface | EndCityInterface) => city.name
+              )
+            }),
+            map((names: CityNameType[]) => {
+              return this.letters.reduce(
+                (obj: object, letter: string) => ({
+                  ...obj,
+                  [letter]: names.filter(
+                    (city: CityNameType) => city.charAt(0) === letter
+                  ),
+                }),
+                {}
+              )
+            }),
+            map((cities: CityGroupInterface) => {
+              return Object.entries(cities)
+                .filter((obj: [string, any]) => {
+                  return obj[1].length
+                })
+                .map(([char, list]) => {
+                  return [
+                    char,
+                    list.sort((a: string, b: string) => a.localeCompare(b)),
+                  ]
+                })
+            }),
+            map((cities: any) => {
+              return [cities.splice(0, Math.ceil(cities.length / 2)), cities]
+            })
+          )
+        })
+      )
+      .subscribe((result) => {
+        console.log('result!!!', result)
+      })
   }
 
   initializeValues(): void {
     this.isLoading$ = this.store.select(isLoadingSelector)
     this.backendErrors$ = this.store.select(backendErrorsSelector)
+
     this.cities$ = combineLatest([
       this.store.select(startCitiesSelector),
       this.store.select(endCitiesSelector),
@@ -104,35 +156,6 @@ export class CitiesComponent implements OnInit {
         return cities
       }),
       filter(Boolean),
-      map((cities: StartCityInterface[] | EndCityInterface[]) => {
-        return cities.map(
-          (city: StartCityInterface | EndCityInterface) => city.name
-        )
-      }),
-      map((names: cityNameType[]) => {
-        return this.letters.reduce(
-          (obj: object, letter: string) => ({
-            ...obj,
-            [letter]: names.filter((city) => city.charAt(0) === letter),
-          }),
-          {}
-        )
-      }),
-      map((cities: CityGroupInterface) => {
-        return Object.entries(cities)
-          .filter((obj: [string, any]) => {
-            return obj[1].length
-          })
-          .map(([char, list]) => {
-            return [
-              char,
-              list.sort((a: string, b: string) => a.localeCompare(b)),
-            ]
-          })
-      }),
-      map((cities: any) => {
-        return [cities.splice(0, Math.ceil(cities.length / 2)), cities]
-      }),
       tap((result: any) => {
         console.log('cities', result)
       })
