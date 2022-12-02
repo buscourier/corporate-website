@@ -1,7 +1,7 @@
 import {EndCityInterface} from '../../../../shared/types/end-city.interface'
 import {StartCityInterface} from '../../../../shared/types/start-city.interface'
 
-export interface CitiesStateInterface {
+export interface CalculatorStateInterface {
   isStartCitiesLoading: boolean
   isEndCitiesLoading: boolean
   startCities: StartCityInterface[] | null

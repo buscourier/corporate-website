@@ -1,19 +1,9 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core'
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
+import {Observable, Subscription} from 'rxjs'
+import {StartCityInterface} from '../../../shared/types/start-city.interface'
+import {EndCityInterface} from '../../../shared/types/end-city.interface'
 import {FormBuilder, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
-import {tuiItemsHandlersProvider} from '@taiga-ui/kit'
-import {Observable, Subscription} from 'rxjs'
-import {tap} from 'rxjs/operators'
-import {STRINGIFY_CITIES} from '../../../shared/handlers/string-handlers'
-import {EndCityInterface} from '../../../shared/types/end-city.interface'
-import {StartCityInterface} from '../../../shared/types/start-city.interface'
-import {getEndCitiesAction} from './store/actions/get-end-cities.action'
-import {getStartCitiesAction} from './store/actions/get-start-cities.action'
 import {
   backendErrorsSelector,
   endCitiesSelector,
@@ -21,15 +11,20 @@ import {
   isStartCitiesLoadingSelector,
   startCitiesSelector,
 } from './store/selectors'
+import {tap} from 'rxjs/operators'
+import {getEndCitiesAction} from './store/actions/get-end-cities.action'
+import {getStartCitiesAction} from './store/actions/get-start-cities.action'
+import {tuiItemsHandlersProvider} from '@taiga-ui/kit'
+import {STRINGIFY_CITIES} from '../../../shared/handlers/string-handlers'
 
 @Component({
-  selector: 'app-cities-form',
-  templateUrl: './cities-form.component.html',
-  styleUrls: ['./cities-form.component.css'],
+  selector: 'app-calculator',
+  templateUrl: './calculator.component.html',
+  styleUrls: ['./calculator.component.css'],
   providers: [tuiItemsHandlersProvider({stringify: STRINGIFY_CITIES})],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CitiesFormComponent implements OnInit, OnDestroy {
+export class CalculatorComponent implements OnInit {
   isStartCitiesLoading$: Observable<boolean>
   isEndCitiesLoading$: Observable<boolean>
   startCities$: Observable<StartCityInterface[]>
