@@ -1,0 +1,4 @@
+:host {
+  @apply relative block pl-16 pr-16;
+  /*@apply  max-w-[570px]*/
+}

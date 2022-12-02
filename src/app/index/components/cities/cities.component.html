@@ -1,6 +1,17 @@
+<button
+  type="button"
+  class="absolute -top-5 -right-2 text-gray-800"
+  (click)="close()"
+>
+  <tui-svg src="icons::close-2" class="!h-[22px] !w-[22px]"></tui-svg>
+</button>
+
+<h3 class="mb-5 mt-2.5 text-lg font-medium">Населенные пункты получения</h3>
 <form [formGroup]="form">
-  <label class="mb-3 block">
-    <span class="mb-1 inline-block text-xs">Населенный пункт</span>
+  <label class="mb-5 block">
+    <span class="mb-1 inline-block text-xs text-gray-500"
+      >Введите название населенного пункта</span
+    >
     <tui-input
       tuiTextfieldSize="m"
       tuiAutoFocus
@@ -16,8 +27,23 @@
 <ng-container *tuiLet="isLoading$ | async as isLoading">
   <ng-container *tuiLet="searchResult$ | async as searchResult">
     <tui-loader [showLoader]="isLoading">
-      <tui-scrollbar *ngIf="searchResult && !isLoading">
-        <div class="">cities {{ searchResult | json }}</div>
+      <tui-scrollbar *ngIf="searchResult && !isLoading" class="h-[330px]">
+        <div class="grid grid-cols-2">
+          <ng-container *ngFor="let col of searchResult">
+            <div *ngIf="col.length">
+              <app-cities-group
+                *ngFor="let group of col"
+                [group]="group"
+              ></app-cities-group>
+            </div>
+          </ng-container>
+        </div>
+        <p
+          *ngIf="!searchResult[0].length && !searchResult[1].length"
+          class="text-center text-sm text-gray-600"
+        >
+          Город не найден...
+        </p>
       </tui-scrollbar>
     </tui-loader>
   </ng-container>

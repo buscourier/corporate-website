@@ -7,6 +7,7 @@ import {TuiLetModule} from '@taiga-ui/cdk'
 import {
   TuiLoaderModule,
   TuiScrollbarModule,
+  TuiSvgModule,
   TuiTextfieldControllerModule,
 } from '@taiga-ui/core'
 import {TuiInputModule} from '@taiga-ui/kit'
@@ -29,6 +30,7 @@ import {CITIES_FEATURE} from './store/state'
     TuiScrollbarModule,
     TuiInputModule,
     TuiTextfieldControllerModule,
+    TuiSvgModule,
   ],
 })
 export class CitiesModule {}

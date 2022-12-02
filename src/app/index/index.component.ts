@@ -57,7 +57,7 @@ export class IndexComponent {
         },
         dismissible: true,
         closeable: false,
-        size: 'm',
+        size: 'l',
       })
       .pipe(take(1))
       .subscribe() //TODO: unsubscribe?

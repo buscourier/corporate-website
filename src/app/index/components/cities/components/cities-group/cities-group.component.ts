@@ -1,4 +1,6 @@
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core'
+import {CitiesGroupInterface} from '../../types/cities-group.interface'
+import {CityNameType} from '../../types/city-name.type'
 
 @Component({
   selector: 'app-cities-group',
@@ -7,8 +9,14 @@ import {ChangeDetectionStrategy, Component, Input} from '@angular/core'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CitiesGroupComponent {
-  @Input() letter: string
-  @Input() cities: any
+  @Input('group') groupProps: CitiesGroupInterface
 
   constructor() {}
+
+  get group(): {cities: CityNameType[]; key: string} {
+    return Object.entries(this.groupProps).map(([key, cities]) => ({
+      key,
+      cities,
+    }))[0]
+  }
 }

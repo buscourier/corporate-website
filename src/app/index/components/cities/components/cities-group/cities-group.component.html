@@ -1,6 +1,6 @@
-<article class="">
-  <div class="">{{ letter }}</div>
+<article class="mb-4 flex space-x-7">
+  <span class="text-[20px] text-gray-600">{{ group.key }}</span>
   <ul class="">
-    <li class="" *ngFor="let city of cities">{{ city }}</li>
+    <li class="mb-4" *ngFor="let city of group.cities">{{ city }}</li>
   </ul>
 </article>

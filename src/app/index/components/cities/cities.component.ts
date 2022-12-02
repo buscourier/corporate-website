@@ -110,6 +110,7 @@ export class CitiesComponent implements OnInit {
                 return obj[1].length
               })
               .map(([char, list]) => {
+                //Todo: maybe better array instead object?
                 return {
                   [char]: list.sort((a: string, b: string) =>
                     a.localeCompare(b)
@@ -160,5 +161,9 @@ export class CitiesComponent implements OnInit {
 
   get type(): string {
     return this.context.data.type
+  }
+
+  close() {
+    this.context.completeWith(1)
   }
 }
