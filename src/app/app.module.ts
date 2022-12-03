@@ -24,6 +24,7 @@ import {AppComponent} from './app.component'
 import {AuthModule} from './auth/auth.module'
 import {PageFooterModule} from './shared/components/page-footer/page-footer.module'
 import {PageHeaderModule} from './shared/components/page-header/page-header.module'
+import {NewOrderModule} from './new-order/new-order.module'
 
 const mapConfig: YaConfig = {
   apikey: 'apiKey',
@@ -53,6 +54,7 @@ const mapConfig: YaConfig = {
     TuiDialogModule,
     TuiAlertModule,
     RecaptchaV3Module,
+    NewOrderModule,
     AngularYandexMapsModule.forRoot(mapConfig),
   ],
   providers: [

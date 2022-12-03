@@ -1,5 +1,14 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
-import {Observable, Subscription} from 'rxjs'
+import {
+  delay,
+  filter,
+  map,
+  Observable,
+  of,
+  Subscription,
+  switchMap,
+  take,
+} from 'rxjs'
 import {StartCityInterface} from '../../../shared/types/start-city.interface'
 import {EndCityInterface} from '../../../shared/types/end-city.interface'
 import {FormBuilder, Validators} from '@angular/forms'
@@ -12,10 +21,13 @@ import {
   startCitiesSelector,
 } from './store/selectors'
 import {tap} from 'rxjs/operators'
-import {getEndCitiesAction} from './store/actions/get-end-cities.action'
-import {getStartCitiesAction} from './store/actions/get-start-cities.action'
 import {tuiItemsHandlersProvider} from '@taiga-ui/kit'
 import {STRINGIFY_CITIES} from '../../../shared/handlers/string-handlers'
+import {getStartCitiesAction} from './store/actions/get-start-cities.action'
+import {getEndCitiesAction} from './store/actions/get-end-cities.action'
+import {changeCityAction as changeStartCityAction} from '../../../new-order/shared/components/start-point/store/actions/change-city.action'
+import {changeCityAction as changeEndCityAction} from '../../../new-order/shared/components/end-point/store/actions/change-city.action'
+import {Router} from '@angular/router'
 
 @Component({
   selector: 'app-calculator',
@@ -30,15 +42,20 @@ export class CalculatorComponent implements OnInit {
   startCities$: Observable<StartCityInterface[]>
   endCities$: Observable<EndCityInterface[]>
   backendErrors$: Observable<null | string>
+  valueChangesSub: Subscription
 
   form = this.fb.group({
     startCity: [null, Validators.required],
-    endCity: [{value: '', disabled: true}, Validators.required],
+    endCity: [{value: null, disabled: true}, Validators.required],
   })
 
-  valueChangesSub: Subscription
+  isSubmitting = false
 
-  constructor(private fb: FormBuilder, private store: Store) {}
+  constructor(
+    private fb: FormBuilder,
+    private store: Store,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.initializeValues()
@@ -59,10 +76,10 @@ export class CalculatorComponent implements OnInit {
     this.valueChangesSub = this.form
       .get('startCity')
       .valueChanges.pipe(
-        tap(({id}: StartCityInterface) => {
+        tap((city: StartCityInterface) => {
           this.form.get('endCity').patchValue('')
           this.form.get('endCity').enable()
-          this.store.dispatch(getEndCitiesAction({cityId: id}))
+          this.store.dispatch(getEndCitiesAction({cityId: city.id}))
         })
       )
       .subscribe()
@@ -72,5 +89,27 @@ export class CalculatorComponent implements OnInit {
     this.store.dispatch(getStartCitiesAction())
   }
 
-  onSubmit() {}
+  onSubmit() {
+    this.isSubmitting = true
+
+    of(this.form.value)
+      .pipe(
+        filter(Boolean),
+        take(1),
+        tap(({startCity, endCity}) => {
+          this.store.dispatch(changeStartCityAction({city: startCity}))
+        }),
+        switchMap(({startCity, endCity}) => {
+          this.store.dispatch(changeEndCityAction({city: endCity}))
+          //TODO:// need to implement here canLoad?
+          return of(null)
+        }),
+        delay(1000),
+        tap(() => {
+          this.isSubmitting = false
+          this.router.navigate(['/new-order'])
+        })
+      )
+      .subscribe()
+  }
 }

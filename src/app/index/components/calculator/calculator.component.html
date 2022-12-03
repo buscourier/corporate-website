@@ -43,6 +43,7 @@
     tuiButton
     appearance="accent"
     class="w-full"
+    [showLoader]="isSubmitting"
     [disabled]="form.invalid"
   >
     Рассчитать
