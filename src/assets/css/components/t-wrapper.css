@@ -15,8 +15,16 @@
 
 [tuiWrapper][data-appearance='textfield']:invalid:invalid,
 [tuiWrapper][data-appearance='textfield']._invalid._invalid {
-  background-color: rgba(199, 65, 65, 0.05);
+  background-color: rgba(199, 65, 65, 0.5);
+  color: var(--tui-base-01);
 }
+
+[tuiWrapper][data-appearance='textfield']:invalid:invalid .t-postfix,
+[tuiWrapper][data-appearance='textfield']._invalid._invalid .t-postfix {
+  color: var(--tui-base-01);
+}
+
+
 
 /*._disabled {*/
 /*  pointer-events: auto !important;*/
