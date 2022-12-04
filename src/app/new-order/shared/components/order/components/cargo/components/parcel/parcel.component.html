@@ -1,9 +1,9 @@
-<div [formGroup]="form" class="relative mb-5 p-5 border border-gray-100 lg:border-0 mt-8 before:content-['Посылка']
+<div [formGroup]="form" class="relative mb-5 p-5 sm:p-0 border border-gray-100 sm:border-0 mt-8 before:content-['Посылка']
   before:absolute before:-top-2.5 before:left-5 before:block before:pl-0.5 before:pr-0.5
-  before:bg-white before:text-xs before:font-medium before:text-gray-600 lg:before:hidden">
-  <div class="mb-2 lg:mb-0.5 grid grid-cols-2 gap-4 lg:gap-0 lg:flex lg:flex-row lg:items-center lg:space-x-4
+  before:bg-white before:text-xs before:font-medium before:text-gray-600 sm:before:hidden">
+  <div class="mb-2 lg:mb-0.5 grid grid-cols-2 gap-4 sm:grid-cols-none sm:gap-0 sm:flex sm:flex-row sm:items-center sm:space-x-4
   ">
-    <label class="block lg:w-24">
+    <label class="block sm:w-24">
       <span class="mb-1 inline-block text-xs">
         Кол-во мест
         <sup class="text-red" *ngIf="count.errors && count.hasError('required')"
@@ -21,7 +21,7 @@
         <input tuiTextfield (blur)="onTouched()" />
       </tui-input-number>
     </label>
-    <label class="block lg:w-24">
+    <label class="block sm:w-24">
       <span class="mb-1 inline-block text-xs">
         Вес
         <sup
@@ -46,7 +46,7 @@
         <input tuiTextfield />
       </tui-input-number>
     </label>
-    <label class="block lg:w-24">
+    <label class="block sm:w-24">
       <span class="mb-1 inline-block text-xs">
         Ширина
         <sup class="text-red" *ngIf="width.errors && width.hasError('required')"
@@ -70,7 +70,7 @@
         <input tuiTextfield />
       </tui-input-number>
     </label>
-    <label class="block lg:w-24">
+    <label class="block sm:w-24">
       <span class="mb-1 inline-block text-xs">
         Высота
         <sup class="text-red" *ngIf="height.errors && form.hasError('required')"
@@ -94,7 +94,7 @@
         <input tuiTextfield />
       </tui-input-number>
     </label>
-    <label class="block lg:w-24">
+    <label class="block sm:w-24">
       <span class="mb-1 inline-block text-xs">
         Длина
         <sup
