@@ -1,14 +1,11 @@
 <div
   [formGroup]="form"
-  class="relative mb-5 mt-8 border border-gray-100 p-5 before:absolute
-   rounded-sm before:-top-2.5 before:left-5 before:block before:bg-white before:pl-0.5 before:pr-0.5
-   before:text-xs before:font-medium before:text-gray-600 before:content-['Посылка'] sm:border-0 sm:p-0
-   sm:before:hidden"
+  class="relative mb-5 mt-8 rounded-sm border border-gray-100 p-5 before:absolute before:-top-2.5 before:left-5 before:block before:bg-white before:pl-0.5 before:pr-0.5 before:text-xs before:font-medium before:text-gray-600 before:content-['Посылка'] sm:border-0 sm:p-0 sm:before:hidden md:border md:p-5 md:before:block xl:border-0 xl:p-0 xl:before:hidden"
 >
   <div
-    class="mb-2 grid grid-cols-2 gap-4 sm:flex sm:grid-cols-none sm:flex-row sm:items-center sm:gap-0 sm:space-x-4 lg:mb-0.5"
+    class="mb-2 grid grid-cols-2 gap-4 sm:grid-cols-parcel md:grid-cols-2 lg:mb-0.5 lg:grid-cols-3 xl:grid-cols-parcel"
   >
-    <label class="block sm:w-24">
+    <label class="block">
       <span class="mb-1 inline-block text-xs">
         Кол-во мест
         <sup class="text-red" *ngIf="count.errors && count.hasError('required')"
@@ -26,7 +23,7 @@
         <input tuiTextfield (blur)="onTouched()" />
       </tui-input-number>
     </label>
-    <label class="block sm:w-24">
+    <label class="block">
       <span class="mb-1 inline-block text-xs">
         Вес
         <sup
@@ -51,7 +48,7 @@
         <input tuiTextfield />
       </tui-input-number>
     </label>
-    <label class="block sm:w-24">
+    <label class="block">
       <span class="mb-1 inline-block text-xs">
         Ширина
         <sup class="text-red" *ngIf="width.errors && width.hasError('required')"
@@ -75,7 +72,7 @@
         <input tuiTextfield />
       </tui-input-number>
     </label>
-    <label class="block sm:w-24">
+    <label class="block">
       <span class="mb-1 inline-block text-xs">
         Высота
         <sup class="text-red" *ngIf="height.errors && form.hasError('required')"
@@ -99,7 +96,7 @@
         <input tuiTextfield />
       </tui-input-number>
     </label>
-    <label class="block sm:w-24">
+    <label class="block">
       <span class="mb-1 inline-block text-xs">
         Длина
         <sup

@@ -1,4 +1,7 @@
-<div [formGroup]="form" class="flex flex-col space-y-4  max-w-[550px] sm:flex-row sm:space-y-0 sm:space-x-4">
+<div
+  [formGroup]="form"
+  class="flex max-w-[550px] flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4 md:flex-col md:space-x-0 md:space-y-4 lg:flex-row lg:space-y-0 lg:space-x-4"
+>
   <label *appLet="cargos$ | async as cargos" class="max-w-[370px] sm:flex-grow">
     <span class="mb-1 inline-block text-xs">
       Выберите запчасть

@@ -129,6 +129,9 @@ module.exports = {
         'index-bus': "url('src/assets/images/index/bus-bg@3x.jpg')",
         'index-curve': "url('src/assets/images/index/curve.svg')",
       },
+      gridTemplateColumns: {
+        parcel: 'repeat(6, 100px)',
+      },
     },
   },
   plugins: [
