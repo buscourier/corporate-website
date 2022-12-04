@@ -1,6 +1,9 @@
-<div [formGroup]="form" class="mb-5">
-  <div class="mb-0.5 flex items-center space-x-4">
-    <label class="mb-3 block w-24">
+<div [formGroup]="form" class="relative mb-5 p-5 border border-gray-100 lg:border-0 mt-8 before:content-['Посылка']
+  before:absolute before:-top-2.5 before:left-5 before:block before:pl-0.5 before:pr-0.5
+  before:bg-white before:text-xs before:font-medium before:text-gray-600 lg:before:hidden">
+  <div class="mb-2 lg:mb-0.5 grid grid-cols-2 gap-4 lg:gap-0 lg:flex lg:flex-row lg:items-center lg:space-x-4
+  ">
+    <label class="block lg:w-24">
       <span class="mb-1 inline-block text-xs">
         Кол-во мест
         <sup class="text-red" *ngIf="count.errors && count.hasError('required')"
@@ -18,7 +21,7 @@
         <input tuiTextfield (blur)="onTouched()" />
       </tui-input-number>
     </label>
-    <label class="mb-3 block w-24">
+    <label class="block lg:w-24">
       <span class="mb-1 inline-block text-xs">
         Вес
         <sup
@@ -43,7 +46,7 @@
         <input tuiTextfield />
       </tui-input-number>
     </label>
-    <label class="mb-3 block w-24">
+    <label class="block lg:w-24">
       <span class="mb-1 inline-block text-xs">
         Ширина
         <sup class="text-red" *ngIf="width.errors && width.hasError('required')"
@@ -67,7 +70,7 @@
         <input tuiTextfield />
       </tui-input-number>
     </label>
-    <label class="mb-3 block w-24">
+    <label class="block lg:w-24">
       <span class="mb-1 inline-block text-xs">
         Высота
         <sup class="text-red" *ngIf="height.errors && form.hasError('required')"
@@ -91,7 +94,7 @@
         <input tuiTextfield />
       </tui-input-number>
     </label>
-    <label class="mb-3 block w-24">
+    <label class="block lg:w-24">
       <span class="mb-1 inline-block text-xs">
         Длина
         <sup
@@ -117,7 +120,7 @@
         <input tuiTextfield />
       </tui-input-number>
     </label>
-    <div class="mt-2">
+    <div class="mt-6 flex flex-col justify-center">
       <ng-content select="button"></ng-content>
     </div>
   </div>

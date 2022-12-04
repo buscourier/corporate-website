@@ -71,3 +71,12 @@ tui-radio-labeled[data-size='m'] {
 tui-checkbox-labeled[data-size='m'] .t-content {
   line-height: 1.25rem !important;
 }
+
+
+[data-tui-host-orientation=horizontal] .t-group {
+  @apply flex-wrap
+}
+
+[data-tui-host-orientation=horizontal] .t-group tui-radio-labeled {
+  @apply !ml-0 !mr-4 mt-3 min-w-[135px]
+}
