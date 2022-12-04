@@ -1,5 +1,5 @@
-<div [formGroup]="form" class="flex max-w-[550px] space-x-4">
-  <label *appLet="cargos$ | async as cargos" class="max-w-[370px] flex-grow">
+<div [formGroup]="form" class="flex flex-col space-y-4 max-w-[550px] sm:flex-row sm:space-y-0 sm:space-x-4">
+  <label *appLet="cargos$ | async as cargos" class="max-w-[370px] sm:flex-grow">
     <span class="mb-1 inline-block text-xs">
       Выберите вариант
       <sup class="text-red" *ngIf="detail.errors && detail.hasError('required')"
@@ -37,6 +37,7 @@
       tuiTextfieldSize="m"
       [min]="1"
       [max]="20"
+      class="w-36"
     >
       <input tuiTextfield />
     </tui-input-count>
