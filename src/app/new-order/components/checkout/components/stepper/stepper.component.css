@@ -54,11 +54,12 @@
 
 .stepper-label {
   @apply text-[10px] font-bold text-gray-500;
-  @apply uppercase leading-5 tracking-widest;
+  @apply uppercase leading-5 tracking-widest whitespace-nowrap;
   @apply col-start-1 col-end-3 row-start-2 row-end-3;
+  @apply opacity-0 w-0 sm:opacity-100 sm:w-full md:opacity-0 md:w-0 lg:opacity-100 lg:w-full;
 
   @apply step-invalid:text-red;
-  @apply step-active:text-black;
+  @apply step-active:text-black step-active:opacity-100 step-active:w-full;
   @apply step-done:text-black;
 }
 
