@@ -1,10 +1,12 @@
 <ng-container *tuiLet="startPoint$ | async as startPoint">
   <ng-container *tuiLet="endPoint$ | async as endPoint">
     <ng-container *tuiLet="isOrdersValid$ | async as isOrdersValid">
-      <aside class="sticky top-5 mt-32">
+      <aside
+        class="fixed bottom-0 left-0 z-30 w-full sm:sticky sm:top-5 sm:z-0 sm:mt-32"
+      >
         <button
           type="button"
-          class="mb-4 ml-7 text-left"
+          class="mb-4 ml-7 hidden text-left sm:block"
           (click)="showPdf(actions)"
         >
           <tui-svg
@@ -17,7 +19,8 @@
           >
         </button>
         <div
-          class="flex flex-col justify-center pt-7 pb-5 pl-7 pr-11 shadow-md md:w-[350px] lg:min-h-[375px] lg:w-[400px]"
+          *ngIf="isSidebarOpened"
+          class="flex flex-col justify-center bg-white px-4 pt-7 pb-5 shadow-md sm:pl-7 sm:pr-11 md:w-[350px] lg:min-h-[375px] lg:w-[400px]"
         >
           <tui-loader
             [showLoader]="
@@ -27,7 +30,7 @@
             textContent="Не все поля формы заполнены..."
           >
             <div *ngIf="!isTotalSumCalculated">
-              <b class="mb-6 block text-lg">Расчет</b>
+              <b class="mb-6 hidden text-lg sm:block">Расчет</b>
               <p class="mb-3">
                 Для расчета стоимости отправления, укажите место отправления и
                 прибытия, а также тип груза.
@@ -159,34 +162,70 @@
                     </div>
                   </ng-container>
                 </ng-container>
-                <div class="mt-5 text-xl">
-                  <span class="text-gray-500">Итого: </span>
-                  <b>{{ totalSum }} руб.</b>
+                <div class="hidden sm:block">
+                  <div class="mt-5 text-xl">
+                    <span class="text-gray-500">Итого: </span>
+                    <b>{{ totalSum }} руб.</b>
+                  </div>
+                  <ng-container *ngIf="!isCheckoutPage">
+                    <button
+                      type="button"
+                      tuiButton
+                      class="mt-5 mb-2.5 w-[270px]"
+                      [disabled]="
+                        !(
+                          startPoint.isValid ||
+                          endPoint.isValid ||
+                          isOrdersValid
+                        )
+                      "
+                      (click)="goToCheckout()"
+                    >
+                      Оформить заказ
+                    </button>
+                    <button type="button" class="text-red" (click)="reset()">
+                      Сбросить расчет
+                    </button>
+                  </ng-container>
                 </div>
-                <ng-container *ngIf="!isCheckoutPage">
-                  <button
-                    type="button"
-                    tuiButton
-                    class="mt-5 mb-2.5 w-[270px]"
-                    [disabled]="
-                      !(startPoint.isValid || endPoint.isValid || isOrdersValid)
-                    "
-                    (click)="goToCheckout()"
-                  >
-                    Оформить заказ
-                  </button>
-                  <button type="button" class="text-red" (click)="reset()">
-                    Сбросить расчет
-                  </button>
-                </ng-container>
               </div>
             </ng-container>
           </tui-loader>
+        </div>
+        <div
+          class="flex items-center justify-between bg-white p-4 shadow-total sm:hidden"
+        >
+          <div class="text-[24px]">
+            <ng-container *ngIf="totalSum; else default">
+              <span class="text-gray-500">Итого: </span>
+              <b>{{ totalSum }} руб.</b>
+            </ng-container>
+            <ng-template #default>
+              <span class="text-gray-500">Рассчет</span>
+            </ng-template>
+          </div>
+          <button
+            type="button"
+            class="flex h-[37px] w-[50px] items-center justify-center rounded-sm border border-gray-300 transition-all"
+            [class.bg-gray-300]="isSidebarOpened"
+            (click)="toggleSidebar()"
+          >
+            <tui-svg
+              src="tuiIconChevronDown"
+              class="opacity-50 transition-all"
+              [class.rotate-180]="isSidebarOpened"
+            ></tui-svg>
+          </button>
         </div>
       </aside>
     </ng-container>
   </ng-container>
 </ng-container>
+<div
+  *ngIf="isSidebarOpened"
+  class="fixed inset-0 z-20 bg-black opacity-70"
+  (click)="toggleSidebar()"
+></div>
 <ng-template #actions let-content="content">
   <a tuiButton size="s" download [href]="content">Загрузить</a>
 </ng-template>

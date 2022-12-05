@@ -24,7 +24,7 @@ module.exports = {
       xl: ['1.75rem', {lineHeight: '2.1rem'}], // 28 / 33.6
       '2xl': ['2rem', {lineHeight: '2.4rem'}], // 32 / 38.4
       '3xl': ['2.625rem', {lineHeight: '3.25rem'}], // 42 / 52
-      '4xl': ['3.563rem', {lineHeight: '4.25rem'}], // 57 / 68
+      '4xl': ['3.563rem', {lineHeight: '4.25rem'}], // 57 / 68,
     },
     borderRadius: {
       none: '0px',
@@ -41,6 +41,7 @@ module.exports = {
       sm: '0px 4px 15px rgba(0, 0, 0, 0.05);',
       md: '0px 24px 54px rgba(0, 0, 0, 0.04)',
       xl: '0px 24px 54px rgba(0, 0, 0, 0.1)',
+      total: '0px 4px 44px rgba(0, 0, 0, 0.25)',
     },
     extend: {
       colors: {

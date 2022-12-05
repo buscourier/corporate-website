@@ -58,6 +58,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   combineAllSub: Subscription
   totalSum = 0
   orders = null
+  isSidebarOpened = false
 
   private readonly pdf = `assets/media/bus_schedule.pdf`
 
@@ -206,5 +207,9 @@ export class SidebarComponent implements OnInit, OnDestroy {
         }
       )
       .subscribe()
+  }
+
+  toggleSidebar() {
+    this.isSidebarOpened = !this.isSidebarOpened
   }
 }

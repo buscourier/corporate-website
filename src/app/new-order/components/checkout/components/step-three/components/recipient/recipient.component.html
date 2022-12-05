@@ -4,50 +4,50 @@
   class="mt-14"
 >
   <h2 class="mb-6 text-lg font-semibold">Получатель:</h2>
- <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
-   <label class="block sm:col-span-2">
-    <span class="mb-1 inline-block text-xs">
-      ФИО
-      <sup
-        class="text-red"
-        *ngIf="form.get('fio').errors && form.get('fio').hasError('required')"
-      >*</sup
+  <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
+    <label class="block sm:col-span-2">
+      <span class="mb-1 inline-block text-xs">
+        ФИО
+        <sup
+          class="text-red"
+          *ngIf="form.get('fio').errors && form.get('fio').hasError('required')"
+          >*</sup
+        >
+      </span>
+      <tui-input
+        tuiTextfieldSize="m"
+        formControlName="fio"
+        [tuiTextfieldLabelOutside]="true"
       >
-    </span>
-     <tui-input
-       tuiTextfieldSize="m"
-       formControlName="fio"
-       [tuiTextfieldLabelOutside]="true"
-     >
-       <input tuiTextfield type="text" />
-     </tui-input>
-     <tui-error
-       formControlName="fio"
-       [error]="[] | tuiFieldError | async"
-     ></tui-error>
-   </label>
-   <label class="block">
-    <span class="mb-1 inline-block text-xs">
-      Телефон
-      <sup
-        class="text-red"
-        *ngIf="
-          form.get('phone').errors && form.get('phone').hasError('required')
-        "
-      >*</sup
+        <input tuiTextfield type="text" />
+      </tui-input>
+      <tui-error
+        formControlName="fio"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
+    </label>
+    <label class="block">
+      <span class="mb-1 inline-block text-xs">
+        Телефон
+        <sup
+          class="text-red"
+          *ngIf="
+            form.get('phone').errors && form.get('phone').hasError('required')
+          "
+          >*</sup
+        >
+      </span>
+      <tui-input-phone
+        formControlName="phone"
+        tuiTextfieldSize="m"
+        [tuiTextfieldLabelOutside]="true"
       >
-    </span>
-     <tui-input-phone
-       formControlName="phone"
-       tuiTextfieldSize="m"
-       [tuiTextfieldLabelOutside]="true"
-     >
-       <input tuiTextfield autocomplete="tel" />
-     </tui-input-phone>
-     <tui-error
-       formControlName="phone"
-       [error]="[] | tuiFieldError | async"
-     ></tui-error>
-   </label>
- </div>
+        <input tuiTextfield autocomplete="tel" />
+      </tui-input-phone>
+      <tui-error
+        formControlName="phone"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
+    </label>
+  </div>
 </form>
