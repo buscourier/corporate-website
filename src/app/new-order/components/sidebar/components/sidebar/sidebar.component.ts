@@ -58,7 +58,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   combineAllSub: Subscription
   totalSum = 0
   orders = null
-  isSidebarOpened = false
+  isSidebarOpened = true
 
   private readonly pdf = `assets/media/bus_schedule.pdf`
 

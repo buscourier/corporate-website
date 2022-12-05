@@ -2,11 +2,11 @@
   <ng-container *tuiLet="endPoint$ | async as endPoint">
     <ng-container *tuiLet="isOrdersValid$ | async as isOrdersValid">
       <aside
-        class="fixed bottom-0 left-0 z-30 w-full sm:sticky sm:top-5 sm:z-0 sm:mt-32"
+        class="fixed bottom-0 left-0 z-30 w-full md:sticky md:top-5 md:z-0 md:mt-32"
       >
         <button
           type="button"
-          class="mb-4 ml-7 hidden text-left sm:block"
+          class="mb-4 ml-7 hidden text-left md:block"
           (click)="showPdf(actions)"
         >
           <tui-svg
@@ -193,7 +193,7 @@
           </tui-loader>
         </div>
         <div
-          class="flex items-center justify-between bg-white p-4 shadow-total sm:hidden"
+          class="flex items-center justify-between bg-white p-4 shadow-total md:hidden"
         >
           <div class="text-[24px]">
             <ng-container *ngIf="totalSum; else default">
@@ -221,11 +221,11 @@
     </ng-container>
   </ng-container>
 </ng-container>
-<div
-  *ngIf="isSidebarOpened"
-  class="fixed inset-0 z-20 bg-black opacity-70"
-  (click)="toggleSidebar()"
-></div>
+<!--<div-->
+<!--  *ngIf="isSidebarOpened"-->
+<!--  class="fixed inset-0 z-20 bg-black opacity-70"-->
+<!--  (click)="toggleSidebar()"-->
+<!--&gt;</div>-->
 <ng-template #actions let-content="content">
   <a tuiButton size="s" download [href]="content">Загрузить</a>
 </ng-template>
