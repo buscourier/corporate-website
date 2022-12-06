@@ -3,7 +3,9 @@
     <ng-container *tuiLet="endPoint$ | async as endPoint">
       <ng-container *tuiLet="isOrdersValid$ | async as isOrdersValid">
         <aside
-          class="fixed bottom-0 left-0 z-30 w-full md:sticky md:top-5 md:z-0 md:mt-32"
+          *ngIf="(isSidebarOpened && isPhoneScreen) || !isPhoneScreen"
+          [@tuiHeightCollapse]=""
+          class="fixed bottom-18 left-0 z-30 w-full md:sticky md:top-5 md:z-0 md:mt-32"
         >
           <button
             *ngIf="!isPhoneScreen"
@@ -21,7 +23,6 @@
             >
           </button>
           <div
-            *ngIf="(isSidebarOpened && isPhoneScreen) || !isPhoneScreen"
             class="flex flex-col justify-center bg-white px-4 pt-7 pb-5 shadow-md sm:pl-7 sm:pr-11 md:w-[350px] lg:min-h-[375px] lg:w-[400px]"
           >
             <tui-loader
@@ -195,33 +196,33 @@
               </ng-container>
             </tui-loader>
           </div>
-          <div
-            *ngIf="isPhoneScreen"
-            class="flex items-center justify-between bg-white p-4 shadow-total"
-          >
-            <div class="text-[24px]">
-              <ng-container *ngIf="totalSum; else default">
-                <span class="text-gray-500">Итого: </span>
-                <b>{{ totalSum }} руб.</b>
-              </ng-container>
-              <ng-template #default>
-                <span class="text-gray-500">Рассчет</span>
-              </ng-template>
-            </div>
-            <button
-              type="button"
-              class="flex h-[37px] w-[50px] items-center justify-center rounded-sm border border-gray-300 transition-all"
-              [class.bg-gray-300]="isSidebarOpened"
-              (click)="toggleSidebar()"
-            >
-              <tui-svg
-                src="tuiIconChevronDown"
-                class="opacity-50 transition-all"
-                [class.rotate-180]="isSidebarOpened"
-              ></tui-svg>
-            </button>
-          </div>
         </aside>
+        <div
+          *ngIf="isPhoneScreen"
+          class="fixed left-0 bottom-0 z-30 flex h-18 w-full items-center justify-between bg-white p-4 shadow-total"
+        >
+          <div class="text-[24px]">
+            <ng-container *ngIf="totalSum; else default">
+              <span class="text-gray-500">Итого: </span>
+              <b>{{ totalSum }} руб.</b>
+            </ng-container>
+            <ng-template #default>
+              <span class="text-gray-500">Рассчет</span>
+            </ng-template>
+          </div>
+          <button
+            type="button"
+            class="flex h-[37px] w-[50px] items-center justify-center rounded-sm border border-gray-300 transition-all"
+            [class.bg-gray-300]="isSidebarOpened"
+            (click)="toggleSidebar()"
+          >
+            <tui-svg
+              src="tuiIconChevronDown"
+              class="opacity-50 transition-all"
+              [class.rotate-180]="isSidebarOpened"
+            ></tui-svg>
+          </button>
+        </div>
       </ng-container>
     </ng-container>
   </ng-container>

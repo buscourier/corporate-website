@@ -10,6 +10,7 @@ import {DomSanitizer} from '@angular/platform-browser'
 import {NavigationEnd, Router, RouterEvent} from '@angular/router'
 import {Store} from '@ngrx/store'
 import {TUI_IS_MOBILE} from '@taiga-ui/cdk'
+import {tuiHeightCollapse} from '@taiga-ui/core'
 import {TuiPdfViewerOptions, TuiPdfViewerService} from '@taiga-ui/kit'
 import {PolymorpheusContent} from '@tinkoff/ng-polymorpheus'
 import {
@@ -48,6 +49,7 @@ import {isTotalSumCalculatedSelector} from '../../store/selectors'
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css'],
+  animations: [tuiHeightCollapse],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarComponent implements OnInit, OnDestroy {
