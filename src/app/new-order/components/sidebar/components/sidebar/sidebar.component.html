@@ -6,8 +6,9 @@
           class="fixed bottom-0 left-0 z-30 w-full md:sticky md:top-5 md:z-0 md:mt-32"
         >
           <button
+            *ngIf="!isPhoneScreen"
             type="button"
-            class="mb-4 ml-7 hidden text-left md:block"
+            class="mb-4 ml-7 text-left"
             (click)="showPdf(actions)"
           >
             <tui-svg
@@ -31,7 +32,7 @@
               textContent="Не все поля формы заполнены..."
             >
               <div *ngIf="!isTotalSumCalculated">
-                <b class="mb-6 hidden text-lg sm:block">Расчет</b>
+                <b *ngIf="!isPhoneScreen" class="mb-6 block text-lg">Расчет</b>
                 <p class="mb-3">
                   Для расчета стоимости отправления, укажите место отправления и
                   прибытия, а также тип груза.
@@ -164,7 +165,7 @@
                       </div>
                     </ng-container>
                   </ng-container>
-                  <div class="hidden sm:block">
+                  <div *ngIf="!isPhoneScreen">
                     <div class="mt-5 text-xl">
                       <span class="text-gray-500">Итого: </span>
                       <b>{{ totalSum }} руб.</b>
@@ -224,12 +225,12 @@
       </ng-container>
     </ng-container>
   </ng-container>
+  <div
+    *ngIf="isSidebarOpened && isPhoneScreen"
+    class="fixed inset-0 z-20 bg-black opacity-70"
+    (click)="toggleSidebar()"
+  ></div>
 </ng-container>
-<!--<div-->
-<!--  *ngIf="isSidebarOpened"-->
-<!--  class="fixed inset-0 z-20 bg-black opacity-70"-->
-<!--  (click)="toggleSidebar()"-->
-<!--&gt;</div>-->
 <ng-template #actions let-content="content">
   <a tuiButton size="s" download [href]="content">Загрузить</a>
 </ng-template>

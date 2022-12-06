@@ -1,6 +1,7 @@
 import {CommonModule} from '@angular/common'
 import {NgModule} from '@angular/core'
 import {RouterModule} from '@angular/router'
+import {TuiLetModule} from '@taiga-ui/cdk'
 import {TuiButtonModule, TuiSvgModule} from '@taiga-ui/core'
 import {TuiLineClampModule} from '@taiga-ui/kit'
 import {EndPointModule} from '../../shared/components/end-point/end-point.module'
@@ -21,6 +22,7 @@ import {CalculatorComponent} from './calculator.component'
     TuiButtonModule,
     TuiSvgModule,
     TuiLineClampModule,
+    TuiLetModule,
   ],
   exports: [CalculatorComponent],
 })

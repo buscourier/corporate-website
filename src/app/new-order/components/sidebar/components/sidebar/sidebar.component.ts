@@ -60,7 +60,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   combineAllSub: Subscription
   totalSum = 0
   orders = null
-  isSidebarOpened = true
+  isSidebarOpened = false
 
   private readonly pdf = `assets/media/bus_schedule.pdf`
 
@@ -91,7 +91,13 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.isOrdersValid$ = this.store.select(isOrdersValidSelector)
     this.startPoint$ = this.store.select(startPointSelector)
     this.endPoint$ = this.store.select(endPointSelector)
-    this.isPhoneScreen$ = this.store.select(isPhoneScreenSelector)
+    this.isPhoneScreen$ = this.store.select(isPhoneScreenSelector).pipe(
+      tap((isPhoneScreen: boolean) => {
+        if (!isPhoneScreen) {
+          this.isSidebarOpened = false
+        }
+      })
+    )
 
     this.combineAllSub = combineLatest([
       this.store.select(startCitySelector),
