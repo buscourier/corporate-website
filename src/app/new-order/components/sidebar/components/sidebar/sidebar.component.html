@@ -21,7 +21,7 @@
             >
           </button>
           <div
-            *ngIf="isSidebarOpened"
+            *ngIf="(isSidebarOpened && isPhoneScreen) || !isPhoneScreen"
             class="flex flex-col justify-center bg-white px-4 pt-7 pb-5 shadow-md sm:pl-7 sm:pr-11 md:w-[350px] lg:min-h-[375px] lg:w-[400px]"
           >
             <tui-loader
