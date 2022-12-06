@@ -22,9 +22,10 @@ import {environment} from '../environments/environment'
 import {AppRoutingModule} from './app-routing.module'
 import {AppComponent} from './app.component'
 import {AuthModule} from './auth/auth.module'
+import {NewOrderModule} from './new-order/new-order.module'
 import {PageFooterModule} from './shared/components/page-footer/page-footer.module'
 import {PageHeaderModule} from './shared/components/page-header/page-header.module'
-import {NewOrderModule} from './new-order/new-order.module'
+import {reducers} from './store/reducers'
 
 const mapConfig: YaConfig = {
   apikey: 'apiKey',
@@ -40,7 +41,7 @@ const mapConfig: YaConfig = {
     PageFooterModule,
     TuiPdfViewerModule,
     AuthModule.forRoot(),
-    StoreModule.forRoot({}, {}),
+    StoreModule.forRoot(reducers),
     EffectsModule.forRoot([]),
     environment.production
       ? []
