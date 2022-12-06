@@ -9,3 +9,9 @@ export const screenSizeSelector = createSelector(
   globalFeatureSelector,
   (state: GlobalStateInterface) => state.screenSize
 )
+
+export const isPhoneScreenSelector = createSelector(
+  globalFeatureSelector,
+  (state: GlobalStateInterface) =>
+    state.screenSize === 'xs' || state.screenSize === 'sm'
+)

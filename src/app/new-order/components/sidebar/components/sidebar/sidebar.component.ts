@@ -20,6 +20,7 @@ import {
   Subscription,
 } from 'rxjs'
 import {tap} from 'rxjs/operators'
+import {isPhoneScreenSelector} from '../../../../../store/global/selectors'
 import {resetEndPointAction} from '../../../../shared/components/end-point/store/actions/reset-end-point.action'
 import {
   endCitySelector,
@@ -53,6 +54,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   isOrdersValid$: Observable<boolean>
   startPoint$: Observable<StartPointStateInterface>
   endPoint$: Observable<EndPointStateInterface>
+  isPhoneScreen$: Observable<boolean>
   totalSumCalculatedSub: Subscription
 
   combineAllSub: Subscription
@@ -89,6 +91,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.isOrdersValid$ = this.store.select(isOrdersValidSelector)
     this.startPoint$ = this.store.select(startPointSelector)
     this.endPoint$ = this.store.select(endPointSelector)
+    this.isPhoneScreen$ = this.store.select(isPhoneScreenSelector)
 
     this.combineAllSub = combineLatest([
       this.store.select(startCitySelector),

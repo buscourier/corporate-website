@@ -1,4 +1,4 @@
-export enum Breakpoints {
+export enum Breakpoint {
   XS = 'xs',
   SM = 'sm',
   MD = 'md',
