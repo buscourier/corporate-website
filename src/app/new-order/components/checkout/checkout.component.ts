@@ -24,7 +24,7 @@ class NavigationEvent {}
 export class CheckoutComponent implements OnInit, OnDestroy {
   currentStepIndex = 0
   scrollTop = 150
-  duration = 0
+  duration = 300
   routerSub: Subscription
 
   form = this.fb.group({})
@@ -46,7 +46,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   initializeValues(): void {
     this.navigate(this.router.url)
-    this.scroll().pipe().subscribe()
+    this.routerSub = this.scroll().subscribe()
 
     this.routerSub = this.router.events
       .pipe(
