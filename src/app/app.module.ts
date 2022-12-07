@@ -28,7 +28,7 @@ import {PageHeaderModule} from './shared/components/page-header/page-header.modu
 import {reducers} from './store/reducers'
 
 const mapConfig: YaConfig = {
-  apikey: 'apiKey',
+  apikey: 'be640658-9c20-46d8-ab54-555efd7fc3ee',
   lang: 'ru_RU',
 }
 
