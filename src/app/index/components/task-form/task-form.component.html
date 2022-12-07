@@ -98,7 +98,14 @@
       <a class="text-black">обработку моих персональных данных</a>
     </span>
   </tui-checkbox-labeled>
-  <button type="submit" tuiButton size="m" appearance="accent" [showLoader]="">
+  <button
+    type="submit"
+    tuiButton
+    size="m"
+    appearance="accent"
+    [showLoader]=""
+    [disabled]="form.invalid"
+  >
     Отправить заявку
   </button>
 </form>

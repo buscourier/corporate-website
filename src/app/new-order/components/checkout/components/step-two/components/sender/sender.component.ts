@@ -49,6 +49,7 @@ export class SenderComponent implements OnInit, AfterViewInit, OnDestroy {
     {id: 'other', name: 'Другое'},
   ]
   personSub: Subscription
+  docTypeSub: Subscription
   isSenderPristineSub: Subscription
 
   form = this.fb.group({
@@ -99,7 +100,7 @@ export class SenderComponent implements OnInit, AfterViewInit, OnDestroy {
       )
       .subscribe()
 
-    this.form
+    this.docTypeSub = this.form
       .get('docType')
       .valueChanges.pipe(
         tap((doc: DocTypeInterface) => {
@@ -171,5 +172,6 @@ export class SenderComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.isSenderPristineSub.unsubscribe()
+    this.docTypeSub.unsubscribe()
   }
 }
