@@ -13,21 +13,59 @@ import {changeValidityAction} from './store/actions/change-validity.action'
 import {changeValuesAction} from './store/actions/change-values.action'
 import {isPersonPristineSelector, personSelector} from './store/selectors'
 import {PersonStateInterface} from './types/person-state.interface'
+import {Pattern} from '../../../../../../../shared/pattern/pattern'
+import {TUI_VALIDATION_ERRORS} from '@taiga-ui/kit'
 
 @Component({
   selector: 'app-person',
   templateUrl: './person.component.html',
   styleUrls: ['./person.component.css'],
+  providers: [
+    {
+      provide: TUI_VALIDATION_ERRORS,
+      useValue: {
+        required: `Заполните`,
+        email: `Некорректный email`,
+        minlength: (error) => {
+          return `Минимум ${error.requiredLength} символа`
+        },
+        pattern: (error) => {
+          return `Только буквы`
+        },
+      },
+    },
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PersonComponent implements OnInit, AfterViewInit, OnDestroy {
   roles = ['Отправитель', 'Получатель']
 
   form = this.fb.group({
-    lastName: ['', Validators.required],
-    firstName: ['', Validators.required],
-    middleName: ['', Validators.required],
-    email: ['', Validators.required],
+    lastName: [
+      '',
+      [
+        Validators.required,
+        Validators.pattern(Pattern.Text),
+        Validators.minLength(2),
+      ],
+    ],
+    firstName: [
+      '',
+      [
+        Validators.required,
+        Validators.pattern(Pattern.Text),
+        Validators.minLength(2),
+      ],
+    ],
+    middleName: [
+      '',
+      [
+        Validators.required,
+        Validators.pattern(Pattern.Text),
+        Validators.minLength(2),
+      ],
+    ],
+    email: ['', [Validators.required, Validators.email]],
     phone: ['', Validators.required],
     role: ['', Validators.required],
   })
