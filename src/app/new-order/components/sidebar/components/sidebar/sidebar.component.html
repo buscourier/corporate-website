@@ -23,7 +23,7 @@
             >
           </button>
           <div
-            class="flex flex-col justify-center bg-white px-4 pt-7 pb-5 shadow-md sm:pl-7 sm:pr-11 md:w-[350px] lg:min-h-[375px] lg:w-[400px]"
+            class="flex flex-col justify-center bg-white pl-4 pr-2 pt-7 pb-5 shadow-md sm:pl-7 sm:pr-4 md:w-[350px] lg:min-h-[375px] lg:w-[400px]"
           >
             <tui-loader
               [showLoader]="
@@ -49,9 +49,6 @@
                   по России.
                 </p>
               </div>
-              <!--          startPoint.isValid {{ startPoint.isValid }} endPoint.isValid-->
-              <!--          {{ endPoint.isValid }} isOrdersValid-->
-              <!--          {{ isOrdersValid }} isTotalSumCalculated {{ isTotalSumCalculated }}-->
               <ng-container
                 *ngIf="
                   startPoint.isValid &&
@@ -60,9 +57,9 @@
                   isTotalSumCalculated
                 "
               >
+                <b class="mb-6 block text-lg">Расчет</b>
                 <ng-container *ngIf="startPoint && endPoint">
                   <ng-container *ngIf="startPoint.city && endPoint.city">
-                    <b class="mb-6 block text-lg">Расчет</b>
                     <p class="mt-1.5 mb-0.5 text-2xs text-gray-700">
                       Направление перевозки:
                     </p>
@@ -110,88 +107,104 @@
                 <div *ngIf="orders && orders.length">
                   <ng-container *ngFor="let order of orders">
                     <ng-container *ngIf="order">
-                      <b class="mb-3 block text-sm">Заказ №1</b>
-                      <p class="mt-1.5 mb-0.5 text-2xs text-gray-700">
-                        Тип груза:
-                      </p>
-                      <ng-container *ngIf="order.cargo.docs">
-                        <p class="text-2xs">
-                          Документы (мест: {{ order.cargo.docs.places }})
-                        </p>
-                      </ng-container>
-                      <ng-container *ngIf="order.cargo.parcels">
-                        <p class="text-2xs">
-                          Посылка (мест:
-                          {{ order.cargo.parcels.parcels.length }})
-                        </p>
-                      </ng-container>
-                      <ng-container *ngIf="order.cargo.auto">
-                        <p class="text-2xs">
-                          Автозапчасть -
-                          {{ order.cargo.auto.detail?.name }} (мест:
-                          {{ order.cargo.auto.places }})
-                        </p>
-                      </ng-container>
-                      <ng-container *ngIf="order.cargo.other">
-                        <p class="text-2xs">
-                          Другое - {{ order.cargo.other.detail?.name }} (мест:
-                          {{ order.cargo.other.places }})
-                        </p>
-                      </ng-container>
-                      <ng-container *ngIf="getPackages(order.packages).length">
-                        <p class="mt-2.5 mb-0.5 text-2xs text-gray-700">
-                          Упаковка:
-                        </p>
-                        <p
-                          *ngFor="let package of getPackages(order.packages)"
-                          class="text-2xs"
-                        >
-                          {{ package.data.short_name }}
-                          {{ package.data.site_name }} ({{ package.count }}
-                          шт.):
-                          <b class="text-sm"
-                            >{{ package.count * package.data.price }} руб.</b
-                          >
-                        </p>
-                      </ng-container>
-                      <div class="mt-2.5">
-                        <ng-container
-                          *ngFor="let service of getServices(order.services)"
-                        >
-                          <p class="mt-0.5 mb-0.5 text-2xs text-gray-700">
-                            {{ service.data.name }}
+                      <b class="mb-3 block text-sm">Детали заказа</b>
+                      <tui-scrollbar class="max-h-60">
+                        <div class="pr-2 sm:pr-5">
+                          <p class="mt-1.5 mb-0.5 text-2xs text-gray-700">
+                            Тип груза:
                           </p>
-                          <b class="text-sm">{{ service.data.price }} руб.</b>
-                        </ng-container>
-                      </div>
+                          <ng-container *ngIf="order.cargo.docs">
+                            <p class="text-2xs">
+                              Документы (мест: {{ order.cargo.docs.places }})
+                            </p>
+                          </ng-container>
+                          <ng-container *ngIf="order.cargo.parcels">
+                            <p class="text-2xs">
+                              Посылка (мест:
+                              {{ order.cargo.parcels.parcels.length }})
+                            </p>
+                          </ng-container>
+                          <ng-container *ngIf="order.cargo.auto">
+                            <p class="text-2xs">
+                              Автозапчасть -
+                              {{ order.cargo.auto.detail?.name }} (мест:
+                              {{ order.cargo.auto.places }})
+                            </p>
+                          </ng-container>
+                          <ng-container *ngIf="order.cargo.other">
+                            <p class="text-2xs">
+                              Другое -
+                              {{ order.cargo.other.detail?.name }} (мест:
+                              {{ order.cargo.other.places }})
+                            </p>
+                          </ng-container>
+                          <ng-container
+                            *ngIf="getPackages(order.packages).length"
+                          >
+                            <p class="mt-2.5 mb-0.5 text-2xs text-gray-700">
+                              Упаковка:
+                            </p>
+                            <p
+                              *ngFor="
+                                let package of getPackages(order.packages)
+                              "
+                              class="text-2xs"
+                            >
+                              {{ package.data.short_name }}
+                              {{ package.data.site_name }} ({{ package.count }}
+                              шт.):
+                              <b class="text-sm"
+                                >{{
+                                  package.count * package.data.price
+                                }}
+                                руб.</b
+                              >
+                            </p>
+                          </ng-container>
+                          <div class="mt-2.5">
+                            <ng-container
+                              *ngFor="
+                                let service of getServices(order.services)
+                              "
+                            >
+                              <p class="mt-0.5 mb-0.5 text-2xs text-gray-700">
+                                {{ service.data.name }}
+                              </p>
+                              <b class="text-sm"
+                                >{{ service.data.price }} руб.</b
+                              >
+                            </ng-container>
+                          </div>
+                        </div>
+                      </tui-scrollbar>
                     </ng-container>
                   </ng-container>
-                  <div *ngIf="!isPhoneScreen">
-                    <div class="mt-5 text-xl">
-                      <span class="text-gray-500">Итого: </span>
-                      <b>{{ totalSum }} руб.</b>
-                    </div>
-                    <ng-container *ngIf="!isCheckoutPage">
-                      <button
-                        type="button"
-                        tuiButton
-                        class="mt-5 mb-2.5 w-[270px]"
-                        [disabled]="
-                          !(
-                            startPoint.isValid ||
-                            endPoint.isValid ||
-                            isOrdersValid
-                          )
-                        "
-                        (click)="goToCheckout()"
-                      >
-                        Оформить заказ
-                      </button>
-                      <button type="button" class="text-red" (click)="reset()">
-                        Сбросить расчет
-                      </button>
-                    </ng-container>
+                </div>
+                <div *ngIf="!isPhoneScreen">
+                  <div class="mt-5 text-xl">
+                    <span class="text-gray-500">Итого: </span>
+                    <b>{{ totalSum }} руб.</b>
                   </div>
+                  <ng-container *ngIf="!isCheckoutPage">
+                    <button
+                      type="button"
+                      tuiButton
+                      class="mt-5 mb-2.5 w-[270px]"
+                      [disabled]="
+                        !(
+                          startPoint.isValid ||
+                          endPoint.isValid ||
+                          isOrdersValid
+                        )
+                      "
+                      (click)="goToCheckout()"
+                    >
+                      Оформить заказ
+                    </button>
+                    <button type="button" class="text-red" (click)="reset()">
+                      Сбросить расчет
+                    </button>
+                  </ng-container>
                 </div>
               </ng-container>
             </tui-loader>
