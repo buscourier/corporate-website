@@ -8,4 +8,5 @@ interface BreakpointsInterface {
 
 export interface GlobalStateInterface {
   screenSize: string | null
+  isPageScrollBlocked: boolean
 }

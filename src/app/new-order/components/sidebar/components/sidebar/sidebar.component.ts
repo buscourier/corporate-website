@@ -222,5 +222,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   toggleSidebar() {
     this.isSidebarOpened = !this.isSidebarOpened
+    // this.store.dispatch(
+    //   changePageScrollStateAction({isBlocked: this.isSidebarOpened})
+    // )
   }
 }

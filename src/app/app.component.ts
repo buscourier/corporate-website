@@ -1,19 +1,22 @@
-import {Component, HostListener, Inject, OnInit} from '@angular/core'
+import {Component, HostListener, Inject, OnDestroy, OnInit} from '@angular/core'
 import {Store} from '@ngrx/store'
-import {Observable} from 'rxjs'
+import {Observable, Subscription} from 'rxjs'
+import {tap} from 'rxjs/operators'
 import {LoginService} from './auth/components/login/services/login.service'
 import {getCurrentUserAction} from './auth/store/actions/get-current-user.action'
 import {isLoggedInSelector} from './auth/store/selectors'
 import {changeScreenSizeAction} from './store/global/actions/change-screen-size.action'
+import {isPageScrollBlockedSelector} from './store/global/selectors'
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'Баскурьер'
   isLoggedIn$: Observable<boolean>
+  isPageScrollSub: Subscription
 
   constructor(
     @Inject(LoginService) private readonly loginService: LoginService,
@@ -21,9 +24,33 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.isLoggedIn$ = this.store.select(isLoggedInSelector)
-    this.store.dispatch(getCurrentUserAction())
+    this.initializeValues()
+    this.fetchData()
     this.changeScreenSize()
+  }
+
+  ngOnDestroy(): void {
+    this.isPageScrollSub.unsubscribe()
+  }
+
+  initializeValues(): void {
+    this.isLoggedIn$ = this.store.select(isLoggedInSelector)
+    this.isPageScrollSub = this.store
+      .select(isPageScrollBlockedSelector)
+      .pipe(
+        tap((isBlocked: boolean) => {
+          if (isBlocked) {
+            document.documentElement.classList.add('page-scroll-blocked')
+          } else {
+            document.documentElement.classList.remove('page-scroll-blocked')
+          }
+        })
+      )
+      .subscribe()
+  }
+
+  fetchData(): void {
+    this.store.dispatch(getCurrentUserAction())
   }
 
   onClick() {

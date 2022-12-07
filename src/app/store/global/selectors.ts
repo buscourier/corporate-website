@@ -15,3 +15,8 @@ export const isPhoneScreenSelector = createSelector(
   (state: GlobalStateInterface) =>
     state.screenSize === 'xs' || state.screenSize === 'sm'
 )
+
+export const isPageScrollBlockedSelector = createSelector(
+  globalFeatureSelector,
+  (state: GlobalStateInterface) => state.isPageScrollBlocked
+)

@@ -4,4 +4,5 @@ export const GLOBAL_FEATURE = 'global'
 
 export const initialState: GlobalStateInterface = {
   screenSize: null,
+  isPageScrollBlocked: false,
 }
