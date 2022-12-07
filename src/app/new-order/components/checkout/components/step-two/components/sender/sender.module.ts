@@ -5,6 +5,7 @@ import {SENDER_FEATURE} from './store/state'
 import {StoreModule} from '@ngrx/store'
 import {reducer} from './store/reducer'
 import {
+  TextMaskModule,
   TuiDataListWrapperModule,
   TuiFieldErrorPipeModule,
   TuiInputModule,
@@ -29,6 +30,7 @@ import {ReactiveFormsModule} from '@angular/forms'
     TuiDataListWrapperModule,
     TuiInputModule,
     PatchFormGroupValuesModule,
+    TextMaskModule,
   ],
   exports: [SenderComponent],
 })

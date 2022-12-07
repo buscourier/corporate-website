@@ -14,21 +14,53 @@ import {changeValidityAction} from './store/actions/change-validity.action'
 import {changeValuesAction} from './store/actions/change-values.action'
 import {isSenderPristineSelector, senderSelector} from './store/selectors'
 import {SenderStateInterface} from './types/sender-state.interface'
+import {TUI_VALIDATION_ERRORS, tuiItemsHandlersProvider} from '@taiga-ui/kit'
+import {Pattern} from '../../../../../../../shared/pattern/pattern'
+import {STRINGIFY_DOCTYPE} from '../../../../../../../shared/handlers/string-handlers'
+import {DocTypeInterface} from '../../../../../../../shared/types/doc-type.interface'
+import {TuiTextMaskOptions} from '@taiga-ui/core'
 
 @Component({
   selector: 'app-sender',
   templateUrl: './sender.component.html',
   styleUrls: ['./sender.component.css'],
+  providers: [
+    tuiItemsHandlersProvider({stringify: STRINGIFY_DOCTYPE}),
+    {
+      provide: TUI_VALIDATION_ERRORS,
+      useValue: {
+        required: `Заполните`,
+        email: `Некорректный email`,
+        minlength: (error) => {
+          return `Минимум ${error.requiredLength} символа`
+        },
+        pattern: (error) => {
+          return `Только буквы`
+        },
+      },
+    },
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SenderComponent implements OnInit, AfterViewInit, OnDestroy {
-  documents = ['Паспорт РФ', 'Водительское удостоверение', 'Другое']
+  documents = [
+    {id: 'passport', name: 'Паспорт РФ'},
+    {id: 'driver', name: 'Водительское удостоверение'},
+    {id: 'other', name: 'Другое'},
+  ]
   personSub: Subscription
   isSenderPristineSub: Subscription
 
   form = this.fb.group({
-    fio: ['', Validators.required],
-    docType: ['', Validators.required],
+    fio: [
+      '',
+      [
+        Validators.required,
+        Validators.pattern(Pattern.Text),
+        Validators.minLength(2),
+      ],
+    ],
+    docType: [{}, Validators.required],
     docNumber: ['', Validators.required],
     phone: ['', Validators.required],
   })
@@ -51,6 +83,8 @@ export class SenderComponent implements OnInit, AfterViewInit, OnDestroy {
     () => this.store.select(senderSelector)
   )
 
+  _docMask: TuiTextMaskOptions = null
+
   constructor(private fb: FormBuilder, private store: Store) {}
 
   ngOnInit(): void {
@@ -61,6 +95,17 @@ export class SenderComponent implements OnInit, AfterViewInit, OnDestroy {
           if (isPristine) {
             this.form.reset()
           }
+        })
+      )
+      .subscribe()
+
+    this.form
+      .get('docType')
+      .valueChanges.pipe(
+        tap((doc: DocTypeInterface) => {
+          this.form.get('docNumber').setValue('')
+          this.form.get('docNumber').markAsUntouched()
+          this.docMask = doc.id
         })
       )
       .subscribe()
@@ -82,6 +127,46 @@ export class SenderComponent implements OnInit, AfterViewInit, OnDestroy {
         })
       )
       .subscribe()
+  }
+
+  get docMask(): TuiTextMaskOptions | any {
+    //TODO: Need to remove any
+    return this._docMask
+  }
+
+  set docMask(id: string) {
+    let mask = []
+
+    switch (id) {
+      case 'passport':
+        mask = [/\d/, /\d/, /\d/, /\d/, ` `, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/]
+        break
+      case 'driver':
+        mask = [
+          /\d/,
+          /\d/,
+          /\d/,
+          `-`,
+          /\d/,
+          /\d/,
+          /\d/,
+          `-`,
+          /\d/,
+          /\d/,
+          /\d/,
+          `-`,
+          /\d/,
+          /\d/,
+        ]
+        break
+      default:
+        mask = [Pattern.Numbers]
+    }
+
+    this._docMask = {
+      guide: false,
+      mask,
+    }
   }
 
   ngOnDestroy(): void {
