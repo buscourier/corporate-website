@@ -1,9 +1,19 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  OnDestroy,
+  OnInit,
+} from '@angular/core'
 import {FormBuilder} from '@angular/forms'
 import {NavigationEnd, Router, RouterEvent} from '@angular/router'
 import {Store} from '@ngrx/store'
-import {filter} from 'rxjs'
+import {TuiScrollService} from '@taiga-ui/cdk'
+import {filter, Subscription, switchMap} from 'rxjs'
+import {tap} from 'rxjs/operators'
 import {setCurrentStepAction} from './store/actions/set-current-step.action'
+
+class NavigationEvent {}
 
 @Component({
   selector: 'app-checkout',
@@ -11,36 +21,59 @@ import {setCurrentStepAction} from './store/actions/set-current-step.action'
   styleUrls: ['./checkout.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CheckoutComponent implements OnInit {
+export class CheckoutComponent implements OnInit, OnDestroy {
   currentStepIndex = 0
+  scrollTop = 150
+  duration = 0
+  routerSub: Subscription
 
   form = this.fb.group({})
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private store: Store
+    private store: Store,
+    @Inject(TuiScrollService) private readonly scrollService: TuiScrollService
   ) {}
 
   ngOnInit(): void {
     this.initializeValues()
   }
 
+  ngOnDestroy(): void {
+    this.routerSub.unsubscribe()
+  }
+
   initializeValues(): void {
     this.navigate(this.router.url)
+    this.scroll().pipe().subscribe()
 
-    //TODO: need unsubscribe?
-    this.router.events
-      .pipe(filter((event: RouterEvent) => event instanceof NavigationEnd))
-      .subscribe((event: RouterEvent) => {
-        this.navigate(event.url)
-      })
+    this.routerSub = this.router.events
+      .pipe(
+        filter((event: RouterEvent) => event instanceof NavigationEnd),
+        tap((event: RouterEvent) => {
+          this.navigate(event.url)
+        }),
+        switchMap((event: NavigationEvent) => {
+          return this.scroll()
+        })
+      )
+      .subscribe()
   }
 
   navigate(url: string): void {
     const currentStep = this.getCurrentStep(url)
 
     this.store.dispatch(setCurrentStepAction({step: currentStep}))
+  }
+
+  scroll() {
+    return this.scrollService.scroll$(
+      document.documentElement,
+      this.scrollTop,
+      0,
+      this.duration
+    )
   }
 
   getCurrentStep(url: string): number {
