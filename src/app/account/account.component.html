@@ -6,7 +6,7 @@
     <div class="order-2 flex-grow md:order-1">
       <!-- item-1-->
       <div
-        [routerLink]="['orders']"
+        [routerLink]="['report']"
         class="mb-2 flex border-y border-gray-200 py-5 px-4 hover:cursor-pointer hover:border-yellow sm:space-x-13 sm:py-9 sm:px-6 md:space-x-0 md:rounded-sm md:border-x md:px-8 lg:space-x-13 lg:pl-13 lg:pr-10"
       >
         <div class="hidden sm:block md:hidden lg:block">
@@ -14,10 +14,7 @@
         </div>
         <div class="basis-full">
           <h2 class="mb-2 text-lg font-bold">Мои заказы</h2>
-          <p>
-            Вы еще не создали ни одного отправления. <br />
-            Посмотрите историю ваших отправлений.
-          </p>
+          <p>Удобное формирование отчета с применением фильтров.</p>
         </div>
         <div class="hidden items-center sm:flex">
           <tui-svg
@@ -46,24 +43,24 @@
         </div>
       </div>
       <!-- item-3-->
-      <div
-        [routerLink]="['report']"
-        class="mb-2 flex border-y border-gray-200 py-5 px-4 hover:cursor-pointer hover:border-yellow sm:space-x-13 sm:py-9 sm:px-6 md:space-x-0 md:rounded-sm md:border-x md:px-8 lg:space-x-13 lg:pl-13 lg:pr-10"
-      >
-        <div class="hidden sm:block md:hidden lg:block">
-          <tui-svg src="icons::report" class="!h-[53px] !w-[48px]"></tui-svg>
-        </div>
-        <div class="basis-full">
-          <h2 class="mb-2 text-lg font-bold">Сформировать отчет</h2>
-          <p>Удобное формирование отчета с применением фильтров.</p>
-        </div>
-        <div class="hidden items-center sm:flex">
-          <tui-svg
-            src="icons::caret-right"
-            class="!h-[26px] !w-[13px]"
-          ></tui-svg>
-        </div>
-      </div>
+      <!--      <div-->
+      <!--        [routerLink]="['report']"-->
+      <!--        class="mb-2 flex border-y border-gray-200 py-5 px-4 hover:cursor-pointer hover:border-yellow sm:space-x-13 sm:py-9 sm:px-6 md:space-x-0 md:rounded-sm md:border-x md:px-8 lg:space-x-13 lg:pl-13 lg:pr-10"-->
+      <!--      >-->
+      <!--        <div class="hidden sm:block md:hidden lg:block">-->
+      <!--          <tui-svg src="icons::report" class="!h-[53px] !w-[48px]"></tui-svg>-->
+      <!--        </div>-->
+      <!--        <div class="basis-full">-->
+      <!--          <h2 class="mb-2 text-lg font-bold">Сформировать отчет</h2>-->
+      <!--          <p>Удобное формирование отчета с применением фильтров.</p>-->
+      <!--        </div>-->
+      <!--        <div class="hidden items-center sm:flex">-->
+      <!--          <tui-svg-->
+      <!--            src="icons::caret-right"-->
+      <!--            class="!h-[26px] !w-[13px]"-->
+      <!--          ></tui-svg>-->
+      <!--        </div>-->
+      <!--      </div>-->
     </div>
     <!-- aside-->
     <div
