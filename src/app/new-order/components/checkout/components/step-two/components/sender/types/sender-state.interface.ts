@@ -3,7 +3,7 @@ import {DocTypeInterface} from '../../../../../../../../shared/types/doc-type.in
 export interface SenderStateInterface {
   fio: string
   docType: DocTypeInterface | null
-  docNumber: string
+  docNumber: string | null
   phone: string
   isValid?: boolean
   isPristine?: boolean

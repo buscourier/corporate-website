@@ -7,18 +7,19 @@ import {
 } from '@angular/core'
 import {FormBuilder, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
-import {Subscription, tap, using} from 'rxjs'
+import {TuiTextMaskOptions} from '@taiga-ui/core'
+import {TUI_VALIDATION_ERRORS, tuiItemsHandlersProvider} from '@taiga-ui/kit'
+import {combineLatest, Subscription, tap, using} from 'rxjs'
+import {currentUserSelector} from 'src/app/auth/store/selectors'
+import {STRINGIFY_DOCTYPE} from '../../../../../../../shared/handlers/string-handlers'
+import {Pattern} from '../../../../../../../shared/pattern/pattern'
+import {CurrentUserInterface} from '../../../../../../../shared/types/current-user.interface'
+import {DocTypeInterface} from '../../../../../../../shared/types/doc-type.interface'
 import {personSelector} from '../../../step-one/components/person/store/selectors'
-import {PersonStateInterface} from '../../../step-one/components/person/types/person-state.interface'
 import {changeValidityAction} from './store/actions/change-validity.action'
 import {changeValuesAction} from './store/actions/change-values.action'
 import {isSenderPristineSelector, senderSelector} from './store/selectors'
 import {SenderStateInterface} from './types/sender-state.interface'
-import {TUI_VALIDATION_ERRORS, tuiItemsHandlersProvider} from '@taiga-ui/kit'
-import {Pattern} from '../../../../../../../shared/pattern/pattern'
-import {STRINGIFY_DOCTYPE} from '../../../../../../../shared/handlers/string-handlers'
-import {DocTypeInterface} from '../../../../../../../shared/types/doc-type.interface'
-import {TuiTextMaskOptions} from '@taiga-ui/core'
 
 @Component({
   selector: 'app-sender',
@@ -48,9 +49,13 @@ export class SenderComponent implements OnInit, AfterViewInit, OnDestroy {
     {id: 'driver', name: 'Водительское удостоверение'},
     {id: 'other', name: 'Другое'},
   ]
+
+  currentUserSub: Subscription
   personSub: Subscription
   docTypeSub: Subscription
   isSenderPristineSub: Subscription
+
+  isEntity = false
 
   form = this.fb.group({
     fio: [
@@ -89,6 +94,19 @@ export class SenderComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(private fb: FormBuilder, private store: Store) {}
 
   ngOnInit(): void {
+    this.currentUserSub = this.store
+      .select(currentUserSelector)
+      .pipe(
+        tap((user: CurrentUserInterface) => {
+          if (user.user_type === 'ur') {
+            this.isEntity = true
+            this.form.get('docType').disable()
+            this.form.get('docNumber').disable()
+          }
+        })
+      )
+      .subscribe()
+
     this.isSenderPristineSub = this.store
       .select(isSenderPristineSelector)
       .pipe(
@@ -115,11 +133,13 @@ export class SenderComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     this.form.get('docType').setValue(this.documents[0])
 
-    this.personSub = this.store
-      .select(personSelector)
+    this.personSub = combineLatest([
+      this.store.select(personSelector),
+      this.store.select(currentUserSelector),
+    ])
       .pipe(
-        tap((person: PersonStateInterface) => {
-          if (person.role === 'Отправитель') {
+        tap(([person, currentUser]) => {
+          if (person.role === 'Отправитель' && currentUser.user_type !== 'ur') {
             this.form.patchValue({
               fio: `${person.lastName} ${person.firstName} ${person.middleName}`,
               phone: person.phone,
@@ -173,5 +193,6 @@ export class SenderComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     this.isSenderPristineSub.unsubscribe()
     this.docTypeSub.unsubscribe()
+    this.currentUserSub.unsubscribe()
   }
 }

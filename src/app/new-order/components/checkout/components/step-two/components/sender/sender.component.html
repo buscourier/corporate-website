@@ -1,4 +1,6 @@
-<h2 class="mb-6 text-lg font-semibold">Отправитель:</h2>
+<h2 class="mb-6 text-lg font-semibold">
+  Отправитель<span *ngIf="isEntity"> по доверенности</span>:
+</h2>
 <form
   [formGroup]="form"
   [patchFormGroupValues]="formValues$ | async"
@@ -25,7 +27,7 @@
       [error]="[] | tuiFieldError | async"
     ></tui-error>
   </label>
-  <label class="block">
+  <label class="block" *ngIf="!form.get('docType').disabled">
     <span class="mb-1 inline-block text-xs">
       Документ
       <sup
@@ -51,7 +53,7 @@
       [error]="[] | tuiFieldError | async"
     ></tui-error>
   </label>
-  <label class="block">
+  <label class="block" *ngIf="!form.get('docNumber').disabled">
     <span class="mb-1 inline-block text-xs">
       Номер документа
       <sup

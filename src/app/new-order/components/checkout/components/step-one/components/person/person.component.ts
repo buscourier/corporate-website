@@ -7,14 +7,14 @@ import {
 } from '@angular/core'
 import {FormBuilder, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
+import {TUI_VALIDATION_ERRORS} from '@taiga-ui/kit'
 import {Subscription, using} from 'rxjs'
 import {tap} from 'rxjs/operators'
+import {Pattern} from '../../../../../../../shared/pattern/pattern'
 import {changeValidityAction} from './store/actions/change-validity.action'
 import {changeValuesAction} from './store/actions/change-values.action'
 import {isPersonPristineSelector, personSelector} from './store/selectors'
 import {PersonStateInterface} from './types/person-state.interface'
-import {Pattern} from '../../../../../../../shared/pattern/pattern'
-import {TUI_VALIDATION_ERRORS} from '@taiga-ui/kit'
 
 @Component({
   selector: 'app-person',
@@ -38,6 +38,8 @@ import {TUI_VALIDATION_ERRORS} from '@taiga-ui/kit'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PersonComponent implements OnInit, AfterViewInit, OnDestroy {
+  //TODO: rename PersonComponent -> AuthorComponent
+
   roles = ['Отправитель', 'Получатель']
 
   form = this.fb.group({
