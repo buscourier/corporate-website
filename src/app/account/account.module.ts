@@ -4,7 +4,12 @@ import {EffectsModule} from '@ngrx/effects'
 import {StoreModule} from '@ngrx/store'
 import {TuiCurrencyPipeModule} from '@taiga-ui/addon-commerce'
 import {TuiLetModule} from '@taiga-ui/cdk'
-import {TuiButtonModule, TuiLoaderModule, TuiSvgModule} from '@taiga-ui/core'
+import {
+  TuiButtonModule,
+  TuiHintModule,
+  TuiLoaderModule,
+  TuiSvgModule,
+} from '@taiga-ui/core'
 import {AccountRoutingModule} from './account-routing.module'
 import {AccountComponent} from './account.component'
 import {AccountService} from './services/account.service'
@@ -26,6 +31,7 @@ import {ACCOUNT_FEATURE} from './store/state'
     TuiCurrencyPipeModule,
     TuiLoaderModule,
     TuiLetModule,
+    TuiHintModule,
   ],
   providers: [AccountService, EntityGuard],
 })

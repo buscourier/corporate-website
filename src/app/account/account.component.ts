@@ -23,7 +23,13 @@ export class AccountComponent implements OnInit {
   isBalanceLoading$: Observable<boolean>
   isSubmitting$: Observable<boolean>
   userProfile$: Observable<any>
-  balance$: Observable<number>
+  balance$: Observable<{
+    period: string
+    debet: number
+    orderSum: number
+    serviceSum: number
+    total: number
+  }>
 
   sections = [
     {
@@ -64,10 +70,17 @@ export class AccountComponent implements OnInit {
     this.balance$ = this.store.select(accountBalanceSelector).pipe(
       filter(Boolean),
       map((balance: BalanceInterface) => {
-        return (
-          Number(balance.debet) -
-          (Number(balance.order_sum) + Number(balance.service_sum))
-        )
+        console.log('balance', balance)
+
+        return {
+          period: `${balance.first_period_date} - ${balance.last_period_date}`,
+          debet: Number(balance.debet),
+          orderSum: Number(balance.order_sum),
+          serviceSum: Number(balance.service_sum),
+          total:
+            Number(balance.debet) -
+            (Number(balance.order_sum) + Number(balance.service_sum)),
+        }
       })
     )
   }

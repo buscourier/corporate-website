@@ -66,25 +66,44 @@
     <div
       class="order-1 mb-8 flex flex-shrink-0 flex-col items-start px-4 md:mb-0 md:px-0"
     >
-      <tui-loader [showLoader]="false">
+      <tui-loader [showLoader]="isBalanceLoading$ | async">
         <ng-container *tuiLet="balance$ | async as balance">
-          <div *ngIf="balance" class="mb-7 flex flex-col">
+          <div *ngIf="balance" class="mb-7 flex h-20 flex-col">
             <span class="text-sm">Ваш баланс:</span>
             <div class="flex items-center justify-between">
-              <b class="text-3xl">{{ balance }} {{ 'RUB' | tuiCurrency }}</b>
+              <b class="text-3xl"
+                >{{ balance.total }} {{ 'RUB' | tuiCurrency }}</b
+              >
               <button
+                tuiIconButton
                 type="button"
+                appearance="icon"
+                icon="icons::refresh"
+                [tuiHint]="tooltip"
+                tuiHintAppearance="onDark"
                 class="ml-5"
                 [class.animate-spin]="isBalanceLoading$ | async"
                 (click)="loadBalance()"
-              >
-                <tui-svg
-                  src="icons::refresh"
-                  class="!h-[25px] !w-[25px]"
-                ></tui-svg>
-              </button>
+              ></button>
             </div>
           </div>
+          <ng-template #tooltip>
+            <div class="text-xs">За период:</div>
+            <b class="text-xs">{{ balance.period }}</b>
+            <br />
+            <span class="text-xs">На счету: </span>
+            <b class="text-xs">{{ balance.debet }} {{ 'RUB' | tuiCurrency }}</b>
+            <br />
+            <span class="text-xs">Заказов на: </span>
+            <b class="text-xs"
+              >{{ balance.orderSum }} {{ 'RUB' | tuiCurrency }}</b
+            >
+            <br />
+            <span class="text-xs">Услуг на: </span>
+            <b class="text-xs"
+              >{{ balance.serviceSum }} {{ 'RUB' | tuiCurrency }}</b
+            >
+          </ng-template>
         </ng-container>
       </tui-loader>
       <button tuiButton type="button" class="mb-5 w-[270px]" size="m">
