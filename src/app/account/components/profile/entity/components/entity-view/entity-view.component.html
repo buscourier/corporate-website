@@ -115,11 +115,11 @@
   </h2>
   <div [formGroup]="form">
     <ng-container formArrayName="confidants">
-      <app-proxy
+      <app-confidant
         *ngFor="let control of confidants.controls; let i = index"
         [formControlName]="i"
       >
-      </app-proxy>
+      </app-confidant>
     </ng-container>
   </div>
 </section>

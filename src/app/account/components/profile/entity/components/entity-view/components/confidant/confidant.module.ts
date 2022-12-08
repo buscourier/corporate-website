@@ -7,10 +7,10 @@ import {
   TuiInputModule,
   TuiInputPhoneModule,
 } from '@taiga-ui/kit'
-import {ProxyComponent} from './proxy.component'
+import {ConfidantComponent} from './confidant.component'
 
 @NgModule({
-  declarations: [ProxyComponent],
+  declarations: [ConfidantComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -20,6 +20,6 @@ import {ProxyComponent} from './proxy.component'
     TuiFieldErrorPipeModule,
     TuiInputPhoneModule,
   ],
-  exports: [ProxyComponent],
+  exports: [ConfidantComponent],
 })
-export class ProxyModule {}
+export class ConfidantModule {}

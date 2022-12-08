@@ -2,19 +2,19 @@
   <label class="block">
     <span class="mb-1 inline-block text-xs">
       ФИО
-      <sup class="text-red" *ngIf="fio.errors && fio.hasError('required')"
+      <sup class="text-red" *ngIf="name.errors && name.hasError('required')"
         >*</sup
       >
     </span>
     <tui-input
       tuiTextfieldSize="m"
-      [formControl]="fio"
+      [formControl]="name"
       [tuiTextfieldLabelOutside]="true"
     >
       <input tuiTextfield type="text" />
     </tui-input>
     <tui-error
-      [formControl]="fio"
+      [formControl]="name"
       [error]="[] | tuiFieldError | async"
     ></tui-error>
   </label>

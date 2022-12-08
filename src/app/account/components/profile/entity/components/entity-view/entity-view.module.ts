@@ -6,7 +6,7 @@ import {EffectsModule} from '@ngrx/effects'
 import {StoreModule} from '@ngrx/store'
 import {TuiButtonModule, TuiLoaderModule, TuiSvgModule} from '@taiga-ui/core'
 import {ConfidantsService} from '../../../../../../shared/services/confidants.service'
-import {ProxyModule} from './components/proxy/proxy.module'
+import {ConfidantModule} from './components/confidant/confidant.module'
 import {EntityViewComponent} from './entity-view.component'
 import {GetConfidantsEffect} from './store/effects/get-confidants.effect'
 import {GetEntityProfileEffect} from './store/effects/get-entity-profile.effect'
@@ -20,8 +20,8 @@ import {ENTITY_PROFILE_FEATURE} from './store/state'
     TuiLoaderModule,
     TuiButtonModule,
     TuiSvgModule,
-    ProxyModule,
     RouterModule,
+    ConfidantModule,
     ReactiveFormsModule,
     StoreModule.forFeature(ENTITY_PROFILE_FEATURE, reducer),
     EffectsModule.forFeature([GetEntityProfileEffect, GetConfidantsEffect]),

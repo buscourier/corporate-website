@@ -1,17 +1,17 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing'
 
-import {ProxyComponent} from './proxy.component'
+import {ConfidantComponent} from './confidant.component'
 
-describe('ProxyComponent', () => {
-  let component: ProxyComponent
-  let fixture: ComponentFixture<ProxyComponent>
+describe('ConfidantComponent', () => {
+  let component: ConfidantComponent
+  let fixture: ComponentFixture<ConfidantComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ProxyComponent],
+      declarations: [ConfidantComponent],
     }).compileComponents()
 
-    fixture = TestBed.createComponent(ProxyComponent)
+    fixture = TestBed.createComponent(ConfidantComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })

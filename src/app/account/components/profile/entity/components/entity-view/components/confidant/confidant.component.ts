@@ -9,18 +9,18 @@ import {TUI_VALIDATION_ERRORS} from '@taiga-ui/kit'
 import {Subscription} from 'rxjs'
 
 @Component({
-  selector: 'app-proxy',
-  templateUrl: './proxy.component.html',
-  styleUrls: ['./proxy.component.css'],
+  selector: 'app-confidant',
+  templateUrl: './confidant.component.html',
+  styleUrls: ['./confidant.component.css'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       multi: true,
-      useExisting: ProxyComponent,
+      useExisting: ConfidantComponent,
     },
     {
       provide: NG_VALIDATORS,
-      useExisting: ProxyComponent,
+      useExisting: ConfidantComponent,
       multi: true,
     },
     {
@@ -38,8 +38,8 @@ import {Subscription} from 'rxjs'
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProxyComponent {
-  fio = this.fb.control('')
+export class ConfidantComponent {
+  name = this.fb.control('')
   phone = this.fb.control('')
   docNumber = this.fb.control('')
 
