@@ -72,4 +72,30 @@ export class ReportDetailsComponent {
   close() {
     this.context.completeWith(1)
   }
+
+  formatDimensions(params: any) {
+    return Object.entries(params)
+      .filter((param) => {
+        return param[0] !== 'count' && param[0] !== 'weight'
+      })
+      .map((param) => {
+        return `<div class="flex flex-col">
+           <small>${param[0]}</small>
+           <b>${param[1]} см.</b>
+        </div>`
+      })
+      .join(' x ')
+  }
 }
+
+// `<span class="flex flex-col"
+//                 ><small>Ширина:</small> <b>{{ dim.width }} см.</b></span
+//               >
+//               <b>х</b>
+//               <span class="flex flex-col"
+//                 ><small>Высота:</small> <b>{{ dim.height }} см.</b></span
+//               >
+//               <b>х</b>
+//               <span class="flex flex-col"
+//                 ><small>Длина:</small> <b>{{ dim.length }} см.</b></span
+//               >`

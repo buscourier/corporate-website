@@ -26,10 +26,10 @@
 
 [tuiWrapper][data-appearance='secondary'],
 [tuiWrapper][data-appearance='flat'] {
-  color: var(--tui-base-04)
+  color: var(--tui-base-04);
 }
 
-  /*._disabled {*/
+/*._disabled {*/
 /*  pointer-events: auto !important;*/
 /*}*/
 
