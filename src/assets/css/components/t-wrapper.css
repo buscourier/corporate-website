@@ -24,7 +24,12 @@
   color: var(--tui-base-01);
 }
 
-/*._disabled {*/
+[tuiWrapper][data-appearance='secondary'],
+[tuiWrapper][data-appearance='flat'] {
+  color: var(--tui-base-04)
+}
+
+  /*._disabled {*/
 /*  pointer-events: auto !important;*/
 /*}*/
 
