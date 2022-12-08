@@ -18,9 +18,10 @@ import {ReportService} from './services/report.service'
 import {GetOrdersEffect} from './store/effects/get-orders.effect'
 import {reducer} from './store/reducer'
 import {REPORT_FEATURE} from './store/state'
+import {PrintComponent} from './components/print/print.component'
 
 @NgModule({
-  declarations: [ReportComponent],
+  declarations: [ReportComponent, PrintComponent],
   imports: [
     CommonModule,
     FilterModule,

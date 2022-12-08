@@ -63,9 +63,11 @@
                 <tbody tuiTbody [data]="orders">
                   <tr *tuiRow="let order of orders" tuiTr>
                     <td *tuiCell="'order_id'" tuiTd>
-                      <b (click)="showDetails(order.order_id)">{{
-                        order.order_id
-                      }}</b>
+                      <b
+                        (click)="showDetails(order.order_id)"
+                        class="hover:cursor-pointer"
+                        >{{ order.order_id }}</b
+                      >
                     </td>
                     <td *tuiCell="'date'" tuiTd>
                       {{ order.date }}
@@ -89,7 +91,11 @@
                       {{ order.status }}
                     </td>
                     <td *tuiCell="'print'" tuiTd>
-                      <b class="text-yellow hover:cursor-pointer">Напечатать</b>
+                      <b
+                        class="text-yellow hover:cursor-pointer"
+                        (click)="showPrint('1')"
+                        >Напечатать</b
+                      >
                     </td>
                   </tr>
                 </tbody>

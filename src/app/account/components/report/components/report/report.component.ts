@@ -9,12 +9,13 @@ import {
 import {Store} from '@ngrx/store'
 import {TuiDialogService} from '@taiga-ui/core'
 import {PolymorpheusComponent} from '@tinkoff/ng-polymorpheus'
-import {filter, map, Observable} from 'rxjs'
+import {filter, map, Observable, take} from 'rxjs'
 import {currentUserSelector} from '../../../../../auth/store/selectors'
 import {CurrentUserInterface} from '../../../../../shared/types/current-user.interface'
 import {getOrdersAction} from '../../store/actions/get-orders.action'
 import {isLoadingSelector, ordersSelector} from '../../store/selectors'
 import {FilterInterface} from '../../types/filter.interface'
+import {PrintComponent} from '../print/print.component'
 import {ReportDetailsComponent} from '../report-details/components/report-details/report-details.component'
 
 @Component({
@@ -110,7 +111,23 @@ export class ReportComponent implements OnInit {
           size: 's',
         }
       )
-      .subscribe() //TODO: unsubscribe?
+      .pipe(take(1))
+      .subscribe()
+  }
+
+  showPrint(id: string) {
+    this.dialogService
+      .open<any>(new PolymorpheusComponent(PrintComponent, this.injector), {
+        data: {
+          orderId: id,
+          userId: this.userId,
+        },
+        dismissible: true,
+        closeable: false,
+        size: 's',
+      })
+      .pipe(take(1))
+      .subscribe()
   }
 
   goToPage(index: number): void {

@@ -87,15 +87,3 @@ export class ReportDetailsComponent {
       .join(' x ')
   }
 }
-
-// `<span class="flex flex-col"
-//                 ><small>Ширина:</small> <b>{{ dim.width }} см.</b></span
-//               >
-//               <b>х</b>
-//               <span class="flex flex-col"
-//                 ><small>Высота:</small> <b>{{ dim.height }} см.</b></span
-//               >
-//               <b>х</b>
-//               <span class="flex flex-col"
-//                 ><small>Длина:</small> <b>{{ dim.length }} см.</b></span
-//               >`

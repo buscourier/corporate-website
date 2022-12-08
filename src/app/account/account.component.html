@@ -66,7 +66,7 @@
     <div
       class="order-1 mb-8 flex flex-shrink-0 flex-col items-start px-4 md:mb-0 md:px-0"
     >
-      <tui-loader [showLoader]="isBalanceLoading$ | async">
+      <tui-loader [showLoader]="false">
         <ng-container *tuiLet="balance$ | async as balance">
           <div *ngIf="balance" class="mb-7 flex h-20 flex-col">
             <span class="text-sm">Ваш баланс:</span>
