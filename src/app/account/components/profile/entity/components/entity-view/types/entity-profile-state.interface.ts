@@ -1,7 +1,7 @@
 import {EntityProfileInterface} from '../../../types/entity-profile.interface'
 
 export interface EntityProfileStateInterface {
-  isLoading: boolean
+  isProfileLoading: boolean
   backendErrors: string | null
   data: null | EntityProfileInterface
 }

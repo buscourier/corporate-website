@@ -5,6 +5,8 @@ import {environment} from '../../../environments/environment'
 import {EndCityInterface} from '../types/end-city.interface'
 import {StartCityInterface} from '../types/start-city.interface'
 
+//TODO: replace by this service all fetch of cities in project
+
 @Injectable()
 export class CitiesService {
   constructor(private http: HttpClient) {}

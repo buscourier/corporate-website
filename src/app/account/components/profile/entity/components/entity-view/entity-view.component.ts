@@ -3,11 +3,13 @@ import {FormBuilder} from '@angular/forms'
 import {Store} from '@ngrx/store'
 import {tuiLoaderOptionsProvider} from '@taiga-ui/core'
 import {filter, map, Observable} from 'rxjs'
-import {tap} from 'rxjs/operators'
 import {currentUserSelector} from '../../../../../../auth/store/selectors'
 import {CurrentUserInterface} from '../../../../../../shared/types/current-user.interface'
 import {getEntityProfileAction} from './store/actions/get-entity-profile.action'
-import {entityProfileSelector, isLoadingSelector} from './store/selectors'
+import {
+  entityProfileSelector,
+  isProfileLoadingSelector,
+} from './store/selectors'
 
 @Component({
   selector: 'app-entity-view',
@@ -23,7 +25,7 @@ import {entityProfileSelector, isLoadingSelector} from './store/selectors'
   ],
 })
 export class EntityViewComponent implements OnInit {
-  isLoading$: Observable<boolean>
+  isProfileLoading$: Observable<boolean>
   backendErrors$: Observable<null | string>
   profile$: Observable<null | any>
 
@@ -41,13 +43,10 @@ export class EntityViewComponent implements OnInit {
   }
 
   initializeValues(): void {
-    this.isLoading$ = this.store.select(isLoadingSelector)
-    this.profile$ = this.store.select(entityProfileSelector).pipe(
-      filter(Boolean),
-      tap((profile) => {
-        console.log('profile', profile)
-      })
-    )
+    this.isProfileLoading$ = this.store.select(isProfileLoadingSelector)
+    this.profile$ = this.store
+      .select(entityProfileSelector)
+      .pipe(filter(Boolean))
   }
 
   fetchData(): void {

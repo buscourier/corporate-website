@@ -3,7 +3,7 @@ import {EntityProfileStateInterface} from '../types/entity-profile-state.interfa
 export const ENTITY_PROFILE_FEATURE = 'entityProfile'
 
 export const initialState: EntityProfileStateInterface = {
-  isLoading: false,
+  isProfileLoading: false,
   backendErrors: null,
   data: null,
 }

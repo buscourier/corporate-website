@@ -6,7 +6,7 @@
   Персональные данные
 </h1>
 <div class="mb-16 max-w-[570px]">
-  <tui-loader [showLoader]="isLoading$ | async">
+  <tui-loader [showLoader]="isProfileLoading$ | async">
     <ng-container *ngIf="profile$ | async as profile">
       <ul class="mb-8 max-w-[520px] space-y-2 border-b border-gray-300 pb-11">
         <li
