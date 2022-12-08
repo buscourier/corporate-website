@@ -7,6 +7,8 @@ export const initialState: SenderStateInterface = {
   docType: null,
   docNumber: '',
   phone: '',
+  isConfidantsLoading: false,
+  confidants: null,
   isValid: false,
   isPristine: true,
 }

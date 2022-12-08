@@ -9,16 +9,26 @@ import {FormBuilder, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
 import {TuiTextMaskOptions} from '@taiga-ui/core'
 import {TUI_VALIDATION_ERRORS, tuiItemsHandlersProvider} from '@taiga-ui/kit'
-import {combineLatest, Subscription, tap, using} from 'rxjs'
+import {combineLatest, Observable, Subscription, tap, using} from 'rxjs'
 import {currentUserSelector} from 'src/app/auth/store/selectors'
-import {STRINGIFY_DOCTYPE} from '../../../../../../../shared/handlers/string-handlers'
+import {
+  STRINGIFY_CONFIDANT,
+  STRINGIFY_DOCTYPE,
+} from '../../../../../../../shared/handlers/string-handlers'
 import {Pattern} from '../../../../../../../shared/pattern/pattern'
+import {ConfidantInterface} from '../../../../../../../shared/types/confidant.interface'
 import {CurrentUserInterface} from '../../../../../../../shared/types/current-user.interface'
 import {DocTypeInterface} from '../../../../../../../shared/types/doc-type.interface'
 import {personSelector} from '../../../step-one/components/person/store/selectors'
 import {changeValidityAction} from './store/actions/change-validity.action'
 import {changeValuesAction} from './store/actions/change-values.action'
-import {isSenderPristineSelector, senderSelector} from './store/selectors'
+import {getConfidantsAction} from './store/actions/get-confidants.action'
+import {
+  confidantsSelector,
+  isConfidantsLoadingSelector,
+  isSenderPristineSelector,
+  senderSelector,
+} from './store/selectors'
 import {SenderStateInterface} from './types/sender-state.interface'
 
 @Component({
@@ -27,6 +37,7 @@ import {SenderStateInterface} from './types/sender-state.interface'
   styleUrls: ['./sender.component.css'],
   providers: [
     tuiItemsHandlersProvider({stringify: STRINGIFY_DOCTYPE}),
+    tuiItemsHandlersProvider({stringify: STRINGIFY_CONFIDANT}),
     {
       provide: TUI_VALIDATION_ERRORS,
       useValue: {
@@ -50,6 +61,8 @@ export class SenderComponent implements OnInit, AfterViewInit, OnDestroy {
     {id: 'other', name: 'Другое'},
   ]
 
+  isConfidantsLoading$: Observable<boolean>
+  confidants$: Observable<ConfidantInterface[]>
   currentUserSub: Subscription
   personSub: Subscription
   docTypeSub: Subscription
@@ -94,14 +107,20 @@ export class SenderComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(private fb: FormBuilder, private store: Store) {}
 
   ngOnInit(): void {
+    this.isConfidantsLoading$ = this.store.select(isConfidantsLoadingSelector)
+    this.confidants$ = this.store.select(confidantsSelector)
+
     this.currentUserSub = this.store
       .select(currentUserSelector)
       .pipe(
         tap((user: CurrentUserInterface) => {
           if (user.user_type === 'ur') {
-            this.isEntity = true
             this.form.get('docType').disable()
             this.form.get('docNumber').disable()
+            this.form.get('fio').setValidators([Validators.required])
+
+            this.isEntity = true
+            this.store.dispatch(getConfidantsAction({userId: user.id}))
           }
         })
       )

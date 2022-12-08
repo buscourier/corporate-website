@@ -15,6 +15,16 @@ export const isSenderValidSelector = createSelector(
   (state: SenderStateInterface) => state.isValid
 )
 
+export const isConfidantsLoadingSelector = createSelector(
+  senderFeatureSelector,
+  (state: SenderStateInterface) => state.isConfidantsLoading
+)
+
+export const confidantsSelector = createSelector(
+  senderFeatureSelector,
+  (state: SenderStateInterface) => state.confidants
+)
+
 export const isSenderPristineSelector = createSelector(
   senderFeatureSelector,
   (state: SenderStateInterface) => state.isPristine

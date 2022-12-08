@@ -15,14 +15,22 @@
         >*</sup
       >
     </span>
-    <tui-select
-      *ngIf="isEntity; else input"
-      tuiTextfieldSize="m"
-      formControlName="fio"
-      [tuiTextfieldLabelOutside]="true"
-    >
-      <tui-data-list-wrapper *tuiDataList [items]="[]"></tui-data-list-wrapper>
-    </tui-select>
+    <ng-container *ngIf="isEntity; else input">
+      <ng-container *tuiLet="confidants$ | async as confidants">
+        <tui-loader [showLoader]="isConfidantsLoading$ | async">
+          <tui-select
+            tuiTextfieldSize="m"
+            formControlName="fio"
+            [tuiTextfieldLabelOutside]="true"
+          >
+            <tui-data-list-wrapper
+              *tuiDataList
+              [items]="confidants"
+            ></tui-data-list-wrapper>
+          </tui-select>
+        </tui-loader>
+      </ng-container>
+    </ng-container>
     <ng-template #input>
       <tui-input
         tuiTextfieldSize="m"
