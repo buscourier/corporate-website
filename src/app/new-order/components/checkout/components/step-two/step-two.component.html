@@ -4,8 +4,9 @@
   <app-start-point #start></app-start-point>
 </div>
 
-<div class="mt-5 flex justify-between">
+<div class="mt-5 flex justify-between" *tuiLet="isEntity$ | async as isEntity">
   <button
+    *ngIf="!isEntity"
     [routerLink]="['/new-order', 'checkout']"
     type="button"
     tuiButton
@@ -20,6 +21,7 @@
     tuiButton
     size="m"
     [disabled]="!isCurrentStepValid"
+    class="ml-auto"
   >
     Дальше
   </button>

@@ -5,7 +5,8 @@ import {
   OnInit,
 } from '@angular/core'
 import {Store} from '@ngrx/store'
-import {combineLatest, map, Subscription} from 'rxjs'
+import {combineLatest, map, Observable, Subscription} from 'rxjs'
+import {isEntitySelector} from '../../../../../auth/store/selectors'
 import {isStartPointValidSelector} from '../../../../shared/components/start-point/store/selectors'
 import {setCurrentStepStateAction} from '../../store/actions/set-current-step-state.action'
 import {isSenderValidSelector} from './components/sender/store/selectors'
@@ -16,12 +17,15 @@ import {isSenderValidSelector} from './components/sender/store/selectors'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StepTwoComponent implements OnInit, OnDestroy {
+  isEntity$: Observable<boolean>
   combineAllSub: Subscription
   isCurrentStepValid = false
 
   constructor(private store: Store) {}
 
   ngOnInit(): void {
+    this.isEntity$ = this.store.select(isEntitySelector)
+
     this.combineAllSub = combineLatest([
       this.store.select(isSenderValidSelector),
       this.store.select(isStartPointValidSelector),
