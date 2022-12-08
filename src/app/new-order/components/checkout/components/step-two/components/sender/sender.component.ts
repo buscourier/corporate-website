@@ -70,19 +70,26 @@ export class SenderComponent implements OnInit, AfterViewInit, OnDestroy {
 
   isEntity = false
 
+  fio = this.fb.control({value: '', disabled: true}, [
+    Validators.required,
+    Validators.pattern(Pattern.Text),
+    Validators.minLength(2),
+  ])
+
+  confidant = this.fb.control({value: null, disabled: true}, [
+    Validators.required,
+  ])
+
+  docType = this.fb.control({}, Validators.required)
+  docNumber = this.fb.control('', Validators.required)
+  phone = this.fb.control('', Validators.required)
+
   form = this.fb.group({
-    fio: [
-      {value: '', disabled: true},
-      [
-        Validators.required,
-        Validators.pattern(Pattern.Text),
-        Validators.minLength(2),
-      ],
-    ],
-    confidant: [{value: null, disabled: true}, [Validators.required]],
-    docType: [{}, Validators.required],
-    docNumber: ['', Validators.required],
-    phone: ['', Validators.required],
+    fio: this.fio,
+    confidant: this.confidant,
+    docType: this.docType,
+    docNumber: this.docNumber,
+    phone: this.phone,
   })
 
   formValues$ = using(
@@ -112,7 +119,7 @@ export class SenderComponent implements OnInit, AfterViewInit, OnDestroy {
     this.confidants$ = this.store.select(confidantsSelector).pipe(
       filter(Boolean),
       tap((confidants: ConfidantInterface[]) => {
-        this.form.get('confidant').patchValue(confidants[0])
+        this.confidant.patchValue(confidants[0])
       })
     )
 
@@ -121,14 +128,14 @@ export class SenderComponent implements OnInit, AfterViewInit, OnDestroy {
       .pipe(
         tap((user: CurrentUserInterface) => {
           if (user.user_type === 'ur') {
-            this.form.get('confidant').enable()
-            this.form.get('docType').disable()
-            this.form.get('docNumber').disable()
+            this.confidant.enable()
+            this.docType.disable()
+            this.docNumber.disable()
 
             this.isEntity = true
             this.store.dispatch(getConfidantsAction({userId: user.id}))
           } else {
-            this.form.get('fio').enable()
+            this.fio.enable()
           }
         })
       )
@@ -145,23 +152,21 @@ export class SenderComponent implements OnInit, AfterViewInit, OnDestroy {
       )
       .subscribe()
 
-    this.form
-      .get('confidant')
-      .valueChanges.pipe(
+    this.confidant.valueChanges
+      .pipe(
         tap((value: ConfidantInterface | string) => {
           if (value instanceof Object) {
-            this.form.get('phone').setValue(value.phone)
+            this.phone.setValue(value.phone)
           }
         })
       )
       .subscribe()
 
-    this.docTypeSub = this.form
-      .get('docType')
-      .valueChanges.pipe(
+    this.docTypeSub = this.docType.valueChanges
+      .pipe(
         tap((doc: DocTypeInterface) => {
-          this.form.get('docNumber').setValue('')
-          this.form.get('docNumber').markAsUntouched()
+          this.docNumber.setValue('')
+          this.docNumber.markAsUntouched()
           this.docMask = doc.id
         })
       )
@@ -169,7 +174,7 @@ export class SenderComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    this.form.get('docType').setValue(this.documents[0])
+    this.docType.setValue(this.documents[0])
 
     this.personSub = combineLatest([
       this.store.select(personSelector),

@@ -6,37 +6,32 @@
   [patchFormGroupValues]="formValues$ | async"
   class="mb-14 grid gap-4 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:gap-5"
 >
-  <label *ngIf="form.get('fio').enabled" class="block xl:col-span-2">
+  <label *ngIf="fio.enabled" class="block xl:col-span-2">
     <span class="mb-1 inline-block text-xs">
       ФИО
-      <sup
-        class="text-red"
-        *ngIf="form.get('fio').errors && form.get('fio').hasError('required')"
+      <sup class="text-red" *ngIf="fio.errors && fio.hasError('required')"
         >*</sup
       >
     </span>
     <tui-input
       tuiTextfieldSize="m"
-      formControlName="fio"
+      [formControl]="fio"
       [tuiTextfieldLabelOutside]="true"
     >
       <input tuiTextfield type="text" />
     </tui-input>
     <tui-error
-      formControlName="fio"
+      [formControl]="fio"
       [error]="[] | tuiFieldError | async"
     ></tui-error>
   </label>
 
-  <label *ngIf="form.get('confidant').enabled" class="block xl:col-span-2">
+  <label *ngIf="confidant.enabled" class="block xl:col-span-2">
     <span class="mb-1 inline-block text-xs">
       ФИО
       <sup
         class="text-red"
-        *ngIf="
-          form.get('confidant').errors &&
-          form.get('confidant').hasError('required')
-        "
+        *ngIf="confidant.errors && confidant.hasError('required')"
         >*</sup
       >
     </span>
@@ -44,7 +39,7 @@
       <tui-loader [showLoader]="isConfidantsLoading$ | async">
         <tui-select
           tuiTextfieldSize="m"
-          formControlName="confidant"
+          [formControl]="confidant"
           [tuiTextfieldLabelOutside]="true"
         >
           <tui-data-list-wrapper
@@ -55,24 +50,22 @@
       </tui-loader>
     </ng-container>
     <tui-error
-      formControlName="confidant"
+      [formControl]="confidant"
       [error]="[] | tuiFieldError | async"
     ></tui-error>
   </label>
-  <label class="block" *ngIf="!form.get('docType').disabled">
+  <label class="block" *ngIf="!docType.disabled">
     <span class="mb-1 inline-block text-xs">
       Документ
       <sup
         class="text-red"
-        *ngIf="
-          form.get('docType').errors && form.get('docType').hasError('required')
-        "
+        *ngIf="docType.errors && docType.hasError('required')"
         >*</sup
       >
     </span>
     <tui-select
       tuiTextfieldSize="m"
-      formControlName="docType"
+      [formControl]="docType"
       [tuiTextfieldLabelOutside]="true"
     >
       <tui-data-list-wrapper
@@ -81,55 +74,48 @@
       ></tui-data-list-wrapper>
     </tui-select>
     <tui-error
-      formControlName="docType"
+      [formControl]="docType"
       [error]="[] | tuiFieldError | async"
     ></tui-error>
   </label>
-  <label class="block" *ngIf="!form.get('docNumber').disabled">
+  <label class="block" *ngIf="!docNumber.disabled">
     <span class="mb-1 inline-block text-xs">
       Номер документа
       <sup
         class="text-red"
-        *ngIf="
-          form.get('docNumber').errors &&
-          form.get('docNumber').hasError('required')
-        "
+        *ngIf="docNumber.errors && docNumber.hasError('required')"
         >*</sup
       >
     </span>
     <tui-input
       tuiTextfieldSize="m"
-      formControlName="docNumber"
+      [formControl]="docNumber"
       [tuiTextfieldLabelOutside]="true"
       [textMask]="docMask"
     >
       <input tuiTextfield type="text" />
     </tui-input>
     <tui-error
-      formControlName="docNumber"
+      [formControl]="docNumber"
       [error]="[] | tuiFieldError | async"
     ></tui-error>
   </label>
   <label class="block">
     <span class="mb-1 inline-block text-xs">
       Телефон
-      <sup
-        class="text-red"
-        *ngIf="
-          form.get('phone').errors && form.get('phone').hasError('required')
-        "
+      <sup class="text-red" *ngIf="phone.errors && phone.hasError('required')"
         >*</sup
       >
     </span>
     <tui-input-phone
-      formControlName="phone"
+      [formControl]="phone"
       tuiTextfieldSize="m"
       [tuiTextfieldLabelOutside]="true"
     >
       <input tuiTextfield autocomplete="tel" />
     </tui-input-phone>
     <tui-error
-      formControlName="phone"
+      [formControl]="phone"
       [error]="[] | tuiFieldError | async"
     ></tui-error>
   </label>
