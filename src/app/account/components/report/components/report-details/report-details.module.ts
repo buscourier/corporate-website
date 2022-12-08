@@ -4,7 +4,12 @@ import {EffectsModule} from '@ngrx/effects'
 
 import {StoreModule} from '@ngrx/store'
 import {TuiLetModule} from '@taiga-ui/cdk'
-import {TuiButtonModule, TuiLoaderModule, TuiSvgModule} from '@taiga-ui/core'
+import {
+  TuiButtonModule,
+  TuiLoaderModule,
+  TuiScrollbarModule,
+  TuiSvgModule,
+} from '@taiga-ui/core'
 import {ReportDetailsComponent} from './components/report-details/report-details.component'
 import {ORDER_DETAILS_PROVIDER} from './services/report-details.service'
 import {CancelOrderEffect} from './store/effects/cancel-order.effect'
@@ -23,6 +28,7 @@ import {REPORT_DETAILS_FEATURE} from './store/state'
     TuiLoaderModule,
     TuiSvgModule,
     TuiLetModule,
+    TuiScrollbarModule,
   ],
   exports: [ReportDetailsComponent],
   providers: [ORDER_DETAILS_PROVIDER],

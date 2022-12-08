@@ -14,17 +14,32 @@
         class="flex flex-col text-left font-base"
       >
         <b class="text-2xl font-bold">№ {{ order.order.order_id }}</b>
+        <div class="flex text-xs">
+          <small class="mr-2">от {{ order.order.order_date.date }}</small>
+          <b class="lowercase text-yellow">{{ order.order.order_name }}</b>
+        </div>
 
-        <div class="mt-8">
+        <div class="mt-6">
           <p class="text-2xs text-gray-600">Направление перевозки:</p>
           <p class="mb-3 text-2xs">
             г. {{ order.order.city_from }} &#8212; г. {{ order.order.city_to }}
+          </p>
+          <p class="text-2xs text-gray-600">Получатель:</p>
+          <p class="mb-3 text-2xs">
+            {{ order.order.recipient_name }}
+          </p>
+          <p class="text-2xs text-gray-600">Телефон получателя:</p>
+          <p class="mb-3 text-2xs">
+            {{ order.order.recipient_phone }}
           </p>
           <p class="text-2xs text-gray-600">Тип груза:</p>
           <p class="mb-3 text-2xs">
             {{ order.order.cargo_type }} (мест: {{ order.order.cargo_count }})
           </p>
-          <ng-container *ngIf="order.order.dimensions_raw.length">
+          <tui-scrollbar
+            *ngIf="order.order.dimensions_raw.length"
+            class="scroll-yellow max-h-[142px]"
+          >
             <div
               *ngFor="let dim of order.order.dimensions_raw"
               class="mb-4 flex items-end text-2xs"
@@ -50,7 +65,27 @@
                 <b class="text-[24px] leading-[24px]">{{ dim.weight }} кг.</b>
               </div>
             </div>
-          </ng-container>
+          </tui-scrollbar>
+          <p class="text-2xs text-gray-600">Перевозчик:</p>
+          <p class="mb-3 text-2xs">
+            {{ order.carrier_info.carrier_name }}
+          </p>
+          <div class="flex justify-between">
+            <div>
+              <p class="text-2xs text-gray-600">Время отправки:</p>
+              <p class="mb-3 text-2xs">
+                {{ order.carrier_info.time_departure.date }}
+                {{ order.carrier_info.time_departure.time }}
+              </p>
+            </div>
+            <div>
+              <p class="text-2xs text-gray-600">Время доставки:</p>
+              <p class="mb-3 text-2xs">
+                {{ order.carrier_info.time_arrival.date }}
+                {{ order.carrier_info.time_arrival.time }}
+              </p>
+            </div>
+          </div>
           <!--          <p class="mb-3">-->
           <!--            <span class="text-2xs text-gray-600"-->
           <!--              >Забор посылки у отправителя</span-->
