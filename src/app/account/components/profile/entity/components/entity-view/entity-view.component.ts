@@ -11,6 +11,7 @@ import {filter, Observable, of, Subscription, switchMap} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {currentUserSelector} from '../../../../../../auth/store/selectors'
 import {CurrentUserInterface} from '../../../../../../shared/types/current-user.interface'
+import {ProxyPersonInterface} from '../../../../../../shared/types/proxy-person.interface'
 import {getEntityProfileAction} from './store/actions/get-entity-profile.action'
 import {getProxyAction} from './store/actions/get-proxy.action'
 import {
@@ -67,8 +68,8 @@ export class EntityViewComponent implements OnInit, OnDestroy {
     this.proxySub = this.store
       .select(proxySelector)
       .pipe(
-        tap((arr) => {
-          console.log('proxy', arr)
+        tap((proxy: ProxyPersonInterface[]) => {
+          console.log('proxy', proxy)
         })
       )
       .subscribe()

@@ -8,6 +8,6 @@ export const getProxyAction = createAction(
 )
 export const getProxySuccessAction = createAction(
   ActionTypes.GET_PROXY_SUCCESS,
-  props<{proxy: ProxyPersonInterface}>()
+  props<{proxy: ProxyPersonInterface[]}>()
 )
 export const getProxyFailureAction = createAction(ActionTypes.GET_PROXY_FAILURE)

@@ -6,5 +6,5 @@ export interface EntityProfileStateInterface {
   isProxyLoading: boolean
   backendErrors: string | null
   profile: EntityProfileInterface | null
-  proxy: ProxyPersonInterface | null
+  proxy: ProxyPersonInterface[] | null
 }

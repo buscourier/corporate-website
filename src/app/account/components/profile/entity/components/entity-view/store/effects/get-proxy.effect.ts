@@ -21,7 +21,9 @@ export class GetProxyEffect {
       ofType(getProxyAction),
       switchMap(({userId}) => {
         return this.proxyPersonService.getProxy(userId).pipe(
-          map((proxy: ProxyPersonInterface) => getProxySuccessAction({proxy})),
+          map((proxy: ProxyPersonInterface[]) =>
+            getProxySuccessAction({proxy})
+          ),
           catchError(() => of(getProxyFailureAction()))
         )
       })

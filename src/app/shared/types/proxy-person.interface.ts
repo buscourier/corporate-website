@@ -1,3 +1,7 @@
 export interface ProxyPersonInterface {
-  [key: string]: any
+  id: string
+  name: string
+  phone: string
+  warrant: string
+  user_id: string
 }
