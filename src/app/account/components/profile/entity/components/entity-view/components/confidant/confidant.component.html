@@ -1,4 +1,4 @@
-<div [formGroup]="form" class="grid grid-cols-2 gap-7">
+<div [formGroup]="form" class="grid gap-5 sm:grid-cols-2 sm:gap-7">
   <label class="block">
     <span class="mb-1 inline-block text-xs">
       ФИО
@@ -10,6 +10,7 @@
       tuiTextfieldSize="m"
       [formControl]="name"
       [tuiTextfieldLabelOutside]="true"
+      [readOnly]="true"
     >
       <input tuiTextfield type="text" />
     </tui-input>
@@ -29,6 +30,7 @@
       [formControl]="phone"
       tuiTextfieldSize="m"
       [tuiTextfieldLabelOutside]="true"
+      [readOnly]="true"
     >
       <input tuiTextfield autocomplete="tel" />
     </tui-input-phone>
@@ -50,6 +52,7 @@
       tuiTextfieldSize="m"
       [formControl]="docNumber"
       [tuiTextfieldLabelOutside]="true"
+      [readOnly]="true"
     >
       <input tuiTextfield type="text" />
     </tui-input>

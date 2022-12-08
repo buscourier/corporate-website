@@ -39,9 +39,9 @@ import {Subscription} from 'rxjs'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfidantComponent {
-  name = this.fb.control('')
-  phone = this.fb.control('')
-  docNumber = this.fb.control('')
+  name = this.fb.control([{value: '', disabled: true}])
+  phone = this.fb.control([{value: '', disabled: true}])
+  docNumber = this.fb.control([{value: '', disabled: true}])
 
   form = this.fb.group({
     name: this.name,

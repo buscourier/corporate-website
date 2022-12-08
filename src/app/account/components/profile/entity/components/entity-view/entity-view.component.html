@@ -114,12 +114,21 @@
     Отправитель по доверенности
   </h2>
   <div [formGroup]="form">
-    <ng-container formArrayName="confidants">
-      <app-confidant
-        *ngFor="let control of confidants.controls; let i = index"
-        [formControlName]="i"
-      >
-      </app-confidant>
-    </ng-container>
+    <div class="relative -ml-5" formArrayName="confidants">
+      <tui-carousel #carousel [(index)]="index" [draggable]="true">
+        <ng-container
+          *ngFor="let control of confidants.controls; let i = index"
+        >
+          <app-confidant *tuiItem [formControlName]="i"> </app-confidant>
+        </ng-container>
+      </tui-carousel>
+      <tui-pagination
+        size="m"
+        [length]="confidants.controls.length"
+        [(index)]="index"
+        (indexChange)="onIndex($event)"
+        class="relative mt-8"
+      ></tui-pagination>
+    </div>
   </div>
 </section>

@@ -41,6 +41,8 @@ export class EntityViewComponent implements OnInit, OnDestroy {
   profile$: Observable<null | any>
   confidantsSub: Subscription
 
+  index = 0
+
   confidants = this.fb.array([])
 
   form = this.fb.group({
@@ -98,5 +100,9 @@ export class EntityViewComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe()
+  }
+
+  onIndex(index: number): void {
+    this.index = index
   }
 }
