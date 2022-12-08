@@ -4,10 +4,16 @@
       <span class="text-gray-500">01.</span> Отправитель
     </h2>
     <div class="mb-14 space-y-4 border-b-2 border-b border-b-gray-100 pb-10">
-      <app-data key="ФИО" [value]="sender.fio"></app-data>
-      <app-data key="Документ" [value]="sender.docType"></app-data>
-      <app-data key="Номер документа" [value]="sender.docNumber"></app-data>
-      <app-data key="Телефон" [value]="sender.phone"></app-data>
+      <ng-container *ngIf="sender.confidant; else person">
+        <app-data key="ФИО" [value]="sender.confidant.name"></app-data>
+        <app-data key="Телефон" [value]="sender.phone"></app-data>
+      </ng-container>
+      <ng-template #person>
+        <app-data key="ФИО" [value]="sender.fio"></app-data>
+        <app-data key="Документ" [value]="sender.docType.name"></app-data>
+        <app-data key="Номер документа" [value]="sender.docNumber"></app-data>
+        <app-data key="Телефон" [value]="sender.phone"></app-data>
+      </ng-template>
     </div>
   </ng-container>
 </ng-container>

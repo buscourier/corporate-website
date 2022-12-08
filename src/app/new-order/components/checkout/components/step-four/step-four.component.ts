@@ -160,7 +160,9 @@ export class StepFourComponent implements OnInit, OnDestroy {
     this.sender$ = this.store.select(senderSelector).pipe(
       filter(Boolean),
       tap((sender: SenderStateInterface) => {
-        this.orderData.sender_name = sender.fio
+        this.orderData.sender_name = sender.confidant
+          ? sender.confidant.name
+          : sender.fio
         this.orderData.sender_passport = sender.docNumber
         this.orderData.sender_phone = sender.phone
       })
