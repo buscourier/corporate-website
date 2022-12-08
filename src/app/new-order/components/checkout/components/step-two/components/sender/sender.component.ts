@@ -9,7 +9,7 @@ import {FormBuilder, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
 import {TuiTextMaskOptions} from '@taiga-ui/core'
 import {TUI_VALIDATION_ERRORS, tuiItemsHandlersProvider} from '@taiga-ui/kit'
-import {combineLatest, Observable, Subscription, tap, using} from 'rxjs'
+import {combineLatest, filter, Observable, Subscription, tap, using} from 'rxjs'
 import {currentUserSelector} from 'src/app/auth/store/selectors'
 import {
   STRINGIFY_CONFIDANT,
@@ -72,7 +72,7 @@ export class SenderComponent implements OnInit, AfterViewInit, OnDestroy {
 
   form = this.fb.group({
     fio: [
-      '',
+      {},
       [
         Validators.required,
         Validators.pattern(Pattern.Text),
@@ -108,7 +108,12 @@ export class SenderComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.isConfidantsLoading$ = this.store.select(isConfidantsLoadingSelector)
-    this.confidants$ = this.store.select(confidantsSelector)
+    this.confidants$ = this.store.select(confidantsSelector).pipe(
+      filter(Boolean),
+      tap((confidants: ConfidantInterface[]) => {
+        this.form.get('fio').patchValue(confidants[0])
+      })
+    )
 
     this.currentUserSub = this.store
       .select(currentUserSelector)
@@ -132,6 +137,17 @@ export class SenderComponent implements OnInit, AfterViewInit, OnDestroy {
         tap((isPristine: boolean) => {
           if (isPristine) {
             this.form.reset()
+          }
+        })
+      )
+      .subscribe()
+
+    this.form
+      .get('fio')
+      .valueChanges.pipe(
+        tap((value: ConfidantInterface | string) => {
+          if (value instanceof Object) {
+            this.form.get('phone').setValue(value.phone)
           }
         })
       )
