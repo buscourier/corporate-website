@@ -41,7 +41,7 @@ export class EntityViewComponent implements OnInit, OnDestroy {
   profile$: Observable<null | any>
   confidantsSub: Subscription
 
-  confidants = this.fb.array([this.fb.control('')])
+  confidants = this.fb.array([])
 
   form = this.fb.group({
     confidants: this.confidants,
@@ -68,8 +68,17 @@ export class EntityViewComponent implements OnInit, OnDestroy {
     this.confidantsSub = this.store
       .select(confidantsSelector)
       .pipe(
+        filter(Boolean),
         tap((confidants: ConfidantInterface[]) => {
-          console.log('confidants', confidants)
+          confidants.forEach(({name, phone}: ConfidantInterface) => {
+            this.confidants.push(
+              this.fb.control({
+                name,
+                phone,
+                docNumber: '',
+              })
+            )
+          })
         })
       )
       .subscribe()

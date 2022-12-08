@@ -43,7 +43,11 @@ export class ConfidantComponent {
   phone = this.fb.control('')
   docNumber = this.fb.control('')
 
-  form = this.fb.group({})
+  form = this.fb.group({
+    name: this.name,
+    phone: this.phone,
+    docNumber: this.docNumber,
+  })
 
   onTouched = () => {}
   onChangeSub: Subscription
