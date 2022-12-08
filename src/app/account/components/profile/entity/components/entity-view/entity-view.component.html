@@ -114,9 +114,9 @@
     Отправитель по доверенности
   </h2>
   <div [formGroup]="form">
-    <ng-container formArrayName="proxies">
+    <ng-container formArrayName="confidants">
       <app-proxy
-        *ngFor="let control of proxies.controls; let i = index"
+        *ngFor="let control of confidants.controls; let i = index"
         [formControlName]="i"
       >
       </app-proxy>

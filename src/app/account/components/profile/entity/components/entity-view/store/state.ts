@@ -4,8 +4,8 @@ export const ENTITY_PROFILE_FEATURE = 'entityProfile'
 
 export const initialState: EntityProfileStateInterface = {
   isProfileLoading: false,
-  isProxyLoading: false,
+  isConfidantsLoading: false,
   backendErrors: null,
   profile: null,
-  proxy: null,
+  confidants: null,
 }

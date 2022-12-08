@@ -2,16 +2,16 @@ import {HttpClient} from '@angular/common/http'
 import {Injectable} from '@angular/core'
 import {Observable} from 'rxjs'
 import {environment} from '../../../environments/environment'
-import {ProxyPersonInterface} from '../types/proxy-person.interface'
+import {ConfidantInterface} from '../types/confidant.interface'
 
 @Injectable()
-export class ProxyPersonService {
+export class ConfidantsService {
   constructor(private http: HttpClient) {}
 
-  getProxy(userId: string): Observable<ProxyPersonInterface[]> {
+  getData(userId: string): Observable<ConfidantInterface[]> {
     const url = `${environment.apiUrl}/account/contactperson`
 
-    return this.http.get<ProxyPersonInterface[]>(
+    return this.http.get<ConfidantInterface[]>(
       `${url}/${environment.apiKey}/${userId}`
     )
   }

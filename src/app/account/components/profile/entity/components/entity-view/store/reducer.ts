@@ -1,15 +1,15 @@
 import {Action, createReducer, on} from '@ngrx/store'
 import {EntityProfileStateInterface} from '../types/entity-profile-state.interface'
 import {
+  getConfidantsAction,
+  getConfidantsFailureAction,
+  getConfidantsSuccessAction,
+} from './actions/get-confidants.action'
+import {
   getEntityProfileAction,
   getEntityProfileFailureAction,
   getEntityProfileSuccessAction,
 } from './actions/get-entity-profile.action'
-import {
-  getProxyAction,
-  getProxyFailureAction,
-  getProxySuccessAction,
-} from './actions/get-proxy.action'
 import {initialState} from './state'
 
 const entityProfileReducer = createReducer(
@@ -27,18 +27,18 @@ const entityProfileReducer = createReducer(
     ...state,
     isProfileLoading: false,
   })),
-  on(getProxyAction, (state) => ({
+  on(getConfidantsAction, (state) => ({
     ...state,
-    isProxyLoading: true,
+    isConfidantsLoading: true,
   })),
-  on(getProxySuccessAction, (state, {proxy}) => ({
+  on(getConfidantsSuccessAction, (state, {confidants}) => ({
     ...state,
-    isProxyLoading: false,
-    proxy,
+    isConfidantsLoading: false,
+    confidants,
   })),
-  on(getProxyFailureAction, (state) => ({
+  on(getConfidantsFailureAction, (state) => ({
     ...state,
-    isProxyLoading: false,
+    isConfidantsLoading: false,
   }))
 )
 

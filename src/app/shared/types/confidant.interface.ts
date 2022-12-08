@@ -1,4 +1,4 @@
-export interface ProxyPersonInterface {
+export interface ConfidantInterface {
   id: string
   name: string
   phone: string

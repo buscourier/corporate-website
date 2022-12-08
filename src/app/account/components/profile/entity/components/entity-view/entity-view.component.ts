@@ -10,15 +10,15 @@ import {tuiLoaderOptionsProvider} from '@taiga-ui/core'
 import {filter, Observable, of, Subscription, switchMap} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {currentUserSelector} from '../../../../../../auth/store/selectors'
+import {ConfidantInterface} from '../../../../../../shared/types/confidant.interface'
 import {CurrentUserInterface} from '../../../../../../shared/types/current-user.interface'
-import {ProxyPersonInterface} from '../../../../../../shared/types/proxy-person.interface'
+import {getConfidantsAction} from './store/actions/get-confidants.action'
 import {getEntityProfileAction} from './store/actions/get-entity-profile.action'
-import {getProxyAction} from './store/actions/get-proxy.action'
 import {
+  confidantsSelector,
   entityProfileSelector,
+  isConfidantsLoadingSelector,
   isProfileLoadingSelector,
-  isProxyLoadingSelector,
-  proxySelector,
 } from './store/selectors'
 
 @Component({
@@ -36,15 +36,15 @@ import {
 })
 export class EntityViewComponent implements OnInit, OnDestroy {
   isProfileLoading$: Observable<boolean>
-  isProxyLoading$: Observable<boolean>
+  isConfidantsLoading$: Observable<boolean>
   backendErrors$: Observable<null | string>
   profile$: Observable<null | any>
-  proxySub: Subscription
+  confidantsSub: Subscription
 
-  proxies = this.fb.array([this.fb.control('')])
+  confidants = this.fb.array([this.fb.control('')])
 
   form = this.fb.group({
-    proxies: this.proxies,
+    confidants: this.confidants,
   })
 
   constructor(private fb: FormBuilder, private store: Store) {}
@@ -55,21 +55,21 @@ export class EntityViewComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.proxySub.unsubscribe()
+    this.confidantsSub.unsubscribe()
   }
 
   initializeValues(): void {
     this.isProfileLoading$ = this.store.select(isProfileLoadingSelector)
-    this.isProxyLoading$ = this.store.select(isProxyLoadingSelector)
+    this.isConfidantsLoading$ = this.store.select(isConfidantsLoadingSelector)
     this.profile$ = this.store
       .select(entityProfileSelector)
       .pipe(filter(Boolean))
 
-    this.proxySub = this.store
-      .select(proxySelector)
+    this.confidantsSub = this.store
+      .select(confidantsSelector)
       .pipe(
-        tap((proxy: ProxyPersonInterface[]) => {
-          console.log('proxy', proxy)
+        tap((confidants: ConfidantInterface[]) => {
+          console.log('confidants', confidants)
         })
       )
       .subscribe()
@@ -84,7 +84,7 @@ export class EntityViewComponent implements OnInit, OnDestroy {
           this.store.dispatch(getEntityProfileAction({userId: user.id}))
         }),
         switchMap((user: CurrentUserInterface) => {
-          this.store.dispatch(getProxyAction({userId: user.id}))
+          this.store.dispatch(getConfidantsAction({userId: user.id}))
           return of(user)
         })
       )

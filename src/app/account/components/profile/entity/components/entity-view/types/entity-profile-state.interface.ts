@@ -1,10 +1,10 @@
-import {ProxyPersonInterface} from '../../../../../../../shared/types/proxy-person.interface'
+import {ConfidantInterface} from '../../../../../../../shared/types/confidant.interface'
 import {EntityProfileInterface} from '../../../types/entity-profile.interface'
 
 export interface EntityProfileStateInterface {
   isProfileLoading: boolean
-  isProxyLoading: boolean
+  isConfidantsLoading: boolean
   backendErrors: string | null
   profile: EntityProfileInterface | null
-  proxy: ProxyPersonInterface[] | null
+  confidants: ConfidantInterface[] | null
 }
