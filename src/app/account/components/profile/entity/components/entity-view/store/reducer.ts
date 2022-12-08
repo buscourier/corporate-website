@@ -5,6 +5,11 @@ import {
   getEntityProfileFailureAction,
   getEntityProfileSuccessAction,
 } from './actions/get-entity-profile.action'
+import {
+  getProxyAction,
+  getProxyFailureAction,
+  getProxySuccessAction,
+} from './actions/get-proxy.action'
 import {initialState} from './state'
 
 const entityProfileReducer = createReducer(
@@ -13,14 +18,27 @@ const entityProfileReducer = createReducer(
     ...state,
     isProfileLoading: true,
   })),
-  on(getEntityProfileSuccessAction, (state, action) => ({
+  on(getEntityProfileSuccessAction, (state, {profile}) => ({
     ...state,
     isProfileLoading: false,
-    data: action.profile,
+    profile,
   })),
   on(getEntityProfileFailureAction, (state) => ({
     ...state,
     isProfileLoading: false,
+  })),
+  on(getProxyAction, (state) => ({
+    ...state,
+    isProxyLoading: true,
+  })),
+  on(getProxySuccessAction, (state, {proxy}) => ({
+    ...state,
+    isProxyLoading: false,
+    proxy,
+  })),
+  on(getProxyFailureAction, (state) => ({
+    ...state,
+    isProxyLoading: false,
   }))
 )
 

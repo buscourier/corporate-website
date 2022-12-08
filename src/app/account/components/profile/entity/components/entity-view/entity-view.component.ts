@@ -1,14 +1,23 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core'
 import {FormBuilder} from '@angular/forms'
 import {Store} from '@ngrx/store'
 import {tuiLoaderOptionsProvider} from '@taiga-ui/core'
-import {filter, map, Observable} from 'rxjs'
+import {filter, Observable, of, Subscription, switchMap} from 'rxjs'
+import {tap} from 'rxjs/operators'
 import {currentUserSelector} from '../../../../../../auth/store/selectors'
 import {CurrentUserInterface} from '../../../../../../shared/types/current-user.interface'
 import {getEntityProfileAction} from './store/actions/get-entity-profile.action'
+import {getProxyAction} from './store/actions/get-proxy.action'
 import {
   entityProfileSelector,
   isProfileLoadingSelector,
+  isProxyLoadingSelector,
+  proxySelector,
 } from './store/selectors'
 
 @Component({
@@ -24,10 +33,12 @@ import {
     }),
   ],
 })
-export class EntityViewComponent implements OnInit {
+export class EntityViewComponent implements OnInit, OnDestroy {
   isProfileLoading$: Observable<boolean>
+  isProxyLoading$: Observable<boolean>
   backendErrors$: Observable<null | string>
   profile$: Observable<null | any>
+  proxySub: Subscription
 
   proxies = this.fb.array([this.fb.control('')])
 
@@ -42,11 +53,25 @@ export class EntityViewComponent implements OnInit {
     this.initializeValues()
   }
 
+  ngOnDestroy(): void {
+    this.proxySub.unsubscribe()
+  }
+
   initializeValues(): void {
     this.isProfileLoading$ = this.store.select(isProfileLoadingSelector)
+    this.isProxyLoading$ = this.store.select(isProxyLoadingSelector)
     this.profile$ = this.store
       .select(entityProfileSelector)
       .pipe(filter(Boolean))
+
+    this.proxySub = this.store
+      .select(proxySelector)
+      .pipe(
+        tap((arr) => {
+          console.log('proxy', arr)
+        })
+      )
+      .subscribe()
   }
 
   fetchData(): void {
@@ -54,8 +79,12 @@ export class EntityViewComponent implements OnInit {
       .select(currentUserSelector)
       .pipe(
         filter(Boolean),
-        map((user: CurrentUserInterface) => {
-          return this.store.dispatch(getEntityProfileAction({userId: user.id}))
+        tap((user: CurrentUserInterface) => {
+          this.store.dispatch(getEntityProfileAction({userId: user.id}))
+        }),
+        switchMap((user: CurrentUserInterface) => {
+          this.store.dispatch(getProxyAction({userId: user.id}))
+          return of(user)
         })
       )
       .subscribe()

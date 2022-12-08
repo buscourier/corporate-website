@@ -7,15 +7,26 @@ export const EntityProfileFeatureSelector =
 
 export const isProfileLoadingSelector = createSelector(
   EntityProfileFeatureSelector,
-  (profileState: EntityProfileStateInterface) => profileState.isProfileLoading
+  (state: EntityProfileStateInterface) => state.isProfileLoading
 )
 
+export const isProxyLoadingSelector = createSelector(
+  EntityProfileFeatureSelector,
+  (state: EntityProfileStateInterface) => state.isProxyLoading
+)
+
+//TODO entityProfileSelector or profileSelector?
 export const entityProfileSelector = createSelector(
   EntityProfileFeatureSelector,
-  (profileState: EntityProfileStateInterface) => profileState.data
+  (state: EntityProfileStateInterface) => state.profile
+)
+
+export const proxySelector = createSelector(
+  EntityProfileFeatureSelector,
+  (state: EntityProfileStateInterface) => state.proxy
 )
 
 export const backendErrorsSelector = createSelector(
   EntityProfileFeatureSelector,
-  (profileState: EntityProfileStateInterface) => profileState.backendErrors
+  (state: EntityProfileStateInterface) => state.backendErrors
 )

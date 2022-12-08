@@ -8,11 +8,11 @@ import {ProfileInterface} from '../../account/components/profile/shared/types/pr
 export class ProxyPersonService {
   constructor(private http: HttpClient) {}
 
-  getProxies(currentUserId: string): Observable<any> {
+  getProxy(userId: string): Observable<any> {
     const url = `${environment.apiUrl}/account/contactperson`
 
     return this.http.get<ProfileInterface[]>(
-      `${url}/${environment.apiKey}/${currentUserId}`
+      `${url}/${environment.apiKey}/${userId}`
     )
   }
 }
