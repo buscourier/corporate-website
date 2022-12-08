@@ -114,6 +114,7 @@
         </div>
 
         <button
+          *ngIf="order.order.order_status_charcode === 'ORDER_POSTING'"
           tuiButton
           type="button"
           appearance="accent"
