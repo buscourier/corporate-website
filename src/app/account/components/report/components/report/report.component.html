@@ -9,9 +9,7 @@
     ></tui-svg>
     <span class="text-sm">Назад к личному кабинету</span>
   </a>
-  <h1 class="mb-8 font-heading text-2xl font-bold lg:text-3xl">
-    Cформировать отчет
-  </h1>
+  <h1 class="mb-8 font-heading text-2xl font-bold lg:text-3xl">Мои заказы</h1>
   <app-filter (filterChanged)="fetchDataWithFilterParams($event)"></app-filter>
   <ng-container *appLet="orders$ | async as orders">
     <div *ngIf="isLargeScreen; else mobileData" class="mb-7 flex flex-col">
@@ -51,6 +49,15 @@
                       Город получения
                     </th>
                     <th *tuiHead="'order_price'" tuiTh [sticky]="true">Цена</th>
+                    <th *tuiHead="'status'" tuiTh [sticky]="true">Статус</th>
+                    <th
+                      *tuiHead="'print'"
+                      tuiTh
+                      [sorter]="null"
+                      [sticky]="true"
+                    >
+                      Действие
+                    </th>
                   </tr>
                 </thead>
                 <tbody tuiTbody [data]="orders">
@@ -77,6 +84,12 @@
                     </td>
                     <td *tuiCell="'order_price'" tuiTd>
                       {{ order.order_price }} {{ 'RUB' | tuiCurrency }}
+                    </td>
+                    <td *tuiCell="'status'" tuiTd>
+                      {{ order.status }}
+                    </td>
+                    <td *tuiCell="'print'" tuiTd>
+                      <b class="text-yellow hover:cursor-pointer">Напечатать</b>
                     </td>
                   </tr>
                 </tbody>
@@ -120,6 +133,14 @@
           <app-mobile-data
             key="Цена"
             [value]="order.order_price"
+          ></app-mobile-data>
+          <app-mobile-data
+            key="Статус"
+            [value]="order.status"
+          ></app-mobile-data>
+          <app-mobile-data
+            key="Действие"
+            value="<b class='text-yellow'>Напечатать</b>"
           ></app-mobile-data>
         </div>
       </tui-loader>

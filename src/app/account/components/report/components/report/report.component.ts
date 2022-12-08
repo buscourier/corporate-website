@@ -32,6 +32,8 @@ export class ReportComponent implements OnInit {
     'start_city',
     'end_city',
     'order_price',
+    'status',
+    'print',
   ]
 
   isLoading$: Observable<boolean>
