@@ -15,13 +15,23 @@
         >*</sup
       >
     </span>
-    <tui-input
+    <tui-select
+      *ngIf="isEntity; else input"
       tuiTextfieldSize="m"
       formControlName="fio"
       [tuiTextfieldLabelOutside]="true"
     >
-      <input tuiTextfield type="text" />
-    </tui-input>
+      <tui-data-list-wrapper *tuiDataList [items]="[]"></tui-data-list-wrapper>
+    </tui-select>
+    <ng-template #input>
+      <tui-input
+        tuiTextfieldSize="m"
+        formControlName="fio"
+        [tuiTextfieldLabelOutside]="true"
+      >
+        <input tuiTextfield type="text" />
+      </tui-input>
+    </ng-template>
     <tui-error
       formControlName="fio"
       [error]="[] | tuiFieldError | async"
