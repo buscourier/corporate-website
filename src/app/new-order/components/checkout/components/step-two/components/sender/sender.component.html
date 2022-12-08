@@ -6,7 +6,7 @@
   [patchFormGroupValues]="formValues$ | async"
   class="mb-14 grid gap-4 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:gap-5"
 >
-  <label class="block xl:col-span-2">
+  <label *ngIf="form.get('fio').enabled" class="block xl:col-span-2">
     <span class="mb-1 inline-block text-xs">
       ФИО
       <sup
@@ -15,33 +15,47 @@
         >*</sup
       >
     </span>
-    <ng-container *ngIf="isEntity; else input">
-      <ng-container *tuiLet="confidants$ | async as confidants">
-        <tui-loader [showLoader]="isConfidantsLoading$ | async">
-          <tui-select
-            tuiTextfieldSize="m"
-            formControlName="fio"
-            [tuiTextfieldLabelOutside]="true"
-          >
-            <tui-data-list-wrapper
-              *tuiDataList
-              [items]="confidants"
-            ></tui-data-list-wrapper>
-          </tui-select>
-        </tui-loader>
-      </ng-container>
-    </ng-container>
-    <ng-template #input>
-      <tui-input
-        tuiTextfieldSize="m"
-        formControlName="fio"
-        [tuiTextfieldLabelOutside]="true"
-      >
-        <input tuiTextfield type="text" />
-      </tui-input>
-    </ng-template>
+    <tui-input
+      tuiTextfieldSize="m"
+      formControlName="fio"
+      [tuiTextfieldLabelOutside]="true"
+    >
+      <input tuiTextfield type="text" />
+    </tui-input>
     <tui-error
       formControlName="fio"
+      [error]="[] | tuiFieldError | async"
+    ></tui-error>
+  </label>
+
+  <label *ngIf="form.get('confidant').enabled" class="block xl:col-span-2">
+    <span class="mb-1 inline-block text-xs">
+      ФИО
+      <sup
+        class="text-red"
+        *ngIf="
+          form.get('confidant').errors &&
+          form.get('confidant').hasError('required')
+        "
+        >*</sup
+      >
+    </span>
+    <ng-container *tuiLet="confidants$ | async as confidants">
+      <tui-loader [showLoader]="isConfidantsLoading$ | async">
+        <tui-select
+          tuiTextfieldSize="m"
+          formControlName="confidant"
+          [tuiTextfieldLabelOutside]="true"
+        >
+          <tui-data-list-wrapper
+            *tuiDataList
+            [items]="confidants"
+          ></tui-data-list-wrapper>
+        </tui-select>
+      </tui-loader>
+    </ng-container>
+    <tui-error
+      formControlName="confidant"
       [error]="[] | tuiFieldError | async"
     ></tui-error>
   </label>

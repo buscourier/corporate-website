@@ -72,13 +72,14 @@ export class SenderComponent implements OnInit, AfterViewInit, OnDestroy {
 
   form = this.fb.group({
     fio: [
-      {},
+      {value: '', disabled: true},
       [
         Validators.required,
         Validators.pattern(Pattern.Text),
         Validators.minLength(2),
       ],
     ],
+    confidant: [{value: null, disabled: true}, [Validators.required]],
     docType: [{}, Validators.required],
     docNumber: ['', Validators.required],
     phone: ['', Validators.required],
@@ -111,7 +112,7 @@ export class SenderComponent implements OnInit, AfterViewInit, OnDestroy {
     this.confidants$ = this.store.select(confidantsSelector).pipe(
       filter(Boolean),
       tap((confidants: ConfidantInterface[]) => {
-        this.form.get('fio').patchValue(confidants[0])
+        this.form.get('confidant').patchValue(confidants[0])
       })
     )
 
@@ -120,12 +121,14 @@ export class SenderComponent implements OnInit, AfterViewInit, OnDestroy {
       .pipe(
         tap((user: CurrentUserInterface) => {
           if (user.user_type === 'ur') {
+            this.form.get('confidant').enable()
             this.form.get('docType').disable()
             this.form.get('docNumber').disable()
-            this.form.get('fio').setValidators([Validators.required])
 
             this.isEntity = true
             this.store.dispatch(getConfidantsAction({userId: user.id}))
+          } else {
+            this.form.get('fio').enable()
           }
         })
       )
@@ -143,7 +146,7 @@ export class SenderComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe()
 
     this.form
-      .get('fio')
+      .get('confidant')
       .valueChanges.pipe(
         tap((value: ConfidantInterface | string) => {
           if (value instanceof Object) {

@@ -3,6 +3,7 @@ import {DocTypeInterface} from '../../../../../../../../shared/types/doc-type.in
 
 export interface SenderStateInterface {
   fio: string
+  confidant: ConfidantInterface | null
   docType: DocTypeInterface | null
   docNumber: string | null
   phone: string

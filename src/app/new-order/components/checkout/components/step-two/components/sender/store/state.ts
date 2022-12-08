@@ -4,6 +4,7 @@ export const SENDER_FEATURE = 'sender'
 
 export const initialState: SenderStateInterface = {
   fio: '',
+  confidant: null,
   docType: null,
   docNumber: '',
   phone: '',
