@@ -5,10 +5,10 @@
 <h1 class="mb-8 font-heading text-2xl font-bold sm:text-3xl">
   Персональные данные
 </h1>
-<div class="max-w-[520px]">
+<div class="mb-16 max-w-[570px]">
   <tui-loader [showLoader]="isLoading$ | async">
     <ng-container *ngIf="profile$ | async as profile">
-      <ul class="mb-8 space-y-2 border-b border-gray-300 pb-11">
+      <ul class="mb-8 max-w-[520px] space-y-2 border-b border-gray-300 pb-11">
         <li
           class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
         >
@@ -23,7 +23,7 @@
         </li>
       </ul>
       <h2 class="font-heading text-lg font-bold">Данные организации</h2>
-      <ul class="mt-7 mb-8 space-y-2">
+      <ul class="mt-7 mb-8 max-w-[520px] space-y-2">
         <li
           class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
         >
@@ -109,3 +109,17 @@
     </ng-container>
   </tui-loader>
 </div>
+<section class="max-w-[570px] border-t border-gray-300 pt-5">
+  <h2 class="mb-7 font-heading text-lg font-bold">
+    Отправитель по доверенности
+  </h2>
+  <div [formGroup]="form">
+    <ng-container formArrayName="proxies">
+      <app-proxy
+        *ngFor="let control of proxies.controls; let i = index"
+        [formControlName]="i"
+      >
+      </app-proxy>
+    </ng-container>
+  </div>
+</section>

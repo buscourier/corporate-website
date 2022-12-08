@@ -1,4 +1,5 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
+import {FormBuilder} from '@angular/forms'
 import {Store} from '@ngrx/store'
 import {tuiLoaderOptionsProvider} from '@taiga-ui/core'
 import {filter, map, Observable} from 'rxjs'
@@ -26,7 +27,13 @@ export class EntityViewComponent implements OnInit {
   backendErrors$: Observable<null | string>
   profile$: Observable<null | any>
 
-  constructor(private store: Store) {}
+  proxies = this.fb.array([this.fb.control('')])
+
+  form = this.fb.group({
+    proxies: this.proxies,
+  })
+
+  constructor(private fb: FormBuilder, private store: Store) {}
 
   ngOnInit(): void {
     this.fetchData()

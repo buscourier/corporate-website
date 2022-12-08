@@ -1,0 +1,61 @@
+<div [formGroup]="form" class="grid grid-cols-2 gap-7">
+  <label class="block">
+    <span class="mb-1 inline-block text-xs">
+      ФИО
+      <sup class="text-red" *ngIf="fio.errors && fio.hasError('required')"
+        >*</sup
+      >
+    </span>
+    <tui-input
+      tuiTextfieldSize="m"
+      [formControl]="fio"
+      [tuiTextfieldLabelOutside]="true"
+    >
+      <input tuiTextfield type="text" />
+    </tui-input>
+    <tui-error
+      [formControl]="fio"
+      [error]="[] | tuiFieldError | async"
+    ></tui-error>
+  </label>
+  <label class="block">
+    <span class="mb-1 inline-block text-xs">
+      Телефон
+      <sup class="text-red" *ngIf="phone.errors && phone.hasError('required')"
+        >*</sup
+      >
+    </span>
+    <tui-input-phone
+      [formControl]="phone"
+      tuiTextfieldSize="m"
+      [tuiTextfieldLabelOutside]="true"
+    >
+      <input tuiTextfield autocomplete="tel" />
+    </tui-input-phone>
+    <tui-error
+      [formControl]="phone"
+      [error]="[] | tuiFieldError | async"
+    ></tui-error>
+  </label>
+  <label class="block">
+    <span class="mb-1 inline-block text-xs">
+      Номер доверенности
+      <sup
+        class="text-red"
+        *ngIf="docNumber.errors && docNumber.hasError('required')"
+        >*</sup
+      >
+    </span>
+    <tui-input
+      tuiTextfieldSize="m"
+      [formControl]="docNumber"
+      [tuiTextfieldLabelOutside]="true"
+    >
+      <input tuiTextfield type="text" />
+    </tui-input>
+    <tui-error
+      [formControl]="docNumber"
+      [error]="[] | tuiFieldError | async"
+    ></tui-error>
+  </label>
+</div>
