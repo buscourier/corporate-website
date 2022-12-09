@@ -14,7 +14,7 @@ table td {
 
 table td:nth-of-type(4) {
   white-space: unset;
-  min-width: 250px;
+  min-width: 150px;
 }
 
 table tr:nth-child(even) td {

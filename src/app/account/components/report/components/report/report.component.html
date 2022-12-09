@@ -56,7 +56,7 @@
                       [sorter]="null"
                       [sticky]="true"
                     >
-                      Действие
+                      Печать
                     </th>
                   </tr>
                 </thead>
@@ -91,11 +91,15 @@
                       {{ order.status }}
                     </td>
                     <td *tuiCell="'print'" tuiTd>
-                      <b
-                        class="text-yellow hover:cursor-pointer"
+                      <button
+                        tuiIconButton
+                        type="button"
+                        appearance="icon"
+                        icon="tuiIconPrintLarge"
                         (click)="showPrint('1')"
-                        >Напечатать</b
-                      >
+                      ></button>
+
+                      <!--                      <b class="text-yellow hover:cursor-pointer">Напечатать</b>-->
                     </td>
                   </tr>
                 </tbody>
@@ -151,12 +155,16 @@
         </div>
       </tui-loader>
     </ng-template>
-    <tui-pagination
-      *ngIf="orders"
-      [length]="length"
-      [index]="pageIndex"
-      (indexChange)="goToPage($event)"
-    ></tui-pagination>
+    <div class="flex items-center">
+      <tui-pagination
+        *ngIf="orders"
+        [length]="length"
+        [index]="pageIndex"
+        (indexChange)="goToPage($event)"
+        class="ml-auto"
+      ></tui-pagination>
+      <button type="button" tuiButton class="ml-auto">Экпорт в Exel</button>
+    </div>
     <ng-container *tuiLet="isLoading$ | async as isLoading">
       <p
         *ngIf="!isLoading && !orders"
