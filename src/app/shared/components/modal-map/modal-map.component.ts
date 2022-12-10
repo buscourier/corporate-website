@@ -19,6 +19,10 @@ export class ModalMapComponent {
     return this.context.data.points
   }
 
+  get address(): string {
+    return this.context.data.address
+  }
+
   close() {
     this.context.completeWith(1)
   }

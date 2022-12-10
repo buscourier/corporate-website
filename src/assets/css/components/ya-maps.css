@@ -1,0 +1,6 @@
+ymaps[class*='copyright'] {
+  @apply hidden;
+}
+ymaps[class*='map-copyrights-promo'] {
+  @apply hidden;
+}

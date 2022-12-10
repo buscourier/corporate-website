@@ -1,12 +1,21 @@
 <ya-map
   [center]="[latitude, longitude]"
   [zoom]="zoom"
-  [options]="{avoidFractionalZoom: true}"
-  [state]="{controls: []}"
+  [options]="{
+    avoidFractionalZoom: true,
+    copyrightLogoVisible: false,
+    copyrightProvidersVisible: false,
+    copyrightUaVisible: false
+  }"
+  [state]="{controls: ['zoomControl']}"
+  (yawheel)="zoomScroll($event)"
+  (ready)="ready()"
 >
   <ya-placemark
     *ngFor="let point of points"
     [geometry]="[point.geo_x, point.geo_y]"
+    [properties]="placemarkProperties"
+    [options]="placemarkOptions"
   ></ya-placemark>
 </ya-map>
-<div class="absolute inset-0"></div>
+<!--<div class="absolute inset-0"></div>-->

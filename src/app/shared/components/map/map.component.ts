@@ -1,5 +1,6 @@
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core'
 import {MapPointInterface} from '../../types/map-point.interface'
+import {YaEvent} from 'angular8-yandex-maps'
 
 @Component({
   selector: 'app-map',
@@ -15,4 +16,23 @@ export class MapComponent {
   @Input() disableDefaultUI: boolean = true
   @Input() gestureHandling: boolean
   @Input() scrollwheel: boolean
+
+  placemarkProperties: ymaps.IPlacemarkProperties = {
+    hintContent: 'Hint content',
+    balloonContent: 'Baloon content',
+  }
+
+  placemarkOptions: ymaps.IPlacemarkOptions = {
+    iconLayout: 'default#image',
+    iconImageHref: '/assets/icons/map-point.svg',
+    iconImageSize: [32, 32],
+  }
+
+  zoomScroll({event}: YaEvent<ymaps.Map>) {
+    event.preventDefault()
+  }
+
+  ready() {
+    console.log('ready!!!')
+  }
 }
