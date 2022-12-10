@@ -315,7 +315,7 @@ export class StartPointComponent implements OnInit, OnDestroy {
     this.dialogService
       .open<any>(new PolymorpheusComponent(ModalMapComponent, this.injector), {
         data: {
-          points: [{geo_x, geo_y}],
+          points: [{geo_x: Number(geo_x), geo_y: Number(geo_y)}],
         },
         dismissible: true,
         closeable: true,

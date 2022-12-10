@@ -1,1 +1,5 @@
-<app-map [points]="points"></app-map>
+<app-map
+  [latitude]="+points[0].geo_x"
+  [longitude]="+points[0].geo_y"
+  [points]="points"
+></app-map>
