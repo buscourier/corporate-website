@@ -10,6 +10,7 @@ import {
   TuiTextfieldControllerModule,
 } from '@taiga-ui/core'
 import {TuiDataListWrapperModule, TuiSelectModule} from '@taiga-ui/kit'
+import {ImgModule} from '../shared/components/img/img.module'
 import {MapModule} from '../shared/components/map/map.module'
 import {ContactsRoutingModule} from './contacts-routing.module'
 import {ContactsComponent} from './contacts.component'
@@ -29,6 +30,7 @@ import {ContactsComponent} from './contacts.component'
     TuiScrollbarModule,
     TuiHintModule,
     MapModule,
+    ImgModule,
   ],
 })
 export class ContactsModule {}

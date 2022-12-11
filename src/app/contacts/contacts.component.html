@@ -474,55 +474,82 @@
 </div>
 
 <ng-template #text>
-  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum, maxime,
-  totam. A accusamus aliquid architecto assumenda consectetur culpa deleniti
-  dolore dolores et, eum ex facilis hic in iure labore minima nemo nesciunt
-  nulla odit omnis placeat quibusdam quo quod rem reprehenderit similique soluta
-  ut velit vero voluptatem! Dolores enim nemo nesciunt odit pariatur quas sequi!
-  Aliquid cumque doloremque error exercitationem fugit id illum inventore ipsam
-  laboriosam laborum neque nostrum pariatur possimus, praesentium quibusdam
-  ratione, veniam! Aliquam animi aperiam asperiores commodi cum cupiditate
-  delectus deleniti distinctio dolor earum eius et ex facilis fugit id
-  inventore, laboriosam libero maxime molestias nemo omnis placeat quibusdam
-  quidem quo reiciendis, saepe vero voluptatum! Cumque doloremque earum
-  explicabo hic iusto, mollitia natus nulla, optio porro qui reiciendis rem
-  reprehenderit vel. Amet architecto beatae culpa cum cupiditate dolor dolorum
-  eius esse ex facilis fugiat fugit hic id illo impedit incidunt inventore
-  itaque natus necessitatibus nisi officia optio pariatur porro quod recusandae,
-  reiciendis rerum similique sit tempora veniam vero voluptas voluptatibus
-  voluptatum. Accusamus aliquam, consectetur consequuntur dicta enim in ipsa
-  minima perferendis quaerat reprehenderit. Atque doloribus excepturi
-  exercitationem fugit hic maxime repudiandae ut. A ad assumenda, commodi
-  consequuntur debitis doloribus eos esse et explicabo, fugiat minima nam
-  perspiciatis quidem rerum similique vel voluptatem. Ab consectetur
-  dignissimos, maiores obcaecati praesentium provident reiciendis veritatis!
-  Beatae maxime mollitia officiis quaerat quam sint veritatis, voluptate!
-  Aliquam, at consectetur consequatur deleniti dolor ducimus enim eos est eum
-  fuga fugiat fugit illo illum impedit incidunt inventore ipsam iste iure
-  mollitia nesciunt nihil numquam obcaecati omnis perspiciatis praesentium
-  quibusdam quo quod quos repellendus, saepe sequi tempora tempore temporibus
-  ullam velit veniam vitae. Accusantium blanditiis dicta facilis laboriosam
-  nobis quaerat quas quia suscipit, tempora voluptas? A adipisci ducimus ea esse
-  impedit, magnam, minima neque obcaecati quae reiciendis saepe veritatis
-  voluptatum. Adipisci aliquam aperiam delectus id impedit magnam modi ratione
-  velit? Aliquid animi aspernatur at consequuntur cupiditate deleniti dolores
-  dolorum ducimus ex facere hic illo illum inventore itaque libero minima neque
-  non nostrum nulla perferendis quas quasi quos, recusandae similique tempora
-  temporibus ullam voluptas? Aliquam blanditiis inventore possimus tempore
-  voluptas? Accusantium at dignissimos doloribus ipsam maiores odio quam
-  suscipit ut velit voluptatum. Ab aliquid animi assumenda consequatur deleniti
-  dolor dolorem enim eos incidunt inventore laborum laudantium maxime minima
-  necessitatibus odio perferendis, quis quos temporibus vel, voluptate. A
-  accusamus alias amet aspernatur commodi dolor eligendi est excepturi
-  exercitationem fugit harum hic ipsam labore, necessitatibus nihil nisi nostrum
-  numquam optio possimus quasi quod saepe totam vero! Ad aut, cupiditate
-  deleniti id illum nisi officia quaerat, qui reiciendis similique sit soluta ut
-  voluptatum. A cum eligendi et fugit id quis unde vitae. Accusamus, architecto
-  doloribus dolorum earum eos eum expedita facere fuga ipsam, labore laboriosam
-  nemo neque nesciunt nostrum quam, quia soluta sunt suscipit tempore voluptas.
-  Adipisci amet animi, aspernatur, dicta ea eaque, enim impedit ipsa officia
-  omnis possimus quasi rerum sequi sunt tenetur? Consectetur dignissimos, in?
-  Consectetur cupiditate, deserunt dolores dolorum, earum excepturi
-  exercitationem fugit inventore maiores molestiae perspiciatis placeat quaerat,
-  quas ratione saepe sit soluta tempora veniam voluptas.
+  <div class="relative pt-10 pr-10 pb-16 pl-12">
+    <button
+      tuiIconButton
+      type="button"
+      appearance="icon"
+      icon="icons::close-2"
+      class="!absolute top-0 right-0"
+    ></button>
+    <b class="mb-5 block text-xl">Владивосток, Автовокзал</b>
+    <div class="grid grid-cols-2 gap-x-11">
+      <div>
+        <div class="mb-8 grid grid-cols-[auto_1fr] text-sm">
+          <tui-svg
+            src="icons::point"
+            class="col-start-1 row-start-2 row-end-3 mr-3 text-gray-500"
+          ></tui-svg>
+          <p class="col-start-2 col-end-3 row-start-1 row-end-2">
+            ул. Фрунзе 45/1, первый этаж
+          </p>
+          <span
+            class="relative col-start-2 col-end-3 row-start-2 row-end-3 justify-self-start text-gray-700 before:absolute before:left-0 before:bottom-0 before:w-full before:border-b before:border-dashed before:border-gray-700"
+            >Посмотреть на карте</span
+          >
+        </div>
+        <div class="mb-8 grid grid-cols-[auto_1fr] text-sm">
+          <tui-svg
+            src="icons::alarm"
+            class="col-start-1 row-start-2 row-end-3 mr-3 text-gray-500"
+          ></tui-svg>
+          <p class="col-start-2 col-end-3 row-start-1 row-end-2 text-gray-500">
+            График работы:
+          </p>
+          <span class="relative col-start-2 col-end-3 row-start-2 row-end-3"
+            >с 8:00 до 20:00, без выходных</span
+          >
+        </div>
+        <div class="mb-8 grid grid-cols-[auto_1fr] text-sm">
+          <tui-svg
+            src="icons::union"
+            class="col-start-1 row-start-2 row-end-3 mr-3 text-gray-500"
+          ></tui-svg>
+          <p class="col-start-2 col-end-3 row-start-1 row-end-2">
+            Контакты для связи:
+          </p>
+          <b
+            class="relative col-start-2 col-end-3 row-start-2 row-end-3 font-medium"
+            >+7 (423) 293 78 79, доб. 0</b
+          >
+        </div>
+        <div class="grid grid-cols-[auto_1fr] text-sm">
+          <tui-svg
+            src="icons::email"
+            class="col-start-1 row-start-2 row-end-3 mr-3 text-blue"
+          ></tui-svg>
+          <p class="col-start-2 col-end-3 row-start-1 row-end-2">
+            Почта отделения:
+          </p>
+          <a
+            href="mailto:inbox@busbox.guru"
+            class="relative col-start-2 col-end-3 row-start-2 row-end-3 justify-self-start font-medium text-blue"
+            >inbox@busbox.guru</a
+          >
+        </div>
+      </div>
+      <div>
+        <div class="h-[175px] w-[278px]">
+          <app-img
+            class="w-full"
+            src="/assets/images/index/images-box/img-2"
+          ></app-img>
+        </div>
+        <p class="text-xs">
+          За содержимое грузов и документов (далее — отправление) несет
+          ответственность лицо, являющееся Отправителем.
+        </p>
+      </div>
+    </div>
+  </div>
 </ng-template>
