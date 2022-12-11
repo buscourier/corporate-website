@@ -1,6 +1,7 @@
 import {CommonModule} from '@angular/common'
 import {NgModule} from '@angular/core'
 import {ReactiveFormsModule} from '@angular/forms'
+import {TuiLetModule} from '@taiga-ui/cdk'
 import {
   TuiButtonModule,
   TuiHintModule,
@@ -31,6 +32,7 @@ import {ContactsComponent} from './contacts.component'
     TuiHintModule,
     MapModule,
     ImgModule,
+    TuiLetModule,
   ],
 })
 export class ContactsModule {}

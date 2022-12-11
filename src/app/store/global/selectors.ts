@@ -10,6 +10,31 @@ export const screenSizeSelector = createSelector(
   (state: GlobalStateInterface) => state.screenSize
 )
 
+export const xsScreenSelector = createSelector(
+  globalFeatureSelector,
+  (state: GlobalStateInterface) => state.screenSize === 'xs'
+)
+
+export const smScreenSelector = createSelector(
+  globalFeatureSelector,
+  (state: GlobalStateInterface) => state.screenSize === 'sm'
+)
+
+export const mdScreenSelector = createSelector(
+  globalFeatureSelector,
+  (state: GlobalStateInterface) => state.screenSize === 'md'
+)
+
+export const lgScreenSelector = createSelector(
+  globalFeatureSelector,
+  (state: GlobalStateInterface) => state.screenSize === 'lg'
+)
+
+export const xlScreenSelector = createSelector(
+  globalFeatureSelector,
+  (state: GlobalStateInterface) => state.screenSize === 'xl'
+)
+
 export const isPhoneScreenSelector = createSelector(
   globalFeatureSelector,
   (state: GlobalStateInterface) =>
