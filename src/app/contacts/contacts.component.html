@@ -445,7 +445,7 @@
     </tui-loader>
   </div>
   <div
-    class="mt-9 mb-14 grid grid-cols-1 gap-2.5 rounded-sm bg-yellow pt-4 pr-7 pb-6 pl-5 shadow-xl transition-all md:hidden lg:col-span-3 lg:col-start-3 lg:row-start-1 lg:row-end-3 lg:mt-0 lg:mb-0 lg:block"
+    class="mt-9 mb-14 grid grid-cols-1 gap-2.5 rounded-sm bg-yellow pt-4 pr-7 pb-6 pl-5 shadow-xl transition-all md:hidden lg:col-span-3 lg:col-start-3 lg:row-start-1 lg:row-end-3 lg:mt-0 lg:mb-0 lg:grid"
   >
     <p>Единая справочная для всего Приморского края:</p>
     <a href="tel:+7(423) 205-86-27">
@@ -466,15 +466,13 @@
     class="hidden rounded-sm bg-white lg:col-span-3 lg:col-start-2 lg:row-start-3 lg:row-end-3 lg:block"
   >
     <tui-loader [showLoader]="false" class="h-full">
-      <tui-scrollbar class="h-full">
-        <ng-container *ngTemplateOutlet="text"></ng-container>
-      </tui-scrollbar>
+      <ng-container *ngTemplateOutlet="text"></ng-container>
     </tui-loader>
   </div>
 </div>
 
 <ng-template #text>
-  <div class="relative pt-10 pr-10 pb-16 pl-12">
+  <div class="relative h-full pt-10 pr-5 pb-16 pl-12">
     <button
       tuiIconButton
       type="button"
@@ -483,73 +481,77 @@
       class="!absolute top-0 right-0"
     ></button>
     <b class="mb-5 block text-xl">Владивосток, Автовокзал</b>
-    <div class="grid grid-cols-2 gap-x-11">
-      <div>
-        <div class="mb-8 grid grid-cols-[auto_1fr] text-sm">
-          <tui-svg
-            src="icons::point"
-            class="col-start-1 row-start-2 row-end-3 mr-3 text-gray-500"
-          ></tui-svg>
-          <p class="col-start-2 col-end-3 row-start-1 row-end-2">
-            ул. Фрунзе 45/1, первый этаж
-          </p>
-          <span
-            class="relative col-start-2 col-end-3 row-start-2 row-end-3 justify-self-start text-gray-700 before:absolute before:left-0 before:bottom-0 before:w-full before:border-b before:border-dashed before:border-gray-700"
-            >Посмотреть на карте</span
-          >
+    <tui-scrollbar class="h-full">
+      <div class="grid grid-cols-2 gap-x-11 pr-5">
+        <div>
+          <div class="mb-8 grid grid-cols-[auto_1fr] text-sm">
+            <tui-svg
+              src="icons::point"
+              class="col-start-1 row-start-2 row-end-3 mr-3 text-gray-500"
+            ></tui-svg>
+            <p class="col-start-2 col-end-3 row-start-1 row-end-2">
+              ул. Фрунзе 45/1, первый этаж
+            </p>
+            <span
+              class="relative col-start-2 col-end-3 row-start-2 row-end-3 justify-self-start text-gray-700 before:absolute before:left-0 before:bottom-0 before:w-full before:border-b before:border-dashed before:border-gray-700"
+              >Посмотреть на карте</span
+            >
+          </div>
+          <div class="mb-8 grid grid-cols-[auto_1fr] text-sm">
+            <tui-svg
+              src="icons::alarm"
+              class="col-start-1 row-start-2 row-end-3 mr-3 text-gray-500"
+            ></tui-svg>
+            <p
+              class="col-start-2 col-end-3 row-start-1 row-end-2 text-gray-500"
+            >
+              График работы:
+            </p>
+            <span class="relative col-start-2 col-end-3 row-start-2 row-end-3"
+              >с 8:00 до 20:00, без выходных</span
+            >
+          </div>
+          <div class="mb-8 grid grid-cols-[auto_1fr] text-sm">
+            <tui-svg
+              src="icons::union"
+              class="col-start-1 row-start-2 row-end-3 mr-3 text-gray-500"
+            ></tui-svg>
+            <p class="col-start-2 col-end-3 row-start-1 row-end-2">
+              Контакты для связи:
+            </p>
+            <b
+              class="relative col-start-2 col-end-3 row-start-2 row-end-3 font-medium"
+              >+7 (423) 293 78 79, доб. 0</b
+            >
+          </div>
+          <div class="grid grid-cols-[auto_1fr] text-sm">
+            <tui-svg
+              src="icons::email"
+              class="col-start-1 row-start-2 row-end-3 mr-3 text-blue"
+            ></tui-svg>
+            <p class="col-start-2 col-end-3 row-start-1 row-end-2">
+              Почта отделения:
+            </p>
+            <a
+              href="mailto:inbox@busbox.guru"
+              class="relative col-start-2 col-end-3 row-start-2 row-end-3 justify-self-start font-medium text-blue"
+              >inbox@busbox.guru</a
+            >
+          </div>
         </div>
-        <div class="mb-8 grid grid-cols-[auto_1fr] text-sm">
-          <tui-svg
-            src="icons::alarm"
-            class="col-start-1 row-start-2 row-end-3 mr-3 text-gray-500"
-          ></tui-svg>
-          <p class="col-start-2 col-end-3 row-start-1 row-end-2 text-gray-500">
-            График работы:
+        <div>
+          <div class="h-[175px] w-[278px]">
+            <app-img
+              class="w-full"
+              src="/assets/images/index/images-box/img-2"
+            ></app-img>
+          </div>
+          <p class="text-xs">
+            За содержимое грузов и документов (далее — отправление) несет
+            ответственность лицо, являющееся Отправителем.
           </p>
-          <span class="relative col-start-2 col-end-3 row-start-2 row-end-3"
-            >с 8:00 до 20:00, без выходных</span
-          >
-        </div>
-        <div class="mb-8 grid grid-cols-[auto_1fr] text-sm">
-          <tui-svg
-            src="icons::union"
-            class="col-start-1 row-start-2 row-end-3 mr-3 text-gray-500"
-          ></tui-svg>
-          <p class="col-start-2 col-end-3 row-start-1 row-end-2">
-            Контакты для связи:
-          </p>
-          <b
-            class="relative col-start-2 col-end-3 row-start-2 row-end-3 font-medium"
-            >+7 (423) 293 78 79, доб. 0</b
-          >
-        </div>
-        <div class="grid grid-cols-[auto_1fr] text-sm">
-          <tui-svg
-            src="icons::email"
-            class="col-start-1 row-start-2 row-end-3 mr-3 text-blue"
-          ></tui-svg>
-          <p class="col-start-2 col-end-3 row-start-1 row-end-2">
-            Почта отделения:
-          </p>
-          <a
-            href="mailto:inbox@busbox.guru"
-            class="relative col-start-2 col-end-3 row-start-2 row-end-3 justify-self-start font-medium text-blue"
-            >inbox@busbox.guru</a
-          >
         </div>
       </div>
-      <div>
-        <div class="h-[175px] w-[278px]">
-          <app-img
-            class="w-full"
-            src="/assets/images/index/images-box/img-2"
-          ></app-img>
-        </div>
-        <p class="text-xs">
-          За содержимое грузов и документов (далее — отправление) несет
-          ответственность лицо, являющееся Отправителем.
-        </p>
-      </div>
-    </div>
+    </tui-scrollbar>
   </div>
 </ng-template>
