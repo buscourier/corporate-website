@@ -9,7 +9,7 @@
           [class.!overflow-visible]="xs && detailsOpened"
         >
           <!--    tabs-->
-          <div class="mb-6 flex md:hidden">
+          <div *ngIf="xs || sm" class="mb-6 flex">
             <button
               type="button"
               class="flex-grow border-b-2 p-5 text-center text-sm hover:opacity-80"
@@ -170,7 +170,7 @@
                   >
                     <span
                       class="relative col-start-1 col-end-2 row-start-1 row-end-2 justify-self-start text-sm text-blue before:absolute before:bottom-0 before:left-0 before:w-full before:border-b before:border-dashed before:border-blue hover:cursor-pointer"
-                      (click)="showDetails({}, text)"
+                      (click)="showDetails({}, details)"
                       >Арсеньев</span
                     >
                     <p class="col-span-4 col-start-1 row-start-2 row-end-3">
@@ -458,7 +458,8 @@
             </tui-loader>
           </div>
           <div
-            class="mt-9 mb-14 grid grid-cols-1 gap-2.5 rounded-sm bg-yellow pt-4 pr-7 pb-6 pl-5 shadow-xl transition-all md:hidden lg:col-span-3 lg:col-start-3 lg:row-start-1 lg:row-end-3 lg:mt-0 lg:mb-0 lg:grid"
+            *ngIf="!md"
+            class="mt-9 mb-14 grid grid-cols-1 gap-2.5 rounded-sm bg-yellow pt-4 pr-7 pb-6 pl-5 shadow-xl transition-all lg:col-span-3 lg:col-start-3 lg:row-start-1 lg:row-end-3 lg:mt-0 lg:mb-0"
           >
             <p>Единая справочная для всего Приморского края:</p>
             <a href="tel:+7(423) 205-86-27">
@@ -480,14 +481,15 @@
             </a>
           </div>
           <div
-            class="col-start-2 col-end-3 row-start-1 row-end-6 rounded-sm bg-white lg:col-span-3 lg:col-start-2 lg:row-start-3 lg:row-end-3 lg:block"
+            *ngIf="!md"
+            class="col-start-2 col-end-3 row-start-1 row-end-6 rounded-sm bg-white lg:col-span-3 lg:col-start-2 lg:row-start-3 lg:row-end-3"
           >
             <tui-loader [showLoader]="false" class="lg:h-full">
-              <ng-container *ngTemplateOutlet="text"></ng-container>
+              <ng-container *ngTemplateOutlet="details"></ng-container>
             </tui-loader>
           </div>
         </div>
-        <ng-template #text>
+        <ng-template #details>
           <div class="relative h-full sm:pt-10 lg:pr-5 lg:pb-16 lg:pl-12">
             <button
               *ngIf="xs; else close"
@@ -588,7 +590,7 @@
               *ngIf="xs"
               tuiButton
               type="button"
-              class="mt-5 w-full sm:!hidden"
+              class="mt-5 w-full"
               (click)="closeDetails()"
             >
               Назад
