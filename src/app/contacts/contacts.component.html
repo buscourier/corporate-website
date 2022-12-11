@@ -1,49 +1,291 @@
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. A adipisci aliquid
-beatae blanditiis consequatur cum debitis dolorem dolores ea excepturi explicabo
-facere ipsa, ipsum iste, iusto laboriosam magnam maiores nam nemo nesciunt nihil
-nobis officia quia quo ratione reiciendis, reprehenderit rerum tenetur totam
-voluptas. Aliquam assumenda, autem commodi ducimus eligendi expedita fuga harum
-hic illo impedit in incidunt, quaerat qui ratione repudiandae sit veritatis.
-Alias animi deserunt dignissimos enim error et itaque modi nemo omnis pariatur
-perspiciatis placeat quaerat quam quibusdam rem, sed suscipit veniam voluptatem!
-Architecto necessitatibus, quae quaerat quisquam veritatis voluptas? Assumenda
-enim et officiis placeat similique! Animi at eligendi eos modi natus
-necessitatibus, porro quaerat repellat velit veniam. Ab accusantium at
-blanditiis commodi consectetur consequatur, deserunt dicta distinctio doloribus
-enim eos facere fuga in inventore ipsa iste iusto minima molestiae nesciunt non
-nostrum numquam obcaecati officiis perspiciatis praesentium provident quasi
-quidem rem sed soluta sunt tempore totam unde ut vitae voluptates voluptatum?
-Alias aliquid amet aut cupiditate delectus dicta, dolorem, eos incidunt iste
-laboriosam non perspiciatis porro qui quibusdam, sapiente sit suscipit.
-Cupiditate ex ipsa obcaecati. Accusantium aperiam culpa fugiat iusto sit
-tempora! Cupiditate debitis deserunt modi sed. Cum doloremque, fuga hic porro
-quae saepe sint? At atque consectetur corporis, cupiditate earum est expedita
-iusto nisi quia quos reprehenderit sint unde voluptate. Alias natus nemo
-obcaecati quas repellendus! Eius et expedita minus! Amet cupiditate dignissimos,
-dolore eligendi enim esse harum id illum magni maxime natus officiis quia
-repellat repudiandae tempora tempore ut velit. Ab aliquid dolore ducimus facilis
-fugiat hic illum ipsa iste iure maxime modi perferendis placeat quae quas rem
-repudiandae, rerum ut? Animi cum doloremque, eaque enim facilis hic illum
-laborum libero perspiciatis quidem quis rerum? Ad alias aliquam asperiores
-assumenda atque beatae commodi corporis cupiditate debitis dolore doloremque
-eligendi error et explicabo fuga id inventore iusto laborum libero maiores neque
-pariatur perferendis porro quam quasi qui ratione sed sit ullam unde, vero
-voluptas voluptates voluptatum! Aliquid architecto consequatur exercitationem?
-Amet dolorem eligendi eum facere ipsam. Adipisci aut consectetur consequatur
-enim illo molestias non provident quasi reiciendis repudiandae! Corporis dicta
-dolorum ea eum, ex inventore iure iusto laboriosam maiores molestiae officiis
-pariatur porro repellat sequi sint suscipit voluptas. Cumque et nam voluptas. Ad
-beatae ducimus expedita veritatis! Aliquam eligendi molestias nulla odio
-recusandae temporibus! A asperiores atque blanditiis cupiditate deserunt
-distinctio eveniet exercitationem, ipsam, modi mollitia neque officiis
-praesentium quibusdam repudiandae ut voluptatem voluptatibus? Alias delectus
-dolor ducimus excepturi explicabo, fuga illo illum laboriosam nam odio
-recusandae tempore vel vero. Aperiam aspernatur aut commodi consectetur
-consequatur cupiditate dolorem ea eum illum ipsa nobis nostrum, praesentium
-provident quisquam, recusandae repellat totam, ullam! A architecto asperiores
-aspernatur autem cum distinctio dolore doloremque fugit iure iusto laborum
-maxime molestiae necessitatibus nesciunt nobis non, omnis quae quaerat quasi quo
-recusandae saepe sint suscipit ut velit voluptas voluptatem. Alias blanditiis
-debitis doloremque earum, eius, eum ex maiores molestiae quibusdam totam velit
-voluptatum! Accusantium adipisci blanditiis, cumque esse exercitationem optio
-porro provident quae quod quos repellat rerum saepe sed sunt velit!
+<!--main-->
+<div class="main-layout">
+  <!--    tabs-->
+  <div class="mb-6 flex">
+    <button
+      type="button"
+      class="flex-grow border-b-2 p-5 text-center text-sm hover:opacity-80"
+      [class]="
+        activeTabIndex === 0
+          ? 'border-yellow text-black'
+          : 'border-gray-300 text-gray-700'
+      "
+      (click)="setActiveTabIndex(0)"
+    >
+      <span>На карте</span>
+    </button>
+    <button
+      type="button"
+      class="flex-grow border-b-2 p-5 text-center text-sm hover:opacity-80"
+      [class]="
+        activeTabIndex === 1
+          ? 'border-yellow text-black'
+          : 'border-gray-300 text-gray-700'
+      "
+      (click)="setActiveTabIndex(1)"
+    >
+      <span>Списком</span>
+    </button>
+  </div>
+  <div class="mb-5 flex gap-[3px]">
+    <button
+      type="button"
+      appearance="outline"
+      class="min-w-14 flex flex-grow flex-col items-center rounded-sm border border-gray-400 px-3.5 pt-2.5 pb-3"
+    >
+      <tui-svg
+        src="icons::location"
+        class="!h-[18px] !w-[15px]"
+        class="mb-0.5 text-black"
+      ></tui-svg>
+      <span class="text-4xs font-normal text-black sm:text-3xs"
+        >Все адреса</span
+      >
+    </button>
+    <button
+      type="button"
+      appearance="outline"
+      class="min-w-14 flex flex-grow flex-col items-center rounded-sm border border-gray-400 px-3.5 pt-2.5 pb-3"
+    >
+      <tui-svg
+        src="icons::give"
+        class="!h-[18px] !w-[15px]"
+        class="mb-0.5 text-black"
+      ></tui-svg>
+      <span class="text-4xs font-normal text-black sm:text-3xs"
+        >Прием грузов</span
+      >
+    </button>
+    <button
+      type="button"
+      appearance="outline"
+      class="min-w-14 flex flex-grow flex-col items-center rounded-sm border border-gray-400 px-3.5 pt-2.5 pb-3"
+    >
+      <tui-svg
+        src="icons::get"
+        class="!h-[18px] !w-[15px]"
+        class="mb-0.5 text-black"
+      ></tui-svg>
+      <span class="text-4xs font-normal text-black sm:text-3xs"
+        >Выдача грузов</span
+      >
+    </button>
+    <button
+      type="button"
+      appearance="outline"
+      class="min-w-14 flex flex-grow flex-col items-center rounded-sm border border-gray-400 px-3.5 pt-2.5 pb-3"
+    >
+      <tui-svg
+        src="icons::office"
+        class="!h-[18px] !w-[15px]"
+        class="mb-0.5 text-black"
+      ></tui-svg>
+      <span class="text-4xs font-normal text-black sm:text-3xs">Офис</span>
+    </button>
+  </div>
+  <div class="mb-7">
+    <tui-select
+      tuiTextfieldSize="m"
+      [formControl]="city"
+      [tuiTextfieldLabelOutside]="true"
+    >
+      <tui-data-list-wrapper *tuiDataList [items]="[]"></tui-data-list-wrapper>
+    </tui-select>
+  </div>
+  <div *ngIf="activeTabIndex === 0">
+    <div class="relative h-96">
+      <app-map [latitude]="0" [longitude]="0" [points]="[]"></app-map>
+    </div>
+  </div>
+  <div *ngIf="activeTabIndex === 1">
+    <tui-loader [showLoader]="false">
+      <tui-scrollbar>
+        <div
+          class="mb-3.5 grid grid-cols-[1fr_repeat(3,auto)] grid-rows-[repeat(2,auto)] items-center gap-1.5"
+        >
+          <span
+            class="relative col-start-1 col-end-2 row-start-1 row-end-2 justify-self-start text-sm text-blue before:absolute before:bottom-0 before:left-0 before:w-full before:border-b before:border-dashed before:border-blue hover:cursor-pointer"
+            >Арсеньев</span
+          >
+          <p class="col-span-4 col-start-1 row-start-2 row-end-3">
+            ул. Фрунзе 45/1, первый этаж
+          </p>
+          <button
+            tuiIconButton
+            type="button"
+            appearance="icon"
+            icon="icons::get"
+            tuiHint="Hello"
+            tuiHintAppearance="onDark"
+            size="xs"
+            class="col-start-2 col-end-3 row-start-1 row-end-2"
+          ></button>
+          <button
+            tuiIconButton
+            type="button"
+            appearance="icon"
+            icon="icons::give"
+            tuiHint="Hello"
+            tuiHintAppearance="onDark"
+            size="xs"
+            class="col-start-3 col-end-4 row-start-1 row-end-2"
+          ></button>
+          <button
+            tuiIconButton
+            type="button"
+            appearance="icon"
+            icon="icons::office"
+            tuiHint="Hello"
+            tuiHintAppearance="onDark"
+            size="xs"
+            class="col-start-4 col-end-5 row-start-1 row-end-2"
+          ></button>
+        </div>
+        <div
+          class="mb-3.5 grid grid-cols-[1fr_repeat(3,auto)] grid-rows-[repeat(2,auto)] items-center gap-1.5"
+        >
+          <span
+            class="relative col-start-1 col-end-2 row-start-1 row-end-2 justify-self-start text-sm text-blue before:absolute before:bottom-0 before:left-0 before:w-full before:border-b before:border-dashed before:border-blue hover:cursor-pointer"
+            >Арсеньев</span
+          >
+          <p class="col-span-4 col-start-1 row-start-2 row-end-3">
+            ул. Фрунзе 45/1, первый этаж
+          </p>
+          <button
+            tuiIconButton
+            type="button"
+            appearance="icon"
+            icon="icons::get"
+            tuiHint="Hello"
+            tuiHintAppearance="onDark"
+            size="xs"
+            class="col-start-2 col-end-3 row-start-1 row-end-2"
+          ></button>
+          <button
+            tuiIconButton
+            type="button"
+            appearance="icon"
+            icon="icons::give"
+            tuiHint="Hello"
+            tuiHintAppearance="onDark"
+            size="xs"
+            class="col-start-3 col-end-4 row-start-1 row-end-2"
+          ></button>
+          <button
+            tuiIconButton
+            type="button"
+            appearance="icon"
+            icon="icons::office"
+            tuiHint="Hello"
+            tuiHintAppearance="onDark"
+            size="xs"
+            class="col-start-4 col-end-5 row-start-1 row-end-2"
+          ></button>
+        </div>
+        <div
+          class="mb-3.5 grid grid-cols-[1fr_repeat(3,auto)] grid-rows-[repeat(2,auto)] items-center gap-1.5"
+        >
+          <span
+            class="relative col-start-1 col-end-2 row-start-1 row-end-2 justify-self-start text-sm text-blue before:absolute before:bottom-0 before:left-0 before:w-full before:border-b before:border-dashed before:border-blue hover:cursor-pointer"
+            >Арсеньев</span
+          >
+          <p class="col-span-4 col-start-1 row-start-2 row-end-3">
+            ул. Фрунзе 45/1, первый этаж
+          </p>
+          <button
+            tuiIconButton
+            type="button"
+            appearance="icon"
+            icon="icons::get"
+            tuiHint="Hello"
+            tuiHintAppearance="onDark"
+            size="xs"
+            class="col-start-2 col-end-3 row-start-1 row-end-2"
+          ></button>
+          <button
+            tuiIconButton
+            type="button"
+            appearance="icon"
+            icon="icons::give"
+            tuiHint="Hello"
+            tuiHintAppearance="onDark"
+            size="xs"
+            class="col-start-3 col-end-4 row-start-1 row-end-2"
+          ></button>
+          <button
+            tuiIconButton
+            type="button"
+            appearance="icon"
+            icon="icons::office"
+            tuiHint="Hello"
+            tuiHintAppearance="onDark"
+            size="xs"
+            class="col-start-4 col-end-5 row-start-1 row-end-2"
+          ></button>
+        </div>
+        <div
+          class="mb-3.5 grid grid-cols-[1fr_repeat(3,auto)] grid-rows-[repeat(2,auto)] items-center gap-1.5"
+        >
+          <span
+            class="relative col-start-1 col-end-2 row-start-1 row-end-2 justify-self-start text-sm text-blue before:absolute before:bottom-0 before:left-0 before:w-full before:border-b before:border-dashed before:border-blue hover:cursor-pointer"
+            >Арсеньев</span
+          >
+          <p class="col-span-4 col-start-1 row-start-2 row-end-3">
+            ул. Фрунзе 45/1, первый этаж
+          </p>
+          <button
+            tuiIconButton
+            type="button"
+            appearance="icon"
+            icon="icons::get"
+            tuiHint="Hello"
+            tuiHintAppearance="onDark"
+            size="xs"
+            class="col-start-2 col-end-3 row-start-1 row-end-2"
+          ></button>
+          <button
+            tuiIconButton
+            type="button"
+            appearance="icon"
+            icon="icons::give"
+            tuiHint="Hello"
+            tuiHintAppearance="onDark"
+            size="xs"
+            class="col-start-3 col-end-4 row-start-1 row-end-2"
+          ></button>
+          <button
+            tuiIconButton
+            type="button"
+            appearance="icon"
+            icon="icons::office"
+            tuiHint="Hello"
+            tuiHintAppearance="onDark"
+            size="xs"
+            class="col-start-4 col-end-5 row-start-1 row-end-2"
+          ></button>
+        </div>
+      </tui-scrollbar>
+    </tui-loader>
+  </div>
+  <div
+    class="mt-9 mb-14 grid grid-cols-1 gap-2.5 rounded-sm bg-yellow pt-4 pr-7 pb-6 pl-5 shadow-xl transition-all"
+  >
+    <p>Единая справочная для всего Приморского края:</p>
+    <a href="tel:+7(423) 205-86-27">
+      <tui-svg
+        src="icons::headphone"
+        class="mr-2.5 !h-[16px] !w-[19px]"
+      ></tui-svg>
+      <span class="text-sm font-medium">+7 (423) 205-86-27</span>
+    </a>
+    <a href="mailto:inbox@busbox.guru">
+      <tui-svg src="icons::email" class="mr-2.5 !h-[16px] !w-[19px]"></tui-svg>
+      <span class="border-b border-dashed border-black text-sm font-medium"
+        >inbox@busbox.guru</span
+      >
+    </a>
+  </div>
+  <!--    actions-->
+  <!--    select-->
+  <!--    points-->
+</div>

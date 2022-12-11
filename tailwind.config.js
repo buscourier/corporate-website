@@ -15,6 +15,8 @@ module.exports = {
       },
     },
     fontSize: {
+      '4xs': ['0.625rem', {lineHeight: '0.625rem'}], //10 / 10
+      '3xs': ['0.75rem', {lineHeight: '0.75rem'}], //12 / 12
       '2xs': ['0.8125rem', {lineHeight: '1rem'}], //13 / 16
       xs: ['0.875rem', {lineHeight: '1.25rem'}], //14 / 20
       sm: ['1rem', {lineHeight: '1.375rem'}], // 16 / 22
