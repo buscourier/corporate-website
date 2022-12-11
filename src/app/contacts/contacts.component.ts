@@ -2,7 +2,6 @@ import {ChangeDetectionStrategy, Component, Inject} from '@angular/core'
 import {FormControl} from '@angular/forms'
 import {TuiDialogContext, TuiDialogService} from '@taiga-ui/core'
 import {PolymorpheusContent} from '@tinkoff/ng-polymorpheus'
-import {take} from 'rxjs'
 
 @Component({
   selector: 'app-contacts',
@@ -12,7 +11,8 @@ import {take} from 'rxjs'
 })
 export class ContactsComponent {
   activeTabIndex = 1
-  isMobile = false
+  isMobile = true
+  detailsOpened = false
   city = new FormControl('')
 
   constructor(
@@ -25,13 +25,18 @@ export class ContactsComponent {
   }
 
   showDetails(data, content: PolymorpheusContent<TuiDialogContext>) {
-    this.dialogService
-      .open(content, {
-        size: 'm',
-        closeable: false,
-        // dismissible: false,
-      })
-      .pipe(take(1))
-      .subscribe()
+    this.detailsOpened = true
+    // this.dialogService
+    //   .open(content, {
+    //     size: 'm',
+    //     closeable: false,
+    //     // dismissible: false,
+    //   })
+    //   .pipe(take(1))
+    //   .subscribe()
+  }
+
+  closeDetails() {
+    this.detailsOpened = false
   }
 }
