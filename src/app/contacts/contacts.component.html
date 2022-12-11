@@ -481,8 +481,9 @@
             </a>
           </div>
           <div
-            *ngIf="!md"
+            *ngIf="xs || sm || (lg && detailsOpened)"
             class="col-start-2 col-end-3 row-start-1 row-end-6 rounded-sm bg-white lg:col-span-3 lg:col-start-2 lg:row-start-3 lg:row-end-3"
+            [class.absolute]="xs && detailsOpened"
           >
             <tui-loader [showLoader]="false" class="lg:h-full">
               <ng-container *ngTemplateOutlet="details"></ng-container>

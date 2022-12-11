@@ -6,7 +6,7 @@ import {PolymorpheusContent} from '@tinkoff/ng-polymorpheus'
 import {Observable, take} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {
-  lgScreenSelector,
+  isLargeScreenSelector,
   mdScreenSelector,
   smScreenSelector,
   xsScreenSelector,
@@ -62,7 +62,7 @@ export class ContactsComponent implements OnInit {
         }
       })
     )
-    this.lg$ = this.store.select(lgScreenSelector).pipe(
+    this.lg$ = this.store.select(isLargeScreenSelector).pipe(
       tap((ok: boolean) => {
         if (ok) {
           this.isModalMode = false
