@@ -112,13 +112,13 @@
             </tui-select>
           </div>
           <div
-            *ngIf="(isMobile && activeTabIndex === 0) || !isMobile"
+            *ngIf="((xs || sm) && activeTabIndex === 0) || !(xs || sm)"
             class="relative h-96 md:absolute md:inset-0 md:-z-10 md:h-full"
           >
             <app-map [latitude]="0" [longitude]="0" [points]="[]"></app-map>
           </div>
           <div
-            *ngIf="(isMobile && activeTabIndex === 1) || !isMobile"
+            *ngIf="((xs || sm) && activeTabIndex === 1) || !(xs || sm)"
             class="rounded-sm bg-white shadow-md md:col-start-1 md:col-end-2 md:row-start-3 md:row-end-4 md:p-5 md:pr-2"
           >
             <tui-loader [showLoader]="false" class="h-full">
@@ -461,7 +461,12 @@
             *ngIf="!md"
             class="mt-9 mb-14 grid grid-cols-1 gap-2.5 rounded-sm bg-yellow pt-4 pr-7 pb-6 pl-5 shadow-xl transition-all lg:col-span-3 lg:col-start-3 lg:row-start-1 lg:row-end-3 lg:mt-0 lg:mb-0"
           >
-            <p>Единая справочная для всего Приморского края:</p>
+            <p>
+              Единая справочная
+              <span class="lg:hidden xl:inline-block"
+                >для всего Приморского края</span
+              >:
+            </p>
             <a href="tel:+7(423) 205-86-27">
               <tui-svg
                 src="icons::headphone"
