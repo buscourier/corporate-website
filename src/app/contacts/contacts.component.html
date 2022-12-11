@@ -157,6 +157,7 @@
           >
             <span
               class="relative col-start-1 col-end-2 row-start-1 row-end-2 justify-self-start text-sm text-blue before:absolute before:bottom-0 before:left-0 before:w-full before:border-b before:border-dashed before:border-blue hover:cursor-pointer"
+              (click)="showDetails({}, text)"
               >Арсеньев</span
             >
             <p class="col-span-4 col-start-1 row-start-2 row-end-3">
@@ -446,20 +447,20 @@
   <div
     class="mt-9 mb-14 grid grid-cols-1 gap-2.5 rounded-sm bg-yellow pt-4 pr-7 pb-6 pl-5 shadow-xl transition-all md:hidden lg:col-span-3 lg:col-start-3 lg:row-start-1 lg:row-end-3 lg:mt-0 lg:mb-0 lg:block"
   >
-    <!--    <p>Единая справочная для всего Приморского края:</p>-->
-    <!--    <a href="tel:+7(423) 205-86-27">-->
-    <!--      <tui-svg-->
-    <!--        src="icons::headphone"-->
-    <!--        class="mr-2.5 !h-[16px] !w-[19px]"-->
-    <!--      ></tui-svg>-->
-    <!--      <span class="text-sm font-medium">+7 (423) 205-86-27</span>-->
-    <!--    </a>-->
-    <!--    <a href="mailto:inbox@busbox.guru">-->
-    <!--      <tui-svg src="icons::email" class="mr-2.5 !h-[16px] !w-[19px]"></tui-svg>-->
-    <!--      <span class="border-b border-dashed border-black text-sm font-medium"-->
-    <!--        >inbox@busbox.guru</span-->
-    <!--      >-->
-    <!--    </a>-->
+    <p>Единая справочная для всего Приморского края:</p>
+    <a href="tel:+7(423) 205-86-27">
+      <tui-svg
+        src="icons::headphone"
+        class="mr-2.5 !h-[16px] !w-[19px]"
+      ></tui-svg>
+      <span class="text-sm font-medium">+7 (423) 205-86-27</span>
+    </a>
+    <a href="mailto:inbox@busbox.guru">
+      <tui-svg src="icons::email" class="mr-2.5 !h-[16px] !w-[19px]"></tui-svg>
+      <span class="border-b border-dashed border-black text-sm font-medium"
+        >inbox@busbox.guru</span
+      >
+    </a>
   </div>
   <div
     class="hidden rounded-sm bg-white lg:col-span-3 lg:col-start-2 lg:row-start-3 lg:row-end-3 lg:block"

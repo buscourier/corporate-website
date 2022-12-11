@@ -70,6 +70,7 @@ export class PackageComponent implements OnInit, OnDestroy {
   }
 
   initializeValues() {
+    //TODO: need to remove
     const packages = [
       ...this.boxes.value,
       ...this.plasticPacks.value,
@@ -173,13 +174,13 @@ export class PackageComponent implements OnInit, OnDestroy {
       countControl.setValue(1)
     }
 
-    //TODO: need unsubscribe?
     this.dialogService
       .open(content, {
         size: 's',
         closeable: false,
         dismissible: false,
       })
+      .pipe(take(1))
       .subscribe()
   }
 
