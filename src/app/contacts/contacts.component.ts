@@ -8,7 +8,8 @@ import {FormControl} from '@angular/forms'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactsComponent {
-  activeTabIndex = 0
+  activeTabIndex = 1
+  isMobile = false
   city = new FormControl('')
 
   constructor() {}

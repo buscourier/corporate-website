@@ -1,7 +1,7 @@
 <!--main-->
 <div class="main-layout">
   <!--    tabs-->
-  <div class="mb-6 flex">
+  <div class="mb-6 flex md:hidden">
     <button
       type="button"
       class="flex-grow border-b-2 p-5 text-center text-sm hover:opacity-80"
@@ -27,11 +27,14 @@
       <span>Списком</span>
     </button>
   </div>
-  <div class="mb-5 flex gap-[3px]">
+  <!--  filter-->
+  <div
+    class="mb-5 flex gap-[3px] md:col-start-1 md:col-end-2 md:row-start-1 md:row-end-2 md:mb-0"
+  >
     <button
       type="button"
       appearance="outline"
-      class="min-w-14 flex flex-grow flex-col items-center rounded-sm border border-gray-400 px-3.5 pt-2.5 pb-3"
+      class="min-w-14 flex flex-grow flex-col items-center rounded-sm border border-gray-400 bg-white px-3.5 pt-2.5 pb-3"
     >
       <tui-svg
         src="icons::location"
@@ -45,7 +48,7 @@
     <button
       type="button"
       appearance="outline"
-      class="min-w-14 flex flex-grow flex-col items-center rounded-sm border border-gray-400 px-3.5 pt-2.5 pb-3"
+      class="min-w-14 flex flex-grow flex-col items-center rounded-sm border border-gray-400 bg-white px-3.5 pt-2.5 pb-3"
     >
       <tui-svg
         src="icons::give"
@@ -59,7 +62,7 @@
     <button
       type="button"
       appearance="outline"
-      class="min-w-14 flex flex-grow flex-col items-center rounded-sm border border-gray-400 px-3.5 pt-2.5 pb-3"
+      class="min-w-14 flex flex-grow flex-col items-center rounded-sm border border-gray-400 bg-white px-3.5 pt-2.5 pb-3"
     >
       <tui-svg
         src="icons::get"
@@ -73,7 +76,7 @@
     <button
       type="button"
       appearance="outline"
-      class="min-w-14 flex flex-grow flex-col items-center rounded-sm border border-gray-400 px-3.5 pt-2.5 pb-3"
+      class="min-w-14 flex flex-grow flex-col items-center rounded-sm border border-gray-400 bg-white px-3.5 pt-2.5 pb-3"
     >
       <tui-svg
         src="icons::office"
@@ -83,7 +86,10 @@
       <span class="text-4xs font-normal text-black sm:text-3xs">Офис</span>
     </button>
   </div>
-  <div class="mb-7">
+  <!--  select-->
+  <div
+    class="mb-7 md:col-start-1 md:col-end-2 md:row-start-2 md:row-end-3 md:mb-0"
+  >
     <tui-select
       tuiTextfieldSize="m"
       [formControl]="city"
@@ -92,200 +98,430 @@
       <tui-data-list-wrapper *tuiDataList [items]="[]"></tui-data-list-wrapper>
     </tui-select>
   </div>
-  <div *ngIf="activeTabIndex === 0">
-    <div class="relative h-96">
-      <app-map [latitude]="0" [longitude]="0" [points]="[]"></app-map>
-    </div>
+  <div
+    *ngIf="(isMobile && activeTabIndex === 0) || !isMobile"
+    class="relative h-96 md:absolute md:inset-0 md:-z-10 md:h-full"
+  >
+    <app-map [latitude]="0" [longitude]="0" [points]="[]"></app-map>
   </div>
-  <div *ngIf="activeTabIndex === 1">
-    <tui-loader [showLoader]="false">
-      <tui-scrollbar>
-        <div
-          class="mb-3.5 grid grid-cols-[1fr_repeat(3,auto)] grid-rows-[repeat(2,auto)] items-center gap-1.5"
-        >
-          <span
-            class="relative col-start-1 col-end-2 row-start-1 row-end-2 justify-self-start text-sm text-blue before:absolute before:bottom-0 before:left-0 before:w-full before:border-b before:border-dashed before:border-blue hover:cursor-pointer"
-            >Арсеньев</span
+  <div
+    *ngIf="(isMobile && activeTabIndex === 1) || !isMobile"
+    class="rounded-sm bg-white shadow-md md:col-start-1 md:col-end-2 md:row-start-3 md:row-end-4 md:p-5 md:pr-2"
+  >
+    <tui-loader [showLoader]="false" class="h-full">
+      <tui-scrollbar class="h-full">
+        <div class="pr-3">
+          <div
+            class="mb-3.5 grid grid-cols-[1fr_repeat(3,auto)] grid-rows-[repeat(2,auto)] items-center gap-1.5"
           >
-          <p class="col-span-4 col-start-1 row-start-2 row-end-3">
-            ул. Фрунзе 45/1, первый этаж
-          </p>
-          <button
-            tuiIconButton
-            type="button"
-            appearance="icon"
-            icon="icons::get"
-            tuiHint="Hello"
-            tuiHintAppearance="onDark"
-            size="xs"
-            class="col-start-2 col-end-3 row-start-1 row-end-2"
-          ></button>
-          <button
-            tuiIconButton
-            type="button"
-            appearance="icon"
-            icon="icons::give"
-            tuiHint="Hello"
-            tuiHintAppearance="onDark"
-            size="xs"
-            class="col-start-3 col-end-4 row-start-1 row-end-2"
-          ></button>
-          <button
-            tuiIconButton
-            type="button"
-            appearance="icon"
-            icon="icons::office"
-            tuiHint="Hello"
-            tuiHintAppearance="onDark"
-            size="xs"
-            class="col-start-4 col-end-5 row-start-1 row-end-2"
-          ></button>
-        </div>
-        <div
-          class="mb-3.5 grid grid-cols-[1fr_repeat(3,auto)] grid-rows-[repeat(2,auto)] items-center gap-1.5"
-        >
-          <span
-            class="relative col-start-1 col-end-2 row-start-1 row-end-2 justify-self-start text-sm text-blue before:absolute before:bottom-0 before:left-0 before:w-full before:border-b before:border-dashed before:border-blue hover:cursor-pointer"
-            >Арсеньев</span
+            <span
+              class="relative col-start-1 col-end-2 row-start-1 row-end-2 justify-self-start text-sm text-blue before:absolute before:bottom-0 before:left-0 before:w-full before:border-b before:border-dashed before:border-blue hover:cursor-pointer"
+              >Арсеньев</span
+            >
+            <p class="col-span-4 col-start-1 row-start-2 row-end-3">
+              ул. Фрунзе 45/1, первый этаж
+            </p>
+            <button
+              tuiIconButton
+              type="button"
+              appearance="icon"
+              icon="icons::get"
+              tuiHint="Hello"
+              tuiHintAppearance="onDark"
+              size="xs"
+              class="col-start-2 col-end-3 row-start-1 row-end-2"
+            ></button>
+            <button
+              tuiIconButton
+              type="button"
+              appearance="icon"
+              icon="icons::give"
+              tuiHint="Hello"
+              tuiHintAppearance="onDark"
+              size="xs"
+              class="col-start-3 col-end-4 row-start-1 row-end-2"
+            ></button>
+            <button
+              tuiIconButton
+              type="button"
+              appearance="icon"
+              icon="icons::office"
+              tuiHint="Hello"
+              tuiHintAppearance="onDark"
+              size="xs"
+              class="col-start-4 col-end-5 row-start-1 row-end-2"
+            ></button>
+          </div>
+          <div
+            class="mb-3.5 grid grid-cols-[1fr_repeat(3,auto)] grid-rows-[repeat(2,auto)] items-center gap-1.5"
           >
-          <p class="col-span-4 col-start-1 row-start-2 row-end-3">
-            ул. Фрунзе 45/1, первый этаж
-          </p>
-          <button
-            tuiIconButton
-            type="button"
-            appearance="icon"
-            icon="icons::get"
-            tuiHint="Hello"
-            tuiHintAppearance="onDark"
-            size="xs"
-            class="col-start-2 col-end-3 row-start-1 row-end-2"
-          ></button>
-          <button
-            tuiIconButton
-            type="button"
-            appearance="icon"
-            icon="icons::give"
-            tuiHint="Hello"
-            tuiHintAppearance="onDark"
-            size="xs"
-            class="col-start-3 col-end-4 row-start-1 row-end-2"
-          ></button>
-          <button
-            tuiIconButton
-            type="button"
-            appearance="icon"
-            icon="icons::office"
-            tuiHint="Hello"
-            tuiHintAppearance="onDark"
-            size="xs"
-            class="col-start-4 col-end-5 row-start-1 row-end-2"
-          ></button>
-        </div>
-        <div
-          class="mb-3.5 grid grid-cols-[1fr_repeat(3,auto)] grid-rows-[repeat(2,auto)] items-center gap-1.5"
-        >
-          <span
-            class="relative col-start-1 col-end-2 row-start-1 row-end-2 justify-self-start text-sm text-blue before:absolute before:bottom-0 before:left-0 before:w-full before:border-b before:border-dashed before:border-blue hover:cursor-pointer"
-            >Арсеньев</span
+            <span
+              class="relative col-start-1 col-end-2 row-start-1 row-end-2 justify-self-start text-sm text-blue before:absolute before:bottom-0 before:left-0 before:w-full before:border-b before:border-dashed before:border-blue hover:cursor-pointer"
+              >Арсеньев</span
+            >
+            <p class="col-span-4 col-start-1 row-start-2 row-end-3">
+              ул. Фрунзе 45/1, первый этаж
+            </p>
+            <button
+              tuiIconButton
+              type="button"
+              appearance="icon"
+              icon="icons::get"
+              tuiHint="Hello"
+              tuiHintAppearance="onDark"
+              size="xs"
+              class="col-start-2 col-end-3 row-start-1 row-end-2"
+            ></button>
+            <button
+              tuiIconButton
+              type="button"
+              appearance="icon"
+              icon="icons::give"
+              tuiHint="Hello"
+              tuiHintAppearance="onDark"
+              size="xs"
+              class="col-start-3 col-end-4 row-start-1 row-end-2"
+            ></button>
+            <button
+              tuiIconButton
+              type="button"
+              appearance="icon"
+              icon="icons::office"
+              tuiHint="Hello"
+              tuiHintAppearance="onDark"
+              size="xs"
+              class="col-start-4 col-end-5 row-start-1 row-end-2"
+            ></button>
+          </div>
+          <div
+            class="mb-3.5 grid grid-cols-[1fr_repeat(3,auto)] grid-rows-[repeat(2,auto)] items-center gap-1.5"
           >
-          <p class="col-span-4 col-start-1 row-start-2 row-end-3">
-            ул. Фрунзе 45/1, первый этаж
-          </p>
-          <button
-            tuiIconButton
-            type="button"
-            appearance="icon"
-            icon="icons::get"
-            tuiHint="Hello"
-            tuiHintAppearance="onDark"
-            size="xs"
-            class="col-start-2 col-end-3 row-start-1 row-end-2"
-          ></button>
-          <button
-            tuiIconButton
-            type="button"
-            appearance="icon"
-            icon="icons::give"
-            tuiHint="Hello"
-            tuiHintAppearance="onDark"
-            size="xs"
-            class="col-start-3 col-end-4 row-start-1 row-end-2"
-          ></button>
-          <button
-            tuiIconButton
-            type="button"
-            appearance="icon"
-            icon="icons::office"
-            tuiHint="Hello"
-            tuiHintAppearance="onDark"
-            size="xs"
-            class="col-start-4 col-end-5 row-start-1 row-end-2"
-          ></button>
-        </div>
-        <div
-          class="mb-3.5 grid grid-cols-[1fr_repeat(3,auto)] grid-rows-[repeat(2,auto)] items-center gap-1.5"
-        >
-          <span
-            class="relative col-start-1 col-end-2 row-start-1 row-end-2 justify-self-start text-sm text-blue before:absolute before:bottom-0 before:left-0 before:w-full before:border-b before:border-dashed before:border-blue hover:cursor-pointer"
-            >Арсеньев</span
+            <span
+              class="relative col-start-1 col-end-2 row-start-1 row-end-2 justify-self-start text-sm text-blue before:absolute before:bottom-0 before:left-0 before:w-full before:border-b before:border-dashed before:border-blue hover:cursor-pointer"
+              >Арсеньев</span
+            >
+            <p class="col-span-4 col-start-1 row-start-2 row-end-3">
+              ул. Фрунзе 45/1, первый этаж
+            </p>
+            <button
+              tuiIconButton
+              type="button"
+              appearance="icon"
+              icon="icons::get"
+              tuiHint="Hello"
+              tuiHintAppearance="onDark"
+              size="xs"
+              class="col-start-2 col-end-3 row-start-1 row-end-2"
+            ></button>
+            <button
+              tuiIconButton
+              type="button"
+              appearance="icon"
+              icon="icons::give"
+              tuiHint="Hello"
+              tuiHintAppearance="onDark"
+              size="xs"
+              class="col-start-3 col-end-4 row-start-1 row-end-2"
+            ></button>
+            <button
+              tuiIconButton
+              type="button"
+              appearance="icon"
+              icon="icons::office"
+              tuiHint="Hello"
+              tuiHintAppearance="onDark"
+              size="xs"
+              class="col-start-4 col-end-5 row-start-1 row-end-2"
+            ></button>
+          </div>
+          <div
+            class="mb-3.5 grid grid-cols-[1fr_repeat(3,auto)] grid-rows-[repeat(2,auto)] items-center gap-1.5"
           >
-          <p class="col-span-4 col-start-1 row-start-2 row-end-3">
-            ул. Фрунзе 45/1, первый этаж
-          </p>
-          <button
-            tuiIconButton
-            type="button"
-            appearance="icon"
-            icon="icons::get"
-            tuiHint="Hello"
-            tuiHintAppearance="onDark"
-            size="xs"
-            class="col-start-2 col-end-3 row-start-1 row-end-2"
-          ></button>
-          <button
-            tuiIconButton
-            type="button"
-            appearance="icon"
-            icon="icons::give"
-            tuiHint="Hello"
-            tuiHintAppearance="onDark"
-            size="xs"
-            class="col-start-3 col-end-4 row-start-1 row-end-2"
-          ></button>
-          <button
-            tuiIconButton
-            type="button"
-            appearance="icon"
-            icon="icons::office"
-            tuiHint="Hello"
-            tuiHintAppearance="onDark"
-            size="xs"
-            class="col-start-4 col-end-5 row-start-1 row-end-2"
-          ></button>
+            <span
+              class="relative col-start-1 col-end-2 row-start-1 row-end-2 justify-self-start text-sm text-blue before:absolute before:bottom-0 before:left-0 before:w-full before:border-b before:border-dashed before:border-blue hover:cursor-pointer"
+              >Арсеньев</span
+            >
+            <p class="col-span-4 col-start-1 row-start-2 row-end-3">
+              ул. Фрунзе 45/1, первый этаж
+            </p>
+            <button
+              tuiIconButton
+              type="button"
+              appearance="icon"
+              icon="icons::get"
+              tuiHint="Hello"
+              tuiHintAppearance="onDark"
+              size="xs"
+              class="col-start-2 col-end-3 row-start-1 row-end-2"
+            ></button>
+            <button
+              tuiIconButton
+              type="button"
+              appearance="icon"
+              icon="icons::give"
+              tuiHint="Hello"
+              tuiHintAppearance="onDark"
+              size="xs"
+              class="col-start-3 col-end-4 row-start-1 row-end-2"
+            ></button>
+            <button
+              tuiIconButton
+              type="button"
+              appearance="icon"
+              icon="icons::office"
+              tuiHint="Hello"
+              tuiHintAppearance="onDark"
+              size="xs"
+              class="col-start-4 col-end-5 row-start-1 row-end-2"
+            ></button>
+          </div>
+          <div
+            class="mb-3.5 grid grid-cols-[1fr_repeat(3,auto)] grid-rows-[repeat(2,auto)] items-center gap-1.5"
+          >
+            <span
+              class="relative col-start-1 col-end-2 row-start-1 row-end-2 justify-self-start text-sm text-blue before:absolute before:bottom-0 before:left-0 before:w-full before:border-b before:border-dashed before:border-blue hover:cursor-pointer"
+              >Арсеньев</span
+            >
+            <p class="col-span-4 col-start-1 row-start-2 row-end-3">
+              ул. Фрунзе 45/1, первый этаж
+            </p>
+            <button
+              tuiIconButton
+              type="button"
+              appearance="icon"
+              icon="icons::get"
+              tuiHint="Hello"
+              tuiHintAppearance="onDark"
+              size="xs"
+              class="col-start-2 col-end-3 row-start-1 row-end-2"
+            ></button>
+            <button
+              tuiIconButton
+              type="button"
+              appearance="icon"
+              icon="icons::give"
+              tuiHint="Hello"
+              tuiHintAppearance="onDark"
+              size="xs"
+              class="col-start-3 col-end-4 row-start-1 row-end-2"
+            ></button>
+            <button
+              tuiIconButton
+              type="button"
+              appearance="icon"
+              icon="icons::office"
+              tuiHint="Hello"
+              tuiHintAppearance="onDark"
+              size="xs"
+              class="col-start-4 col-end-5 row-start-1 row-end-2"
+            ></button>
+          </div>
+          <div
+            class="mb-3.5 grid grid-cols-[1fr_repeat(3,auto)] grid-rows-[repeat(2,auto)] items-center gap-1.5"
+          >
+            <span
+              class="relative col-start-1 col-end-2 row-start-1 row-end-2 justify-self-start text-sm text-blue before:absolute before:bottom-0 before:left-0 before:w-full before:border-b before:border-dashed before:border-blue hover:cursor-pointer"
+              >Арсеньев</span
+            >
+            <p class="col-span-4 col-start-1 row-start-2 row-end-3">
+              ул. Фрунзе 45/1, первый этаж
+            </p>
+            <button
+              tuiIconButton
+              type="button"
+              appearance="icon"
+              icon="icons::get"
+              tuiHint="Hello"
+              tuiHintAppearance="onDark"
+              size="xs"
+              class="col-start-2 col-end-3 row-start-1 row-end-2"
+            ></button>
+            <button
+              tuiIconButton
+              type="button"
+              appearance="icon"
+              icon="icons::give"
+              tuiHint="Hello"
+              tuiHintAppearance="onDark"
+              size="xs"
+              class="col-start-3 col-end-4 row-start-1 row-end-2"
+            ></button>
+            <button
+              tuiIconButton
+              type="button"
+              appearance="icon"
+              icon="icons::office"
+              tuiHint="Hello"
+              tuiHintAppearance="onDark"
+              size="xs"
+              class="col-start-4 col-end-5 row-start-1 row-end-2"
+            ></button>
+          </div>
+          <div
+            class="mb-3.5 grid grid-cols-[1fr_repeat(3,auto)] grid-rows-[repeat(2,auto)] items-center gap-1.5"
+          >
+            <span
+              class="relative col-start-1 col-end-2 row-start-1 row-end-2 justify-self-start text-sm text-blue before:absolute before:bottom-0 before:left-0 before:w-full before:border-b before:border-dashed before:border-blue hover:cursor-pointer"
+              >Арсеньев</span
+            >
+            <p class="col-span-4 col-start-1 row-start-2 row-end-3">
+              ул. Фрунзе 45/1, первый этаж
+            </p>
+            <button
+              tuiIconButton
+              type="button"
+              appearance="icon"
+              icon="icons::get"
+              tuiHint="Hello"
+              tuiHintAppearance="onDark"
+              size="xs"
+              class="col-start-2 col-end-3 row-start-1 row-end-2"
+            ></button>
+            <button
+              tuiIconButton
+              type="button"
+              appearance="icon"
+              icon="icons::give"
+              tuiHint="Hello"
+              tuiHintAppearance="onDark"
+              size="xs"
+              class="col-start-3 col-end-4 row-start-1 row-end-2"
+            ></button>
+            <button
+              tuiIconButton
+              type="button"
+              appearance="icon"
+              icon="icons::office"
+              tuiHint="Hello"
+              tuiHintAppearance="onDark"
+              size="xs"
+              class="col-start-4 col-end-5 row-start-1 row-end-2"
+            ></button>
+          </div>
+          <div
+            class="mb-3.5 grid grid-cols-[1fr_repeat(3,auto)] grid-rows-[repeat(2,auto)] items-center gap-1.5"
+          >
+            <span
+              class="relative col-start-1 col-end-2 row-start-1 row-end-2 justify-self-start text-sm text-blue before:absolute before:bottom-0 before:left-0 before:w-full before:border-b before:border-dashed before:border-blue hover:cursor-pointer"
+              >Арсеньев</span
+            >
+            <p class="col-span-4 col-start-1 row-start-2 row-end-3">
+              ул. Фрунзе 45/1, первый этаж
+            </p>
+            <button
+              tuiIconButton
+              type="button"
+              appearance="icon"
+              icon="icons::get"
+              tuiHint="Hello"
+              tuiHintAppearance="onDark"
+              size="xs"
+              class="col-start-2 col-end-3 row-start-1 row-end-2"
+            ></button>
+            <button
+              tuiIconButton
+              type="button"
+              appearance="icon"
+              icon="icons::give"
+              tuiHint="Hello"
+              tuiHintAppearance="onDark"
+              size="xs"
+              class="col-start-3 col-end-4 row-start-1 row-end-2"
+            ></button>
+            <button
+              tuiIconButton
+              type="button"
+              appearance="icon"
+              icon="icons::office"
+              tuiHint="Hello"
+              tuiHintAppearance="onDark"
+              size="xs"
+              class="col-start-4 col-end-5 row-start-1 row-end-2"
+            ></button>
+          </div>
         </div>
       </tui-scrollbar>
     </tui-loader>
   </div>
   <div
-    class="mt-9 mb-14 grid grid-cols-1 gap-2.5 rounded-sm bg-yellow pt-4 pr-7 pb-6 pl-5 shadow-xl transition-all"
+    class="mt-9 mb-14 grid grid-cols-1 gap-2.5 rounded-sm bg-yellow pt-4 pr-7 pb-6 pl-5 shadow-xl transition-all md:hidden lg:col-span-3 lg:col-start-3 lg:row-start-1 lg:row-end-3 lg:mt-0 lg:mb-0 lg:block"
   >
-    <p>Единая справочная для всего Приморского края:</p>
-    <a href="tel:+7(423) 205-86-27">
-      <tui-svg
-        src="icons::headphone"
-        class="mr-2.5 !h-[16px] !w-[19px]"
-      ></tui-svg>
-      <span class="text-sm font-medium">+7 (423) 205-86-27</span>
-    </a>
-    <a href="mailto:inbox@busbox.guru">
-      <tui-svg src="icons::email" class="mr-2.5 !h-[16px] !w-[19px]"></tui-svg>
-      <span class="border-b border-dashed border-black text-sm font-medium"
-        >inbox@busbox.guru</span
-      >
-    </a>
+    <!--    <p>Единая справочная для всего Приморского края:</p>-->
+    <!--    <a href="tel:+7(423) 205-86-27">-->
+    <!--      <tui-svg-->
+    <!--        src="icons::headphone"-->
+    <!--        class="mr-2.5 !h-[16px] !w-[19px]"-->
+    <!--      ></tui-svg>-->
+    <!--      <span class="text-sm font-medium">+7 (423) 205-86-27</span>-->
+    <!--    </a>-->
+    <!--    <a href="mailto:inbox@busbox.guru">-->
+    <!--      <tui-svg src="icons::email" class="mr-2.5 !h-[16px] !w-[19px]"></tui-svg>-->
+    <!--      <span class="border-b border-dashed border-black text-sm font-medium"-->
+    <!--        >inbox@busbox.guru</span-->
+    <!--      >-->
+    <!--    </a>-->
   </div>
-  <!--    actions-->
-  <!--    select-->
-  <!--    points-->
+  <div
+    class="hidden rounded-sm bg-white lg:col-span-3 lg:col-start-2 lg:row-start-3 lg:row-end-3 lg:block"
+  >
+    <tui-loader [showLoader]="false" class="h-full">
+      <tui-scrollbar class="h-full">
+        <ng-container *ngTemplateOutlet="text"></ng-container>
+      </tui-scrollbar>
+    </tui-loader>
+  </div>
 </div>
+
+<ng-template #text>
+  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum, maxime,
+  totam. A accusamus aliquid architecto assumenda consectetur culpa deleniti
+  dolore dolores et, eum ex facilis hic in iure labore minima nemo nesciunt
+  nulla odit omnis placeat quibusdam quo quod rem reprehenderit similique soluta
+  ut velit vero voluptatem! Dolores enim nemo nesciunt odit pariatur quas sequi!
+  Aliquid cumque doloremque error exercitationem fugit id illum inventore ipsam
+  laboriosam laborum neque nostrum pariatur possimus, praesentium quibusdam
+  ratione, veniam! Aliquam animi aperiam asperiores commodi cum cupiditate
+  delectus deleniti distinctio dolor earum eius et ex facilis fugit id
+  inventore, laboriosam libero maxime molestias nemo omnis placeat quibusdam
+  quidem quo reiciendis, saepe vero voluptatum! Cumque doloremque earum
+  explicabo hic iusto, mollitia natus nulla, optio porro qui reiciendis rem
+  reprehenderit vel. Amet architecto beatae culpa cum cupiditate dolor dolorum
+  eius esse ex facilis fugiat fugit hic id illo impedit incidunt inventore
+  itaque natus necessitatibus nisi officia optio pariatur porro quod recusandae,
+  reiciendis rerum similique sit tempora veniam vero voluptas voluptatibus
+  voluptatum. Accusamus aliquam, consectetur consequuntur dicta enim in ipsa
+  minima perferendis quaerat reprehenderit. Atque doloribus excepturi
+  exercitationem fugit hic maxime repudiandae ut. A ad assumenda, commodi
+  consequuntur debitis doloribus eos esse et explicabo, fugiat minima nam
+  perspiciatis quidem rerum similique vel voluptatem. Ab consectetur
+  dignissimos, maiores obcaecati praesentium provident reiciendis veritatis!
+  Beatae maxime mollitia officiis quaerat quam sint veritatis, voluptate!
+  Aliquam, at consectetur consequatur deleniti dolor ducimus enim eos est eum
+  fuga fugiat fugit illo illum impedit incidunt inventore ipsam iste iure
+  mollitia nesciunt nihil numquam obcaecati omnis perspiciatis praesentium
+  quibusdam quo quod quos repellendus, saepe sequi tempora tempore temporibus
+  ullam velit veniam vitae. Accusantium blanditiis dicta facilis laboriosam
+  nobis quaerat quas quia suscipit, tempora voluptas? A adipisci ducimus ea esse
+  impedit, magnam, minima neque obcaecati quae reiciendis saepe veritatis
+  voluptatum. Adipisci aliquam aperiam delectus id impedit magnam modi ratione
+  velit? Aliquid animi aspernatur at consequuntur cupiditate deleniti dolores
+  dolorum ducimus ex facere hic illo illum inventore itaque libero minima neque
+  non nostrum nulla perferendis quas quasi quos, recusandae similique tempora
+  temporibus ullam voluptas? Aliquam blanditiis inventore possimus tempore
+  voluptas? Accusantium at dignissimos doloribus ipsam maiores odio quam
+  suscipit ut velit voluptatum. Ab aliquid animi assumenda consequatur deleniti
+  dolor dolorem enim eos incidunt inventore laborum laudantium maxime minima
+  necessitatibus odio perferendis, quis quos temporibus vel, voluptate. A
+  accusamus alias amet aspernatur commodi dolor eligendi est excepturi
+  exercitationem fugit harum hic ipsam labore, necessitatibus nihil nisi nostrum
+  numquam optio possimus quasi quod saepe totam vero! Ad aut, cupiditate
+  deleniti id illum nisi officia quaerat, qui reiciendis similique sit soluta ut
+  voluptatum. A cum eligendi et fugit id quis unde vitae. Accusamus, architecto
+  doloribus dolorum earum eos eum expedita facere fuga ipsam, labore laboriosam
+  nemo neque nesciunt nostrum quam, quia soluta sunt suscipit tempore voluptas.
+  Adipisci amet animi, aspernatur, dicta ea eaque, enim impedit ipsa officia
+  omnis possimus quasi rerum sequi sunt tenetur? Consectetur dignissimos, in?
+  Consectetur cupiditate, deserunt dolores dolorum, earum excepturi
+  exercitationem fugit inventore maiores molestiae perspiciatis placeat quaerat,
+  quas ratione saepe sit soluta tempora veniam voluptas.
+</ng-template>

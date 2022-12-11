@@ -1,3 +1,4 @@
 :host {
-  @apply mt-24 block bg-gray;
+  /*mt-24*/
+  @apply block bg-gray;
 }
