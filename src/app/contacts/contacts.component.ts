@@ -20,12 +20,14 @@ import {
   filter,
   map,
   Observable,
+  of,
   Subscription,
   take,
 } from 'rxjs'
-import {tap} from 'rxjs/operators'
+import {concatAll, switchMap, tap, toArray} from 'rxjs/operators'
 import {ModalMapComponent} from '../shared/components/modal-map/modal-map.component'
 import {STRINGIFY_OFFICE} from '../shared/handlers/string-handlers'
+import {MapPointInterface} from '../shared/types/map-point.interface'
 import {OfficeInterface} from '../shared/types/office.interface'
 import {
   isLargeScreenSelector,
@@ -51,6 +53,7 @@ export class ContactsComponent implements OnInit {
   isOfficesLoading$: Observable<boolean>
   offices$: Observable<OfficeInterface[]>
   filteredOffices$: Observable<OfficeInterface[]>
+  mapPoints$: Observable<MapPointInterface[]>
   cities$: Observable<OfficeInterface[]>
   backendErrors$: Observable<string>
   xs$: Observable<boolean>
@@ -60,6 +63,16 @@ export class ContactsComponent implements OnInit {
 
   currentFilter$ = new BehaviorSubject('location')
   isFilterLoading = false
+
+  currentOffice = null
+  isCurrentOfficeLoading = false
+
+  centralMapPoint = {
+    geo_x: 0,
+    geo_y: 0,
+  }
+
+  mapZoom = 12
 
   activeTabIndex = 1
   activeFilter = null
@@ -178,6 +191,31 @@ export class ContactsComponent implements OnInit {
       })
     )
 
+    this.mapPoints$ = this.filteredOffices$.pipe(
+      filter(Boolean),
+      switchMap((offices: OfficeInterface[]) => {
+        return of(offices).pipe(
+          concatAll(),
+          map(({geo_x, geo_y}: OfficeInterface) => {
+            return {geo_x, geo_y}
+          }),
+          toArray()
+        )
+      }),
+      tap((points: MapPointInterface[]) => {
+        if (points.length) {
+          this.centralMapPoint.geo_x = Number(points[0].geo_x)
+          this.centralMapPoint.geo_y = Number(points[0].geo_y)
+        }
+
+        if (points.length > 4) {
+          this.mapZoom = 7
+        } else {
+          this.mapZoom = 12
+        }
+      })
+    )
+
     this.xs$ = this.store.select(xsScreenSelector).pipe(
       tap((ok: boolean) => {
         if (ok) {
@@ -220,7 +258,12 @@ export class ContactsComponent implements OnInit {
     this.activeTabIndex = index
   }
 
-  showDetails(data, content: PolymorpheusContent<TuiDialogContext>) {
+  showDetails(
+    office: OfficeInterface,
+    content: PolymorpheusContent<TuiDialogContext>
+  ) {
+    this.currentOffice = office
+
     if (this.isModalMode) {
       this.detailsOpened = false
 

@@ -85,7 +85,14 @@
               *ngIf="((xs || sm) && activeTabIndex === 0) || !(xs || sm)"
               class="relative h-96 md:absolute md:inset-0 md:-z-10 md:h-full"
             >
-              <app-map [latitude]="0" [longitude]="0" [points]="[]"></app-map>
+              <ng-container *tuiLet="mapPoints$ | async as mapPoints">
+                <app-map
+                  [latitude]="centralMapPoint.geo_x"
+                  [longitude]="centralMapPoint.geo_y"
+                  [points]="mapPoints"
+                  [zoom]="mapZoom"
+                ></app-map>
+              </ng-container>
             </div>
             <div
               *ngIf="((xs || sm) && activeTabIndex === 1) || !(xs || sm)"
@@ -107,6 +114,7 @@
                     >
                       <span
                         class="relative col-start-1 col-end-2 row-start-1 row-end-2 justify-self-start text-sm text-blue before:absolute before:bottom-0 before:left-0 before:w-full before:border-b before:border-dashed before:border-blue hover:cursor-pointer"
+                        (click)="showDetails(office, details)"
                         >{{ office.name }}</span
                       >
                       <p
@@ -191,7 +199,10 @@
               class="col-start-2 col-end-3 row-start-1 row-end-6 rounded-sm bg-white lg:col-span-4 lg:col-start-2 lg:row-start-3 lg:row-end-3 xl:col-span-3"
               [class.absolute]="xs && detailsOpened"
             >
-              <tui-loader [showLoader]="false" class="lg:h-full">
+              <tui-loader
+                [showLoader]="isCurrentOfficeLoading"
+                class="lg:h-full"
+              >
                 <ng-container *ngTemplateOutlet="details"></ng-container>
               </tui-loader>
             </div>
@@ -219,7 +230,7 @@
                   (click)="closeDetails(observer)"
                 ></button>
               </ng-template>
-              <b class="mb-8 block text-xl">Владивосток, Автовокзал</b>
+              <b class="mb-8 block text-xl">{{ currentOffice.name }}</b>
               <tui-scrollbar class="h-full">
                 <div
                   class="grid gap-y-8 sm:grid-cols-2 sm:gap-y-0 sm:gap-x-4 xl:gap-x-11 xl:pr-5"
@@ -231,7 +242,7 @@
                         class="col-start-1 row-start-2 row-end-3 mr-3 text-gray-500"
                       ></tui-svg>
                       <p class="col-start-2 col-end-3 row-start-1 row-end-2">
-                        ул. Фрунзе 45/1, первый этаж
+                        {{ currentOffice.address }}
                       </p>
                       <span
                         class="relative col-start-2 col-end-3 row-start-2 row-end-3 justify-self-start text-gray-700 before:absolute before:left-0 before:bottom-0 before:w-full before:border-b before:border-dashed before:border-gray-700"
@@ -251,7 +262,7 @@
                       </p>
                       <span
                         class="relative col-start-2 col-end-3 row-start-2 row-end-3"
-                        >с 8:00 до 20:00, без выходных</span
+                        >{{ currentOffice.worktime }}</span
                       >
                     </div>
                     <div class="mb-8 grid grid-cols-[auto_1fr] text-sm">
@@ -264,7 +275,7 @@
                       </p>
                       <b
                         class="relative col-start-2 col-end-3 row-start-2 row-end-3 font-medium"
-                        >+7 (423) 293 78 79, доб. 0</b
+                        >{{ currentOffice.phone }}</b
                       >
                     </div>
                     <div class="grid grid-cols-[auto_1fr] text-sm">
