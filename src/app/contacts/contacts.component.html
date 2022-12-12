@@ -40,60 +40,25 @@
             class="mb-5 flex gap-[3px] md:col-start-1 md:col-end-2 md:row-start-1 md:row-end-2 md:mb-0"
           >
             <button
+              *ngFor="let action of filterActions"
               type="button"
               appearance="outline"
-              class="min-w-14 flex flex-grow flex-col items-center rounded-sm border border-gray-400 bg-white px-3.5 pt-2.5 pb-3"
+              class="min-w-14 flex flex-grow flex-col items-center rounded-sm border px-3.5 pt-2.5 pb-3 transition-colors hover:border-yellow"
+              [ngClass]="
+                action.id === activeFilter
+                  ? 'border-yellow bg-yellow'
+                  : 'border-gray-400 bg-white'
+              "
+              (click)="setActiveFilter(action.id)"
             >
               <tui-svg
-                src="icons::location"
+                [src]="'icons::' + action.id"
                 class="!h-[18px] !w-[15px]"
                 class="mb-0.5 text-black"
               ></tui-svg>
-              <span class="text-4xs font-normal text-black sm:text-3xs"
-                >Все адреса</span
-              >
-            </button>
-            <button
-              type="button"
-              appearance="outline"
-              class="min-w-14 flex flex-grow flex-col items-center rounded-sm border border-gray-400 bg-white px-3.5 pt-2.5 pb-3"
-            >
-              <tui-svg
-                src="icons::give"
-                class="!h-[18px] !w-[15px]"
-                class="mb-0.5 text-black"
-              ></tui-svg>
-              <span class="text-4xs font-normal text-black sm:text-3xs"
-                >Прием грузов</span
-              >
-            </button>
-            <button
-              type="button"
-              appearance="outline"
-              class="min-w-14 flex flex-grow flex-col items-center rounded-sm border border-gray-400 bg-white px-3.5 pt-2.5 pb-3"
-            >
-              <tui-svg
-                src="icons::get"
-                class="!h-[18px] !w-[15px]"
-                class="mb-0.5 text-black"
-              ></tui-svg>
-              <span class="text-4xs font-normal text-black sm:text-3xs"
-                >Выдача грузов</span
-              >
-            </button>
-            <button
-              type="button"
-              appearance="outline"
-              class="min-w-14 flex flex-grow flex-col items-center rounded-sm border border-gray-400 bg-white px-3.5 pt-2.5 pb-3"
-            >
-              <tui-svg
-                src="icons::office"
-                class="!h-[18px] !w-[15px]"
-                class="mb-0.5 text-black"
-              ></tui-svg>
-              <span class="text-4xs font-normal text-black sm:text-3xs"
-                >Офис</span
-              >
+              <span class="text-4xs font-normal text-black sm:text-3xs">{{
+                action.name
+              }}</span>
             </button>
           </div>
           <!--  select-->

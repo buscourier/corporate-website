@@ -35,11 +35,31 @@ export class ContactsComponent implements OnInit {
   lg$: Observable<boolean>
 
   activeTabIndex = 1
+  activeFilter = null
   isMobile = true
   isModalMode = false
   detailsOpened = false
   city = new FormControl('')
   detailsModalSub: Subscription
+
+  filterActions = [
+    {
+      id: 'location',
+      name: 'Все адреса',
+    },
+    {
+      id: 'give',
+      name: 'Прием грузов',
+    },
+    {
+      id: 'get',
+      name: 'Выдача грузов',
+    },
+    {
+      id: 'office',
+      name: 'Офис',
+    },
+  ]
 
   constructor(
     private store: Store,
@@ -136,5 +156,9 @@ export class ContactsComponent implements OnInit {
     } else {
       console.log('not mobile')
     }
+  }
+
+  setActiveFilter(id: string) {
+    this.activeFilter = id
   }
 }
