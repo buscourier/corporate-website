@@ -96,12 +96,13 @@
                 class="h-full"
               >
                 <tui-scrollbar
+                  *tuiLet="filteredOffices$ | async as filteredOffices"
                   class="h-full"
                   [class.opacity-0]="isOfficesLoading || isFilterLoading"
                 >
                   <div class="pr-3">
                     <div
-                      *ngFor="let office of filteredOffices$ | async"
+                      *ngFor="let office of filteredOffices"
                       class="mb-5 grid grid-cols-[1fr_repeat(3,auto)] grid-rows-[repeat(2,auto)] items-center gap-1.5"
                     >
                       <span
@@ -148,6 +149,12 @@
                       ></button>
                     </div>
                   </div>
+                  <p
+                    *ngIf="filteredOffices && !filteredOffices.length"
+                    class="mt-5 text-center text-sm text-gray-500"
+                  >
+                    Офис не найден...
+                  </p>
                 </tui-scrollbar>
               </tui-loader>
             </div>
