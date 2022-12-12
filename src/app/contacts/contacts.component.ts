@@ -324,4 +324,8 @@ export class ContactsComponent implements OnInit {
   setActiveFilter(id: string) {
     this.currentFilter$.next(id)
   }
+
+  yes(data) {
+    console.log('data', data)
+  }
 }

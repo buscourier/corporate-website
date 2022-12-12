@@ -1,6 +1,12 @@
-import {ChangeDetectionStrategy, Component, Input} from '@angular/core'
-import {MapPointInterface} from '../../types/map-point.interface'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core'
 import {YaEvent} from 'angular8-yandex-maps'
+import {MapPointInterface} from '../../types/map-point.interface'
 
 @Component({
   selector: 'app-map',
@@ -16,6 +22,8 @@ export class MapComponent {
   @Input() disableDefaultUI: boolean = true
   @Input() gestureHandling: boolean
   @Input() scrollwheel: boolean
+
+  @Output() pointSelect: EventEmitter<any> = new EventEmitter<any>()
 
   placemarkProperties: ymaps.IPlacemarkProperties = {
     hintContent: 'Hint content',
@@ -34,5 +42,9 @@ export class MapComponent {
 
   ready() {
     console.log('ready!!!')
+  }
+
+  go(point) {
+    this.pointSelect.emit(point)
   }
 }

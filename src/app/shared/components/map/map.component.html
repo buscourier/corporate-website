@@ -16,6 +16,7 @@
     [geometry]="[point.geo_x, point.geo_y]"
     [properties]="placemarkProperties"
     [options]="placemarkOptions"
+    (yaclick)="go(point)"
   ></ya-placemark>
 </ya-map>
 <!--<div class="absolute inset-0"></div>-->

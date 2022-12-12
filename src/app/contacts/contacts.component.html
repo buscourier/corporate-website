@@ -91,6 +91,7 @@
                   [longitude]="centralMapPoint.geo_y"
                   [points]="mapPoints"
                   [zoom]="mapZoom"
+                  (pointSelect)="yes($event)"
                 ></app-map>
               </ng-container>
             </div>
