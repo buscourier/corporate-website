@@ -271,8 +271,8 @@ export class ContactsComponent implements OnInit {
           new PolymorpheusComponent(ModalMapComponent, this.injector),
           {
             data: {
-              address: 'Address',
-              points: [{geo_x: office.geo_x, geo_y: office.geo_y}],
+              points: [office],
+              disableScrollZoom: true,
             },
             dismissible: true,
             closeable: false,

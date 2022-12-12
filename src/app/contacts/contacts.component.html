@@ -93,6 +93,7 @@
                   [longitude]="currentOffice && currentOffice.geo_y"
                   [points]="filteredOffices"
                   [zoom]="mapZoom"
+                  [disableScrollZoom]="true"
                   (pointSelect)="showDetails($event, details)"
                 ></app-map>
               </ng-container>

@@ -19,8 +19,8 @@ export class ModalMapComponent {
     return this.context.data.points
   }
 
-  get address(): string {
-    return this.context.data.address
+  get disableScrollZoom(): string {
+    return this.context.data.disableScrollZoom
   }
 
   close() {

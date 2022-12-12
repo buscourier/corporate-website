@@ -22,6 +22,7 @@ export class MapComponent {
   @Input() disableDefaultUI: boolean = true
   @Input() gestureHandling: boolean
   @Input() scrollwheel: boolean
+  @Input() disableScrollZoom = false
 
   @Output() pointSelect: EventEmitter<any> = new EventEmitter<any>()
 
@@ -37,7 +38,9 @@ export class MapComponent {
   }
 
   zoomScroll({event}: YaEvent<ymaps.Map>) {
-    event.preventDefault()
+    if (this.disableScrollZoom) {
+      event.preventDefault()
+    }
   }
 
   ready() {
