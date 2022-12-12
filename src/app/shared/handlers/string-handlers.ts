@@ -3,12 +3,17 @@ import {CargoInterface} from '../../new-order/shared/types/cargo.interface'
 import {ConfidantInterface} from '../types/confidant.interface'
 import {DocTypeInterface} from '../types/doc-type.interface'
 import {EndCityInterface} from '../types/end-city.interface'
+import {OfficeInterface} from '../types/office.interface'
 import {StartCityInterface} from '../types/start-city.interface'
 
 export const STRINGIFY_CITIES: TuiStringHandler<
   StartCityInterface | EndCityInterface
 > = (item: StartCityInterface | EndCityInterface) =>
   item ? `${item.name}` : ``
+
+export const STRINGIFY_OFFICE: TuiStringHandler<OfficeInterface> = (
+  item: OfficeInterface
+) => (item ? `${item.name}` : ``)
 
 export const STRINGIFY_CARGOS: TuiStringHandler<CargoInterface> = (
   item: CargoInterface

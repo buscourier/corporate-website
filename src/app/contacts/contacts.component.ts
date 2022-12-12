@@ -8,6 +8,7 @@ import {
 import {FormControl} from '@angular/forms'
 import {Store} from '@ngrx/store'
 import {TuiDialogContext, TuiDialogService} from '@taiga-ui/core'
+import {tuiItemsHandlersProvider} from '@taiga-ui/kit'
 import {
   PolymorpheusComponent,
   PolymorpheusContent,
@@ -15,6 +16,7 @@ import {
 import {Observable, Subscription, take} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {ModalMapComponent} from '../shared/components/modal-map/modal-map.component'
+import {STRINGIFY_OFFICE} from '../shared/handlers/string-handlers'
 import {OfficeInterface} from '../shared/types/office.interface'
 import {
   isLargeScreenSelector,
@@ -33,6 +35,7 @@ import {
   selector: 'app-contacts',
   templateUrl: './contacts.component.html',
   styleUrls: ['./contacts.component.css'],
+  providers: [tuiItemsHandlersProvider({stringify: STRINGIFY_OFFICE})],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactsComponent implements OnInit {
@@ -49,8 +52,9 @@ export class ContactsComponent implements OnInit {
   isMobile = true
   isModalMode = false
   detailsOpened = false
-  city = new FormControl('')
   detailsModalSub: Subscription
+
+  office = new FormControl('')
 
   filterActions = [
     {
