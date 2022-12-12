@@ -12,8 +12,8 @@ export interface OfficeInterface {
   give: string
   delivery: string
   pickup: string
-  geo_x: string
-  geo_y: string
+  geo_x: number
+  geo_y: number
   pvz: string
   pvz_comment: string
 }

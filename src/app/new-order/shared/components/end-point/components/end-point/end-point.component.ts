@@ -332,12 +332,10 @@ export class EndPointComponent implements OnInit, OnDestroy {
       return
     }
 
-    const {geo_x, geo_y} = office
-
     this.dialogService
       .open<any>(new PolymorpheusComponent(ModalMapComponent, this.injector), {
         data: {
-          points: [{geo_x, geo_y}],
+          points: [office],
         },
         dismissible: true,
         closeable: true,

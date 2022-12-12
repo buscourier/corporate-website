@@ -20,14 +20,12 @@ import {
   filter,
   map,
   Observable,
-  of,
   Subscription,
   take,
 } from 'rxjs'
-import {concatAll, switchMap, tap, toArray} from 'rxjs/operators'
+import {tap} from 'rxjs/operators'
 import {ModalMapComponent} from '../shared/components/modal-map/modal-map.component'
 import {STRINGIFY_OFFICE} from '../shared/handlers/string-handlers'
-import {MapPointInterface} from '../shared/types/map-point.interface'
 import {OfficeInterface} from '../shared/types/office.interface'
 import {
   isLargeScreenSelector,
@@ -53,7 +51,6 @@ export class ContactsComponent implements OnInit {
   isOfficesLoading$: Observable<boolean>
   offices$: Observable<OfficeInterface[]>
   filteredOffices$: Observable<OfficeInterface[]>
-  mapPoints$: Observable<MapPointInterface[]>
   cities$: Observable<OfficeInterface[]>
   backendErrors$: Observable<string>
   xs$: Observable<boolean>
@@ -66,11 +63,6 @@ export class ContactsComponent implements OnInit {
 
   currentOffice = null
   isCurrentOfficeLoading = false
-
-  centralMapPoint = {
-    geo_x: 0,
-    geo_y: 0,
-  }
 
   mapZoom = 12
 
@@ -186,29 +178,10 @@ export class ContactsComponent implements OnInit {
           })
       }),
       delay(500),
-      tap(() => {
+      tap((offices: OfficeInterface[]) => {
         this.isFilterLoading = false
-      })
-    )
 
-    this.mapPoints$ = this.filteredOffices$.pipe(
-      filter(Boolean),
-      switchMap((offices: OfficeInterface[]) => {
-        return of(offices).pipe(
-          concatAll(),
-          map(({geo_x, geo_y}: OfficeInterface) => {
-            return {geo_x, geo_y}
-          }),
-          toArray()
-        )
-      }),
-      tap((points: MapPointInterface[]) => {
-        if (points.length) {
-          this.centralMapPoint.geo_x = Number(points[0].geo_x)
-          this.centralMapPoint.geo_y = Number(points[0].geo_y)
-        }
-
-        if (points.length > 4) {
+        if (offices.length > 4) {
           this.mapZoom = 7
         } else {
           this.mapZoom = 12
@@ -286,9 +259,11 @@ export class ContactsComponent implements OnInit {
     } else {
       this.detailsOpened = false
     }
+
+    this.currentOffice = null
+    this.mapZoom = 7
   }
 
-  //TODO: in contactsService map geo_x to Number(geo_x) and geo_y to Number(geo_y)
   showOnMap(isMobile: boolean, office: OfficeInterface) {
     if (isMobile) {
       this.dialogService
@@ -297,9 +272,7 @@ export class ContactsComponent implements OnInit {
           {
             data: {
               address: 'Address',
-              points: [
-                {geo_x: Number(office.geo_x), geo_y: Number(office.geo_y)},
-              ],
+              points: [{geo_x: office.geo_x, geo_y: office.geo_y}],
             },
             dismissible: true,
             closeable: false,
@@ -309,8 +282,6 @@ export class ContactsComponent implements OnInit {
         .pipe(take(1))
         .subscribe()
     } else {
-      this.centralMapPoint.geo_x = Number(office.geo_x)
-      this.centralMapPoint.geo_y = Number(office.geo_y)
       this.detailsOpened = false
 
       // if (this.detailsModalSub) {
@@ -318,7 +289,7 @@ export class ContactsComponent implements OnInit {
       // }
     }
 
-    this.mapZoom = 13
+    this.mapZoom = 15
   }
 
   setActiveFilter(id: string) {

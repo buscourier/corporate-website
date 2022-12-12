@@ -1,4 +1,4 @@
 export interface MapPointInterface {
-  geo_x: string
-  geo_y: string
+  geo_x: number
+  geo_y: number
 }

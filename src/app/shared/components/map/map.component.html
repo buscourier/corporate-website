@@ -1,5 +1,8 @@
 <ya-map
-  [center]="[latitude, longitude]"
+  [center]="[
+    latitude || (points && points[0].geo_x),
+    longitude || (points && points[0].geo_y)
+  ]"
   [zoom]="zoom"
   [options]="{
     avoidFractionalZoom: true,

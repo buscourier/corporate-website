@@ -1,6 +1,6 @@
 import {HttpClient} from '@angular/common/http'
 import {Injectable} from '@angular/core'
-import {filter, Observable} from 'rxjs'
+import {filter, map, Observable} from 'rxjs'
 import {concatAll, toArray} from 'rxjs/operators'
 import {environment} from '../../../../environments/environment'
 import {EndCityInterface} from '../../../shared/types/end-city.interface'
@@ -32,6 +32,13 @@ export class NewOrderService {
       concatAll(),
       filter((office: OfficeInterface) => {
         return office.office_id === id
+      }),
+      map((office: OfficeInterface) => {
+        return {
+          ...office,
+          geo_x: Number(office.geo_x),
+          geo_y: Number(office.geo_y),
+        }
       }),
       toArray()
     )

@@ -85,11 +85,13 @@
               *ngIf="((xs || sm) && activeTabIndex === 0) || !(xs || sm)"
               class="relative h-96 md:absolute md:inset-0 md:-z-10 md:h-full"
             >
-              <ng-container *tuiLet="mapPoints$ | async as mapPoints">
+              <ng-container
+                *tuiLet="filteredOffices$ | async as filteredOffices"
+              >
                 <app-map
-                  [latitude]="centralMapPoint.geo_x"
-                  [longitude]="centralMapPoint.geo_y"
-                  [points]="mapPoints"
+                  [latitude]="currentOffice && currentOffice.geo_x"
+                  [longitude]="currentOffice && currentOffice.geo_y"
+                  [points]="filteredOffices"
                   [zoom]="mapZoom"
                   (pointSelect)="yes($event)"
                 ></app-map>
@@ -115,6 +117,8 @@
                     >
                       <span
                         class="relative col-start-1 col-end-2 row-start-1 row-end-2 justify-self-start text-sm text-blue before:absolute before:bottom-0 before:left-0 before:w-full before:border-b before:border-dashed before:border-blue hover:cursor-pointer"
+                        [class.font-bold]="office === currentOffice"
+                        [class.before:border-b-2]="office === currentOffice"
                         (click)="showDetails(office, details)"
                         >{{ office.name }}</span
                       >
