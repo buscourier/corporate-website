@@ -93,7 +93,11 @@ export class ContactsComponent implements OnInit {
     }
   }
 
-  closeDetails() {
-    this.detailsOpened = false
+  closeDetails(observer = null) {
+    if (observer) {
+      observer.complete()
+    } else {
+      this.detailsOpened = false
+    }
   }
 }
