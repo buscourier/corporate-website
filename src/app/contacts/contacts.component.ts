@@ -217,6 +217,8 @@ export class ContactsComponent implements OnInit {
 
           if (this.detailsModalSub) {
             this.detailsModalSub.unsubscribe()
+            //when resize screen and modal destroyed
+            this.currentOffice = null
           }
         }
       })

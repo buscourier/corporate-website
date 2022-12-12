@@ -25,8 +25,11 @@ export class MapComponent {
   @Input() disableScrollZoom = false
   @Input() showHint = true
   @Input() showBalloon = false
+  @Input('showLoader') showLoaderProps = false
 
   @Output() pointSelect: EventEmitter<any> = new EventEmitter<any>()
+
+  isLoading = true
 
   placemarkProperties: ymaps.IPlacemarkProperties = {
     hintContent: 'Hint content',
@@ -46,7 +49,7 @@ export class MapComponent {
   }
 
   ready() {
-    console.log('ready!!!')
+    this.isLoading = false
   }
 
   selectPoint(point) {

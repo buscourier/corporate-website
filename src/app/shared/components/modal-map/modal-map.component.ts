@@ -31,6 +31,10 @@ export class ModalMapComponent {
     return !!this.context.data.showBalloon
   }
 
+  get showLoader(): boolean {
+    return !!this.context.data.showLoader
+  }
+
   close() {
     this.context.completeWith(1)
   }
