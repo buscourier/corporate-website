@@ -3,7 +3,7 @@ import {FormControl} from '@angular/forms'
 import {Store} from '@ngrx/store'
 import {TuiDialogContext, TuiDialogService} from '@taiga-ui/core'
 import {PolymorpheusContent} from '@tinkoff/ng-polymorpheus'
-import {Observable, take} from 'rxjs'
+import {Observable, Subscription, take} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {
   isLargeScreenSelector,
@@ -29,6 +29,7 @@ export class ContactsComponent implements OnInit {
   isModalMode = false
   detailsOpened = false
   city = new FormControl('')
+  detailsModalSub: Subscription
 
   constructor(
     private store: Store,
@@ -66,6 +67,10 @@ export class ContactsComponent implements OnInit {
       tap((ok: boolean) => {
         if (ok) {
           this.isModalMode = false
+
+          if (this.detailsModalSub) {
+            this.detailsModalSub.unsubscribe()
+          }
         }
       })
     )
@@ -78,9 +83,8 @@ export class ContactsComponent implements OnInit {
   showDetails(data, content: PolymorpheusContent<TuiDialogContext>) {
     if (this.isModalMode) {
       this.detailsOpened = false
-      console.log('this.isModalMode show details', this.isModalMode)
 
-      this.dialogService
+      this.detailsModalSub = this.dialogService
         .open(content, {
           size: 'm',
           closeable: false,
