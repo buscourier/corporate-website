@@ -19,7 +19,6 @@ import {
   filter,
   map,
   Observable,
-  startWith,
   Subscription,
   take,
 } from 'rxjs'
@@ -117,11 +116,37 @@ export class ContactsComponent implements OnInit {
             (office: OfficeInterface) => office.office_id === id
           )
         })
+      }),
+      map((offices: OfficeInterface[]) => {
+        const office = {
+          id: '0',
+          name: 'Все города',
+          address: '',
+          phone: '',
+          worktime: '',
+          desc: '',
+          office_id: '',
+          site_id: '',
+          home_id: '',
+          get: '',
+          give: '',
+          delivery: '',
+          pickup: '',
+          geo_x: '',
+          geo_y: '',
+          pvz: '',
+          pvz_comment: '',
+        }
+
+        return [office, ...offices]
+      }),
+      tap((offices: OfficeInterface[]) => {
+        this.city.setValue(offices[0])
       })
     )
 
     this.filteredOffices$ = combineLatest([
-      this.city.valueChanges.pipe(startWith(null)),
+      this.city.valueChanges,
       this.currentFilter$,
       this.offices$,
     ]).pipe(
@@ -135,7 +160,9 @@ export class ContactsComponent implements OnInit {
 
         return offices
           .filter((office) => {
-            return city ? office.office_id === city.office_id : office
+            return city.id !== '0'
+              ? office.office_id === city.office_id
+              : office
           })
           .filter((office) => {
             return filter ? office[filter] === '1' : office
