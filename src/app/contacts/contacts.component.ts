@@ -288,7 +288,8 @@ export class ContactsComponent implements OnInit {
     }
   }
 
-  showOnMap(isMobile) {
+  //TODO: in contactsService map geo_x to Number(geo_x) and geo_y to Number(geo_y)
+  showOnMap(isMobile: boolean, office: OfficeInterface) {
     if (isMobile) {
       this.dialogService
         .open<any>(
@@ -296,7 +297,9 @@ export class ContactsComponent implements OnInit {
           {
             data: {
               address: 'Address',
-              points: [{geo_x: 0, geo_y: 0}],
+              points: [
+                {geo_x: Number(office.geo_x), geo_y: Number(office.geo_y)},
+              ],
             },
             dismissible: true,
             closeable: false,
@@ -306,8 +309,16 @@ export class ContactsComponent implements OnInit {
         .pipe(take(1))
         .subscribe()
     } else {
-      console.log('not mobile')
+      this.centralMapPoint.geo_x = Number(office.geo_x)
+      this.centralMapPoint.geo_y = Number(office.geo_y)
+      this.detailsOpened = false
+
+      // if (this.detailsModalSub) {
+      //   this.detailsModalSub.unsubscribe()
+      // }
     }
+
+    this.mapZoom = 13
   }
 
   setActiveFilter(id: string) {
