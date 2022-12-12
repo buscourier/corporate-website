@@ -13,7 +13,7 @@ import {
   PolymorpheusComponent,
   PolymorpheusContent,
 } from '@tinkoff/ng-polymorpheus'
-import {Observable, Subscription, take} from 'rxjs'
+import {filter, map, Observable, Subscription, take} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {ModalMapComponent} from '../shared/components/modal-map/modal-map.component'
 import {STRINGIFY_OFFICE} from '../shared/handlers/string-handlers'
@@ -41,6 +41,7 @@ import {
 export class ContactsComponent implements OnInit {
   isOfficesLoading$: Observable<boolean>
   offices$: Observable<OfficeInterface[]>
+  cities$: Observable<OfficeInterface[]>
   backendErrors$: Observable<string>
   xs$: Observable<boolean>
   sm$: Observable<boolean>
@@ -54,7 +55,7 @@ export class ContactsComponent implements OnInit {
   detailsOpened = false
   detailsModalSub: Subscription
 
-  office = new FormControl('')
+  city = new FormControl('')
 
   filterActions = [
     {
@@ -91,6 +92,21 @@ export class ContactsComponent implements OnInit {
     this.isOfficesLoading$ = this.store.select(isOfficesLoadingSelector)
     this.offices$ = this.store.select(officesSelector)
     this.backendErrors$ = this.store.select(backendErrorsSelector)
+
+    this.cities$ = this.offices$.pipe(
+      filter(Boolean),
+      map((offices: OfficeInterface[]) => {
+        return [
+          ...new Set(
+            offices.map((office: OfficeInterface) => office.office_id)
+          ),
+        ].map((id: string) => {
+          return offices.find(
+            (office: OfficeInterface) => office.office_id === id
+          )
+        })
+      })
+    )
 
     this.xs$ = this.store.select(xsScreenSelector).pipe(
       tap((ok: boolean) => {

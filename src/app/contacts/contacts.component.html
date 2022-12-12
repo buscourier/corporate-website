@@ -65,17 +65,18 @@
             </div>
             <!--  select-->
             <div
+              *tuiLet="cities$ | async as cities"
               class="mb-7 md:col-start-1 md:col-end-2 md:row-start-2 md:row-end-3 md:mb-0"
             >
               <tui-loader [showLoader]="isOfficesLoading">
                 <tui-select
                   tuiTextfieldSize="m"
-                  [formControl]="office"
+                  [formControl]="city"
                   [tuiTextfieldLabelOutside]="true"
                 >
                   <tui-data-list-wrapper
                     *tuiDataList
-                    [items]="offices"
+                    [items]="cities"
                   ></tui-data-list-wrapper>
                 </tui-select>
               </tui-loader>
@@ -111,30 +112,33 @@
                         type="button"
                         appearance="icon"
                         icon="icons::get"
-                        tuiHint="Hello"
+                        tuiHint="Выдача грузов"
                         tuiHintAppearance="onDark"
                         size="xs"
-                        class="col-start-2 col-end-3 row-start-1 row-end-2"
+                        class="col-start-2 col-end-3 row-start-1 row-end-2 opacity-50"
+                        [class.opacity-100]="+office.get === 1"
                       ></button>
                       <button
                         tuiIconButton
                         type="button"
                         appearance="icon"
                         icon="icons::give"
-                        tuiHint="Hello"
+                        tuiHint="Прием грузов"
                         tuiHintAppearance="onDark"
                         size="xs"
-                        class="col-start-3 col-end-4 row-start-1 row-end-2"
+                        class="col-start-3 col-end-4 row-start-1 row-end-2 opacity-50"
+                        [class.opacity-100]="+office.give === 1"
                       ></button>
                       <button
                         tuiIconButton
                         type="button"
                         appearance="icon"
                         icon="icons::office"
-                        tuiHint="Hello"
+                        tuiHint="Офис"
                         tuiHintAppearance="onDark"
                         size="xs"
-                        class="col-start-4 col-end-5 row-start-1 row-end-2"
+                        class="col-start-4 col-end-5 row-start-1 row-end-2 opacity-50"
+                        [class.opacity-100]="+office.office_id === 1"
                       ></button>
                     </div>
                   </div>
