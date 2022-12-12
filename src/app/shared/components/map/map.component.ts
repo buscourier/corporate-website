@@ -44,7 +44,7 @@ export class MapComponent {
     console.log('ready!!!')
   }
 
-  go(point) {
+  selectPoint(point) {
     this.pointSelect.emit(point)
   }
 }
