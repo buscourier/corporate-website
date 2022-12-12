@@ -13,7 +13,16 @@ import {
   PolymorpheusComponent,
   PolymorpheusContent,
 } from '@tinkoff/ng-polymorpheus'
-import {filter, map, Observable, Subscription, take} from 'rxjs'
+import {
+  BehaviorSubject,
+  combineLatest,
+  filter,
+  map,
+  Observable,
+  startWith,
+  Subscription,
+  take,
+} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {ModalMapComponent} from '../shared/components/modal-map/modal-map.component'
 import {STRINGIFY_OFFICE} from '../shared/handlers/string-handlers'
@@ -41,12 +50,15 @@ import {
 export class ContactsComponent implements OnInit {
   isOfficesLoading$: Observable<boolean>
   offices$: Observable<OfficeInterface[]>
+  filteredOffices$: Observable<OfficeInterface[]>
   cities$: Observable<OfficeInterface[]>
   backendErrors$: Observable<string>
   xs$: Observable<boolean>
   sm$: Observable<boolean>
   md$: Observable<boolean>
   lg$: Observable<boolean>
+
+  currentFilter$ = new BehaviorSubject('location')
 
   activeTabIndex = 1
   activeFilter = null
@@ -55,7 +67,7 @@ export class ContactsComponent implements OnInit {
   detailsOpened = false
   detailsModalSub: Subscription
 
-  city = new FormControl('')
+  city = new FormControl(null)
 
   filterActions = [
     {
@@ -90,7 +102,7 @@ export class ContactsComponent implements OnInit {
 
   initializeValues() {
     this.isOfficesLoading$ = this.store.select(isOfficesLoadingSelector)
-    this.offices$ = this.store.select(officesSelector)
+    this.offices$ = this.store.select(officesSelector).pipe(filter(Boolean))
     this.backendErrors$ = this.store.select(backendErrorsSelector)
 
     this.cities$ = this.offices$.pipe(
@@ -105,6 +117,29 @@ export class ContactsComponent implements OnInit {
             (office: OfficeInterface) => office.office_id === id
           )
         })
+      })
+    )
+
+    this.filteredOffices$ = combineLatest([
+      this.city.valueChanges.pipe(startWith(null)),
+      this.currentFilter$,
+      this.offices$,
+    ]).pipe(
+      map(([city, currentFilter, offices]) => {
+        const filter =
+          currentFilter === 'location'
+            ? null
+            : currentFilter === 'office'
+            ? 'office_id'
+            : currentFilter
+
+        return offices
+          .filter((office) => {
+            return city ? office.office_id === city.office_id : office
+          })
+          .filter((office) => {
+            return filter ? office[filter] === '1' : office
+          })
       })
     )
 
@@ -198,6 +233,6 @@ export class ContactsComponent implements OnInit {
   }
 
   setActiveFilter(id: string) {
-    this.activeFilter = id
+    this.currentFilter$.next(id)
   }
 }

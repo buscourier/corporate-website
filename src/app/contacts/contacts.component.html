@@ -47,7 +47,7 @@
                 appearance="outline"
                 class="min-w-14 flex flex-grow flex-col items-center rounded-sm border px-3.5 pt-2.5 pb-3 transition-colors hover:border-yellow"
                 [ngClass]="
-                  action.id === activeFilter
+                  action.id === (currentFilter$ | async)
                     ? 'border-yellow bg-yellow'
                     : 'border-gray-400 bg-white'
                 "
@@ -95,7 +95,7 @@
                 <tui-scrollbar class="h-full">
                   <div class="pr-3">
                     <div
-                      *ngFor="let office of offices"
+                      *ngFor="let office of filteredOffices$ | async"
                       class="mb-5 grid grid-cols-[1fr_repeat(3,auto)] grid-rows-[repeat(2,auto)] items-center gap-1.5"
                     >
                       <span
