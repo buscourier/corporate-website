@@ -15,12 +15,19 @@ import {
 import {Observable, Subscription, take} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {ModalMapComponent} from '../shared/components/modal-map/modal-map.component'
+import {OfficeInterface} from '../shared/types/office.interface'
 import {
   isLargeScreenSelector,
   mdScreenSelector,
   smScreenSelector,
   xsScreenSelector,
 } from '../store/global/selectors'
+import {getOfficesAction} from './store/actions/get-offices.action'
+import {
+  backendErrorsSelector,
+  isOfficesLoadingSelector,
+  officesSelector,
+} from './store/selectors'
 
 @Component({
   selector: 'app-contacts',
@@ -29,6 +36,9 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactsComponent implements OnInit {
+  isOfficesLoading$: Observable<boolean>
+  offices$: Observable<OfficeInterface[]>
+  backendErrors$: Observable<string>
   xs$: Observable<boolean>
   sm$: Observable<boolean>
   md$: Observable<boolean>
@@ -70,9 +80,14 @@ export class ContactsComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeValues()
+    this.fetchData()
   }
 
   initializeValues() {
+    this.isOfficesLoading$ = this.store.select(isOfficesLoadingSelector)
+    this.offices$ = this.store.select(officesSelector)
+    this.backendErrors$ = this.store.select(backendErrorsSelector)
+
     this.xs$ = this.store.select(xsScreenSelector).pipe(
       tap((ok: boolean) => {
         if (ok) {
@@ -105,6 +120,10 @@ export class ContactsComponent implements OnInit {
         }
       })
     )
+  }
+
+  fetchData() {
+    this.store.dispatch(getOfficesAction())
   }
 
   setActiveTabIndex(index: number) {
