@@ -273,6 +273,7 @@ export class ContactsComponent implements OnInit {
             data: {
               points: [office],
               disableScrollZoom: true,
+              showHint: true,
             },
             dismissible: true,
             closeable: false,

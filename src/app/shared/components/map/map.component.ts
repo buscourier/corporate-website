@@ -23,6 +23,8 @@ export class MapComponent {
   @Input() gestureHandling: boolean
   @Input() scrollwheel: boolean
   @Input() disableScrollZoom = false
+  @Input() showHint = true
+  @Input() showBalloon = false
 
   @Output() pointSelect: EventEmitter<any> = new EventEmitter<any>()
 

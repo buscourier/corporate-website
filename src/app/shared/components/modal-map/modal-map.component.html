@@ -2,7 +2,7 @@
   <div
     class="absolute top-0 left-0 z-10 flex h-14 w-full items-center justify-between bg-white pl-4 shadow-sm"
   >
-    <b class="text-sm text-gray-600">{{ points[0].address }}</b>
+    <b class="text-sm text-gray-600">{{ points[0].name }}</b>
     <button
       type="button"
       tuiIconButton
@@ -16,7 +16,9 @@
     [latitude]="points[0].geo_x"
     [longitude]="points[0].geo_y"
     [points]="points"
-    [disableScrollZoom]="!!disableScrollZoom"
+    [disableScrollZoom]="disableScrollZoom"
+    [showHint]="showHint"
+    [showBalloon]="showBalloon"
     class="p-4"
   ></app-map>
 </ng-container>

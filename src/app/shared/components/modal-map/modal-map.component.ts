@@ -19,8 +19,16 @@ export class ModalMapComponent {
     return this.context.data.points
   }
 
-  get disableScrollZoom(): string {
+  get disableScrollZoom(): boolean {
     return this.context.data.disableScrollZoom
+  }
+
+  get showHint(): boolean {
+    return !!this.context.data.showHint
+  }
+
+  get showBalloon(): boolean {
+    return !!this.context.data.showBalloon
   }
 
   close() {
