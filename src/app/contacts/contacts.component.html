@@ -91,8 +91,14 @@
               *ngIf="((xs || sm) && activeTabIndex === 1) || !(xs || sm)"
               class="rounded-sm bg-white md:col-start-1 md:col-end-2 md:row-start-3 md:row-end-4 md:p-5 md:pr-2 md:shadow-md"
             >
-              <tui-loader [showLoader]="isOfficesLoading" class="h-full">
-                <tui-scrollbar class="h-full">
+              <tui-loader
+                [showLoader]="isOfficesLoading || isFilterLoading"
+                class="h-full"
+              >
+                <tui-scrollbar
+                  class="h-full"
+                  [class.opacity-0]="isOfficesLoading || isFilterLoading"
+                >
                   <div class="pr-3">
                     <div
                       *ngFor="let office of filteredOffices$ | async"
@@ -103,7 +109,7 @@
                         >{{ office.name }}</span
                       >
                       <p
-                        class="col-span-4 col-start-1 row-start-2 row-end-3 text-3xs"
+                        class="col-start-1 col-end-2 row-start-2 row-end-3 text-3xs"
                       >
                         {{ office.address }}
                       </p>

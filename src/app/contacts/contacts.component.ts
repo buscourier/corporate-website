@@ -16,6 +16,7 @@ import {
 import {
   BehaviorSubject,
   combineLatest,
+  delay,
   filter,
   map,
   Observable,
@@ -58,6 +59,7 @@ export class ContactsComponent implements OnInit {
   lg$: Observable<boolean>
 
   currentFilter$ = new BehaviorSubject('location')
+  isFilterLoading = false
 
   activeTabIndex = 1
   activeFilter = null
@@ -151,6 +153,8 @@ export class ContactsComponent implements OnInit {
       this.offices$,
     ]).pipe(
       map(([city, currentFilter, offices]) => {
+        this.isFilterLoading = true
+
         const filter =
           currentFilter === 'location'
             ? null
@@ -167,6 +171,10 @@ export class ContactsComponent implements OnInit {
           .filter((office) => {
             return filter ? office[filter] === '1' : office
           })
+      }),
+      delay(500),
+      tap(() => {
+        this.isFilterLoading = false
       })
     )
 
