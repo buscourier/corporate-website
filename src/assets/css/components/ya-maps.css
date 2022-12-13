@@ -4,3 +4,7 @@ ymaps[class*='copyright'] {
 ymaps[class*='map-copyrights-promo'] {
   @apply hidden;
 }
+
+[class*='ymaps-2'][class*='-ground-pane'] {
+  filter: grayscale(1);
+}

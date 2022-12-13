@@ -11,10 +11,14 @@
       copyrightProvidersVisible: false,
       copyrightUaVisible: false
     }"
-    [state]="{controls: ['zoomControl']}"
+    [state]="{controls: []}"
     (yawheel)="zoomScroll($event)"
     (ready)="ready()"
   >
+    <ya-control
+      type="ZoomControl"
+      [parameters]="zoomControlParameters"
+    ></ya-control>
     <ya-placemark
       *ngFor="let point of points"
       [geometry]="[point.geo_x, point.geo_y]"

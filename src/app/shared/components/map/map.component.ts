@@ -31,6 +31,15 @@ export class MapComponent {
 
   isLoading = true
 
+  zoomControlParameters: ymaps.control.IZoomControlParameters = {
+    options: {
+      position: {
+        bottom: 50,
+        right: 25,
+      },
+    },
+  }
+
   placemarkProperties: ymaps.IPlacemarkProperties = {
     hintContent: 'Hint content',
     balloonContent: 'Baloon content',
