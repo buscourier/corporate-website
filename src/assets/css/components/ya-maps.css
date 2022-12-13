@@ -6,5 +6,5 @@ ymaps[class*='map-copyrights-promo'] {
 }
 
 [class*='ymaps-2'][class*='-ground-pane'] {
-  filter: grayscale(1);
+  filter: grayscale(1) brightness(0.8);
 }
