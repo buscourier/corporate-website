@@ -24,6 +24,23 @@ import {
 import {ZoneTariffInterface} from './types/zone-tariff.interface'
 import {ZoneInterface} from './types/zone.interface'
 
+const ZoneId = {
+  'Зона 1': 1,
+  'Зона 2': 2,
+  'Зона 3': 3,
+  'Зона 4': 4,
+  'Зона 5': 5,
+  'Зона 6': 6,
+}
+
+const ParcelWeight = {
+  '0 - 20': 0,
+  '20 - 40': 1,
+  '40 - 60': 2,
+  '60 - 80': 3,
+  '80 - 100': 4,
+}
+
 @Component({
   selector: 'app-tariff',
   templateUrl: './tariff.component.html',
@@ -37,6 +54,9 @@ export class TariffComponent implements OnInit, AfterViewInit {
   cities$: Observable<StartCityInterface[]>
   zones$: Observable<ZoneInterface[]>
   zoneTariffs$: Observable<ZoneTariffInterface[]>
+  docsAndParcelsTariffs$: Observable<any>
+  autoDetailsTariffs$: Observable<any>
+  otherTariffs$: Observable<any>
   filteredCities$: Observable<StartCityInterface[]>
   backendErrors: Observable<string>
 
@@ -67,6 +87,71 @@ export class TariffComponent implements OnInit, AfterViewInit {
     this.zones$ = this.store.select(zonesSelector)
     this.zoneTariffs$ = this.store.select(zoneTariffsSelector)
     this.backendErrors = this.store.select(backendErrorsSelector)
+
+    this.autoDetailsTariffs$ = this.getZoneTariffs('Автозапчасти')
+    this.otherTariffs$ = this.getZoneTariffs('Другое')
+    this.docsAndParcelsTariffs$ = this.zoneTariffs$.pipe(
+      map((zones: ZoneTariffInterface[]) => {
+        return zones.filter((zone: ZoneTariffInterface) => {
+          return (
+            zone.main_type === 'Документы (формат А4)' ||
+            zone.main_type === 'Посылки'
+          )
+        })
+      }),
+      map((zones: ZoneTariffInterface[]) => {
+        return zones.map((zone: ZoneTariffInterface) => {
+          return {
+            name: zone.zone,
+            data: {
+              id: ZoneId[zone.id],
+              price: zone.price,
+              size: zone.size,
+              weight: zone.weight,
+              type: zone.type,
+            },
+          }
+        })
+      }),
+      map((zones: any) => {
+        const reduced = zones.reduce((acc, {name, data}) => {
+          acc[name] ??= {name: name, data: []}
+          acc[name].data.push(data)
+          return acc
+        }, {})
+
+        return Object.values(reduced)
+      }),
+      map((zones: any) => {
+        return zones.map(({name, data}) => {
+          const reduced = data.reduce((acc, {type, size, weight, price}) => {
+            acc[size] ??= {size: size, data: [null, null, null, null, null]}
+            acc[size].data.splice(ParcelWeight[weight], 1, {
+              type,
+              size,
+              weight,
+              price,
+            })
+            return acc
+          }, {})
+
+          return {name, data: Object.values(reduced)}
+        })
+      }),
+      map((zones: any) => {
+        return zones.map(({name, data}) => {
+          const lastItem = data.pop()
+
+          if (lastItem.size) {
+            data.push(lastItem)
+          } else {
+            data[0].docs = lastItem.data[0].price
+          }
+
+          return {name, data}
+        })
+      })
+    )
 
     this.filteredCities$ = combineLatest([
       this.region.valueChanges,
@@ -106,6 +191,33 @@ export class TariffComponent implements OnInit, AfterViewInit {
         })
       )
       .subscribe()
+  }
+
+  getZoneTariffs(type) {
+    return this.zoneTariffs$.pipe(
+      map((zones: ZoneTariffInterface[]) => {
+        return zones.filter((zone: ZoneTariffInterface) => {
+          return zone.main_type === type
+        })
+      }),
+      map((zones: ZoneTariffInterface[]) => {
+        return zones.map((zone: ZoneTariffInterface) => {
+          return {
+            name: zone.type,
+            data: {id: ZoneId[zone.zone], price: zone.price, name: zone.zone},
+          }
+        })
+      }),
+      map((zones: any) => {
+        const reduced = zones.reduce((acc, {name, data}) => {
+          acc[name] ??= {name, data: [null, null, null, null, null, null, null]}
+          acc[name].data.splice(data.id - 1, 1, data)
+          return acc
+        }, {})
+
+        return Object.values(reduced)
+      })
+    )
   }
 
   fetchData(): void {
