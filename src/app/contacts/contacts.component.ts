@@ -4,9 +4,11 @@ import {
   Inject,
   Injector,
   OnInit,
+  Self,
 } from '@angular/core'
 import {FormControl} from '@angular/forms'
 import {Store} from '@ngrx/store'
+import {TuiDestroyService, TuiScrollService} from '@taiga-ui/cdk'
 import {TuiDialogContext, TuiDialogService} from '@taiga-ui/core'
 import {tuiItemsHandlersProvider} from '@taiga-ui/kit'
 import {
@@ -23,6 +25,7 @@ import {
   startWith,
   Subscription,
   take,
+  takeUntil,
 } from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {ModalMapComponent} from '../shared/components/modal-map/modal-map.component'
@@ -65,7 +68,10 @@ const defaultOffice = {
   selector: 'app-contacts',
   templateUrl: './contacts.component.html',
   styleUrls: ['./contacts.component.css'],
-  providers: [tuiItemsHandlersProvider({stringify: STRINGIFY_OFFICE})],
+  providers: [
+    tuiItemsHandlersProvider({stringify: STRINGIFY_OFFICE}),
+    TuiDestroyService,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactsComponent implements OnInit {
@@ -86,6 +92,8 @@ export class ContactsComponent implements OnInit {
   isCurrentOfficeLoading = false
 
   mapZoom = 12
+  scrollTop = 150
+  duration = 300
 
   activeTabIndex = 1
   activeFilter = null
@@ -117,9 +125,13 @@ export class ContactsComponent implements OnInit {
 
   constructor(
     private store: Store,
+    @Self()
+    @Inject(TuiDestroyService)
+    private destroy$: TuiDestroyService,
     @Inject(TuiDialogService)
     private readonly dialogService: TuiDialogService,
-    @Inject(Injector) private readonly injector: Injector
+    @Inject(Injector) private readonly injector: Injector,
+    @Inject(TuiScrollService) private readonly scrollService: TuiScrollService
   ) {}
 
   ngOnInit(): void {
@@ -158,6 +170,9 @@ export class ContactsComponent implements OnInit {
       this.currentFilter$,
       this.offices$,
     ]).pipe(
+      tap(() => {
+        this.scroll()
+      }),
       map(([city, currentFilter, offices]) => {
         this.isFilterLoading = true
 
@@ -240,6 +255,7 @@ export class ContactsComponent implements OnInit {
     content: PolymorpheusContent<TuiDialogContext>
   ) {
     this.currentOffice = office
+    this.scroll()
 
     if (this.isModalMode) {
       this.detailsOpened = false
@@ -317,5 +333,12 @@ export class ContactsComponent implements OnInit {
     }
 
     return status
+  }
+
+  scroll() {
+    return this.scrollService
+      .scroll$(document.documentElement, this.scrollTop, 0, this.duration)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe()
   }
 }
