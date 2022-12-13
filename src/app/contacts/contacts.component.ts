@@ -20,6 +20,7 @@ import {
   filter,
   map,
   Observable,
+  startWith,
   Subscription,
   take,
 } from 'rxjs'
@@ -39,6 +40,26 @@ import {
   isOfficesLoadingSelector,
   officesSelector,
 } from './store/selectors'
+
+const defaultOffice = {
+  id: '0',
+  name: 'Все города',
+  address: '',
+  phone: '',
+  worktime: '',
+  desc: '',
+  office_id: '',
+  site_id: '',
+  home_id: '',
+  get: '',
+  give: '',
+  delivery: '',
+  pickup: '',
+  geo_x: '',
+  geo_y: '',
+  pvz: '',
+  pvz_comment: '',
+}
 
 @Component({
   selector: 'app-contacts',
@@ -125,27 +146,7 @@ export class ContactsComponent implements OnInit {
         })
       }),
       map((offices: OfficeInterface[]) => {
-        const office = {
-          id: '0',
-          name: 'Все города',
-          address: '',
-          phone: '',
-          worktime: '',
-          desc: '',
-          office_id: '',
-          site_id: '',
-          home_id: '',
-          get: '',
-          give: '',
-          delivery: '',
-          pickup: '',
-          geo_x: '',
-          geo_y: '',
-          pvz: '',
-          pvz_comment: '',
-        }
-
-        return [office, ...offices]
+        return [defaultOffice, ...offices]
       }),
       tap((offices: OfficeInterface[]) => {
         this.city.setValue(offices[0])
@@ -153,7 +154,7 @@ export class ContactsComponent implements OnInit {
     )
 
     this.filteredOffices$ = combineLatest([
-      this.city.valueChanges,
+      this.city.valueChanges.pipe(startWith(defaultOffice)),
       this.currentFilter$,
       this.offices$,
     ]).pipe(
@@ -231,6 +232,7 @@ export class ContactsComponent implements OnInit {
 
   setActiveTabIndex(index: number) {
     this.activeTabIndex = index
+    // this.city.updateValueAndValidity()
   }
 
   showDetails(

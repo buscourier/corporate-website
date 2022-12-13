@@ -101,6 +101,7 @@
             <div
               *ngIf="((xs || sm) && activeTabIndex === 1) || !(xs || sm)"
               class="rounded-sm bg-white md:col-start-1 md:col-end-2 md:row-start-3 md:row-end-4 md:p-5 md:pr-2 md:shadow-md"
+              [class.hidden]="xs && detailsOpened"
             >
               <tui-loader
                 [showLoader]="isOfficesLoading || isFilterLoading"
@@ -324,7 +325,7 @@
                 *ngIf="xs"
                 tuiButton
                 type="button"
-                class="mt-5 w-full"
+                class="mt-5 mb-5 w-full"
                 (click)="closeDetails()"
               >
                 Назад
