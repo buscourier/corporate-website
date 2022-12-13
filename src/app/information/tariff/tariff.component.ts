@@ -54,9 +54,9 @@ export class TariffComponent implements OnInit, AfterViewInit {
   cities$: Observable<StartCityInterface[]>
   zones$: Observable<ZoneInterface[]>
   zoneTariffs$: Observable<ZoneTariffInterface[]>
-  docsAndParcelsTariffs$: Observable<any>
-  autoDetailsTariffs$: Observable<any>
-  otherTariffs$: Observable<any>
+  docsAndParcelsZoneTariffs$: Observable<any>
+  autoDetailsZoneTariffs$: Observable<any>
+  otherZoneTariffs$: Observable<any>
   filteredCities$: Observable<StartCityInterface[]>
   backendErrors: Observable<string>
 
@@ -88,9 +88,10 @@ export class TariffComponent implements OnInit, AfterViewInit {
     this.zoneTariffs$ = this.store.select(zoneTariffsSelector)
     this.backendErrors = this.store.select(backendErrorsSelector)
 
-    this.autoDetailsTariffs$ = this.getZoneTariffs('Автозапчасти')
-    this.otherTariffs$ = this.getZoneTariffs('Другое')
-    this.docsAndParcelsTariffs$ = this.zoneTariffs$.pipe(
+    this.autoDetailsZoneTariffs$ = this.getZoneTariffs('Автозапчасти')
+    this.otherZoneTariffs$ = this.getZoneTariffs('Другое')
+    this.docsAndParcelsZoneTariffs$ = this.zoneTariffs$.pipe(
+      filter(Boolean),
       map((zones: ZoneTariffInterface[]) => {
         return zones.filter((zone: ZoneTariffInterface) => {
           return (
@@ -195,6 +196,7 @@ export class TariffComponent implements OnInit, AfterViewInit {
 
   getZoneTariffs(type) {
     return this.zoneTariffs$.pipe(
+      filter(Boolean),
       map((zones: ZoneTariffInterface[]) => {
         return zones.filter((zone: ZoneTariffInterface) => {
           return zone.main_type === type

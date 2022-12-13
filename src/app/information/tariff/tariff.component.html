@@ -34,6 +34,115 @@
       </ng-template>
     </div>
   </div>
+  <ng-container *ngIf="docsAndParcelsZoneTariffs$ | async as zones">
+    <h2 class="title title--md">Документы и грузы</h2>
+
+    <div class="table">
+      <div class="table__scroll">
+        <table class="table__content">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Габариты</th>
+              <th>Документы</th>
+              <th>До 20 кг</th>
+              <th>20 - 40 кг</th>
+              <th>40 - 60 кг</th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let zone of zones">
+            <tr>
+              <td [rowSpan]="zone.data.length">
+                <b class="table__label">{{ zone.name }}</b>
+              </td>
+              <td colspan="7">
+                <div class="table--inner table">
+                  <table class="table__content">
+                    <tr *ngFor="let item of zone.data">
+                      <td>до {{ item.size }} см</td>
+                      <td>
+                        {{ item.docs }}
+                      </td>
+                      <ng-container
+                        *ngFor="let data of item.data; let i = index"
+                      >
+                        <td *ngIf="i < 3">
+                          {{ data ? data.price : '&#8212;' }}
+                        </td>
+                      </ng-container>
+                    </tr>
+                  </table>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="autoDetailsZoneTariffs$ | async as zones">
+    <h2 class="title title--md">Автозапчасти</h2>
+
+    <div class="table--other table">
+      <div class="table__scroll">
+        <table class="table__content">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Зона 1</th>
+              <th>Зона 2</th>
+              <th>Зона 3</th>
+              <th>Зона 4</th>
+              <th>Зона 5</th>
+              <th>Зона 6</th>
+              <th>Зона 7</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let zone of zones">
+              <td>
+                <b>{{ zone.name }}</b>
+              </td>
+              <td *ngFor="let item of zone.data">
+                {{ item ? item.price : '&#8212;' }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="otherZoneTariffs$ | async as zones">
+    <h2 class="title title--md">Другое</h2>
+
+    <div class="table--other table">
+      <div class="table__scroll">
+        <table class="table__content">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Зона 1</th>
+              <th>Зона 2</th>
+              <th>Зона 3</th>
+              <th>Зона 4</th>
+              <th>Зона 5</th>
+              <th>Зона 6</th>
+              <th>Зона 7</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let zone of zones">
+              <td>
+                <b>{{ zone.name }}</b>
+              </td>
+              <td *ngFor="let item of zone.data">
+                {{ item ? item.price : '&#8212;' }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </ng-container>
 </div>
-{{ zones$ | async }}
-{{ zoneTariffs$ | async }}
