@@ -5,6 +5,7 @@ import {EffectsModule} from '@ngrx/effects'
 import {StoreModule} from '@ngrx/store'
 import {TuiCurrencyPipeModule} from '@taiga-ui/addon-commerce'
 import {TuiLetModule} from '@taiga-ui/cdk'
+import {TuiLoaderModule} from '@taiga-ui/core'
 import {TuiRadioListModule} from '@taiga-ui/kit'
 import {CitiesService} from 'src/app/shared/services/cities.service'
 import {TariffService} from './services/tariff.service'
@@ -31,6 +32,7 @@ import {TariffComponent} from './tariff.component'
     ]),
     TuiLetModule,
     TuiCurrencyPipeModule,
+    TuiLoaderModule,
   ],
   providers: [CitiesService, TariffService],
 })

@@ -34,6 +34,16 @@
       </ng-template>
     </div>
   </div>
+  <tui-loader [showLoader]="isZonesLoading$ | async" class="mb-22">
+    <div
+      *ngFor="let zone of zones$ | async"
+      class="mb-2.5 rounded-sm bg-yellow p-7"
+    >
+      <b class="mb-3 block text-xl font-medium">{{ zone.zone }}</b>
+      <p class="text-xs">{{ zone.cities }}</p>
+    </div>
+  </tui-loader>
+
   <ng-container *ngIf="docsAndParcelsZoneTariffs$ | async as zones">
     <h2 class="mb-10 font-heading text-xl font-bold lg:text-2xl">
       Документы и грузы
