@@ -87,3 +87,7 @@ tui-checkbox-labeled[data-size='m'] .t-content {
   @apply !ml-0 !mr-4 mt-4 min-w-[135px] sm:mt-0 sm:mr-6 sm:min-w-min md:mr-4 md:mt-4 md:min-w-[135px] lg:mt-0 lg:mr-6
   lg:min-w-min;
 }
+
+/*tui-radio-list.tariff-cities > [data-tui-host-orientation='horizontal'] .t-group {*/
+/*  @apply !pt-0*/
+/*}*/
