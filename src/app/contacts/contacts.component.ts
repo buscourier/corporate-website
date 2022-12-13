@@ -298,4 +298,18 @@ export class ContactsComponent implements OnInit {
   setActiveFilter(id: string) {
     this.currentFilter$.next(id)
   }
+
+  getOfficeStatus(currentOffice: any) {
+    let status = ''
+
+    if (currentOffice.get === '1' && currentOffice.give === '1') {
+      status = 'Офис принимает и выдает грузы'
+    } else if (currentOffice.get === '1') {
+      status = 'Офис только выдает грузы'
+    } else if (currentOffice.give === '1') {
+      status = 'Офис только принимает грузы'
+    }
+
+    return status
+  }
 }
