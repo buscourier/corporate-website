@@ -19,3 +19,23 @@ export const backendErrorsSelector = createSelector(
   tariffsFeatureSelector,
   (state: TariffsStateInterface) => state.backendErrors
 )
+
+export const isZonesLoadingSelector = createSelector(
+  tariffsFeatureSelector,
+  (state: TariffsStateInterface) => state.isZonesLoading
+)
+
+export const zonesSelector = createSelector(
+  tariffsFeatureSelector,
+  (state: TariffsStateInterface) => state.zones
+)
+
+export const isZoneTariffsLoadingSelector = createSelector(
+  tariffsFeatureSelector,
+  (state: TariffsStateInterface) => state.isZoneTariffsLoading
+)
+
+export const zoneTariffsSelector = createSelector(
+  tariffsFeatureSelector,
+  (state: TariffsStateInterface) => state.zoneTariffs
+)

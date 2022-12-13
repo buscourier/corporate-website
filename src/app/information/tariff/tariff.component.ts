@@ -6,15 +6,23 @@ import {
 } from '@angular/core'
 import {FormControl} from '@angular/forms'
 import {Store} from '@ngrx/store'
-import {combineLatest, map, Observable} from 'rxjs'
+import {combineLatest, filter, map, Observable} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {StartCityInterface} from 'src/app/shared/types/start-city.interface'
 import {getCitiesAction} from './store/actions/get-cities.action'
+import {getZoneTariffsAction} from './store/actions/get-zone-tariffs.action'
+import {getZonesAction} from './store/actions/get-zones.action'
 import {
   backendErrorsSelector,
   citiesSelector,
   isCitiesLoadingSelector,
+  isZonesLoadingSelector,
+  isZoneTariffsLoadingSelector,
+  zonesSelector,
+  zoneTariffsSelector,
 } from './store/selectors'
+import {ZoneTariffInterface} from './types/zone-tariff.interface'
+import {ZoneInterface} from './types/zone.interface'
 
 @Component({
   selector: 'app-tariff',
@@ -24,7 +32,11 @@ import {
 })
 export class TariffComponent implements OnInit, AfterViewInit {
   isCitiesLoading$: Observable<boolean>
+  isZonesLoading$: Observable<boolean>
+  isZoneTariffsLoading$: Observable<boolean>
   cities$: Observable<StartCityInterface[]>
+  zones$: Observable<ZoneInterface[]>
+  zoneTariffs$: Observable<ZoneTariffInterface[]>
   filteredCities$: Observable<StartCityInterface[]>
   backendErrors: Observable<string>
 
@@ -49,7 +61,11 @@ export class TariffComponent implements OnInit, AfterViewInit {
 
   initializeValues(): void {
     this.isCitiesLoading$ = this.store.select(isCitiesLoadingSelector)
+    this.isZonesLoading$ = this.store.select(isZonesLoadingSelector)
+    this.isZoneTariffsLoading$ = this.store.select(isZoneTariffsLoadingSelector)
     this.cities$ = this.store.select(citiesSelector)
+    this.zones$ = this.store.select(zonesSelector)
+    this.zoneTariffs$ = this.store.select(zoneTariffsSelector)
     this.backendErrors = this.store.select(backendErrorsSelector)
 
     this.filteredCities$ = combineLatest([
@@ -79,6 +95,17 @@ export class TariffComponent implements OnInit, AfterViewInit {
         this.city.setValue(cities[0])
       })
     )
+
+    this.city.valueChanges
+      .pipe(
+        filter(Boolean),
+        tap((city: StartCityInterface) => {
+          //TODO maybe switch map?
+          this.store.dispatch(getZonesAction({id: city.site_id}))
+          this.store.dispatch(getZoneTariffsAction({id: city.site_id}))
+        })
+      )
+      .subscribe()
   }
 
   fetchData(): void {
