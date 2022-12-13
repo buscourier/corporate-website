@@ -175,15 +175,15 @@
             </div>
             <div
               *ngIf="!md"
-              class="mt-9 mb-14 grid grid-cols-1 gap-2.5 rounded-sm bg-yellow pt-4 pr-7 pb-6 pl-5 shadow-xl transition-all lg:col-span-3 lg:col-start-3 lg:row-start-1 lg:row-end-3 lg:mt-0 lg:mb-0"
+              class="mt-9 mb-14 flex max-w-[430px] flex-wrap gap-2 self-start rounded-sm bg-yellow pt-4 pr-7 pb-6 pl-5 shadow-xl transition-all lg:col-span-3 lg:col-start-3 lg:row-start-1 lg:row-end-3 lg:mt-0 lg:mb-0"
             >
-              <p>
+              <p class="mb-0.5 basis-full">
                 Единая справочная
                 <span class="lg:hidden xl:inline-block"
                   >для всего Приморского края</span
                 >:
               </p>
-              <a href="tel:+7(423) 205-86-27">
+              <a href="tel:+7(423) 205-86-27" class="mr-4">
                 <tui-svg
                   src="icons::headphone"
                   class="mr-2.5 !h-[16px] !w-[19px]"
@@ -258,7 +258,7 @@
                       </p>
                       <span
                         class="relative col-start-2 col-end-3 row-start-2 row-end-3 justify-self-start text-gray-700 before:absolute before:left-0 before:bottom-0 before:w-full before:border-b before:border-dashed before:border-gray-700 hover:cursor-pointer"
-                        (click)="showOnMap(xs || sm, currentOffice)"
+                        (click)="showOnMap(xs || sm || md, currentOffice)"
                         >Посмотреть на карте</span
                       >
                     </div>
