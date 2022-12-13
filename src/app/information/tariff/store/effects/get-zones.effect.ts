@@ -1,7 +1,7 @@
 import {HttpErrorResponse} from '@angular/common/http'
 import {Injectable} from '@angular/core'
 import {Actions, createEffect, ofType} from '@ngrx/effects'
-import {catchError, map, of, switchMap} from 'rxjs'
+import {catchError, delay, map, of, switchMap} from 'rxjs'
 import {TariffService} from '../../services/tariff.service'
 import {ZoneInterface} from '../../types/zone.interface'
 import {
@@ -17,6 +17,7 @@ export class GetZonesEffect {
   getZones = createEffect(() =>
     this.actions$.pipe(
       ofType(getZonesAction),
+      delay(600),
       switchMap(({id}) =>
         this.service.getZones(id).pipe(
           map((zones: ZoneInterface[]) => getZonesSuccessAction({zones})),

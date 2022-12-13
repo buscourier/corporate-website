@@ -88,6 +88,10 @@ tui-checkbox-labeled[data-size='m'] .t-content {
   lg:min-w-min;
 }
 
-/*tui-radio-list.tariff-cities > [data-tui-host-orientation='horizontal'] .t-group {*/
-/*  @apply !pt-0*/
-/*}*/
+.tariff-cities[data-tui-host-orientation='horizontal'] .t-group {
+  @apply pt-0 gap-3 !grid grid-cols-1 gap-3 sm:grid-cols-[auto_1fr] sm:gap-x-10
+}
+
+.tariff-cities[data-tui-host-orientation='horizontal'] .t-group tui-radio-labeled {
+  @apply mt-0 !mr-0
+}
