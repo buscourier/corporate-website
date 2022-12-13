@@ -1,8 +1,8 @@
 <tui-loader [showLoader]="isLoading" class="h-full">
   <ya-map
     [center]="[
-      latitude || (points && points[0].geo_x),
-      longitude || (points && points[0].geo_y)
+      latitude || (points && points.length && points[0].geo_x) || 0,
+      longitude || (points && points.length && points[0].geo_y) || 0
     ]"
     [zoom]="zoom"
     [options]="{
