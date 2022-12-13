@@ -35,11 +35,13 @@
     </div>
   </div>
   <ng-container *ngIf="docsAndParcelsZoneTariffs$ | async as zones">
-    <h2 class="title title--md">Документы и грузы</h2>
+    <h2 class="mb-10 font-heading text-xl font-bold lg:text-2xl">
+      Документы и грузы
+    </h2>
 
-    <div class="table">
-      <div class="table__scroll">
-        <table class="table__content">
+    <div class="relative mb-22">
+      <div class="overflow-x-auto">
+        <table>
           <thead>
             <tr>
               <th></th>
@@ -53,21 +55,30 @@
           <tbody *ngFor="let zone of zones">
             <tr>
               <td [rowSpan]="zone.data.length">
-                <b class="table__label">{{ zone.name }}</b>
+                <b class="block rounded-sm bg-yellow p-4 text-center text-sm">{{
+                  zone.name
+                }}</b>
               </td>
               <td colspan="7">
-                <div class="table--inner table">
-                  <table class="table__content">
+                <div class="table-inner">
+                  <table>
                     <tr *ngFor="let item of zone.data">
                       <td>до {{ item.size }} см</td>
                       <td>
-                        {{ item.docs }}
+                        {{
+                          item.docs | currency: 'RUB':'symbol-narrow':'1.0':'ru'
+                        }}
                       </td>
                       <ng-container
                         *ngFor="let data of item.data; let i = index"
                       >
                         <td *ngIf="i < 3">
-                          {{ data ? data.price : '&#8212;' }}
+                          {{
+                            data
+                              ? (data.price
+                                | currency: 'RUB':'symbol-narrow':'1.0':'ru')
+                              : '&#8212;'
+                          }}
                         </td>
                       </ng-container>
                     </tr>
@@ -80,12 +91,15 @@
       </div>
     </div>
   </ng-container>
+
   <ng-container *ngIf="autoDetailsZoneTariffs$ | async as zones">
-    <h2 class="title title--md">Автозапчасти</h2>
+    <h2 class="mb-10 font-heading text-xl font-bold lg:text-2xl">
+      Автозапчасти
+    </h2>
 
-    <div class="table--other table">
-      <div class="table__scroll">
-        <table class="table__content">
+    <div class="relative mb-22">
+      <div class="overflow-x-auto">
+        <table class="other">
           <thead>
             <tr>
               <th></th>
@@ -104,7 +118,11 @@
                 <b>{{ zone.name }}</b>
               </td>
               <td *ngFor="let item of zone.data">
-                {{ item ? item.price : '&#8212;' }}
+                {{
+                  item
+                    ? (item.price | currency: 'RUB':'symbol-narrow':'1.0':'ru')
+                    : '&#8212;'
+                }}
               </td>
             </tr>
           </tbody>
@@ -112,13 +130,12 @@
       </div>
     </div>
   </ng-container>
-
   <ng-container *ngIf="otherZoneTariffs$ | async as zones">
-    <h2 class="title title--md">Другое</h2>
+    <h2 class="mb-10 font-heading text-xl font-bold lg:text-2xl">Другое</h2>
 
-    <div class="table--other table">
-      <div class="table__scroll">
-        <table class="table__content">
+    <div class="relative mb-22">
+      <div class="overflow-x-auto">
+        <table class="other">
           <thead>
             <tr>
               <th></th>
@@ -145,4 +162,14 @@
       </div>
     </div>
   </ng-container>
+
+  <p class="text-xs text-gray-700">
+    * <b>Документы</b> – это папка или файл с бумагой не более формата А4 и
+    толщиной до 1,5 см без каких-либо сторонних вложений: флешки, карты и т.д.
+  </p>
+  <p class="mb-20 text-xs text-gray-700">
+    * <b>Габаритная посылка</b> – это груз до 20 кг и с суммой длин трёх сторон
+    не более 130 см (30х30х70 см). Крупногабаритные посылки рассчитываются на
+    месте при приёме.
+  </p>
 </div>

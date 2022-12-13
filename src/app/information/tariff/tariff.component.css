@@ -1,0 +1,80 @@
+table {
+  @apply w-full border-collapse whitespace-normal whitespace-nowrap xl:min-w-full;
+  /*@apply min-w-[650px];*/
+}
+
+th,
+td {
+  @apply min-w-[60px] p-2.5 text-xs;
+}
+
+th:not(:first-child),
+td:not(:first-child) {
+  @apply text-center;
+}
+
+th:first-child,
+td:first-child {
+  @apply pr-8;
+}
+
+th {
+  @apply text-sm;
+}
+
+th:not(:first-child) {
+  @apply border-b-2 border-yellow text-center;
+}
+
+tr:nth-child(even) {
+  @apply bg-gray-100;
+}
+
+td[colspan='7'] {
+  @apply /*padding: 5px
+  0;*/ px-1 py-0;
+}
+
+.table-inner tr:only-child {
+  background: #f3f1f1;
+}
+
+.table-inner th:first-child,
+.table-inner td:first-child {
+  @apply pr-2.5;
+}
+
+table.other td,
+table.other th {
+  @apply pt-3 pb-3;
+}
+
+table.other td:first-child,
+table.other th:first-child {
+  @apply pr-2.5;
+}
+
+table.other th:not(:first-child) {
+  @apply border-0 bg-yellow;
+}
+
+table.other th:nth-of-type(2) {
+  @apply rounded-tl-sm rounded-bl-sm;
+}
+
+table.other th:last-child {
+  @apply rounded-tr-sm rounded-br-sm;
+}
+
+.scroll-shadow::after {
+  @apply /*content: '';*/ /*position: absolute;*/ /*top: 0;*/
+    /*right: 0;*/ /*width: 80px;*/
+   /*height: 100%;*/
+   /*background: transparent;*/
+   /*background: linear-gradient(90deg,
+   transparent 20%,
+   rgba($white-color, 0.9)
+   80%);*/ after:absolute
+   after:top-0 after:right-0
+   after:h-full after:w-20 after:bg-transparent after:bg-gradient-to-r after:from-transparent after:to-white xl:hidden;
+}

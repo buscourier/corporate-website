@@ -1,3 +1,5 @@
+import {registerLocaleData} from '@angular/common'
+import ruLocale from '@angular/common/locales/ru'
 import {NgModule} from '@angular/core'
 import {BrowserModule} from '@angular/platform-browser'
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
@@ -31,6 +33,8 @@ const mapConfig: YaConfig = {
   apikey: 'be640658-9c20-46d8-ab54-555efd7fc3ee',
   lang: 'ru_RU',
 }
+
+registerLocaleData(ruLocale, 'ru')
 
 @NgModule({
   declarations: [AppComponent],

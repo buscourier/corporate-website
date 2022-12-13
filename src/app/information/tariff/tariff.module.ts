@@ -3,6 +3,7 @@ import {NgModule} from '@angular/core'
 import {ReactiveFormsModule} from '@angular/forms'
 import {EffectsModule} from '@ngrx/effects'
 import {StoreModule} from '@ngrx/store'
+import {TuiCurrencyPipeModule} from '@taiga-ui/addon-commerce'
 import {TuiLetModule} from '@taiga-ui/cdk'
 import {TuiRadioListModule} from '@taiga-ui/kit'
 import {CitiesService} from 'src/app/shared/services/cities.service'
@@ -29,6 +30,7 @@ import {TariffComponent} from './tariff.component'
       GetZoneTariffsEffect,
     ]),
     TuiLetModule,
+    TuiCurrencyPipeModule,
   ],
   providers: [CitiesService, TariffService],
 })
