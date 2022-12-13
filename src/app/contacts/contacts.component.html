@@ -305,10 +305,12 @@
                     </div>
                   </div>
                   <div>
-                    <div class="mb-6 max-w-sm">
+                    <div class="mb-6">
                       <app-img
-                        class="w-full"
-                        src="/assets/images/index/images-box/img-2"
+                        class="h-60 w-full rounded-sm object-cover lg:h-48"
+                        [src]="
+                          '/assets/images/contacts/offices/' + currentOffice.id
+                        "
                       ></app-img>
                     </div>
                     <p class="text-xs">
