@@ -7,5 +7,39 @@
       Вам доступна вся история движения посылки. Чтобы воспользоваться поиском,
       введите номер вашего заказа и нажмите кнопку “Найти посылку”.
     </p>
+
+    <ng-container *tuiLet="isStatusesLoading$ | async as isStatusesLoading">
+      <form
+        [formGroup]="form"
+        class="grid grid-cols-[1fr_270px] gap-4"
+        (ngSubmit)="onSubmit()"
+      >
+        <tui-input
+          tuiTextfieldSize="m"
+          [formControl]="orderNumber"
+          [tuiTextfieldLabelOutside]="true"
+        >
+          <input tuiTextfield type="text" />
+        </tui-input>
+        <button
+          tuiButton
+          type="submit"
+          size="m"
+          [showLoader]="isStatusesLoading"
+        >
+          Найти посылку
+        </button>
+        <div>
+          <span><sup>*</sup>7 символов</span>
+          <span>Пример: 878581</span>
+        </div>
+      </form>
+
+      <tui-loader [showLoader]="isStatusesLoading">
+        <div [class.opacity-0]="isStatusesLoading">
+          {{ statuses$ | async }}
+        </div>
+      </tui-loader>
+    </ng-container>
   </div>
 </div>

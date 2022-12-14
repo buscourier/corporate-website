@@ -182,6 +182,7 @@ export class TariffComponent implements OnInit, AfterViewInit {
       })
     )
 
+    //TODO: need unsubscribe
     this.city.valueChanges
       .pipe(
         filter(Boolean),
