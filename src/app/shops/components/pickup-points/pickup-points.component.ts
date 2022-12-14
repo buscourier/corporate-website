@@ -2,6 +2,7 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
 import {Store} from '@ngrx/store'
 import {filter, map, Observable, of, switchMap} from 'rxjs'
 import {concatAll, tap, toArray} from 'rxjs/operators'
+import {MapPointInterface} from 'src/app/shared/types/map-point.interface'
 import {OfficeInterface} from '../../../shared/types/office.interface'
 import {getDepartmentsAction} from './store/actions/get-departments.action'
 import {
@@ -10,11 +11,19 @@ import {
   isDepartmentsLoadingSelector,
 } from './store/selectors'
 
+interface DepartmentInterface {
+  office_id: string
+  name: string
+  coords: MapPointInterface[]
+  info: Array<{type: string; text: string}>
+  pvz: ''
+}
+
 interface PickupPointsInterface {
-  IML: OfficeInterface[]
-  HERMES: OfficeInterface[]
-  CSE: OfficeInterface[]
-  Boxberry: OfficeInterface[]
+  IML: DepartmentInterface[]
+  HERMES: DepartmentInterface[]
+  CSE: DepartmentInterface[]
+  Boxberry: DepartmentInterface[]
 }
 
 const pickupPoints = ['IML', 'HERMES', 'CSE', 'Boxberry']
@@ -48,16 +57,59 @@ export class PickupPointsComponent implements OnInit {
           filter((department: OfficeInterface) => {
             return department.pvz !== null
           }),
-          toArray()
+          map((department: OfficeInterface) => {
+            return {
+              office_id: department.office_id,
+              name: department.name,
+              coords: [
+                {
+                  geo_x: department.geo_x,
+                  geo_y: department.geo_y,
+                },
+              ],
+              info: [
+                [
+                  {
+                    type: 'Адрес:',
+                    text: department.address,
+                  },
+                  {
+                    type: 'Режим работы:',
+                    text:
+                      JSON.parse(department.pvz_comment)['this.id'] ||
+                      department.worktime,
+                  },
+                ],
+              ],
+              pvz: department.pvz,
+            }
+          }),
+          toArray(),
+          map((departments: any) => {
+            const reduced = departments.splice(0, 3).reduce(
+              (obj, department) => {
+                return {
+                  office_id: department.office_id,
+                  name: 'Владивосток',
+                  coords: [...obj.coords, ...department.coords],
+                  info: [...obj.info, ...department.info],
+                  pvz: department.pvz,
+                }
+              },
+              {office_id: '', name: '', coords: [], info: [], pvz: ''}
+            )
+
+            return [reduced, ...departments]
+          })
         )
       }),
-      map((departments: OfficeInterface[]) => {
+      map((departments: DepartmentInterface[]) => {
         return pickupPoints.reduce(
           (acc, point: string) => {
             return {
               ...acc,
               [point]: departments.filter(
-                (office: OfficeInterface) => JSON.parse(office.pvz)[point]
+                (office: any) => JSON.parse(office.pvz)[point]
               ),
             }
           },
