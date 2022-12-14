@@ -37,7 +37,27 @@
 
       <tui-loader [showLoader]="isStatusesLoading">
         <div [class.opacity-0]="isStatusesLoading">
-          {{ statuses$ | async }}
+          <ul *ngIf="statuses$ | async as statuses" class="timeline">
+            <li class="timeline-item" *ngFor="let status of statuses">
+              <time
+                class="timeline-meta col-start-3 col-end-4 row-start-1 row-end-2 mr-[5px] text-gray-500"
+              >
+                {{ formatDate(status.serverdate) }}
+              </time>
+              <div
+                class="timeline-meta col-start-4 col-end-5 row-start-1 row-end-2"
+              >
+                Заказ № {{ orderNumber.value }}
+              </div>
+              <div
+                class="timeline-status timeline-status--{{
+                  Status[status.charcode]
+                }}"
+              >
+                {{ status.lk_name }}
+              </div>
+            </li>
+          </ul>
         </div>
       </tui-loader>
     </ng-container>
