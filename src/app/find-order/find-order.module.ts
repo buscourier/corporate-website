@@ -7,6 +7,7 @@ import {TuiLetModule} from '@taiga-ui/cdk'
 import {
   TuiButtonModule,
   TuiLoaderModule,
+  TuiSvgModule,
   TuiTextfieldControllerModule,
 } from '@taiga-ui/core'
 import {TuiInputModule} from '@taiga-ui/kit'
@@ -16,6 +17,7 @@ import {FindOrderService} from './services/find-order.service'
 import {GetStatusesEffect} from './store/effects/get-statuses.effect'
 import {reducer} from './store/reducer'
 import {FIND_ORDER_FEATURE} from './store/state'
+import {ImgModule} from '../shared/components/img/img.module'
 
 @NgModule({
   declarations: [FindOrderComponent],
@@ -30,6 +32,8 @@ import {FIND_ORDER_FEATURE} from './store/state'
     EffectsModule.forFeature([GetStatusesEffect]),
     TuiLoaderModule,
     TuiLetModule,
+    ImgModule,
+    TuiSvgModule,
   ],
   providers: [FindOrderService],
 })
