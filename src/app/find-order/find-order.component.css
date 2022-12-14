@@ -1,5 +1,5 @@
 .timeline {
-  @apply mt-6 mb-16 border-t border-gray-300 pt-10;
+  @apply mt-6 border-t border-gray-300 pt-10;
 }
 
 .timeline-item {
