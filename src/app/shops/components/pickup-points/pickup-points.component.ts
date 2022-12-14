@@ -14,7 +14,7 @@ import {
 interface DepartmentInterface {
   office_id: string
   name: string
-  coords: MapPointInterface[]
+  mapPoints: MapPointInterface[]
   info: Array<{type: string; text: string}>
   pvz: ''
 }
@@ -40,6 +40,8 @@ export class PickupPointsComponent implements OnInit {
   points$: Observable<PickupPointsInterface>
   backendErrors$: Observable<string>
 
+  currentMapPoints: MapPointInterface[] = []
+
   constructor(private store: Store) {}
 
   ngOnInit(): void {
@@ -61,7 +63,7 @@ export class PickupPointsComponent implements OnInit {
             return {
               office_id: department.office_id,
               name: department.name,
-              coords: [
+              mapPoints: [
                 {
                   geo_x: department.geo_x,
                   geo_y: department.geo_y,
@@ -91,12 +93,12 @@ export class PickupPointsComponent implements OnInit {
                 return {
                   office_id: department.office_id,
                   name: 'Владивосток',
-                  coords: [...obj.coords, ...department.coords],
+                  mapPoints: [...obj.mapPoints, ...department.mapPoints],
                   info: [...obj.info, ...department.info],
                   pvz: department.pvz,
                 }
               },
-              {office_id: '', name: '', coords: [], info: [], pvz: ''}
+              {office_id: '', name: '', mapPoints: [], info: [], pvz: ''}
             )
 
             return [reduced, ...departments]
@@ -126,5 +128,14 @@ export class PickupPointsComponent implements OnInit {
 
   fetchData(): void {
     this.store.dispatch(getDepartmentsAction())
+  }
+
+  getPointsKeys(points) {
+    return Object.keys(points)
+  }
+
+  setMapPoints(points: MapPointInterface[]) {
+    this.currentMapPoints = points
+    console.log('this.currentMapPoints', this.currentMapPoints)
   }
 }

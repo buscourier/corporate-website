@@ -6,6 +6,7 @@ import {
   Output,
 } from '@angular/core'
 import {YaEvent} from 'angular8-yandex-maps'
+import {MapPointInterface} from '../../types/map-point.interface'
 import {OfficeInterface} from '../../types/office.interface'
 
 @Component({
@@ -15,7 +16,7 @@ import {OfficeInterface} from '../../types/office.interface'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MapComponent {
-  @Input() points: OfficeInterface[]
+  @Input() points: OfficeInterface[] | MapPointInterface[]
   @Input() latitude: number
   @Input() longitude: number
   @Input() zoom: number = 12

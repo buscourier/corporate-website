@@ -2,7 +2,9 @@ import {CommonModule} from '@angular/common'
 import {NgModule} from '@angular/core'
 import {EffectsModule} from '@ngrx/effects'
 import {StoreModule} from '@ngrx/store'
+import {TuiLetModule} from '@taiga-ui/cdk'
 import {TuiAccordionModule, TuiInputModule} from '@taiga-ui/kit'
+import {MapModule} from '../../../shared/components/map/map.module'
 import {OfficesService} from '../../../shared/services/offices.service'
 import {PickupPointsComponent} from './pickup-points.component'
 import {GetDepartmentsEffect} from './store/effects/get-departments.effect'
@@ -17,6 +19,8 @@ import {PICKUP_POINTS_FEATURE} from './store/state'
     EffectsModule.forFeature([GetDepartmentsEffect]),
     TuiInputModule,
     TuiAccordionModule,
+    TuiLetModule,
+    MapModule,
   ],
   exports: [PickupPointsComponent],
   providers: [OfficesService],

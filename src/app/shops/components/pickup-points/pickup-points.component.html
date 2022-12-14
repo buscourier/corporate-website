@@ -1,65 +1,36 @@
-{{ points$ | async }}
-<tui-accordion class="container" [rounded]="false">
-  <tui-accordion-item borders="top-bottom" [showArrow]="false">
-    <div class="operation-header">
-      <div class="operation-date">
-        5
-        <div class="operation-month">May</div>
-      </div>
-
-      <div class="operation-title">Get your money back</div>
-      <div class="operation-info">
-        <div class="operation-status operation-status_success">Approved</div>
-      </div>
-    </div>
-    <ng-template tuiAccordionItemContent>
-      <h3 class="form-title">Payment form</h3>
-      <form class="operation-form">
-        <tui-input formControlName="name" class="input">
-          Your name
-          <input tuiTextfield placeholder="Roman Sedov" />
-        </tui-input>
-
-        <div class="buttons">
-          <button tuiButton type="submit" size="l" class="tui-space_right-2">
-            Send
-          </button>
-          <button tuiButton type="button" appearance="flat" size="l">
-            Cancel
-          </button>
-        </div>
-      </form>
-    </ng-template>
-  </tui-accordion-item>
-  <tui-accordion-item borders="top-bottom" [showArrow]="false">
-    <div class="operation-header">
-      <div class="operation-date">
-        6
-        <div class="operation-month">May</div>
-      </div>
-      <div class="operation-pic"></div>
-      <div class="operation-title">Get your neighbor's money</div>
-      <div class="operation-info">
-        <div class="operation-status operation-status_error">Declined</div>
-      </div>
-    </div>
-    <ng-template tuiAccordionItemContent>
-      <h3 class="form-title">Payment form</h3>
-      <form class="operation-form">
-        <tui-input formControlName="name" class="input">
-          Your name
-          <input tuiTextfield placeholder="Roman Sedov" />
-        </tui-input>
-
-        <div class="buttons">
-          <button tuiButton type="submit" size="l" class="tui-space_right-2">
-            Send
-          </button>
-          <button tuiButton type="button" appearance="flat" size="l">
-            Cancel
-          </button>
-        </div>
-      </form>
-    </ng-template>
-  </tui-accordion-item>
-</tui-accordion>
+<ng-container *tuiLet="points$ | async as points">
+  <ng-container *ngIf="points">
+    <tui-accordion [rounded]="false">
+      <tui-accordion-item
+        *ngFor="let key of getPointsKeys(points)"
+        [showArrow]="false"
+      >
+        <b>{{ key }}</b>
+        <ng-template tuiAccordionItemContent>
+          <tui-accordion [rounded]="false">
+            <tui-accordion-item
+              *ngFor="let department of points[key]"
+              (click)="setMapPoints(department.mapPoints)"
+            >
+              <b>{{ department.name }}</b>
+              <ng-template tuiAccordionItemContent>
+                <dl *ngFor="let info of department.info">
+                  <ng-container *ngFor="let item of info">
+                    <dt>{{ item.type }}</dt>
+                    <dd>{{ item.text }}</dd>
+                  </ng-container>
+                </dl>
+                <div class="h-[300px]">
+                  <ng-container *ngTemplateOutlet="map"></ng-container>
+                </div>
+              </ng-template>
+            </tui-accordion-item>
+          </tui-accordion>
+        </ng-template>
+      </tui-accordion-item>
+    </tui-accordion>
+  </ng-container>
+</ng-container>
+<ng-template #map>
+  <app-map [points]="currentMapPoints"></app-map>
+</ng-template>

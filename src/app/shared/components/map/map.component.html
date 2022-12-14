@@ -23,8 +23,8 @@
       *ngFor="let point of points"
       [geometry]="[point.geo_x, point.geo_y]"
       [properties]="{
-        hintContent: showHint ? point.address : null,
-        balloonContent: showBalloon ? point.address : null
+        hintContent: showHint ? 'point?.address' : null,
+        balloonContent: showBalloon ? ' point?.address' : null
       }"
       [options]="placemarkOptions"
       (yaclick)="selectPoint(point)"
