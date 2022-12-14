@@ -1,18 +1,18 @@
 .timeline {
-  @apply mt-6 mb-16 pt-10 border-t border-gray-300;
+  @apply mt-6 mb-16 border-t border-gray-300 pt-10;
 }
 
 .timeline-item {
-  @apply relative grid grid-cols-[5px_21px_repeat(2,auto)] gap-y-[5px] items-center justify-start;
+  @apply relative grid grid-cols-[5px_21px_repeat(2,auto)] items-center justify-start gap-y-[5px];
   @apply sm:grid-cols-[5px_32px_repeat(2,auto)_32px_auto] sm:gap-y-0;
 
-  @apply before:w-1.5 before:h-1.5 before:bg-gray-300 before:rounded-full
-  before:col-start-1 before:col-end-2 before:row-start-1 before:row-end-2;
+  @apply before:col-start-1 before:col-end-2 before:row-start-1 before:row-end-2
+  before:h-1.5 before:w-1.5 before:rounded-full before:bg-gray-300;
 }
 
 .timeline-item:not(:first-child) {
   @apply mt-9;
-  @apply after:absolute after:left-[2px] after:bottom-12 after:w-[1px] after:h-[92px] after:bg-gray-300;
+  @apply after:absolute after:left-[2px] after:bottom-12 after:h-[92px] after:w-[1px] after:bg-gray-300;
   @apply sm:after:bottom-4 sm:after:h-[66px];
 }
 
@@ -21,18 +21,18 @@
 }
 
 .timeline-status {
-  @apply py-1.5 px-2.5 block text-2xs border border-transparent col-start-3 col-end-4 row-start-2 row-end-3;
+  @apply col-start-3 col-end-4 row-start-2 row-end-3 block border border-transparent py-1.5 px-2.5 text-2xs;
   @apply sm:col-start-6 sm:col-end-7 sm:row-start-1 sm:row-end-2;
 }
 
 .timeline-status--yellow {
-  @apply bg-yellow-100 border-yellow;
+  @apply border-yellow bg-yellow-100;
 }
 
 .timeline-status--blue {
-  @apply bg-blue-100 border-blue;
+  @apply border-blue bg-blue-100;
 }
 
 .timeline-status--pink {
-  @apply bg-red-100 border-red;
+  @apply border-red bg-red-100;
 }
