@@ -1,5 +1,5 @@
 export enum ActionTypes {
-  GET_POINTS = '[Pickup points] Get points',
-  GET_POINTS_SUCCESS = '[Pickup points] Get points success',
-  GET_POINTS_FAILURE = '[Pickup points] Get points failure',
+  GET_DEPARTMENTS = '[Pickup points] Get departments',
+  GET_DEPARTMENTS_SUCCESS = '[Pickup points] Get departments success',
+  GET_DEPARTMENTS_FAILURE = '[Pickup points] Get departments failure',
 }

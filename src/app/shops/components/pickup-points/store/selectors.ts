@@ -1,18 +1,18 @@
 import {createFeatureSelector, createSelector} from '@ngrx/store'
-import {PICKUP_POINTS_FEATURE} from './state'
 import {PickupPointsStateInterface} from '../types/pickup-points-state.interface'
+import {PICKUP_POINTS_FEATURE} from './state'
 
 export const pickupPointsFeatureSelector =
   createFeatureSelector<PickupPointsStateInterface>(PICKUP_POINTS_FEATURE)
 
-export const isPointsLoadingSelector = createSelector(
+export const isDepartmentsLoadingSelector = createSelector(
   pickupPointsFeatureSelector,
-  (state: PickupPointsStateInterface) => state.isPointsLoading
+  (state: PickupPointsStateInterface) => state.isDepartmentsLoading
 )
 
-export const pointsSelector = createSelector(
+export const departmentsSelector = createSelector(
   pickupPointsFeatureSelector,
-  (state: PickupPointsStateInterface) => state.points
+  (state: PickupPointsStateInterface) => state.departments
 )
 
 export const backendErrorsSelector = createSelector(

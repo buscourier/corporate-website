@@ -1,34 +1,34 @@
 import {Action, createReducer, on} from '@ngrx/store'
-import {initialState} from './state'
-import {
-  getPointsAction,
-  getPointsFailureAction,
-  getPointsSuccessAction,
-} from './actions/get-points.action'
 import {PickupPointsStateInterface} from '../types/pickup-points-state.interface'
+import {
+  getDepartmentsAction,
+  getDepartmentsFailureAction,
+  getDepartmentsSuccessAction,
+} from './actions/get-departments.action'
+import {initialState} from './state'
 
 const pickupPointsReducer = createReducer(
   initialState,
   on(
-    getPointsAction,
+    getDepartmentsAction,
     (state): PickupPointsStateInterface => ({
       ...state,
-      isPointsLoading: true,
+      isDepartmentsLoading: true,
     })
   ),
   on(
-    getPointsSuccessAction,
-    (state, {points}): PickupPointsStateInterface => ({
+    getDepartmentsSuccessAction,
+    (state, {departments}): PickupPointsStateInterface => ({
       ...state,
-      isPointsLoading: false,
-      points,
+      isDepartmentsLoading: false,
+      departments,
     })
   ),
   on(
-    getPointsFailureAction,
+    getDepartmentsFailureAction,
     (state, {errors}): PickupPointsStateInterface => ({
       ...state,
-      isPointsLoading: false,
+      isDepartmentsLoading: false,
       backendErrors: errors,
     })
   )
