@@ -30,13 +30,16 @@ const routes: Routes = [
     path: 'new-order',
     loadChildren: () =>
       import('./new-order/new-order.module').then((m) => m.NewOrderModule),
-    // canActivate: [AuthGuard],
   },
   {
     path: 'find-order',
     loadChildren: () =>
       import('./find-order/find-order.module').then((m) => m.FindOrderModule),
-    // canActivate: [AuthGuard],
+  },
+  {
+    path: 'eshops',
+    loadChildren: () =>
+      import('./shops/shops.module').then((m) => m.ShopsModule),
   },
   {
     path: 'contacts',
