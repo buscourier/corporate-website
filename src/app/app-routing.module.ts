@@ -33,6 +33,12 @@ const routes: Routes = [
     // canActivate: [AuthGuard],
   },
   {
+    path: 'find-order',
+    loadChildren: () =>
+      import('./find-order/find-order.module').then((m) => m.FindOrderModule),
+    // canActivate: [AuthGuard],
+  },
+  {
     path: 'contacts',
     loadChildren: () =>
       import('./contacts/contacts.module').then((m) => m.ContactsModule),
