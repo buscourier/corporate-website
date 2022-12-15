@@ -6,7 +6,10 @@
         [borders]="null"
         class="accordion-item-type-1"
       >
-        <b>{{ key }}</b>
+        <b class="align-middle text-lg font-medium text-black">{{ key }} </b>
+        <small class="align-middle text-xs text-black"
+          >({{ points[key].length }} отделения)</small
+        >
         <ng-template tuiAccordionItemContent>
           <tui-accordion [rounded]="false">
             <tui-accordion-item
