@@ -16,16 +16,35 @@
               *ngFor="let department of points[key]"
               [showArrow]="false"
               (click)="setMapPoints(department.mapPoints)"
+              [borders]="null"
+              class="accordion-item-type-2"
             >
-              <b>{{ department.name }}</b>
+              <div class="flex justify-between">
+                <div>
+                  <b class="align-middle text-lg font-medium text-black"
+                    >{{ department.name }}
+                  </b>
+                  <small class="align-middle text-xs text-black"
+                    >({{ department.info.length }} отделения)</small
+                  >
+                </div>
+                <tui-svg src="icons::plus"></tui-svg>
+              </div>
               <ng-template tuiAccordionItemContent>
-                <dl *ngFor="let info of department.info">
-                  <ng-container *ngFor="let item of info">
-                    <dt>{{ item.type }}</dt>
-                    <dd>{{ item.text }}</dd>
-                  </ng-container>
-                </dl>
-                <div class="h-[300px]">
+                <div class="mt-4 mb-5 ml-6 mr-1">
+                  <dl
+                    *ngFor="let info of department.info"
+                    class="mb-4border-b border-gray-200 pb-4 text-sm last:border-0 last:pb-0"
+                  >
+                    <ng-container *ngFor="let item of info">
+                      <dt class="mr-1 inline-block font-medium">
+                        {{ item.type }}
+                      </dt>
+                      <dd class="inline-block">{{ item.text }}</dd>
+                    </ng-container>
+                  </dl>
+                </div>
+                <div class="mb-4 h-[300px]">
                   <ng-container *ngTemplateOutlet="map"></ng-container>
                 </div>
               </ng-template>

@@ -3,6 +3,7 @@ import {NgModule} from '@angular/core'
 import {EffectsModule} from '@ngrx/effects'
 import {StoreModule} from '@ngrx/store'
 import {TuiLetModule} from '@taiga-ui/cdk'
+import {TuiSvgModule} from '@taiga-ui/core'
 import {TuiAccordionModule, TuiInputModule} from '@taiga-ui/kit'
 import {MapModule} from '../../../shared/components/map/map.module'
 import {OfficesService} from '../../../shared/services/offices.service'
@@ -21,6 +22,7 @@ import {PICKUP_POINTS_FEATURE} from './store/state'
     TuiAccordionModule,
     TuiLetModule,
     MapModule,
+    TuiSvgModule,
   ],
   exports: [PickupPointsComponent],
   providers: [OfficesService],
