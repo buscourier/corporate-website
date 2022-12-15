@@ -40,6 +40,7 @@ export class PickupPointsComponent implements OnInit {
   points$: Observable<PickupPointsInterface>
   backendErrors$: Observable<string>
 
+  currentPoint = pickupPoints[0]
   currentMapPoints: MapPointInterface[] = []
 
   constructor(private store: Store) {}
@@ -136,6 +137,9 @@ export class PickupPointsComponent implements OnInit {
 
   setMapPoints(points: MapPointInterface[]) {
     this.currentMapPoints = points
-    console.log('this.currentMapPoints', this.currentMapPoints)
+  }
+
+  setCurrentPoint(key: string) {
+    this.currentPoint = key
   }
 }

@@ -1,6 +1,6 @@
 <ng-container *tuiLet="points$ | async as points">
   <ng-container *ngIf="points">
-    <tui-accordion [rounded]="false">
+    <tui-accordion *ngIf="false" [rounded]="false">
       <tui-accordion-item
         *ngFor="let key of getPointsKeys(points)"
         [borders]="null"
@@ -56,6 +56,26 @@
         </ng-template>
       </tui-accordion-item>
     </tui-accordion>
+    <ng-container *ngIf="true">
+      <div class="grid grid-cols-4">
+        <button
+          type="button"
+          *ngFor="let key of getPointsKeys(points)"
+          class="relative flex flex-col items-center justify-center border-b-2 border-transparent pt-4 pb-4 text-center transition-colors before:absolute before:top-0 before:-bottom-0.5 before:right-0 before:w-1 before:bg-white last:before:hidden lg:h-16 lg:flex-row lg:space-x-1"
+          [class]="
+            key === currentPoint
+              ? 'bg-white border-b-yellow hover:bg-white before:hidden'
+              : 'bg-gray-100 border-transparent hover:bg-gray-50'
+          "
+          (click)="setCurrentPoint(key)"
+        >
+          <b class="text-lg font-medium text-black">{{ key }} </b>
+          <small class="text-xs text-black"
+            >({{ points[key].length }} отделения)</small
+          >
+        </button>
+      </div>
+    </ng-container>
   </ng-container>
 </ng-container>
 <ng-template #map>
