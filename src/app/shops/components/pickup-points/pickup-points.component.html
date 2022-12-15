@@ -3,13 +3,15 @@
     <tui-accordion [rounded]="false">
       <tui-accordion-item
         *ngFor="let key of getPointsKeys(points)"
-        [showArrow]="false"
+        [borders]="null"
+        class="accordion-item-type-1"
       >
         <b>{{ key }}</b>
         <ng-template tuiAccordionItemContent>
           <tui-accordion [rounded]="false">
             <tui-accordion-item
               *ngFor="let department of points[key]"
+              [showArrow]="false"
               (click)="setMapPoints(department.mapPoints)"
             >
               <b>{{ department.name }}</b>
