@@ -31,18 +31,21 @@
                 <tui-svg src="icons::plus"></tui-svg>
               </div>
               <ng-template tuiAccordionItemContent>
-                <div class="mt-4 mb-5 ml-6 mr-1">
-                  <dl
+                <div class="mt-4 mb-5 ml-6">
+                  <ul
                     *ngFor="let info of department.info"
-                    class="mb-4border-b border-gray-200 pb-4 text-sm last:border-0 last:pb-0"
+                    class="mb-4 space-y-2 border-b border-gray-200 pb-4 text-sm last:border-0 last:pb-0"
                   >
-                    <ng-container *ngFor="let item of info">
-                      <dt class="mr-1 inline-block font-medium">
+                    <li
+                      *ngFor="let item of info"
+                      class="flex flex-wrap space-x-1"
+                    >
+                      <b class="inline-block font-medium">
                         {{ item.type }}
-                      </dt>
-                      <dd class="inline-block">{{ item.text }}</dd>
-                    </ng-container>
-                  </dl>
+                      </b>
+                      <span>{{ item.text }}</span>
+                    </li>
+                  </ul>
                 </div>
                 <div class="mb-4 h-[300px]">
                   <ng-container *ngTemplateOutlet="map"></ng-container>
