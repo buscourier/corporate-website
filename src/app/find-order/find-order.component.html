@@ -1,114 +1,107 @@
-<div class="mx-auto mt-10 max-w-[1170px] px-4 lg:mt-16">
-  <div class="max-w-[770px]">
-    <h1 class="mt-10 mb-1 font-heading text-2xl font-bold lg:mt-20 lg:text-3xl">
-      Отследить посылку по номеру заказа
-    </h1>
-    <p class="mb-10 text-sm">
-      Вам доступна вся история движения посылки. Чтобы воспользоваться поиском,
-      введите номер вашего заказа и нажмите кнопку “Найти посылку”.
-    </p>
+<div class="max-w-[770px]">
+  <h1 class="mt-10 mb-1 font-heading text-2xl font-bold lg:text-3xl">
+    Отследить посылку по номеру заказа
+  </h1>
+  <p class="mb-10 text-sm">
+    Вам доступна вся история движения посылки. Чтобы воспользоваться поиском,
+    введите номер вашего заказа и нажмите кнопку “Найти посылку”.
+  </p>
 
-    <ng-container *tuiLet="isStatusesLoading$ | async as isStatusesLoading">
-      <form
-        [formGroup]="form"
-        class="grid max-w-sm grid-cols-1 gap-4 sm:max-w-full sm:grid-cols-[1fr_270px]"
-        (ngSubmit)="onSubmit()"
+  <ng-container *tuiLet="isStatusesLoading$ | async as isStatusesLoading">
+    <form
+      [formGroup]="form"
+      class="grid max-w-sm grid-cols-1 gap-4 sm:max-w-full sm:grid-cols-[1fr_270px]"
+      (ngSubmit)="onSubmit()"
+    >
+      <tui-input
+        tuiTextfieldSize="m"
+        [formControl]="orderNumber"
+        [tuiTextfieldLabelOutside]="true"
       >
-        <tui-input
-          tuiTextfieldSize="m"
-          [formControl]="orderNumber"
-          [tuiTextfieldLabelOutside]="true"
-        >
-          <input tuiTextfield type="text" maxlength="7" />
-        </tui-input>
-        <button
-          tuiButton
-          type="submit"
-          size="m"
-          [showLoader]="isStatusesLoading"
-        >
-          Найти посылку
-        </button>
-        <div class="text-xs">
-          <span class="text-gray-500"><sup>*</sup>7 символов. </span>
-          <span>Пример: 878581</span>
-        </div>
-      </form>
+        <input tuiTextfield type="text" maxlength="7" />
+      </tui-input>
+      <button tuiButton type="submit" size="m" [showLoader]="isStatusesLoading">
+        Найти посылку
+      </button>
+      <div class="text-xs">
+        <span class="text-gray-500"><sup>*</sup>7 символов. </span>
+        <span>Пример: 878581</span>
+      </div>
+    </form>
 
-      <tui-loader [showLoader]="isStatusesLoading">
-        <ul
-          *ngIf="statuses$ | async as statuses"
-          class="timeline"
-          [class.opacity-0]="isStatusesLoading"
+    <tui-loader [showLoader]="isStatusesLoading">
+      <ul
+        *ngIf="statuses$ | async as statuses"
+        class="timeline"
+        [class.opacity-0]="isStatusesLoading"
+      >
+        <li class="timeline-item" *ngFor="let status of statuses">
+          <time
+            class="timeline-meta col-start-3 col-end-4 row-start-1 row-end-2 mr-[5px] text-gray-500"
+          >
+            {{ formatDate(status.serverdate) }}
+          </time>
+          <div
+            class="timeline-meta col-start-4 col-end-5 row-start-1 row-end-2"
+          >
+            Заказ № {{ orderNumber.value }}
+          </div>
+          <div
+            class="timeline-status timeline-status--{{
+              Status[status.charcode]
+            }}"
+          >
+            {{ status.lk_name }}
+          </div>
+        </li>
+      </ul>
+    </tui-loader>
+  </ng-container>
+  <div class="mt-16 border-t border-gray-300 pt-12">
+    <h2 class="mb-4 font-heading text-2xl font-bold">
+      Где найти номер заказа?
+    </h2>
+    <app-img
+      class="w-full rounded-sm object-cover"
+      src="/assets/images/find-order/order"
+    ></app-img>
+  </div>
+  <div class="mt-16 border-t border-gray-300 pt-12">
+    <h2 class="mb-8 font-heading text-2xl font-bold">
+      Нужна помощь специалиста?
+    </h2>
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-[auto_1fr] sm:gap-14">
+      <div class="mb-7 grid grid-cols-[auto_1fr] text-sm">
+        <tui-svg
+          src="icons::phone-help"
+          class="text-gray-yellow col-start-1 row-start-2 row-end-3 mr-3"
+        ></tui-svg>
+        <p
+          class="col-start-2 col-end-3 row-start-1 row-end-2 mb-2 text-sm text-gray-900"
         >
-          <li class="timeline-item" *ngFor="let status of statuses">
-            <time
-              class="timeline-meta col-start-3 col-end-4 row-start-1 row-end-2 mr-[5px] text-gray-500"
-            >
-              {{ formatDate(status.serverdate) }}
-            </time>
-            <div
-              class="timeline-meta col-start-4 col-end-5 row-start-1 row-end-2"
-            >
-              Заказ № {{ orderNumber.value }}
-            </div>
-            <div
-              class="timeline-status timeline-status--{{
-                Status[status.charcode]
-              }}"
-            >
-              {{ status.lk_name }}
-            </div>
-          </li>
-        </ul>
-      </tui-loader>
-    </ng-container>
-    <div class="mt-16 border-t border-gray-300 pt-12">
-      <h2 class="mb-4 font-heading text-2xl font-bold">
-        Где найти номер заказа?
-      </h2>
-      <app-img
-        class="w-full rounded-sm object-cover"
-        src="/assets/images/find-order/order"
-      ></app-img>
-    </div>
-    <div class="mt-16 border-t border-gray-300 pt-12">
-      <h2 class="mb-8 font-heading text-2xl font-bold">
-        Нужна помощь специалиста?
-      </h2>
-      <div class="grid grid-cols-1 gap-6 sm:grid-cols-[auto_1fr] sm:gap-14">
-        <div class="mb-7 grid grid-cols-[auto_1fr] text-sm">
-          <tui-svg
-            src="icons::phone-help"
-            class="text-gray-yellow col-start-1 row-start-2 row-end-3 mr-3"
-          ></tui-svg>
-          <p
-            class="col-start-2 col-end-3 row-start-1 row-end-2 mb-2 text-sm text-gray-900"
-          >
-            По телефону
-          </p>
-          <a
-            href="tel: 8(423)293-78-79"
-            class="relative col-start-2 col-end-3 row-start-2 row-end-3 justify-self-start text-[26px] transition-colors before:absolute before:left-0 before:-bottom-1.5 before:w-full before:border-b before:border-dashed before:border-gray-700 hover:cursor-pointer hover:text-yellow"
-            >+7 (423) 293-78-79</a
-          >
-        </div>
-        <div class="mb-7 grid grid-cols-[auto_1fr] text-sm">
-          <tui-svg
-            src="icons::whatsapp"
-            class="text-gray-yellow col-start-1 row-start-2 row-end-3 mr-3"
-          ></tui-svg>
-          <p
-            class="col-start-2 col-end-3 row-start-1 row-end-2 mb-2 text-sm text-gray-900"
-          >
-            Написать в
-          </p>
-          <a
-            href="tel: 8(423)293-78-79"
-            class="relative col-start-2 col-end-3 row-start-2 row-end-3 justify-self-start text-[26px] transition-colors before:absolute before:left-0 before:-bottom-1.5 before:w-full before:border-b before:border-dashed before:border-gray-700 hover:cursor-pointer hover:text-yellow"
-            >WhatsApp</a
-          >
-        </div>
+          По телефону
+        </p>
+        <a
+          href="tel: 8(423)293-78-79"
+          class="relative col-start-2 col-end-3 row-start-2 row-end-3 justify-self-start text-[26px] transition-colors before:absolute before:left-0 before:-bottom-1.5 before:w-full before:border-b before:border-dashed before:border-gray-700 hover:cursor-pointer hover:text-yellow"
+          >+7 (423) 293-78-79</a
+        >
+      </div>
+      <div class="mb-7 grid grid-cols-[auto_1fr] text-sm">
+        <tui-svg
+          src="icons::whatsapp"
+          class="text-gray-yellow col-start-1 row-start-2 row-end-3 mr-3"
+        ></tui-svg>
+        <p
+          class="col-start-2 col-end-3 row-start-1 row-end-2 mb-2 text-sm text-gray-900"
+        >
+          Написать в
+        </p>
+        <a
+          href="tel: 8(423)293-78-79"
+          class="relative col-start-2 col-end-3 row-start-2 row-end-3 justify-self-start text-[26px] transition-colors before:absolute before:left-0 before:-bottom-1.5 before:w-full before:border-b before:border-dashed before:border-gray-700 hover:cursor-pointer hover:text-yellow"
+          >WhatsApp</a
+        >
       </div>
     </div>
   </div>

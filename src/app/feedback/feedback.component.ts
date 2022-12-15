@@ -24,6 +24,15 @@ export class FeedbackComponent {
   response$: Observable<ResponseInterface>
   validationErrors$: Observable<string>
 
+  types = [
+    {id: 1, name: 'Вопрос'},
+    {id: 2, name: 'Отзыв'},
+    {id: 3, name: 'Предложение или замечание'},
+    {id: 4, name: 'Вопросы сотрудничества'},
+  ]
+
+  type = this.fb.control('')
+
   form = this.fb.group({
     sender: [
       '',

@@ -13,6 +13,7 @@ import {
   TuiFieldErrorPipeModule,
   TuiInputModule,
   TuiInputPhoneModule,
+  TuiRadioListModule,
   TuiTextAreaModule,
 } from '@taiga-ui/kit'
 import {SiteService} from '../shared/services/site.service'
@@ -38,6 +39,7 @@ import {FEEDBACK_FEATURE} from './store/state'
     TuiTextAreaModule,
     TuiCheckboxLabeledModule,
     TuiButtonModule,
+    TuiRadioListModule,
   ],
   providers: [SiteService],
 })

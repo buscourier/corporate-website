@@ -1,3 +1,7 @@
+:host {
+  @apply block mx-auto mt-10 max-w-[1170px] px-4 lg:mt-16;
+}
+
 .timeline {
   @apply mt-6 border-t border-gray-300 pt-10;
 }
