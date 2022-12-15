@@ -103,7 +103,7 @@
     tuiButton
     size="m"
     appearance="accent"
-    [showLoader]=""
+    [showLoader]="isSubmitting$ | async"
     [disabled]="form.invalid"
   >
     Отправить заявку

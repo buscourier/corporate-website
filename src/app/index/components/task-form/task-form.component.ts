@@ -1,7 +1,16 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
 import {FormBuilder, Validators} from '@angular/forms'
+import {Store} from '@ngrx/store'
 import {TUI_VALIDATION_ERRORS} from '@taiga-ui/kit'
+import {Observable} from 'rxjs'
+import {tap} from 'rxjs/operators'
 import {Pattern} from '../../../shared/pattern/pattern'
+import {sendMessageAction} from './store/actions/send-message.action'
+import {
+  isSubmittingSelector,
+  responseSelector,
+  validationErrorsSelector,
+} from './store/selectors'
 
 @Component({
   selector: 'app-task-form',
@@ -25,6 +34,9 @@ import {Pattern} from '../../../shared/pattern/pattern'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaskFormComponent implements OnInit {
+  isSubmitting$: Observable<boolean>
+  validationErrors$: Observable<string>
+
   form = this.fb.group({
     name: [
       '',
@@ -44,14 +56,31 @@ export class TaskFormComponent implements OnInit {
         Validators.minLength(2),
       ],
     ],
-    agree: ['', [Validators.required]],
+    agree: [false, [Validators.required]],
   })
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private store: Store) {}
 
   ngOnInit(): void {
-    console.log('!')
+    this.isSubmitting$ = this.store.select(isSubmittingSelector)
+    this.store
+      .select(responseSelector)
+      .pipe(
+        tap(() => {
+          this.form.reset()
+        })
+      )
+      .subscribe()
+
+    this.validationErrors$ = this.store.select(validationErrorsSelector)
   }
 
-  onSubmit() {}
+  onSubmit() {
+    if (this.form.invalid) {
+      return
+    }
+
+    const payload = this.form.value
+    this.store.dispatch(sendMessageAction({payload}))
+  }
 }
