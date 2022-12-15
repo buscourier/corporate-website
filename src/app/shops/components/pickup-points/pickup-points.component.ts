@@ -1,5 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
 import {Store} from '@ngrx/store'
+import {tuiFadeIn} from '@taiga-ui/core'
 import {filter, map, Observable, of, switchMap} from 'rxjs'
 import {concatAll, tap, toArray} from 'rxjs/operators'
 import {MapPointInterface} from 'src/app/shared/types/map-point.interface'
@@ -26,13 +27,14 @@ interface PickupPointsInterface {
   Boxberry: DepartmentInterface[]
 }
 
-const pickupPoints = ['IML', 'HERMES', 'CSE', 'Boxberry']
+const pickupPointNames = ['IML', 'HERMES', 'CSE', 'Boxberry']
 
 @Component({
   selector: 'app-pickup-points',
   templateUrl: './pickup-points.component.html',
   styleUrls: ['./pickup-points.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [tuiFadeIn],
 })
 export class PickupPointsComponent implements OnInit {
   isDepartmentsLoading$: Observable<boolean>
@@ -40,7 +42,7 @@ export class PickupPointsComponent implements OnInit {
   points$: Observable<PickupPointsInterface>
   backendErrors$: Observable<string>
 
-  currentPoint = pickupPoints[0]
+  currentTab = null
   currentMapPoints: MapPointInterface[] = []
 
   constructor(private store: Store) {}
@@ -107,7 +109,7 @@ export class PickupPointsComponent implements OnInit {
         )
       }),
       map((departments: DepartmentInterface[]) => {
-        return pickupPoints.reduce(
+        return pickupPointNames.reduce(
           (acc, point: string) => {
             return {
               ...acc,
@@ -120,8 +122,9 @@ export class PickupPointsComponent implements OnInit {
         )
       }),
 
-      tap((data) => {
-        console.log('data', data)
+      tap((pickupPoints: PickupPointsInterface) => {
+        //TODO: do that because accordion not emits events when item opened
+        this.setCurrentTab('IML', pickupPoints['IML'])
       })
     )
     this.backendErrors$ = this.store.select(backendErrorsSelector)
@@ -139,7 +142,9 @@ export class PickupPointsComponent implements OnInit {
     this.currentMapPoints = points
   }
 
-  setCurrentPoint(key: string) {
-    this.currentPoint = key
+  setCurrentTab(key: string, points) {
+    this.currentTab = key
+
+    this.setMapPoints(points[0].mapPoints)
   }
 }
