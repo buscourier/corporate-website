@@ -77,7 +77,11 @@
           </button>
         </div>
         <ng-container *ngFor="let key of getPointsKeys(points)">
-          <div *ngIf="key === currentTab" class="mt-6 grid grid-cols-2 gap-7">
+          <div
+            *ngIf="key === currentTab"
+            class="mt-6 grid grid-cols-2 gap-7"
+            [@tuiFadeIn]=""
+          >
             <tui-accordion [rounded]="false">
               <tui-accordion-item
                 *ngFor="let department of points[key]; let i = index"
