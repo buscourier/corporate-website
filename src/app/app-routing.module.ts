@@ -46,6 +46,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./contacts/contacts.module').then((m) => m.ContactsModule),
   },
+  {
+    path: 'feedback',
+    loadChildren: () =>
+      import('./feedback/feedback.module').then((m) => m.FeedbackModule),
+  },
 ]
 
 @NgModule({
