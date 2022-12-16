@@ -1,13 +1,101 @@
-<div class="mx-auto mt-10 block max-w-[1170px] px-4 lg:mt-20">
-  <div
-    class="grid grid-cols-1 gap-16 lg:grid-cols-[minmax(770px,1fr)_370px] lg:gap-8"
-  >
+<div class="mx-auto mt-10 max-w-[1170px] px-4 lg:mt-16">
+  <div class="mb-10 grid grid-cols-1 gap-16 lg:grid-cols-[1fr_370px] lg:gap-20">
     <div>
-      <h1 class="mb-1 font-heading text-2xl font-bold lg:text-3xl">
-        Экспресс-доставка грузов и документов по всей России из Владивостока от
-        2 до 4 дней!
+      <h1 class="mb-6 max-w-2xl font-heading text-2xl font-bold lg:text-3xl">
+        Экспресс-доставка грузов<br class="hidden sm:block" />
+        и документов по всей России<br class="hidden sm:block" />
+        из Владивостока от 2 до 4 дней!
       </h1>
+      <app-map></app-map>
     </div>
-    <div>sidebar</div>
+    <div>
+      <article class="rounded-md bg-yellow pt-11 pr-10 pb-10 pl-9">
+        <h3 class="mb-5 font-heading text-xl font-normal">
+          Рассчитайте стоимость
+        </h3>
+        <button
+          type="button"
+          tuiButton
+          appearance="accent"
+          size="m"
+          class="w-full max-w-[270px]"
+          (click)="openCalculator()"
+        >
+          Перейти в калькулятор
+        </button>
+      </article>
+    </div>
+  </div>
+  <div class="max-w-[770px]">
+    <h2 class="mb-10 font-heading text-lg font-medium">
+      Мы являемся официальным представителем федеральной компании «Курьер Сервис
+      Экспресс».
+    </h2>
+    <ul class="grid gap-7 sm:grid-cols-[auto_1fr] lg:gap-10">
+      <li class="flex max-w-sm md:max-w-full">
+        <tui-svg
+          src="icons::home-point"
+          class="mr-7 !h-[42px] !w-[42px]"
+        ></tui-svg>
+        <p class="text-sm">
+          Доставка в любые<br />
+          населенные пункты<br />
+          России
+        </p>
+      </li>
+      <li class="flex max-w-sm md:max-w-full">
+        <tui-svg
+          src="icons::to-door"
+          class="mr-7 !h-[41px] !w-[42px]"
+        ></tui-svg>
+        <p class="text-sm">
+          Доставка "от двери до<br />
+          двери"
+        </p>
+      </li>
+      <li class="flex max-w-sm md:max-w-full">
+        <tui-svg
+          src="icons::schedule"
+          class="mr-7 !h-[42px] !w-[42px]"
+        ></tui-svg>
+        <p class="text-sm">
+          Минимальные сроки<br />
+          доставки: от 2 до 4 дней
+        </p>
+      </li>
+      <li class="flex max-w-sm md:max-w-full">
+        <tui-svg src="icons::disk" class="mr-7 !h-[44px] !w-[46px]"></tui-svg>
+        <p class="text-sm">
+          Страхование груза на<br />
+          сумму до 25 000 руб.
+        </p>
+      </li>
+      <li class="flex max-w-sm md:max-w-full">
+        <tui-svg src="icons::geo" class="mr-7 !h-[42px] !w-[42px]"></tui-svg>
+        <p class="text-sm">
+          Отслеживание доставки<br />
+          груза online
+          <a href="https://www.cse.ru/" class="text-blue">на сайте КСЕ</a>
+        </p>
+      </li>
+      <li class="flex max-w-sm md:max-w-full">
+        <tui-svg src="icons::track" class="mr-7 !h-[34px] !w-[42px]"></tui-svg>
+        <p class="text-sm">
+          Перевозка<br />
+          негабаритных грузов
+        </p>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="mt-16 border-t border-gray-300 pt-16 lg:mt-18 lg:pt-20">
+  <div class="mx-auto max-w-[1170px] px-4">
+    <h1 class="mb-1 font-heading text-2xl font-bold lg:text-3xl">
+      Нужна консультация специалиста?
+    </h1>
+    <p class="mb-11 text-sm">
+      Закажите обратный звонок и мы свяжемся с вами в ближайшее время!
+    </p>
+    <app-support-form></app-support-form>
   </div>
 </div>

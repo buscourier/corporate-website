@@ -1,0 +1,19 @@
+<article class="relative flex flex-col items-center rounded-sm bg-white p-2">
+  <button
+    type="button"
+    class="absolute -top-2 -right-2 text-gray-800"
+    (click)="close()"
+  >
+    <tui-svg src="icons::close-2" class="!h-[22px] !w-[22px]"></tui-svg>
+  </button>
+
+  <tui-loader [showLoader]="!isLoaded" class="w-full overflow-x-auto">
+    <iframe
+      src="https://lk.cse.ru/cse/calc"
+      width="500px"
+      [height]="isLoaded ? '500px' : 0"
+      frameborder="0"
+      (load)="onLoad()"
+    ></iframe>
+  </tui-loader>
+</article>
