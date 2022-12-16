@@ -18,6 +18,10 @@
   @apply md:mt-5;
 }
 
+:host ::ng-deep dl dt {
+  @apply font-medium;
+}
+
 :host ::ng-deep app-img {
   @apply mt-5 h-[175px] w-[270px] rounded-sm;
   @apply md:col-start-3 md:col-end-4 md:row-span-full md:row-start-1 md:mt-0;
