@@ -7,5 +7,5 @@ tui-carousel.items-shadow .t-scroller {
 }
 
 tui-carousel.items-shadow .t-wrapper {
-  @apply lg:overflow-visible pt-10 pb-20;
+  @apply pt-10 pb-20 lg:overflow-visible;
 }
