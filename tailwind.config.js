@@ -45,6 +45,7 @@ module.exports = {
       md: '0px 24px 54px rgba(0, 0, 0, 0.04)',
       xl: '0px 24px 54px rgba(0, 0, 0, 0.1)',
       total: '0px 4px 44px rgba(0, 0, 0, 0.25)',
+      none: '0 0 rgba(0, 0, 0, 0)',
     },
     extend: {
       colors: {
