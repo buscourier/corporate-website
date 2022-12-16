@@ -130,5 +130,9 @@
   </ng-container>
 </ng-container>
 <ng-template #map>
-  <app-map [points]="currentMapPoints" [zoom]="10"></app-map>
+  <app-map
+    [points]="currentMapPoints"
+    [zoom]="10"
+    [disableScrollZoom]="true"
+  ></app-map>
 </ng-template>

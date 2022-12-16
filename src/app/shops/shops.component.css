@@ -1,0 +1,32 @@
+/*icon-size*/
+.shopping-live {
+  @apply w-[90px] h-[40px] lg:w-[135px] lg:h-[58px];
+}
+
+.decathlon {
+  @apply w-[108px] h-[27px] lg:w-[166px] lg:h-[41px];
+}
+
+.zara {
+  @apply w-[88px] h-[37px] lg:w-[141px] lg:h-[59px];
+}
+
+.child-world {
+  @apply w-[101px] h-[39px] lg:w-[172px] lg:h-[67px];
+}
+
+.iml {
+  @apply w-[92px] h-[57px] lg:w-[151px] lg:h-[93px];
+}
+
+.boxberry {
+  @apply w-[143px] h-[41px] lg:w-[216px] lg:h-[61px];
+}
+
+.hermes {
+  @apply w-[124px] h-[42px] lg:w-[177px] lg:h-[60px];
+}
+
+.kce {
+  @apply w-[102px] h-[27px] lg:w-[153px] lg:h-[40px];
+}

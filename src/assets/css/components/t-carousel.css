@@ -1,0 +1,11 @@
+tui-carousel.items-shadow {
+  @apply overflow-visible;
+}
+
+tui-carousel.items-shadow .t-scroller {
+  @apply overflow-visible before:hidden after:hidden;
+}
+
+tui-carousel.items-shadow .t-wrapper {
+  @apply overflow-visible;
+}
