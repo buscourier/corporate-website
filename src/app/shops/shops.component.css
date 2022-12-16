@@ -38,3 +38,22 @@
   /*@apply h-[27px] w-[102px] lg:h-[40px] lg:w-[153px];*/
   @apply h-[40px] w-[153px];
 }
+
+/*'shops-promo': "url('src/assets/images/index/curve.svg')",*/
+
+
+.promo {
+  @apply relative;
+  @apply before:absolute before:right-0 before:bottom-0 before:bg-[length:236px_314px]
+  before:bg-[url('src/assets/images/shops/banners/img--xs@3x.jpg')] before:w-[236px] before:h-[314px];
+
+  @apply sm:before:-bottom-10 sm:before:bg-[url('src/assets/images/shops/banners/img--md@3x.jpg')]
+  sm:before:bg-[length:584px_362px] sm:before:w-[584px] sm:before:h-[362px];
+
+  /*@apply md:bottom-0;*/
+
+  @apply lg:before:bg-[url('src/assets/images/shops/banners/img--lg@3x.jpg')]
+  lg:before:bg-[length:777px_447px] lg:before:w-[777px] lg:before:h-[447px];
+
+  @apply xl:before:-right-36;
+}
