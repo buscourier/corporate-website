@@ -51,8 +51,8 @@
 
   /*@apply md:bottom-0;*/
 
-  @apply lg:before:h-[447px]
-  lg:before:w-[777px] lg:before:bg-[url('src/assets/images/shops/banners/img--lg@3x.jpg')] lg:before:bg-[length:777px_447px];
+  @apply lg:before:h-[447px] lg:before:w-[777px] lg:before:bg-[url('src/assets/images/shops/banners/img--lg@3x.jpg')]
+  lg:before:bg-[length:777px_447px] lg:before:-right-28;
 
   @apply xl:before:-right-36;
 }

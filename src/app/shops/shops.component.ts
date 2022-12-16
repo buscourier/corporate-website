@@ -23,9 +23,43 @@ export class ShopsComponent implements OnInit {
   pointsIndex = 0
   pointsCount = 4
 
-  public readonly shops = [`shopping-live`, `decathlon`, `zara`, `child-world`]
+  public readonly shops = [
+    {
+      name: 'shopping-live',
+      link: 'https://www.shoppinglive.ru/',
+    },
+    {
+      name: 'decathlon',
+      link: 'https://www.decathlon.ru/',
+    },
+    {
+      name: 'zara',
+      link: 'https://www.zara.com/ru/',
+    },
+    {
+      name: 'child-world',
+      link: 'https://www.detmir.ru/',
+    },
+  ]
 
-  public readonly points = [`iml`, `boxberry`, `hermes`, `kce`]
+  public readonly points = [
+    {
+      name: 'iml',
+      link: 'https://www.oldi.ru/partners/iml/',
+    },
+    {
+      name: 'boxberry',
+      link: 'https://boxberry.ru/',
+    },
+    {
+      name: 'hermes',
+      link: 'http://hermeslogistic.ru/',
+    },
+    {
+      name: 'kce',
+      link: 'https://www.cse.ru/',
+    },
+  ]
 
   constructor(private store: Store, private cdr: ChangeDetectorRef) {}
 

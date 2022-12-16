@@ -51,12 +51,17 @@
         class="items-shadow w-full"
       >
         <ng-container *ngFor="let shop of shops; let i = index">
-          <div
+          <a
+            [href]="shop.link"
+            target="_blank"
             *tuiItem
             class="flex h-[153px] items-center justify-center rounded-sm border border-transparent bg-white shadow-xl transition-all hover:border-yellow hover:shadow-none lg:first:-ml-5"
           >
-            <tui-svg [class]="shop" [src]="'icons::' + shop"> </tui-svg>
-          </div>
+            <tui-svg
+              [class]="shop.name"
+              [src]="'icons::' + shop.name"
+            ></tui-svg>
+          </a>
         </ng-container>
       </tui-carousel>
       <button
@@ -113,12 +118,15 @@
         class="items-shadow w-full"
       >
         <ng-container *ngFor="let point of points; let i = index">
-          <div
+          <a
+            [href]="point.link"
+            target="_blank"
             *tuiItem
             class="flex h-[153px] items-center justify-center rounded-sm border border-transparent bg-white shadow-xl transition-all hover:border-yellow hover:shadow-none hover:shadow-none lg:first:-ml-5"
           >
-            <tui-svg [class]="point" [src]="'icons::' + point"> </tui-svg>
-          </div>
+            <tui-svg [class]="point.name" [src]="'icons::' + point.name">
+            </tui-svg>
+          </a>
         </ng-container>
       </tui-carousel>
       <button
