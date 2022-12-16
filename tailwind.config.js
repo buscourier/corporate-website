@@ -122,6 +122,7 @@ module.exports = {
         spin: 'spin 500ms linear infinite',
       },
       spacing: {
+        7.5: '1.875rem',
         13: '3.25rem',
         18: '4.375rem',
         22: '5.625rem', //90px

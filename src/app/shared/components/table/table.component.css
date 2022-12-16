@@ -1,0 +1,8 @@
+:host ::ng-deep tr:nth-child(even) {
+  @apply bg-gray-100;
+}
+
+:host ::ng-deep th,
+:host ::ng-deep td {
+  @apply p-4 text-left first:rounded-tl-sm first:rounded-bl-sm last:rounded-tr-sm last:rounded-br-sm;
+}
