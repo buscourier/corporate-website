@@ -1,32 +1,40 @@
 /*icon-size*/
 .shopping-live {
-  @apply h-[40px] w-[90px] lg:h-[58px] lg:w-[135px];
+  /*@apply h-[40px] w-[90px] lg:h-[58px] lg:w-[135px];*/
+  @apply h-[58px] w-[135px];
 }
 
 .decathlon {
-  @apply h-[27px] w-[108px] lg:h-[41px] lg:w-[166px];
+  /*@apply h-[27px] w-[108px] lg:h-[41px] lg:w-[166px];*/
+  @apply h-[41px] w-[166px];
 }
 
 .zara {
-  @apply h-[37px] w-[88px] lg:h-[59px] lg:w-[141px];
+  /*@apply h-[37px] w-[88px] lg:h-[59px] lg:w-[141px];*/
+  @apply h-[59px] w-[141px];
 }
 
 .child-world {
-  @apply h-[39px] w-[101px] lg:h-[67px] lg:w-[172px];
+  /*@apply h-[39px] w-[101px] lg:h-[67px] lg:w-[172px];*/
+  @apply h-[67px] w-[172px];
 }
 
 .iml {
-  @apply h-[57px] w-[92px] lg:h-[93px] lg:w-[151px];
+  /*@apply h-[57px] w-[92px] lg:h-[93px] lg:w-[151px];*/
+  @apply h-[93px] w-[151px];
 }
 
 .boxberry {
-  @apply h-[41px] w-[143px] lg:h-[61px] lg:w-[216px];
+  /*@apply h-[41px] w-[143px] lg:h-[61px] lg:w-[216px];*/
+  @apply h-[61px] w-[216px];
 }
 
 .hermes {
-  @apply h-[42px] w-[124px] lg:h-[60px] lg:w-[177px];
+  /*@apply h-[42px] w-[124px] lg:h-[60px] lg:w-[177px];*/
+  @apply h-[60px] w-[177px];
 }
 
 .kce {
-  @apply h-[27px] w-[102px] lg:h-[40px] lg:w-[153px];
+  /*@apply h-[27px] w-[102px] lg:h-[40px] lg:w-[153px];*/
+  @apply h-[40px] w-[153px];
 }

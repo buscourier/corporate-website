@@ -1,11 +1,11 @@
 tui-carousel.items-shadow {
-  @apply overflow-visible;
+  @apply lg:overflow-visible;
 }
 
 tui-carousel.items-shadow .t-scroller {
-  @apply overflow-visible before:hidden after:hidden;
+  @apply lg:overflow-visible lg:before:hidden lg:after:hidden;
 }
 
 tui-carousel.items-shadow .t-wrapper {
-  @apply overflow-visible;
+  @apply lg:overflow-visible pt-10 pb-20;
 }
