@@ -1,0 +1,22 @@
+.package {
+  @apply mb-7 grid grid-cols-[38px_1fr] grid-rows-[repeat(4,auto)] content-start items-start gap-x-5 border-t border-gray-300 pt-7;
+  @apply before:step-point before:col-start-1 before:col-end-2 before:row-span-full before:row-start-1 before:content-[attr(data-count)];
+  @apply md:mb-10 md:grid-cols-[38px_1fr_270px] md:grid-rows-[repeat(3,auto)] md:gap-x-7 md:pt-10;
+  @apply lg:grid-cols-[38px_1fr] xl:grid-cols-[38px_1fr_270px];
+}
+
+:host ::ng-deep b {
+  color: red;
+}
+
+:host ::ng-deep app-img {
+  @apply h-[175px] w-[270px] rounded-sm;
+  @apply md:col-start-3 md:col-end-4 md:row-span-full md:row-start-1;
+  @apply lg:col-start-2 lg:col-end-3 lg:row-start-3 lg:row-end-4;
+  @apply xl:col-start-3 xl:col-end-4 xl:row-span-full xl:row-start-1;
+}
+
+:host ::ng-deep table {
+  @apply col-span-full col-start-1 row-start-4 row-end-5;
+  @apply sm:col-start-2;
+}

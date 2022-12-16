@@ -1,162 +1,127 @@
-<h1 class="mt-10 mb-1 font-heading text-2xl font-bold lg:mt-20 lg:text-3xl">
-  Тарифы на перевозку
-</h1>
-<p class="mb-10 text-sm">
-  Для получения тарифов, выберите регион и город, из которого планируется
-  отправление.
-</p>
-<div
-  class="grid grid-cols-1 gap-16 lg:grid-cols-[minmax(770px,1fr)_370px] lg:gap-8"
->
-  <div class="w-full">
-    <div
-      class="mb-10 flex flex-col space-y-10 border-b border-t border-gray-300 py-10 md:flex-row md:space-x-16 md:space-y-0 lg:space-x-32"
-    >
-      <div>
-        <b class="mb-4 block text-lg font-medium">Регион:</b>
-        <tui-radio-list
-          orientation="vertical"
-          [formControl]="region"
-          [items]="regions"
-          [itemContent]="regionsContent"
-        ></tui-radio-list>
-        <ng-template #regionsContent let-data>
-          {{ data.name }}
-        </ng-template>
-      </div>
-      <div *tuiLet="filteredCities$ | async as cities">
-        <b class="mb-4 block text-lg font-medium">Город:</b>
-        <ng-container *tuiLet="isCitiesLoading$ | async as isCitiesLoading">
-          <tui-loader [showLoader]="isCitiesLoading">
-            <tui-radio-list
-              *ngIf="!isCitiesLoading && cities"
-              orientation="horizontal"
-              [formControl]="city"
-              [items]="cities"
-              [itemContent]="citiesContent"
-              class="tariff-cities"
-            ></tui-radio-list>
-            <ng-template #citiesContent let-data>
-              {{ data.name }}
-            </ng-template>
-          </tui-loader>
-        </ng-container>
-      </div>
-    </div>
-
-    <ng-container *tuiLet="isZonesLoading$ | async as isZonesLoading">
-      <ng-container
-        *tuiLet="isZoneTariffsLoading$ | async as isZoneTariffsLoading"
+<div class="mx-auto mt-10 block max-w-[1170px] px-4 lg:mt-16">
+  <h1 class="mb-1 font-heading text-2xl font-bold lg:text-3xl">
+    Тарифы на перевозку
+  </h1>
+  <p class="mb-10 text-sm">
+    Для получения тарифов, выберите регион и город, из которого планируется
+    отправление.
+  </p>
+  <div
+    class="grid grid-cols-1 gap-16 lg:grid-cols-[minmax(770px,1fr)_370px] lg:gap-8"
+  >
+    <div class="w-full">
+      <div
+        class="mb-10 flex flex-col space-y-10 border-b border-t border-gray-300 py-10 md:flex-row md:space-x-16 md:space-y-0 lg:space-x-32"
       >
-        <tui-loader [showLoader]="isZonesLoading || isZoneTariffsLoading">
-          <ng-container *ngIf="!isZonesLoading && !isZoneTariffsLoading">
-            <div
-              *ngFor="let zone of zones$ | async"
-              class="mb-2.5 rounded-sm bg-yellow p-7"
-            >
-              <b class="mb-3 block text-xl font-medium">{{ zone.zone }}</b>
-              <p class="text-xs">{{ zone.cities }}</p>
-            </div>
-            <ng-container *ngIf="docsAndParcelsZoneTariffs$ | async as zones">
-              <h2
-                class="mt-22 mb-10 font-heading text-xl font-bold lg:text-2xl"
+        <div>
+          <b class="mb-4 block text-lg font-medium">Регион:</b>
+          <tui-radio-list
+            orientation="vertical"
+            [formControl]="region"
+            [items]="regions"
+            [itemContent]="regionsContent"
+          ></tui-radio-list>
+          <ng-template #regionsContent let-data>
+            {{ data.name }}
+          </ng-template>
+        </div>
+        <div *tuiLet="filteredCities$ | async as cities">
+          <b class="mb-4 block text-lg font-medium">Город:</b>
+          <ng-container *tuiLet="isCitiesLoading$ | async as isCitiesLoading">
+            <tui-loader [showLoader]="isCitiesLoading">
+              <tui-radio-list
+                *ngIf="!isCitiesLoading && cities"
+                orientation="horizontal"
+                [formControl]="city"
+                [items]="cities"
+                [itemContent]="citiesContent"
+                class="tariff-cities"
+              ></tui-radio-list>
+              <ng-template #citiesContent let-data>
+                {{ data.name }}
+              </ng-template>
+            </tui-loader>
+          </ng-container>
+        </div>
+      </div>
+
+      <ng-container *tuiLet="isZonesLoading$ | async as isZonesLoading">
+        <ng-container
+          *tuiLet="isZoneTariffsLoading$ | async as isZoneTariffsLoading"
+        >
+          <tui-loader [showLoader]="isZonesLoading || isZoneTariffsLoading">
+            <ng-container *ngIf="!isZonesLoading && !isZoneTariffsLoading">
+              <div
+                *ngFor="let zone of zones$ | async"
+                class="mb-2.5 rounded-sm bg-yellow p-7"
               >
-                Документы и грузы
-              </h2>
-              <div class="relative mb-22">
-                <div class="overflow-x-auto">
-                  <table>
-                    <thead>
-                      <tr>
-                        <th></th>
-                        <th>Габариты</th>
-                        <th>Документы</th>
-                        <th>До 20 кг</th>
-                        <th>20 - 40 кг</th>
-                        <th>40 - 60 кг</th>
-                      </tr>
-                    </thead>
-                    <tbody *ngFor="let zone of zones">
-                      <tr>
-                        <td [rowSpan]="zone.data.length">
-                          <b
-                            class="block rounded-sm bg-yellow p-4 text-center text-sm"
-                            >{{ zone.name }}</b
-                          >
-                        </td>
-                        <td colspan="7">
-                          <div class="table-inner">
-                            <table>
-                              <tr *ngFor="let item of zone.data">
-                                <td>до {{ item.size }} см</td>
-                                <td>
-                                  {{
-                                    item.docs
-                                      | currency
-                                        : 'RUB'
-                                        : 'symbol-narrow'
-                                        : '1.0'
-                                        : 'ru'
-                                  }}
-                                </td>
-                                <ng-container
-                                  *ngFor="let data of item.data; let i = index"
-                                >
-                                  <td *ngIf="i < 3">
+                <b class="mb-3 block text-xl font-medium">{{ zone.zone }}</b>
+                <p class="text-xs">{{ zone.cities }}</p>
+              </div>
+              <ng-container *ngIf="docsAndParcelsZoneTariffs$ | async as zones">
+                <h2
+                  class="mt-22 mb-10 font-heading text-xl font-bold lg:text-2xl"
+                >
+                  Документы и грузы
+                </h2>
+                <div class="relative mb-22">
+                  <div class="overflow-x-auto">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th></th>
+                          <th>Габариты</th>
+                          <th>Документы</th>
+                          <th>До 20 кг</th>
+                          <th>20 - 40 кг</th>
+                          <th>40 - 60 кг</th>
+                        </tr>
+                      </thead>
+                      <tbody *ngFor="let zone of zones">
+                        <tr>
+                          <td [rowSpan]="zone.data.length">
+                            <b
+                              class="block rounded-sm bg-yellow p-4 text-center text-sm"
+                              >{{ zone.name }}</b
+                            >
+                          </td>
+                          <td colspan="7">
+                            <div class="table-inner">
+                              <table>
+                                <tr *ngFor="let item of zone.data">
+                                  <td>до {{ item.size }} см</td>
+                                  <td>
                                     {{
-                                      data
-                                        ? (data.price
-                                          | currency
-                                            : 'RUB'
-                                            : 'symbol-narrow'
-                                            : '1.0'
-                                            : 'ru')
-                                        : '&#8212;'
+                                      item.docs
+                                        | currency
+                                          : 'RUB'
+                                          : 'symbol-narrow'
+                                          : '1.0'
+                                          : 'ru'
                                     }}
                                   </td>
-                                </ng-container>
-                              </tr>
-                            </table>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </ng-container>
-            <ng-container *tuiLet="autoDetailsZoneTariffs$ | async as zones">
-              <ng-container *ngIf="zones && zones.length">
-                <h2 class="mb-10 font-heading text-xl font-bold lg:text-2xl">
-                  Автозапчасти
-                </h2>
-                <div class="relative mb-22">
-                  <div class="overflow-x-auto">
-                    <table class="other">
-                      <thead>
-                        <tr>
-                          <th></th>
-                          <th>Зона 1</th>
-                          <th>Зона 2</th>
-                          <th>Зона 3</th>
-                          <th>Зона 4</th>
-                          <th>Зона 5</th>
-                          <th>Зона 6</th>
-                          <th>Зона 7</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr *ngFor="let zone of zones">
-                          <td>
-                            <b>{{ zone.name }}</b>
-                          </td>
-                          <td *ngFor="let item of zone.data">
-                            {{
-                              item
-                                ? (item.price
-                                  | currency: 'RUB':'symbol-narrow':'1.0':'ru')
-                                : '&#8212;'
-                            }}
+                                  <ng-container
+                                    *ngFor="
+                                      let data of item.data;
+                                      let i = index
+                                    "
+                                  >
+                                    <td *ngIf="i < 3">
+                                      {{
+                                        data
+                                          ? (data.price
+                                            | currency
+                                              : 'RUB'
+                                              : 'symbol-narrow'
+                                              : '1.0'
+                                              : 'ru')
+                                          : '&#8212;'
+                                      }}
+                                    </td>
+                                  </ng-container>
+                                </tr>
+                              </table>
+                            </div>
                           </td>
                         </tr>
                       </tbody>
@@ -164,56 +129,100 @@
                   </div>
                 </div>
               </ng-container>
-            </ng-container>
-            <ng-container *tuiLet="otherZoneTariffs$ | async as zones">
-              <ng-container *ngIf="zones && zones.length">
-                <h2 class="mb-10 font-heading text-xl font-bold lg:text-2xl">
-                  Другое
-                </h2>
-                <div class="relative mb-22">
-                  <div class="overflow-x-auto">
-                    <table class="other">
-                      <thead>
-                        <tr>
-                          <th></th>
-                          <th>Зона 1</th>
-                          <th>Зона 2</th>
-                          <th>Зона 3</th>
-                          <th>Зона 4</th>
-                          <th>Зона 5</th>
-                          <th>Зона 6</th>
-                          <th>Зона 7</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr *ngFor="let zone of zones">
-                          <td>
-                            <b>{{ zone.name }}</b>
-                          </td>
-                          <td *ngFor="let item of zone.data">
-                            {{ item ? item.price : '&#8212;' }}
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+              <ng-container *tuiLet="autoDetailsZoneTariffs$ | async as zones">
+                <ng-container *ngIf="zones && zones.length">
+                  <h2 class="mb-10 font-heading text-xl font-bold lg:text-2xl">
+                    Автозапчасти
+                  </h2>
+                  <div class="relative mb-22">
+                    <div class="overflow-x-auto">
+                      <table class="other">
+                        <thead>
+                          <tr>
+                            <th></th>
+                            <th>Зона 1</th>
+                            <th>Зона 2</th>
+                            <th>Зона 3</th>
+                            <th>Зона 4</th>
+                            <th>Зона 5</th>
+                            <th>Зона 6</th>
+                            <th>Зона 7</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let zone of zones">
+                            <td>
+                              <b>{{ zone.name }}</b>
+                            </td>
+                            <td *ngFor="let item of zone.data">
+                              {{
+                                item
+                                  ? (item.price
+                                    | currency
+                                      : 'RUB'
+                                      : 'symbol-narrow'
+                                      : '1.0'
+                                      : 'ru')
+                                  : '&#8212;'
+                              }}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
-                </div>
+                </ng-container>
               </ng-container>
+              <ng-container *tuiLet="otherZoneTariffs$ | async as zones">
+                <ng-container *ngIf="zones && zones.length">
+                  <h2 class="mb-10 font-heading text-xl font-bold lg:text-2xl">
+                    Другое
+                  </h2>
+                  <div class="relative mb-22">
+                    <div class="overflow-x-auto">
+                      <table class="other">
+                        <thead>
+                          <tr>
+                            <th></th>
+                            <th>Зона 1</th>
+                            <th>Зона 2</th>
+                            <th>Зона 3</th>
+                            <th>Зона 4</th>
+                            <th>Зона 5</th>
+                            <th>Зона 6</th>
+                            <th>Зона 7</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let zone of zones">
+                            <td>
+                              <b>{{ zone.name }}</b>
+                            </td>
+                            <td *ngFor="let item of zone.data">
+                              {{ item ? item.price : '&#8212;' }}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </ng-container>
+              </ng-container>
+              <p class="text-xs text-gray-700">
+                * <b>Документы</b> – это папка или файл с бумагой не более
+                формата А4 и толщиной до 1,5 см без каких-либо сторонних
+                вложений: флешки, карты и т.д.
+              </p>
+              <p class="text-xs text-gray-700">
+                * <b>Габаритная посылка</b> – это груз до 20 кг и с суммой длин
+                трёх сторон не более 130 см (30х30х70 см). Крупногабаритные
+                посылки рассчитываются на месте при приёме.
+              </p>
             </ng-container>
-            <p class="text-xs text-gray-700">
-              * <b>Документы</b> – это папка или файл с бумагой не более формата
-              А4 и толщиной до 1,5 см без каких-либо сторонних вложений: флешки,
-              карты и т.д.
-            </p>
-            <p class="text-xs text-gray-700">
-              * <b>Габаритная посылка</b> – это груз до 20 кг и с суммой длин
-              трёх сторон не более 130 см (30х30х70 см). Крупногабаритные
-              посылки рассчитываются на месте при приёме.
-            </p>
-          </ng-container>
-        </tui-loader>
+          </tui-loader>
+        </ng-container>
       </ng-container>
-    </ng-container>
+    </div>
+    media
   </div>
-  media
 </div>

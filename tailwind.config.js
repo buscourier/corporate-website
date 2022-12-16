@@ -155,5 +155,24 @@ module.exports = {
     plugin(function ({addVariant}) {
       addVariant('step-done', '.stepper-item.done &')
     }),
+    plugin(function ({addComponents}) {
+      addComponents({
+        '.step-point': {
+          position: 'relative',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '38px',
+          height: '38px',
+          fontFamily: 'Roboto, Helvetica, sans-serif',
+          fontSize: '20px',
+          lineHeight: '24px',
+          fontWeight: '700',
+          backgroundColor: '#ffdc00',
+          color: '#000000',
+          borderRadius: '50%',
+        },
+      })
+    }),
   ],
 }
