@@ -5,6 +5,7 @@ import {filter, map, Observable, of, switchMap} from 'rxjs'
 import {concatAll, tap, toArray} from 'rxjs/operators'
 import {MapPointInterface} from 'src/app/shared/types/map-point.interface'
 import {OfficeInterface} from '../../../shared/types/office.interface'
+import {isNotSmallScreenSelector} from '../../../store/global/selectors'
 import {getDepartmentsAction} from './store/actions/get-departments.action'
 import {
   backendErrorsSelector,
@@ -41,6 +42,7 @@ export class PickupPointsComponent implements OnInit {
   departments$: Observable<OfficeInterface[]>
   points$: Observable<PickupPointsInterface>
   backendErrors$: Observable<string>
+  isNotSmallScreen$: Observable<boolean>
 
   currentTab = null
   currentMapPoints: MapPointInterface[] = []
@@ -53,6 +55,7 @@ export class PickupPointsComponent implements OnInit {
   }
 
   initializeValues(): void {
+    this.isNotSmallScreen$ = this.store.select(isNotSmallScreenSelector)
     this.isDepartmentsLoading$ = this.store.select(isDepartmentsLoadingSelector)
     this.points$ = this.store.select(departmentsSelector).pipe(
       filter(Boolean),

@@ -1,131 +1,138 @@
-<ng-container *tuiLet="points$ | async as points">
-  <ng-container *ngIf="points">
-    <tui-accordion *ngIf="false" [rounded]="false">
-      <tui-accordion-item
-        *ngFor="let key of getPointsKeys(points)"
-        [borders]="null"
-        class="accordion-item-type-1"
-      >
-        <b class="align-middle text-lg font-medium text-black">{{ key }} </b>
-        <small class="align-middle text-xs text-black"
-          >({{ points[key].length }} отделения)</small
-        >
-        <ng-template tuiAccordionItemContent>
-          <tui-accordion [rounded]="false">
-            <tui-accordion-item
-              *ngFor="let department of points[key]"
-              [showArrow]="false"
-              (click)="setMapPoints(department.mapPoints)"
-              [borders]="null"
-              class="accordion-item-type-2"
-            >
-              <div class="flex justify-between">
-                <div>
-                  <b class="align-middle text-lg font-medium text-black"
-                    >{{ department.name }}
-                  </b>
-                  <small class="align-middle text-xs text-black"
-                    >({{ department.info.length }} отделения)</small
-                  >
-                </div>
-                <tui-svg src="icons::plus"></tui-svg>
-              </div>
-              <ng-template tuiAccordionItemContent>
-                <div class="mt-4 mb-5 ml-6">
-                  <ul
-                    *ngFor="let info of department.info"
-                    class="mb-4 space-y-2 border-b border-gray-200 pb-4 text-sm last:border-0 last:pb-0"
-                  >
-                    <li
-                      *ngFor="let item of info"
-                      class="flex flex-wrap space-x-1"
-                    >
-                      <b class="inline-block font-medium">
-                        {{ item.type }}
-                      </b>
-                      <span>{{ item.text }}</span>
-                    </li>
-                  </ul>
-                </div>
-                <div class="mb-4 h-[300px]">
-                  <ng-container *ngTemplateOutlet="map"></ng-container>
-                </div>
-              </ng-template>
-            </tui-accordion-item>
-          </tui-accordion>
-        </ng-template>
-      </tui-accordion-item>
-    </tui-accordion>
-    <ng-container *ngIf="true">
-      <div class="grid grid-cols-4">
-        <button
-          type="button"
-          *ngFor="let key of getPointsKeys(points)"
-          class="relative flex flex-col items-center justify-center border-b-2 border-transparent pt-4 pb-4 text-center transition-colors before:absolute before:top-0 before:-bottom-0.5 before:right-0 before:w-1 before:bg-white last:before:hidden lg:h-16 lg:flex-row lg:space-x-1"
-          [class]="
-            key === currentTab
-              ? 'bg-white border-b-yellow hover:bg-white before:hidden'
-              : 'bg-gray-100 border-transparent hover:bg-gray-50'
-          "
-          (click)="setCurrentTab(key, points[key])"
-        >
-          <b class="text-lg font-medium text-black">{{ key }} </b>
-          <small class="text-xs text-black"
-            >({{ points[key].length }} отделения)</small
+<ng-container *tuiLet="isNotSmallScreen$ | async as isNotSmallScreen">
+  <ng-container *tuiLet="points$ | async as points">
+    <ng-container *ngIf="points">
+      <ng-container *ngIf="isNotSmallScreen; else mobile">
+        <div class="grid grid-cols-4">
+          <button
+            type="button"
+            *ngFor="let key of getPointsKeys(points)"
+            class="relative flex flex-col items-center justify-center border-b-2 border-transparent pt-4 pb-4 text-center transition-colors before:absolute before:top-0 before:-bottom-0.5 before:right-0 before:w-1 before:bg-white last:before:hidden lg:h-16 lg:flex-row lg:space-x-1"
+            [class]="
+              key === currentTab
+                ? 'bg-white border-b-yellow hover:bg-white before:hidden'
+                : 'bg-gray-100 border-transparent hover:bg-gray-50'
+            "
+            (click)="setCurrentTab(key, points[key])"
           >
-        </button>
-      </div>
-      <ng-container *ngFor="let key of getPointsKeys(points)">
-        <div
-          *ngIf="key === currentTab"
-          class="mt-6 grid grid-cols-2 gap-7"
-          [@tuiFadeIn]=""
-        >
-          <tui-accordion [rounded]="false">
-            <tui-accordion-item
-              *ngFor="let department of points[key]; let i = index"
-              [showArrow]="false"
-              (click)="setMapPoints(department.mapPoints)"
-              [borders]="null"
-              [open]="i === 0"
-              class="accordion-item-type-2"
+            <b class="text-lg font-medium text-black">{{ key }} </b>
+            <small class="text-xs text-black"
+              >({{ points[key].length }} отделения)</small
             >
-              <div class="flex justify-between">
-                <div>
-                  <b class="align-middle text-lg font-medium text-black"
-                    >{{ department.name }}
-                  </b>
-                  <small class="align-middle text-xs text-black"
-                    >({{ department.info.length }} отделения)</small
-                  >
-                </div>
-                <tui-svg src="icons::plus"></tui-svg>
-              </div>
-              <ng-template tuiAccordionItemContent>
-                <div class="mt-4 mb-5 ml-6">
-                  <ul
-                    *ngFor="let info of department.info"
-                    class="mb-4 space-y-2 border-b border-gray-200 pb-4 text-sm last:border-0 last:pb-0"
-                  >
-                    <li
-                      *ngFor="let item of info"
-                      class="flex flex-wrap space-x-1"
-                    >
-                      <b class="inline-block font-medium">
-                        {{ item.type }}
-                      </b>
-                      <span>{{ item.text }}</span>
-                    </li>
-                  </ul>
-                </div>
-              </ng-template>
-            </tui-accordion-item>
-          </tui-accordion>
-          <div class="mt-2 h-full">
-            <ng-container *ngTemplateOutlet="map"></ng-container>
-          </div>
+          </button>
         </div>
+        <ng-container *ngFor="let key of getPointsKeys(points)">
+          <div
+            *ngIf="key === currentTab"
+            class="mt-6 grid grid-cols-2 gap-7"
+            [@tuiFadeIn]=""
+          >
+            <tui-accordion [rounded]="false">
+              <tui-accordion-item
+                *ngFor="let department of points[key]; let i = index"
+                [showArrow]="false"
+                (click)="setMapPoints(department.mapPoints)"
+                [borders]="null"
+                [open]="i === 0"
+                class="accordion-item-type-2"
+              >
+                <div class="flex justify-between">
+                  <div>
+                    <b class="align-middle text-lg font-medium text-black"
+                      >{{ department.name }}
+                    </b>
+                    <small class="align-middle text-xs text-black"
+                      >({{ department.info.length }} отделения)</small
+                    >
+                  </div>
+                  <tui-svg src="icons::plus"></tui-svg>
+                </div>
+                <ng-template tuiAccordionItemContent>
+                  <div class="mt-4 mb-5 ml-6">
+                    <ul
+                      *ngFor="let info of department.info"
+                      class="mb-4 space-y-2 border-b border-gray-200 pb-4 text-sm last:border-0 last:pb-0"
+                    >
+                      <li
+                        *ngFor="let item of info"
+                        class="flex flex-wrap space-x-1"
+                      >
+                        <b class="inline-block font-medium">
+                          {{ item.type }}
+                        </b>
+                        <span>{{ item.text }}</span>
+                      </li>
+                    </ul>
+                  </div>
+                </ng-template>
+              </tui-accordion-item>
+            </tui-accordion>
+            <div class="mt-2 h-full">
+              <ng-container *ngTemplateOutlet="map"></ng-container>
+            </div>
+          </div>
+        </ng-container>
       </ng-container>
+
+      <ng-template #mobile>
+        <tui-accordion [rounded]="false">
+          <tui-accordion-item
+            *ngFor="let key of getPointsKeys(points)"
+            [borders]="null"
+            class="accordion-item-type-1"
+          >
+            <b class="align-middle text-lg font-medium text-black"
+              >{{ key }}
+            </b>
+            <small class="align-middle text-xs text-black"
+              >({{ points[key].length }} отделения)</small
+            >
+            <ng-template tuiAccordionItemContent>
+              <tui-accordion [rounded]="false">
+                <tui-accordion-item
+                  *ngFor="let department of points[key]"
+                  [showArrow]="false"
+                  (click)="setMapPoints(department.mapPoints)"
+                  [borders]="null"
+                  class="accordion-item-type-2"
+                >
+                  <div class="flex justify-between">
+                    <div>
+                      <b class="align-middle text-lg font-medium text-black"
+                        >{{ department.name }}
+                      </b>
+                      <small class="align-middle text-xs text-black"
+                        >({{ department.info.length }} отделения)</small
+                      >
+                    </div>
+                    <tui-svg src="icons::plus"></tui-svg>
+                  </div>
+                  <ng-template tuiAccordionItemContent>
+                    <div class="mt-4 mb-5 ml-6">
+                      <ul
+                        *ngFor="let info of department.info"
+                        class="mb-4 space-y-2 border-b border-gray-200 pb-4 text-sm last:border-0 last:pb-0"
+                      >
+                        <li
+                          *ngFor="let item of info"
+                          class="flex flex-wrap space-x-1"
+                        >
+                          <b class="inline-block font-medium">
+                            {{ item.type }}
+                          </b>
+                          <span>{{ item.text }}</span>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="mb-4 h-[300px]">
+                      <ng-container *ngTemplateOutlet="map"></ng-container>
+                    </div>
+                  </ng-template>
+                </tui-accordion-item>
+              </tui-accordion>
+            </ng-template>
+          </tui-accordion-item>
+        </tui-accordion>
+      </ng-template>
     </ng-container>
   </ng-container>
 </ng-container>
