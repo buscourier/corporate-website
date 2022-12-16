@@ -41,19 +41,18 @@
 
 /*'shops-promo': "url('src/assets/images/index/curve.svg')",*/
 
-
 .promo {
   @apply relative;
-  @apply before:absolute before:right-0 before:bottom-0 before:bg-[length:236px_314px]
-  before:bg-[url('src/assets/images/shops/banners/img--xs@3x.jpg')] before:w-[236px] before:h-[314px];
+  @apply before:absolute before:right-0 before:bottom-0 before:h-[314px]
+  before:w-[236px] before:bg-[url('src/assets/images/shops/banners/img--xs@3x.jpg')] before:bg-[length:236px_314px];
 
-  @apply sm:before:-bottom-10 sm:before:bg-[url('src/assets/images/shops/banners/img--md@3x.jpg')]
-  sm:before:bg-[length:584px_362px] sm:before:w-[584px] sm:before:h-[362px];
+  @apply sm:before:-bottom-10 sm:before:h-[362px]
+  sm:before:w-[584px] sm:before:bg-[url('src/assets/images/shops/banners/img--md@3x.jpg')] sm:before:bg-[length:584px_362px];
 
   /*@apply md:bottom-0;*/
 
-  @apply lg:before:bg-[url('src/assets/images/shops/banners/img--lg@3x.jpg')]
-  lg:before:bg-[length:777px_447px] lg:before:w-[777px] lg:before:h-[447px];
+  @apply lg:before:h-[447px]
+  lg:before:w-[777px] lg:before:bg-[url('src/assets/images/shops/banners/img--lg@3x.jpg')] lg:before:bg-[length:777px_447px];
 
   @apply xl:before:-right-36;
 }
