@@ -128,6 +128,7 @@ module.exports = {
         22: '5.625rem', //90px
         90: '22.5rem',
         46: '11.5rem',
+        66: '16.5rem',
       },
       margin: {
         18: '4.375rem',

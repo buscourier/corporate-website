@@ -1,13 +1,15 @@
-.picture {
+picture {
   border-radius: inherit;
   width: inherit;
   height: inherit;
   object-fit: inherit;
+  max-height: inherit;
 }
 
 img {
   border-radius: inherit;
   width: inherit;
   height: inherit;
+  max-height: inherit;
   object-fit: inherit;
 }
