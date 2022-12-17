@@ -62,7 +62,7 @@
     <div class="col-start-2 col-end-3 row-start-2 row-end-3 lg:row-start-1">
       <app-img
         [breakpoints]="{sm: true, md: true, lg: true}"
-        class="h-[345px] w-full min-w-[345px] rounded-md object-cover lg:h-[420px] xl:h-[500px]"
+        class="h-[345px] w-full rounded-md object-cover lg:h-[420px] xl:h-[500px]"
         src="/assets/images/about/team"
       ></app-img>
     </div>
@@ -156,7 +156,9 @@
     </div>
   </div>
 </section>
-<section class="bg-yellow pt-12 pb-8 sm:pt-16 sm:pb-16 xl:pt-20 xl:pb-20">
+<section
+  class="mb-12 bg-yellow pt-12 pb-8 sm:pt-16 sm:pb-16 lg:mb-16 xl:mb-20 xl:pt-20 xl:pb-20"
+>
   <div class="mx-auto max-w-[1170px] px-4">
     <h2 class="mb-4 font-heading text-xl font-bold lg:mb-10 lg:text-2xl">
       Наши социальные проекты
@@ -189,6 +191,45 @@
             приюту «Ковчег»
           </span>
         </div>
+      </li>
+    </ul>
+  </div>
+</section>
+<section
+  class="gap mx-auto grid max-w-[1170px] grid-cols-1 gap-7.5 px-4 md:grid-cols-2 md:gap-12 xl:grid-cols-[495px_1fr] xl:gap-20"
+>
+  <div>
+    <app-img
+      [breakpoints]="{sm: true, md: true, lg: true}"
+      class="h-[250px] w-full rounded-md object-cover xl:h-[337px]"
+      src="/assets/images/about/team"
+    ></app-img>
+  </div>
+  <div>
+    <h2
+      class="mb-4 font-heading text-xl font-bold lg:text-2xl xl:mb-10 xl:mt-10"
+    >
+      Баскурьер — Команда
+    </h2>
+    <p class="mb-5 text-md font-medium xl:text-lg">
+      Наша команда становится крепче когда&nbsp;мы:
+    </p>
+    <ul>
+      <li class="mb-3 flex space-x-3.5">
+        <tui-svg src="icons::check" class="text-gray-500"></tui-svg>
+        <span class="text-sm">проводим планерки</span>
+      </li>
+      <li class="mb-3 flex space-x-3.5">
+        <tui-svg src="icons::check" class="text-gray-500"></tui-svg>
+        <span class="text-sm">совместные выезды</span>
+      </li>
+      <li class="mb-3 flex space-x-3.5">
+        <tui-svg src="icons::check" class="text-gray-500"></tui-svg>
+        <span class="text-sm">обучение и тренинги</span>
+      </li>
+      <li class="mb-3 flex space-x-3.5">
+        <tui-svg src="icons::check" class="text-gray-500"></tui-svg>
+        <span class="text-sm">интересные и яркие корпоративы</span>
       </li>
     </ul>
   </div>
