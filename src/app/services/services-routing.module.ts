@@ -11,6 +11,13 @@ const routes: Routes = [
         path: 'cse',
         loadChildren: () => import('./cse/cse.module').then((m) => m.CseModule),
       },
+      {
+        path: 'complex-tasks',
+        loadChildren: () =>
+          import('./complex-tasks/complex-tasks.module').then(
+            (m) => m.ComplexTasksModule
+          ),
+      },
     ],
   },
 ]
