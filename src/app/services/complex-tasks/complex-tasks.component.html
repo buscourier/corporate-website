@@ -31,6 +31,7 @@
           <button
             type="button"
             class="inline-block text-blue md:block lg:inline-block"
+            (click)="openTask(taskOne)"
           >
             Читать далее
           </button>
@@ -55,6 +56,7 @@
           <button
             type="button"
             class="inline-block text-blue md:block lg:inline-block"
+            (click)="openTask(taskTwo)"
           >
             Читать далее
           </button>
@@ -77,6 +79,7 @@
           <button
             type="button"
             class="inline-block text-blue md:block lg:inline-block"
+            (click)="openTask(taskThree)"
           >
             Читать далее
           </button>
@@ -96,3 +99,160 @@
     <app-support-form></app-support-form>
   </div>
 </div>
+<ng-template #taskOne let-observer>
+  <article class="relative flex flex-col rounded-sm bg-white md:p-2">
+    <button
+      type="button"
+      class="absolute -top-2 -right-2 text-gray-800"
+      (click)="observer.complete()"
+    >
+      <tui-svg src="icons::close-2" class="!h-[22px] !w-[22px]"></tui-svg>
+    </button>
+    <app-img
+      class="mt-8 h-48 w-full object-cover md:mt-6 md:h-80"
+      src="/assets/images/complex-tasks/task-1--xl"
+    ></app-img>
+    <h1 class="mt-7 mb-5 font-heading text-lg font-bold md:text-xl">
+      «Доставка цветов из аэропорта<br class="hidden sm:block" />
+      по Приморскому краю за 24 часа»
+    </h1>
+    <p class="mb-2 text-xs md:mb-4 md:text-base">
+      Крупная оптовая компания поставщик цветов из Москвы запросила организовать
+      поставку своей продукции из аэропорта г. Владивосток в 21 населенный пункт
+      Приморского края, в том числе и г. Бикин (хабаровский край).
+    </p>
+    <p class="mb-2 text-xs md:mb-4 md:text-base">
+      В связи со спецификой товара доставку необходимо было реализовать очень
+      быстро.
+    </p>
+    <p class="mb-4 text-xs md:text-base">
+      <b
+        >Баскурьер справились с задачей за 24 часа.<br />
+        За это время были выполнены следующие действия:</b
+      >
+    </p>
+
+    <ul>
+      <li class="mb-1 flex items-center space-x-1.5">
+        <tui-svg src="icons::check" class="text-green"></tui-svg>
+        <span class="text-xs md:text-base">забор груза из аэропорта.</span>
+      </li>
+      <li class="mb-1.5 flex items-center space-x-1.5">
+        <tui-svg src="icons::check" class="text-green"></tui-svg>
+        <span class="text-xs md:text-base"
+          >прохождение фитосанитарного контроля.</span
+        >
+      </li>
+      <li class="mb-1.5 flex items-center space-x-1.5">
+        <tui-svg src="icons::check" class="text-green"></tui-svg>
+        <span class="text-xs md:text-base">получение груза в Карго.</span>
+      </li>
+      <li class="mb-1.5 flex items-center space-x-1.5">
+        <tui-svg src="icons::check" class="text-green"></tui-svg>
+        <span class="text-xs md:text-base"
+          >распределение груза по направлениям.</span
+        >
+      </li>
+      <li class="flex items-center space-x-1.5">
+        <tui-svg src="icons::check" class="text-green"></tui-svg>
+        <span class="text-xs md:text-base">доставка груза получателям.</span>
+      </li>
+    </ul>
+  </article>
+</ng-template>
+
+<ng-template #taskTwo let-observer>
+  <article class="relative flex flex-col rounded-sm bg-white md:p-2">
+    <button
+      type="button"
+      class="absolute -top-2 -right-2 text-gray-800"
+      (click)="observer.complete()"
+    >
+      <tui-svg src="icons::close-2" class="!h-[22px] !w-[22px]"></tui-svg>
+    </button>
+    <app-img
+      class="mt-8 h-48 w-full object-cover md:mt-6 md:h-80"
+      src="/assets/images/complex-tasks/task-2--xl"
+    ></app-img>
+    <h1 class="mt-7 mb-5 font-heading text-lg font-bold md:text-xl">
+      «Подарки для близких, которые сейчас далеко»
+    </h1>
+    <p class="mb-2 text-xs md:mb-4 md:text-base">
+      В Баскурьер поступила заявка на доставку спортивного велосипеда из
+      Владивостока в Находку. Но столь большой груз нужно было не только забрать
+      у отправителя, а еще и оформить в подарочную упаковку и перевязать
+      подходящим бантом. Также стояла задача доставить подарок имениннику в
+      определенное время к месту празднования торжества.
+    </p>
+    <p class="mb-4 text-xs md:text-base">
+      <b>Выполнены следующие действия:</b>
+    </p>
+
+    <ul>
+      <li class="mb-1 flex items-center space-x-1.5">
+        <tui-svg src="icons::check" class="text-green"></tui-svg>
+        <span class="text-xs md:text-base">забор груза у отправителя.</span>
+      </li>
+      <li class="mb-1.5 flex items-center space-x-1.5">
+        <tui-svg src="icons::check" class="text-green"></tui-svg>
+        <span class="text-xs md:text-base"
+          >оформление в подарочную упаковку.</span
+        >
+      </li>
+      <li class="mb-1.5 flex items-center space-x-1.5">
+        <tui-svg src="icons::check" class="text-green"></tui-svg>
+        <span class="text-xs md:text-base"
+          >доставка до пункта назначения к точному времени.</span
+        >
+      </li>
+    </ul>
+  </article>
+</ng-template>
+
+<ng-template #taskThree let-observer>
+  <article class="relative flex flex-col rounded-sm bg-white md:p-2">
+    <button
+      type="button"
+      class="absolute -top-2 -right-2 text-gray-800"
+      (click)="observer.complete()"
+    >
+      <tui-svg src="icons::close-2" class="!h-[22px] !w-[22px]"></tui-svg>
+    </button>
+    <app-img
+      class="mt-8 h-48 w-full object-cover md:mt-6 md:h-80"
+      src="/assets/images/complex-tasks/task-3--xl"
+    ></app-img>
+    <h1 class="mt-7 mb-5 font-heading text-lg font-bold md:text-xl">
+      «Доставим даже в тайгу»
+    </h1>
+    <p class="mb-2 text-xs md:mb-4 md:text-base">
+      С нестандартной задачей обратился клиент, который поехал на охоту в
+      Лазовский район. В тайге у него сломалась машина, а подходящей запчасти в
+      округе не нашлось.
+    </p>
+    <p class="mb-2 text-xs md:mb-4 md:text-base">
+      По запросу клиента, мы выкупили автозапчасть в магазине Владивостока и
+      отправили ее в село Лазо. Через 8 часов после обращения в нашу компанию
+      машина клиента была уже на ходу.
+    </p>
+    <p class="mb-4 text-xs md:text-base">
+      <b
+        >Баскурьер справились с задачей за 8 часов.<br />
+        За это время были выполнены следующие действия:</b
+      >
+    </p>
+
+    <ul>
+      <li class="mb-1 flex items-center space-x-1.5">
+        <tui-svg src="icons::check" class="text-green"></tui-svg>
+        <span class="text-xs md:text-base"
+          >забор и выкуп автозапчасти в магазине.</span
+        >
+      </li>
+      <li class="mb-1.5 flex items-center space-x-1.5">
+        <tui-svg src="icons::check" class="text-green"></tui-svg>
+        <span class="text-xs md:text-base">доставка до пункта назначения.</span>
+      </li>
+    </ul>
+  </article>
+</ng-template>

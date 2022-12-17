@@ -1,4 +1,7 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core'
+import {ChangeDetectionStrategy, Component, Inject} from '@angular/core'
+import {TuiDialogContext, TuiDialogService} from '@taiga-ui/core'
+import {PolymorpheusContent} from '@tinkoff/ng-polymorpheus'
+import {take} from 'rxjs'
 
 @Component({
   selector: 'app-complex-tasks',
@@ -7,5 +10,19 @@ import {ChangeDetectionStrategy, Component} from '@angular/core'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ComplexTasksComponent {
-  constructor() {}
+  constructor(
+    @Inject(TuiDialogService)
+    private readonly dialogService: TuiDialogService
+  ) {}
+
+  openTask(content: PolymorpheusContent<TuiDialogContext>) {
+    this.dialogService
+      .open(content, {
+        size: 'l',
+        closeable: false,
+        dismissible: false,
+      })
+      .pipe(take(1))
+      .subscribe()
+  }
 }
