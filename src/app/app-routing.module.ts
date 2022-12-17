@@ -56,6 +56,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./feedback/feedback.module').then((m) => m.FeedbackModule),
   },
+  {
+    path: 'career',
+    loadChildren: () =>
+      import('./career/career.module').then((m) => m.CareerModule),
+  },
 ]
 
 @NgModule({
