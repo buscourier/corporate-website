@@ -1,7 +1,7 @@
 .package {
   @apply mb-7 grid grid-cols-[38px_1fr] grid-rows-[repeat(4,auto)] items-start gap-x-5 border-t border-gray-300 pt-7;
   @apply before:step-point before:col-start-1 before:col-end-2 before:row-span-full before:row-start-1 before:content-[attr(data-count)];
-  @apply md:mb-10 md:grid-cols-[38px_1fr_270px] md:grid-rows-[repeat(3,auto)] md:gap-x-7 md:pt-10;
+  @apply md:mb-10 md:grid-cols-[38px_1fr_270px] md:grid-rows-[repeat(3,auto)] md:gap-x-8 md:pt-10;
   @apply lg:grid-cols-[38px_1fr] lg:grid-rows-[repeat(4,auto)] xl:grid-cols-[38px_1fr_270px] xl:grid-rows-[repeat(3,auto)];
 }
 
@@ -14,7 +14,7 @@
 }
 
 :host ::ng-deep dl {
-  @apply mt-2.5 flex space-x-0.5 justify-self-start rounded-md border-2 border-yellow px-7 py-3 text-sm;
+  @apply mt-2.5 flex  space-x-0.5 justify-self-start rounded-md border-2 border-yellow px-7 py-3 text-sm;
   @apply md:mt-5;
 }
 
