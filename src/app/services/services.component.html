@@ -5,7 +5,10 @@
   <div
     class="flex flex-col sm:flex-row sm:items-end sm:space-x-6 lg:space-x-10"
   >
-    <div class="mb-3 flex flex-col sm:mb-0 sm:flex-grow">
+    <a
+      class="mb-3 flex flex-col transition-all duration-300 hover:opacity-60 sm:mb-0 sm:flex-grow"
+      routerLink="/"
+    >
       <img src="/assets/images/services/transportation/prim.svg" />
       <h2 class="mb-2.5 text-lg font-medium">
         Грузоперевозки<br />
@@ -15,14 +18,83 @@
         >
       </h2>
       <p class="text-gray-700">рейсовыми междугородними автобусами.</p>
-    </div>
-    <div class="flex flex-col sm:flex-grow">
+    </a>
+    <a
+      class="flex flex-col transition-all duration-300 hover:opacity-60 sm:flex-grow"
+      routerLink="/services/cse"
+    >
       <img src="/assets/images/services/transportation/rus.svg" />
       <h2 class="mb-2.5 text-lg font-medium">
         Грузоперевозки<br />
         по всей России
       </h2>
       <p class="text-gray-700">экспресс-доставка партнерской службой «КСЭ».</p>
-    </div>
+    </a>
+  </div>
+  <div
+    class="mt-7.5 grid grid-cols-1 gap-5 sm:mt-13 sm:grid-cols-2 md:gap-7.5 lg:grid-cols-3"
+  >
+    <article class="relative hover:cursor-pointer">
+      <app-img
+        class="h-[230px] w-full rounded-md object-cover"
+        src="/assets/images/services/insurance"
+      ></app-img>
+      <div
+        class="absolute inset-0 z-20 flex flex-col justify-end rounded-md px-5 pb-7 text-white after:absolute after:inset-0 after:-z-10 after:rounded-md after:bg-gradient-to-t after:from-black after:to-transparent after:opacity-70 after:transition-all after:duration-300 hover:after:bg-black"
+      >
+        <h3 class="mb-2.5 text-md font-medium">Страхование груза</h3>
+        <p>Защита от любых непредвиденных ситуаций.</p>
+      </div>
+    </article>
+
+    <article class="relative hover:cursor-pointer lg:col-span-2">
+      <app-img
+        class="h-[230px] w-full rounded-md object-cover"
+        src="/assets/images/services/tasks"
+      ></app-img>
+      <div
+        class="absolute inset-0 z-20 flex flex-col justify-end rounded-md px-5 pb-7 text-white after:absolute after:inset-0 after:-z-10 after:rounded-md after:bg-gradient-to-t after:from-black after:to-transparent after:opacity-70 after:transition-all after:duration-300 hover:after:bg-black"
+      >
+        <h3 class="mb-2.5 text-md font-medium">
+          Решение нестандартных логистических задач
+        </h3>
+        <p>
+          Предлагаем индивидуальные решения для решения нестандартных задач.
+        </p>
+      </div>
+    </article>
+
+    <article class="relative hover:cursor-pointer lg:col-span-2">
+      <app-img
+        class="h-[230px] w-full rounded-md object-cover"
+        src="/assets/images/services/eshops"
+      ></app-img>
+      <div
+        class="absolute inset-0 z-20 flex flex-col justify-end rounded-md px-5 pb-7 text-white after:absolute after:inset-0 after:-z-10 after:rounded-md after:bg-gradient-to-t after:from-black after:to-transparent after:opacity-70 after:transition-all after:duration-300 hover:after:bg-black"
+      >
+        <h3 class="mb-2.5 text-md font-medium">
+          Доставка посылок из интернет-магазинов со всего мира
+        </h3>
+        <p>
+          Мы представляем официальные пункты выдачи международных курьерских
+          служб: BoxBerry, IML, Hermes, КСЭ-Стро.
+        </p>
+      </div>
+    </article>
+
+    <article class="relative hover:cursor-pointer">
+      <app-img
+        class="h-[230px] w-full rounded-md object-cover"
+        src="/assets/images/services/courier"
+      ></app-img>
+      <div
+        class="absolute inset-0 z-20 flex flex-col justify-end rounded-md px-5 pb-7 text-white after:absolute after:inset-0 after:-z-10 after:rounded-md after:bg-gradient-to-t after:from-black after:to-transparent after:opacity-70 after:transition-all after:duration-300 hover:after:bg-black"
+      >
+        <h3 class="mb-2.5 text-md font-medium">
+          Забор и доставка груза курьером
+        </h3>
+        <p>Мы заберем груз перед отправкой и доставим до нужного адреса.</p>
+      </div>
+    </article>
   </div>
 </div>
