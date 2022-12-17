@@ -8,4 +8,8 @@ import {ChangeDetectionStrategy, Component} from '@angular/core'
 })
 export class ServicesComponent {
   constructor() {}
+
+  imgLoad() {
+    // alert(1)
+  }
 }
