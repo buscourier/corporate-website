@@ -21,7 +21,7 @@
     </a>
     <a
       class="flex flex-col transition-all duration-300 hover:opacity-60 sm:flex-grow"
-      routerLink="/services/cse"
+      routerLink="cse"
     >
       <img src="/assets/images/services/transportation/rus.svg" />
       <h2 class="mb-2.5 text-lg font-medium">
@@ -34,7 +34,7 @@
   <div
     class="mt-7.5 grid grid-cols-1 gap-5 sm:mt-13 sm:grid-cols-2 md:gap-7.5 lg:grid-cols-3"
   >
-    <article class="relative hover:cursor-pointer">
+    <article routerLink="insurance" class="relative hover:cursor-pointer">
       <app-img
         class="h-[230px] w-full rounded-md object-cover"
         src="/assets/images/services/insurance"
@@ -47,7 +47,10 @@
       </div>
     </article>
 
-    <article class="relative hover:cursor-pointer lg:col-span-2">
+    <article
+      routerLink="complex-tasks"
+      class="relative hover:cursor-pointer lg:col-span-2"
+    >
       <app-img
         class="h-[230px] w-full rounded-md object-cover"
         src="/assets/images/services/tasks"
@@ -64,7 +67,10 @@
       </div>
     </article>
 
-    <article class="relative hover:cursor-pointer lg:col-span-2">
+    <article
+      routerLink="/eshops"
+      class="relative hover:cursor-pointer lg:col-span-2"
+    >
       <app-img
         class="h-[230px] w-full rounded-md object-cover"
         src="/assets/images/services/eshops"
@@ -82,7 +88,7 @@
       </div>
     </article>
 
-    <article class="relative hover:cursor-pointer">
+    <article routerLink="courier" class="relative hover:cursor-pointer">
       <app-img
         class="h-[230px] w-full rounded-md object-cover"
         src="/assets/images/services/courier"
