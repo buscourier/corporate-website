@@ -1,0 +1,15 @@
+.aeroflot-2 {
+  @apply h-[71px] w-[226px];
+}
+
+.aurora {
+  @apply h-[50px] w-[163px];
+}
+
+.eastjet {
+  @apply h-[70px] w-[187px];
+}
+
+.s7 {
+  @apply h-[67px] w-[187px];
+}

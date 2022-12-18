@@ -80,3 +80,68 @@
     </li>
   </ol>
 </div>
+
+<div class="mt-12 border-t border-gray-400 pt-10 lg:mt-24 lg:pt-5">
+  <div class="mx-auto max-w-[1170px]">
+    <div class="relative flex items-center">
+      <button
+        *ngIf="points.length / pointsCount > 1"
+        tuiIconButton
+        icon="tuiIconChevronLeftLarge"
+        title="Previous"
+        class="!absolute -left-1 top-20 z-10 !hidden lg:!block"
+        [class.cursor-not-allowed]="pointsIndex === 0"
+        [disabled]="pointsIndex === 0"
+        (click)="carousel.prev()"
+      ></button>
+      <tui-carousel
+        #carousel
+        [(index)]="pointsIndex"
+        [itemsCount]="pointsCount"
+        [draggable]="true"
+        class="items-shadow w-full"
+      >
+        <ng-container *ngFor="let point of points; let i = index">
+          <ng-container *ngIf="point.link; else text">
+            <a
+              [href]="point.link"
+              target="_blank"
+              *tuiItem
+              class="flex h-[153px] items-center justify-center rounded-sm border border-transparent bg-white shadow-xl transition-all hover:border-yellow hover:shadow-none hover:shadow-none lg:first:-ml-5"
+            >
+              <tui-svg [class]="point.name" [src]="'icons::' + point.name">
+              </tui-svg>
+            </a>
+          </ng-container>
+          <ng-template #text>
+            <span
+              *tuiItem
+              class="flex h-[153px] items-center justify-center rounded-sm border border-transparent bg-white shadow-xl transition-all hover:border-yellow hover:shadow-none hover:shadow-none lg:first:-ml-5"
+            >
+              <tui-svg [class]="point.name" [src]="'icons::' + point.name">
+              </tui-svg>
+            </span>
+          </ng-template>
+        </ng-container>
+      </tui-carousel>
+      <button
+        *ngIf="points.length / pointsCount > 1"
+        tuiIconButton
+        icon="tuiIconChevronRightLarge"
+        title="Next"
+        class="!absolute -right-1 top-20 !hidden lg:!block"
+        [class.cursor-not-allowed]="pointsIndex === points.length - 1"
+        [disabled]="points.length / pointsCount === 1"
+        (click)="carousel.next()"
+      ></button>
+    </div>
+    <div *ngIf="points.length / pointsCount > 1" class="-mt-10">
+      <tui-pagination
+        size="s"
+        [length]="points.length / pointsCount"
+        [(index)]="pointsIndex"
+        (indexChange)="onPointsIndex($event)"
+      ></tui-pagination>
+    </div>
+  </div>
+</div>
