@@ -66,6 +66,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./about/about.module').then((m) => m.AboutModule),
   },
+  {
+    path: 'documents',
+    loadChildren: () =>
+      import('./documents/documents.module').then((m) => m.DocumentsModule),
+  },
 ]
 
 @NgModule({
