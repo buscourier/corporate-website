@@ -23,6 +23,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./insurance/insurance.module').then((m) => m.InsuranceModule),
   },
+  {
+    path: 'courier',
+    loadChildren: () =>
+      import('./courier/courier.module').then((m) => m.CourierModule),
+  },
 ]
 
 @NgModule({
