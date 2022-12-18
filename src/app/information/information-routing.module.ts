@@ -36,6 +36,11 @@ const routes: Routes = [
             (m) => m.HowToSendModule
           ),
       },
+      {
+        path: 'rules',
+        loadChildren: () =>
+          import('./rules/rules.module').then((m) => m.RulesModule),
+      },
     ],
   },
 ]
