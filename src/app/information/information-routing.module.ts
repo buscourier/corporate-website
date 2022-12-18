@@ -29,6 +29,13 @@ const routes: Routes = [
             (m) => m.HowToGetModule
           ),
       },
+      {
+        path: 'how-to-send',
+        loadChildren: () =>
+          import('./how-to-send/how-to-send.module').then(
+            (m) => m.HowToSendModule
+          ),
+      },
     ],
   },
 ]
