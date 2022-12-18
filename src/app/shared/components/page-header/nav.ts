@@ -1,33 +1,33 @@
 export default [
-  {link: 'orders/track-order', name: 'Отследить посылку'},
+  {link: 'find-order', name: 'Отследить посылку'},
   {link: 'new-order', name: 'Расчет тарифа по Приморью'},
   {
-    link: 'services/index',
+    link: 'services',
     name: 'Услуги',
     dropdown: [
       {link: '/', name: 'Грузоперевозки по Приморскому краю'},
-      {link: 'services/kce', name: 'Грузоперевозки по России'},
+      {link: 'services/cse', name: 'Грузоперевозки по России'},
       {link: 'services/courier', name: 'Забор и доставка курьером'},
       {link: 'eshops', name: 'Доставка посылок из интернет-магазинов'},
       {
-        link: 'services/non-standard-tasks',
+        link: 'services/complex-tasks',
         name: 'Реализация нестандартных логистических задач',
       },
-      {link: 'services/cargo-insurance', name: 'Страхование груза'},
+      {link: 'services/insurance', name: 'Страхование груза'},
     ],
   },
   {
-    link: 'info/index',
+    link: 'info',
     name: 'Информация',
     dropdown: [
       {link: 'info/how-to-send', name: 'Как отправить посылку'},
       {link: 'info/how-to-get', name: 'Как получить посылку'},
-      {link: 'info/rules-of-send', name: 'Правила приемки и отправки грузов'},
-      {link: 'info/rates', name: 'Тарифы на перевозку'},
-      {link: 'info/packing', name: 'Упаковки грузов и виды упаковки'},
+      {link: 'info/rules', name: 'Правила приемки и отправки грузов'},
+      {link: 'info/tariff', name: 'Тарифы на перевозку'},
+      {link: 'info/packaging', name: 'Упаковки грузов и виды упаковки'},
       {link: 'info/storage', name: 'Хранение груза на складах Баскурьер'},
       {
-        link: 'info/from-airport',
+        link: 'info/airport',
         name: 'Доставка грузов и багажа из Аэропорта',
       },
     ],
