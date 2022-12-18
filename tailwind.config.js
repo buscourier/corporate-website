@@ -173,6 +173,9 @@ module.exports = {
           backgroundColor: '#ffdc00',
           color: '#000000',
           borderRadius: '50%',
+          counterIncrement: 'number',
+          content: 'counter(number)',
+          alignSelf: 'start',
         },
       })
     }),

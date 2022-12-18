@@ -1,0 +1,12 @@
+ol {
+  counter-reset: number;
+  /*max-width: 640px;*/
+}
+
+ol li {
+  @apply mb-10 grid grid-cols-[38px_1fr] items-center gap-x-5 text-sm before:step-point md:gap-x-8;
+}
+
+/*ol li > p:only-child {*/
+/*  @apply self-center;*/
+/*}*/
