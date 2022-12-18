@@ -17,6 +17,11 @@ const routes: Routes = [
         loadChildren: () =>
           import('./packaging/packaging.module').then((m) => m.PackagingModule),
       },
+      {
+        path: 'airport',
+        loadChildren: () =>
+          import('./airport/airport.module').then((m) => m.AirportModule),
+      },
     ],
   },
 ]
