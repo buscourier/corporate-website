@@ -18,6 +18,11 @@ const routes: Routes = [
         (m) => m.ComplexTasksModule
       ),
   },
+  {
+    path: 'insurance',
+    loadChildren: () =>
+      import('./insurance/insurance.module').then((m) => m.InsuranceModule),
+  },
 ]
 
 @NgModule({
