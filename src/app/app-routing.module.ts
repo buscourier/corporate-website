@@ -76,6 +76,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./actions/actions.module').then((m) => m.ActionsModule),
   },
+  {
+    path: 'policy',
+    loadChildren: () =>
+      import('./policy/policy.module').then((m) => m.PolicyModule),
+  },
 ]
 
 @NgModule({
