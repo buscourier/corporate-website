@@ -22,6 +22,13 @@ const routes: Routes = [
         loadChildren: () =>
           import('./airport/airport.module').then((m) => m.AirportModule),
       },
+      {
+        path: 'how-to-get',
+        loadChildren: () =>
+          import('./how-to-get/how-to-get.module').then(
+            (m) => m.HowToGetModule
+          ),
+      },
     ],
   },
 ]
