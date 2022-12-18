@@ -1,1 +1,21 @@
-<router-outlet></router-outlet>
+<div class="mx-auto mt-10 max-w-[1170px] px-4 lg:mt-16">
+  <h1 class="mb-5 font-heading text-2xl font-bold lg:text-3xl">
+    Полезная информация
+  </h1>
+  <p class="mb-12 max-w-[700px] text-sm">
+    В данном разделе мы собрали всю необходимую информацию для работы с нами.
+    Выберите интересующий вас раздел и получите полную информацию о том, как:
+  </p>
+  <ul class="mb-12 mt-4 max-w-[570px] text-sm">
+    <li *ngFor="let link of links" class="mb-3 mb-6 flex space-x-3">
+      <a [routerLink]="link.href" class="flex items-center">
+        <tui-svg src="icons::arrow-right-yellow" class="mr-6"></tui-svg>
+        <span
+          class="relative text-lg leading-6 before:absolute before:left-0 before:-bottom-1 before:w-full before:border-b before:border-gray-300 before:border-black hover:cursor-pointer hover:opacity-80 hover:before:hidden"
+        >
+          {{ link.name }}
+        </span>
+      </a>
+    </li>
+  </ul>
+</div>

@@ -179,5 +179,13 @@ module.exports = {
         },
       })
     }),
+    plugin(function ({addComponents}) {
+      addComponents({
+        '.link-xl': {
+          fontSize: '26px',
+          lineHeight: '32px',
+        },
+      })
+    }),
   ],
 }
