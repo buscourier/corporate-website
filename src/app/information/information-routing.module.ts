@@ -41,6 +41,11 @@ const routes: Routes = [
         loadChildren: () =>
           import('./rules/rules.module').then((m) => m.RulesModule),
       },
+      {
+        path: 'storage',
+        loadChildren: () =>
+          import('./storage/storage.module').then((m) => m.StorageModule),
+      },
     ],
   },
 ]
