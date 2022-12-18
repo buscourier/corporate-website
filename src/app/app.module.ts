@@ -25,6 +25,8 @@ import {AppRoutingModule} from './app-routing.module'
 import {AppComponent} from './app.component'
 import {AuthModule} from './auth/auth.module'
 import {NewOrderModule} from './new-order/new-order.module'
+import {NotFoundModule} from './not-found/not-found.module'
+import {ImgModule} from './shared/components/img/img.module'
 import {PageFooterModule} from './shared/components/page-footer/page-footer.module'
 import {PageHeaderModule} from './shared/components/page-header/page-header.module'
 import {reducers} from './store/reducers'
@@ -59,8 +61,10 @@ registerLocaleData(ruLocale, 'ru')
     TuiDialogModule,
     TuiAlertModule,
     RecaptchaV3Module,
+    NotFoundModule,
     NewOrderModule,
     AngularYandexMapsModule.forRoot(mapConfig),
+    ImgModule,
   ],
   providers: [
     // {

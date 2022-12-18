@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core'
 import {ExtraOptions, RouterModule, Routes} from '@angular/router'
 import {AuthGuard} from './auth/services/auth.guard'
+import {NotFoundComponent} from './not-found/not-found.component'
 
 const routerOptions: ExtraOptions = {
   scrollOffset: [0, 0],
@@ -81,6 +82,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./policy/policy.module').then((m) => m.PolicyModule),
   },
+  {path: '**', component: NotFoundComponent},
 ]
 
 @NgModule({
