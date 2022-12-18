@@ -1,10 +1,73 @@
 <div class="mx-auto mt-10 max-w-[1170px] px-4 lg:mt-16">
-  <div class="max-w-[540px]">
-    <h1 class="mb-5 font-heading text-2xl font-bold lg:text-3xl">
-      Как получить посылку
-    </h1>
-    <ol>
-      <li></li>
+  <div class="max-w-[540px]"></div>
+  <h1 class="mb-10 font-heading text-2xl font-bold lg:text-3xl">
+    Как получить посылку
+  </h1>
+  <div class="flex flex-col lg:flex-row lg:justify-between">
+    <ol class="max-w-[540px]">
+      <li>
+        <div>
+          <p class="mb-1">
+            Вы можете забрать посылку в одном из наших филиалов.
+          </p>
+          <a routerLink="#" class="text-blue hover:opacity-80"
+            >Смотреть адреса филиалов</a
+          >
+        </div>
+      </li>
+      <li>
+        <p>
+          Если вы получаете посылку в населенном пункте, где нет нашего филиала,
+          то вам необходимо встретить автобус на автостанции и забрать посылку у
+          водителя.
+        </p>
+      </li>
+      <li>
+        <div>
+          <p class="mb-3">
+            После того, как ваша посылка будет оправлена, вам придет смс с
+            информацией: номер заказа, гос. номер автобуса, маршрут,
+            приблизительное время прибытия автобуса
+          </p>
+          <p>
+            Обращаем ваше внимание, что автобусы могут задерживаться в дороге
+            или, наоборот, могут приехать раньше. Поэтому необходимо прибыть на
+            станцию за 20 минут до указанного в смс времени, а также не
+            торопитесь уезжать, если автобус не приехал вовремя.
+          </p>
+        </div>
+      </li>
+      <li>
+        <p>
+          Для получения посылки вам понадобятся документы, удостоверяющие
+          личность (паспорт, военный билет или водительское удостоверение).
+        </p>
+      </li>
     </ol>
+    <div class="lg:w-[370px] lg:flex-shrink-0">
+      <!--       start media-->
+      <div
+        class="flex max-w-[370px] items-center rounded-sm pt-6 pr-9 pb-8 pl-7 shadow-xl"
+      >
+        <tui-svg
+          src="icons::pdf"
+          class="mr-5 !h-[42px] !w-[42px] self-start"
+        ></tui-svg>
+        <div>
+          <p class="mb-2.5 text-sm">Правила приемки и отправки грузов</p>
+          <button
+            type="button"
+            class="relative leading-6 text-blue before:absolute before:left-0 before:bottom-0 before:w-full before:border-b before:border-dashed before:border-blue hover:cursor-pointer hover:opacity-80 hover:before:hidden"
+            (click)="showPdf(actions)"
+          >
+            <span><b class="font-medium">Открыть в pdf</b></span>
+          </button>
+        </div>
+      </div>
+      <!--        end media-->
+    </div>
   </div>
 </div>
+<ng-template #actions let-content="content">
+  <a tuiButton size="s" download [href]="content">Загрузить</a>
+</ng-template>
