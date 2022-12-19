@@ -7,7 +7,7 @@ import {
 import {TUI_SVG_SRC_PROCESSOR, TuiDialogService} from '@taiga-ui/core'
 import {PolymorpheusComponent} from '@tinkoff/ng-polymorpheus'
 import {take} from 'rxjs'
-import {CitiesComponent} from './components/cities/cities.component'
+import {CitiesComponent} from '../shared/components/cities/cities.component'
 
 @Component({
   selector: 'app-index',
@@ -60,6 +60,6 @@ export class IndexComponent {
         size: 'l',
       })
       .pipe(take(1))
-      .subscribe() //TODO: unsubscribe?
+      .subscribe()
   }
 }

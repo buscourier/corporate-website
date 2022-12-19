@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core'
 import {Actions, createEffect, ofType} from '@ngrx/effects'
 import {catchError, map, of, switchMap} from 'rxjs'
-import {CitiesService} from '../../../../../shared/services/cities.service'
-import {EndCityInterface} from '../../../../../shared/types/end-city.interface'
+import {CitiesService} from '../../../../services/cities.service'
+import {EndCityInterface} from '../../../../types/end-city.interface'
 import {
   getEndCitiesAction,
   getEndCitiesFailureAction,

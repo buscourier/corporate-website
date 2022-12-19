@@ -22,9 +22,13 @@
               <span class="text-gray-500">б)</span>
               <p>
                 Прийти в филиал.<br class="sm:hidden" />
-                <a routerLink="#" class="link-blue ml-1 inline-block"
-                  >Смотреть адреса филиалов</a
+                <button
+                  type="button"
+                  class="link-blue ml-1 inline-block text-sm"
+                  (click)="showCities()"
                 >
+                  Смотреть адреса филиалов
+                </button>
               </p>
             </li>
           </ul>

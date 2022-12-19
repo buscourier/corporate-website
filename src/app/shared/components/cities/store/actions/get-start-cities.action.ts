@@ -1,5 +1,5 @@
 import {createAction, props} from '@ngrx/store'
-import {StartCityInterface} from '../../../../../shared/types/start-city.interface'
+import {StartCityInterface} from '../../../../types/start-city.interface'
 import {ActionTypes} from '../action-types'
 
 export const getStartCitiesAction = createAction(ActionTypes.GET_START_CITIES)

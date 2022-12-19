@@ -1,5 +1,5 @@
-import {EndCityInterface} from '../../../../shared/types/end-city.interface'
-import {StartCityInterface} from '../../../../shared/types/start-city.interface'
+import {EndCityInterface} from '../../../types/end-city.interface'
+import {StartCityInterface} from '../../../types/start-city.interface'
 
 export interface CitiesStateInterface {
   isLoading: boolean
