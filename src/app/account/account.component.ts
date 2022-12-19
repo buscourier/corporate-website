@@ -70,8 +70,6 @@ export class AccountComponent implements OnInit {
     this.balance$ = this.store.select(accountBalanceSelector).pipe(
       filter(Boolean),
       map((balance: BalanceInterface) => {
-        console.log('balance', balance)
-
         return {
           period: `${balance.first_period_date} - ${balance.last_period_date}`,
           debet: Number(balance.debet),

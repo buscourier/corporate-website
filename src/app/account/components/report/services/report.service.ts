@@ -1,7 +1,6 @@
 import {HttpClient} from '@angular/common/http'
 import {Injectable} from '@angular/core'
 import {map, Observable} from 'rxjs'
-import {tap} from 'rxjs/operators'
 import {environment} from '../../../../../environments/environment'
 import {OrderCancelInputInterface} from '../components/report-details/types/order-cancel-input.interface'
 import {OrderInterface} from '../types/order.interface'
@@ -35,9 +34,6 @@ export class ReportService {
         JSON.stringify(payload)
       )
       .pipe(
-        tap((response: ReportResponseInterface) => {
-          console.log('response', response)
-        }),
         map((response: ReportResponseInterface) => {
           const orders = response.orders.map((order: OrderInterface) => {
             return {

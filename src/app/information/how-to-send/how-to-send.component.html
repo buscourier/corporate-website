@@ -14,9 +14,7 @@
               <p>
                 Если вы хотите, чтобы курьер забрал посылку от вашей двери, вы
                 можете
-                <a routerLink="/new-order" class="text-blue hover:opacity-80"
-                  >оставить заявку</a
-                >
+                <a routerLink="/new-order" class="link-blue">оставить заявку</a>
                 на вызов курьера.
               </p>
             </li>
@@ -24,9 +22,7 @@
               <span class="text-gray-500">б)</span>
               <p>
                 Прийти в филиал.<br class="sm:hidden" />
-                <a
-                  routerLink="#"
-                  class="ml-1 inline-block text-blue hover:opacity-80"
+                <a routerLink="#" class="link-blue ml-1 inline-block"
                   >Смотреть адреса филиалов</a
                 >
               </p>
@@ -52,7 +48,7 @@
             Упаковка груза должна обеспечивать его сохранность. Если у вас нет
             упаковки, мы ее обязательно предложим.
           </p>
-          <a routerLink="/info/packaging" class="text-blue hover:opacity-80"
+          <a routerLink="/info/packaging" class="link-blue"
             >Смотреть виды упаковки и стоимость</a
           >
         </div>
@@ -66,7 +62,7 @@
             Согласно транспортной безопасности есть грузы, которые мы не
             перевозим.
           </p>
-          <a class="text-blue hover:opacity-80"
+          <a routerLink="/info/rules" class="link-blue"
             >Смотреть запрещенные к перевозке грузы</a
           >
         </div>
@@ -83,11 +79,7 @@
         ></tui-svg>
         <div>
           <p class="mb-2.5 text-sm">Правила приемки и отправки грузов</p>
-          <button
-            type="button"
-            class="relative leading-6 text-blue before:absolute before:left-0 before:bottom-0 before:w-full before:border-b before:border-dashed before:border-blue hover:cursor-pointer hover:opacity-80 hover:before:hidden"
-            (click)="showPdf(actions)"
-          >
+          <button type="button" class="link-blue" (click)="showPdf(actions)">
             <span><b class="font-medium">Открыть файл</b></span>
           </button>
         </div>

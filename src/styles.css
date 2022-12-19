@@ -17,5 +17,6 @@
 @import './assets/css/components/checkbox.css';
 @import './assets/css/components/re-captcha.css';
 @import './assets/css/components/list.css';
+@import './assets/css/components/link.css';
 
 @import 'tailwindcss/utilities';
