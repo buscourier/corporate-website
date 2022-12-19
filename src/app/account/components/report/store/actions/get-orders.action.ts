@@ -1,6 +1,6 @@
 import {createAction, props} from '@ngrx/store'
-import {OrderInterface} from '../../types/order.interface'
 import {ReportInputInterface} from '../../types/report-input.interface'
+import {ReportResponseInterface} from '../../types/report-response.interface'
 import {ActionTypes} from '../action-types'
 
 export const getOrdersAction = createAction(
@@ -10,7 +10,7 @@ export const getOrdersAction = createAction(
 
 export const getOrdersSuccessAction = createAction(
   ActionTypes.GET_ORDERS_SUCCESS,
-  props<{orders: OrderInterface[]}>()
+  props<{orders: ReportResponseInterface}>()
 )
 
 export const getOrdersFailureAction = createAction(
