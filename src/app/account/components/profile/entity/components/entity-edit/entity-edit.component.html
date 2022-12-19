@@ -267,26 +267,8 @@
       ></tui-error>
     </label>
 
-    <label class="col-span-2 block sm:col-span-1">
-      <span
-        class="mb-1 inline-block text-xs"
-        [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'"
-        >Перевозчик</span
-      >
-      <tui-input
-        tuiTextfieldSize="m"
-        formControlName="driver"
-        [tuiTextfieldLabelOutside]="true"
-        [class.tui-skeleton]="isLoading$ | async"
-      >
-        Нет данных
-        <input tuiTextfield type="text" />
-      </tui-input>
-      <tui-error
-        formControlName="driver"
-        [error]="[] | tuiFieldError | async"
-      ></tui-error>
-    </label>
+    <!--empty field-->
+    <label class="col-span-2 block opacity-0 sm:col-span-1"></label>
 
     <button
       tuiButton

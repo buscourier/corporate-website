@@ -39,7 +39,6 @@ export class EntityEditComponent implements OnInit {
     ks: '',
     contractNumber: '',
     contractDate: '',
-    driver: '',
   })
 
   constructor(private store: Store, private fb: FormBuilder) {}
@@ -117,7 +116,6 @@ export class EntityEditComponent implements OnInit {
         value: this.profile.contractDate.value,
         disabled: this.profile.contractDate.edit == 0,
       },
-      driver: '',
     })
   }
 
