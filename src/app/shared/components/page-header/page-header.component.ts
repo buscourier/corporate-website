@@ -133,4 +133,8 @@ export class PageHeaderComponent implements OnInit {
   getAnimation(duration: number): TuiDurationOptions {
     return {value: ``, params: {duration}}
   }
+
+  truncate(name: string) {
+    return name.slice(0, 20) + '...'
+  }
 }

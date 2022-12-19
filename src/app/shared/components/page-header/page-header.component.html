@@ -197,7 +197,9 @@
               <ng-template #user>
                 <ng-container *tuiLet="currentUser$ | async as currentUser">
                   <span>{{
-                    (currentUser && currentUser.user_name) || 'Пользователь'
+                    currentUser && currentUser.user_name
+                      ? truncate(currentUser.user_name)
+                      : 'Пользователь'
                   }}</span>
                 </ng-container>
                 <tui-svg
@@ -206,7 +208,7 @@
                 ></tui-svg>
                 <tui-svg
                   src="icons::user-logged-in"
-                  class="!h-7 !w-7"
+                  class="!w-10 !w-10"
                 ></tui-svg>
               </ng-template>
             </button>
@@ -237,7 +239,7 @@
             <div
               *ngIf="activeDropdown === 'current-user'"
               [@fadeInOut]
-              class="absolute top-full left-0 z-20 w-52"
+              class="absolute top-full right-0 z-20 w-52"
             >
               <div
                 class="mt-2 flex flex-col border-t-2 border-yellow bg-white pt-3 pr-5 pb-2 pl-4 shadow"
