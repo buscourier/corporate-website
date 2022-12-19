@@ -48,27 +48,27 @@
                 <p class="mb-1.5 text-2xs text-gray-600">Габариты груза:</p>
                 <div class="flex items-center space-x-4">
                   <span class="flex flex-col"
-                    ><small>Ширина:</small> <b>{{ dim.width }} см.</b></span
+                    ><small>Ширина:</small> <b>{{ dim.width }} см</b></span
                   >
                   <b>x</b>
                   <span class="flex flex-col"
-                    ><small>Длина:</small> <b>{{ dim.length }} см.</b></span
+                    ><small>Длина:</small> <b>{{ dim.length }} см</b></span
                   >
                   <b>x</b>
                   <span class="flex flex-col"
-                    ><small>Высота:</small> <b>{{ dim.height }} см.</b></span
+                    ><small>Высота:</small> <b>{{ dim.height }} см</b></span
                   >
                 </div>
               </div>
               <div class="flex flex-col items-center">
                 <p class="mb-3 text-2xs text-gray-600">Вес груза:</p>
-                <b class="text-[24px] leading-[24px]">{{ dim.weight }} кг.</b>
+                <b class="text-[24px] leading-[24px]">{{ dim.weight }} кг</b>
               </div>
             </div>
           </tui-scrollbar>
-          <p class="text-2xs text-gray-600">Перевозчик:</p>
+          <p class="text-2xs text-gray-600">Описание:</p>
           <p class="mb-3 text-2xs">
-            {{ order.carrier_info.carrier_name }}
+            {{ order.order.cargo_description }}
           </p>
           <div class="flex justify-between">
             <div>
