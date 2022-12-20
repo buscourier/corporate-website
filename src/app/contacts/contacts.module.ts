@@ -3,7 +3,7 @@ import {NgModule} from '@angular/core'
 import {ReactiveFormsModule} from '@angular/forms'
 import {EffectsModule} from '@ngrx/effects'
 import {StoreModule} from '@ngrx/store'
-import {TuiLetModule} from '@taiga-ui/cdk'
+import {TuiDestroyService, TuiLetModule} from '@taiga-ui/cdk'
 import {
   TuiButtonModule,
   TuiHintModule,
@@ -42,6 +42,6 @@ import {CONTACTS_FEATURE} from './store/state'
     StoreModule.forFeature(CONTACTS_FEATURE, reducer),
     EffectsModule.forFeature([GetOfficesEffect]),
   ],
-  providers: [ContactsService],
+  providers: [ContactsService, TuiDestroyService],
 })
 export class ContactsModule {}
