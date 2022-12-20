@@ -224,38 +224,17 @@
       по Приморскому краю и в Хабаровск.
     </p>
     <div class="grid grid-cols-2 gap-4 md:grid-cols-4 lg:gap-x-7">
-      <div
-        class="flex h-24 items-center justify-center rounded-sm border border-transparent bg-white shadow-md hover:border-yellow lg:h-[153px]"
+      <a
+        *ngFor="let client of clients"
+        [href]="client.link"
+        target="_blank"
+        class="flex h-24 items-center justify-center rounded-sm border border-transparent bg-white shadow-xl hover:border-yellow hover:shadow-none lg:h-[153px]"
       >
         <tui-svg
-          src="icons::sber"
+          [src]="'icons::' + client.name"
           class="!h-[27px] !w-[110px] lg:!h-[43px] lg:!w-[178px]"
         ></tui-svg>
-      </div>
-      <div
-        class="flex h-24 items-center justify-center rounded-sm border border-transparent bg-white shadow-md hover:border-yellow lg:h-[153px]"
-      >
-        <tui-svg
-          src="icons::aeroflot"
-          class="!h-[25px] !w-[118px] lg:!h-[40px] lg:!w-[190px]"
-        ></tui-svg>
-      </div>
-      <div
-        class="flex h-24 items-center justify-center rounded-sm border border-transparent bg-white shadow-md hover:border-yellow lg:h-[153px]"
-      >
-        <tui-svg
-          src="icons::hyperauto"
-          class="!h-[18px] !w-[119px] lg:!h-[30px] lg:!w-[202px]"
-        ></tui-svg>
-      </div>
-      <div
-        class="flex h-24 items-center justify-center rounded-sm border border-transparent bg-white shadow-md hover:border-yellow lg:h-[153px]"
-      >
-        <tui-svg
-          src="icons::unilab"
-          class="!h-[21px] !w-[112px] lg:!h-[36px] lg:!w-[190px]"
-        ></tui-svg>
-      </div>
+      </a>
     </div>
   </div>
   <section

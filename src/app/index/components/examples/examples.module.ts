@@ -10,6 +10,7 @@ import {
 } from '@taiga-ui/kit'
 import {ExamplesComponent} from './examples.component'
 import {ImgModule} from '../../../shared/components/img/img.module'
+import {RouterModule} from '@angular/router'
 
 @NgModule({
   declarations: [ExamplesComponent],
@@ -23,6 +24,7 @@ import {ImgModule} from '../../../shared/components/img/img.module'
     TuiButtonModule,
     TuiSvgModule,
     ImgModule,
+    RouterModule,
     TuiPaginationModule,
   ],
   exports: [ExamplesComponent],

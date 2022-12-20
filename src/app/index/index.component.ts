@@ -32,6 +32,25 @@ import {CitiesComponent} from '../shared/components/cities/cities.component'
 export class IndexComponent {
   linesLimit = 8
 
+  public readonly clients = [
+    {
+      name: 'sber',
+      link: 'https://sber.ru/',
+    },
+    {
+      name: 'aeroflot',
+      link: 'https://www.aeroflot.ru/ru-ru',
+    },
+    {
+      name: 'hyperauto',
+      link: 'https://hyperauto.ru/',
+    },
+    {
+      name: 'unilab',
+      link: 'https://unilab.su/',
+    },
+  ]
+
   constructor(
     @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
     @Inject(Injector) private readonly injector: Injector
