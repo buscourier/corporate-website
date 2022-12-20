@@ -478,7 +478,7 @@
                           [routerLink]="item.link"
                           class="mb-4 text-sm leading-6 text-gray-800 transition-colors last-of-type:mb-0 hover:text-black active:bg-white"
                           routerLinkActive="active"
-                          (click)="closeDropdown()"
+                          (click)="toggleMobileMenu(false)"
                         >
                           {{ item.name }}
                         </a>
@@ -491,6 +491,7 @@
                       [routerLink]="item.link"
                       class="border-t border-gray-300 p-4 pl-5 text-[18px] leading-6 text-gray-800 first-of-type:border-none hover:text-black"
                       routerLinkActive="active"
+                      (click)="toggleMobileMenu(false)"
                     >
                       {{ item.name }}
                     </a>
@@ -528,7 +529,7 @@
   <!--  backdrop -->
   <div
     *ngIf="activeDropdown"
-    (mouseenter)="closeDropdown()"
+    (mouseenter)="toggleMobileMenu(false)"
     class="fixed inset-0 z-10"
   ></div>
 </header>
