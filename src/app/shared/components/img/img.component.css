@@ -14,4 +14,5 @@ img {
   height: inherit;
   max-height: inherit;
   object-fit: inherit;
+  background-color: #f5f4f4;
 }
