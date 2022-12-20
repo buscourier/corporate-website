@@ -42,6 +42,6 @@ import {CONTACTS_FEATURE} from './store/state'
     StoreModule.forFeature(CONTACTS_FEATURE, reducer),
     EffectsModule.forFeature([GetOfficesEffect]),
   ],
-  providers: [ContactsService, TuiDestroyService],
+  providers: [ContactsService],
 })
 export class ContactsModule {}
