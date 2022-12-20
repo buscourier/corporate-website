@@ -1,12 +1,20 @@
 import {Component, HostListener, Inject, OnDestroy, OnInit} from '@angular/core'
 import {Store} from '@ngrx/store'
-import {Observable, Subscription} from 'rxjs'
+import {delay, Observable, Subscription} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {LoginService} from './auth/components/login/services/login.service'
 import {getCurrentUserAction} from './auth/store/actions/get-current-user.action'
 import {isLoggedInSelector} from './auth/store/selectors'
 import {changeScreenSizeAction} from './store/global/actions/change-screen-size.action'
 import {isPageScrollBlockedSelector} from './store/global/selectors'
+import {
+  NavigationCancel,
+  NavigationEnd,
+  NavigationError,
+  NavigationStart,
+  Router,
+  RouterEvent,
+} from '@angular/router'
 
 @Component({
   selector: 'app-root',
@@ -17,10 +25,12 @@ export class AppComponent implements OnInit, OnDestroy {
   title = 'Баскурьер'
   isLoggedIn$: Observable<boolean>
   isPageScrollSub: Subscription
+  isLoading = true
 
   constructor(
     @Inject(LoginService) private readonly loginService: LoginService,
-    private store: Store
+    private store: Store,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -43,6 +53,22 @@ export class AppComponent implements OnInit, OnDestroy {
             document.documentElement.classList.add('page-scroll-blocked')
           } else {
             document.documentElement.classList.remove('page-scroll-blocked')
+          }
+        })
+      )
+      .subscribe()
+
+    this.router.events
+      .pipe(
+        tap((event: RouterEvent) => {
+          if (event instanceof NavigationStart) {
+            this.isLoading = true
+          } else if (
+            event instanceof NavigationEnd ||
+            event instanceof NavigationCancel ||
+            event instanceof NavigationError
+          ) {
+            this.isLoading = false
           }
         })
       )

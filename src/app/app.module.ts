@@ -12,6 +12,7 @@ import {
   TUI_SVG_SRC_PROCESSOR,
   TuiAlertModule,
   TuiDialogModule,
+  TuiLoaderModule,
   TuiRootModule,
 } from '@taiga-ui/core'
 import {TUI_LANGUAGE, TUI_RUSSIAN_LANGUAGE} from '@taiga-ui/i18n'
@@ -65,6 +66,7 @@ registerLocaleData(ruLocale, 'ru')
     NewOrderModule,
     AngularYandexMapsModule.forRoot(mapConfig),
     ImgModule,
+    TuiLoaderModule,
   ],
   providers: [
     // {
