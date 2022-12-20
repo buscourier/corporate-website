@@ -113,10 +113,17 @@ export class DocumentsComponent {
     actions: PolymorpheusContent<TuiPdfViewerOptions>
   ): void {
     this.pdfService
-      .open(this.sanitizer.bypassSecurityTrustResourceUrl(link), {
-        label,
-        actions,
-      })
+      .open(
+        this.sanitizer.bypassSecurityTrustResourceUrl(
+          this.isMobile
+            ? `https://drive.google.com/viewerng/viewer?embedded=true&url=${link}`
+            : link
+        ),
+        {
+          label,
+          actions,
+        }
+      )
       .pipe(take(1))
       .subscribe()
   }
