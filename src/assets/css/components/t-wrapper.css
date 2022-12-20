@@ -105,3 +105,8 @@ tui-checkbox-labeled[data-size='m'] .t-content {
 .feedback[data-tui-host-orientation='horizontal'] .t-group tui-radio-labeled {
   @apply mt-0 !mr-0 min-w-min;
 }
+
+/*fix bug in counter*/
+.counter [tuiIconButton] .t-icon {
+  height: 1.5rem !important;
+}

@@ -70,13 +70,14 @@
             </h1>
             <p class="mb-4 text-sm">{{ box.get('data').value.property }}</p>
             <div class="flex items-end space-x-2">
-              <label class="block flex-grow">
+              <label class="block flex-grow counter">
                 <span class="mb-1 inline-block text-xs">Сколько штук?</span>
                 <tui-input-count
                   [formControl]="getControl(box.get('count'))"
                   [tuiTextfieldLabelOutside]="true"
                   [min]="1"
                   [max]="20"
+                  tuiTextfieldSize="m"
                 >
                   <input tuiTextfield />
                 </tui-input-count>
@@ -84,6 +85,7 @@
               <button
                 type="button"
                 tuiButton
+                size="m"
                 (click)="
                   observer.complete();
                   closeDialog(
