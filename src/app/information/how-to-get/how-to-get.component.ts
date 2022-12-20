@@ -32,10 +32,14 @@ export class HowToGetComponent {
   ) {}
 
   showPdf(actions: PolymorpheusContent<TuiPdfViewerOptions>): void {
+    const link = `https://busbox.guru/uploads/pages/Правила_приёмки_и_отправки_грузов_Баскурьер.pdf`
+
     this.pdfService
       .open(
         this.sanitizer.bypassSecurityTrustResourceUrl(
-          `https://busbox.guru/uploads/pages/Правила_приёмки_и_отправки_грузов_Баскурьер.pdf`
+          this.isMobile
+            ? `https://drive.google.com/viewerng/viewer?embedded=true&url=${link}`
+            : link
         ),
         {
           label: `Правила приемки и отправки грузов`,

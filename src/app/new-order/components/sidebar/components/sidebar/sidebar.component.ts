@@ -205,12 +205,14 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
 
   showPdf(actions: PolymorpheusContent<TuiPdfViewerOptions>): void {
+    const link = `https://busbox.guru/uploads/pages/Расписание_отправлений_Владивосток.pdf`
+
     this.pdfService
       .open(
         this.sanitizer.bypassSecurityTrustResourceUrl(
           this.isMobile
-            ? `https://busbox.guru/uploads/pages/Расписание_отправлений_Владивосток.pdf`
-            : this.pdf
+            ? `https://drive.google.com/viewerng/viewer?embedded=true&url=${link}`
+            : link
         ),
         {
           label: `Расписание автобусов`,

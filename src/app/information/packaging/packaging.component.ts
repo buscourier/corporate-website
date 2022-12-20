@@ -18,10 +18,14 @@ export class PackagingComponent {
   ) {}
 
   showPdf(): void {
+    const link = `https://busbox.guru/uploads/pages/Расписание_отправлений_Владивосток.pdf`
+
     this.pdfService
       .open(
         this.sanitizer.bypassSecurityTrustResourceUrl(
-          `https://busbox.guru/uploads/pages/Расписание_отправлений_Владивосток.pdf`
+          this.isMobile
+            ? `https://drive.google.com/viewerng/viewer?embedded=true&url=${link}`
+            : link
         ),
         {
           label: `Правила приемки и отправки грузов`,
