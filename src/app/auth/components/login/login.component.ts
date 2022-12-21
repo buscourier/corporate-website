@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   Inject,
-  OnDestroy,
   OnInit,
   Self,
 } from '@angular/core'
@@ -40,7 +39,7 @@ import {LoginRequestInterface} from '../../types/login-request.interface'
     TuiDestroyService,
   ],
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit {
   form: FormGroup
   isLoading$: Observable<boolean>
   isSubmitting$: Observable<boolean>
@@ -62,16 +61,12 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.initializeForm()
   }
 
-  ngOnDestroy(): void {
-    this.isLoggedInSubscription.unsubscribe()
-  }
-
   initializeValues(): void {
     this.isLoading$ = this.store.select(isLoadingSelector)
     this.isSubmitting$ = this.store.select(isSubmittingSelector)
     this.backendErrors$ = this.store.select(validationErrorsSelector)
 
-    this.isLoggedInSubscription = this.store
+    this.store
       .select(isLoggedInSelector)
       .pipe(
         tap((isLoggedIn: null | boolean) => {
