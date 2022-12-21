@@ -14,6 +14,7 @@ import {
   TuiTextfieldControllerModule,
 } from '@taiga-ui/core'
 import {TuiFieldErrorPipeModule, TuiInputModule} from '@taiga-ui/kit'
+import {AlertModule} from '../../../../../../shared/components/alert/alert.module'
 import {EntityEditComponent} from './entity-edit.component'
 import {GetEntityProfileEffect} from './store/effects/get-entity-profile.effect'
 import {UpdateEntityProfileEffect} from './store/effects/update-entity-profile.effect'
@@ -33,6 +34,7 @@ import {EDIT_ENTITY_PROFILE_FEATURE} from './store/state'
     TuiButtonModule,
     TuiSvgModule,
     TuiNotificationModule,
+    AlertModule,
     TuiLoaderModule,
     StoreModule.forFeature(EDIT_ENTITY_PROFILE_FEATURE, reducer),
     EffectsModule.forFeature([

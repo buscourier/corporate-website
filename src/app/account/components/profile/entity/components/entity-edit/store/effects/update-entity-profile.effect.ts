@@ -3,7 +3,7 @@ import {Router} from '@angular/router'
 import {Actions, createEffect, ofType} from '@ngrx/effects'
 import {TuiDialogService} from '@taiga-ui/core'
 import {PolymorpheusComponent} from '@tinkoff/ng-polymorpheus'
-import {catchError, map, of, switchMap} from 'rxjs'
+import {catchError, delay, map, of, switchMap, take} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {AlertComponent} from '../../../../../../../../shared/components/alert/alert.component'
 import {EntityService} from '../../../../services/entity.service'
@@ -28,6 +28,7 @@ export class UpdateEntityProfileEffect {
   updateProfile = createEffect(() =>
     this.actions$.pipe(
       ofType(updateEntityProfileAction),
+      delay(1000),
       switchMap(({currentUserId, profileInput}) => {
         return this.entityService
           .updateProfile(currentUserId, profileInput)
@@ -65,7 +66,8 @@ export class UpdateEntityProfileEffect {
           //       size: 'auto',
           //     }
           //   )
-          //   .subscribe() //TODO: unsubscribe?
+          //   .pipe(take(1))
+          //   .subscribe()
           this.router.navigate(['/account', 'profile', 'entity'])
         })
       ),
@@ -90,6 +92,7 @@ export class UpdateEntityProfileEffect {
                 size: 'auto',
               }
             )
+            .pipe(take(1))
             .subscribe() //TODO: unsubscribe?
         })
       ),

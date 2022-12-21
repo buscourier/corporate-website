@@ -5,7 +5,7 @@ import {AlertComponent} from './alert.component'
 
 @NgModule({
   declarations: [AlertComponent],
-  imports: [CommonModule, TuiSvgModule, TuiButtonModule],
+  imports: [CommonModule, TuiButtonModule, TuiSvgModule],
   exports: [AlertComponent],
 })
 export class AlertModule {}

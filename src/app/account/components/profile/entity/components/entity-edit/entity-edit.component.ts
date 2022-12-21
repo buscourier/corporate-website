@@ -1,7 +1,14 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  OnInit,
+  Self,
+} from '@angular/core'
 import {FormBuilder, FormGroup} from '@angular/forms'
 import {Store} from '@ngrx/store'
-import {filter, map, Observable} from 'rxjs'
+import {TuiDestroyService} from '@taiga-ui/cdk'
+import {filter, map, Observable, takeUntil} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {currentUserSelector} from '../../../../../../auth/store/selectors'
 import {CurrentUserInterface} from '../../../../../../shared/types/current-user.interface'
@@ -18,6 +25,7 @@ import {
   selector: 'app-entity-edit',
   templateUrl: './entity-edit.component.html',
   styleUrls: ['./entity-edit.component.css'],
+  providers: [TuiDestroyService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EntityEditComponent implements OnInit {
@@ -41,7 +49,13 @@ export class EntityEditComponent implements OnInit {
     contractDate: '',
   })
 
-  constructor(private store: Store, private fb: FormBuilder) {}
+  constructor(
+    private store: Store,
+    private fb: FormBuilder,
+    @Self()
+    @Inject(TuiDestroyService)
+    private destroy$: TuiDestroyService
+  ) {}
 
   ngOnInit(): void {
     this.fetchData()
@@ -56,7 +70,8 @@ export class EntityEditComponent implements OnInit {
         map((user: CurrentUserInterface) => {
           this.currentUserId = user.id
           return this.store.dispatch(getEntityProfileAction({userId: user.id}))
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe()
   }
@@ -71,7 +86,8 @@ export class EntityEditComponent implements OnInit {
         tap((profile: EntityProfileInterface) => {
           this.profile = profile
           this.initializeForm()
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe()
   }

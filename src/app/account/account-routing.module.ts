@@ -16,11 +16,6 @@ const routes: Routes = [
     // canActivate: [EntityGuard],
   },
   {
-    path: 'orders',
-    loadChildren: () =>
-      import('./components/orders/orders.module').then((m) => m.OrdersModule),
-  },
-  {
     path: 'report',
     loadChildren: () =>
       import('./components/report/report.module').then((m) => m.ReportModule),
