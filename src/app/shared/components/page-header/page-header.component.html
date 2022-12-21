@@ -180,26 +180,28 @@
         <ng-container *tuiLet="isAnonymous$ | async as isAnonymous">
           <div class="relative z-30 pl-5">
             <button
+              *ngIf="isAnonymous; else user"
               type="button"
               class="font-base text-gray-800 hover:text-black"
-              (mouseenter)="
-                showDropdown(isAnonymous ? 'anonymous-user' : 'current-user')
-              "
               aria-expanded="false"
+              (click)="login()"
             >
-              <span *ngIf="isAnonymous; else user">
-                <tui-svg
-                  src="icons::user-anonymous"
-                  class="mr-3 !h-[40px] !w-[40px]"
-                ></tui-svg>
-                <span>Личный кабинет</span>
-              </span>
-              <ng-template #user>
+              <tui-svg
+                src="icons::user-anonymous"
+                class="mr-3 !h-[40px] !w-[40px]"
+              ></tui-svg>
+              <span>Войти</span>
+            </button>
+
+            <ng-template #user>
+              <div
+                class="font-base text-gray-800 hover:cursor-pointer hover:text-black"
+                (mouseenter)="showDropdown('current-user')"
+                aria-expanded="false"
+              >
                 <ng-container *tuiLet="currentUser$ | async as currentUser">
-                  <span>{{
-                    currentUser && currentUser.user_name
-                      ? truncate(currentUser.user_name)
-                      : 'Пользователь'
+                  <span *ngIf="currentUser">{{
+                    truncate(currentUser.user_name)
                   }}</span>
                 </ng-container>
                 <tui-svg
@@ -210,8 +212,9 @@
                   src="icons::user-logged-in"
                   class="!h-10 !w-10"
                 ></tui-svg>
-              </ng-template>
-            </button>
+              </div>
+            </ng-template>
+
             <!--  top bar: anonymous dropdown -->
             <div
               *ngIf="activeDropdown === 'anonymous-user'"
