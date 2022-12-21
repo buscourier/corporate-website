@@ -1,13 +1,15 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  OnDestroy,
+  Inject,
   OnInit,
+  Self,
 } from '@angular/core'
 import {FormBuilder} from '@angular/forms'
 import {Store} from '@ngrx/store'
+import {TuiDestroyService} from '@taiga-ui/cdk'
 import {tuiLoaderOptionsProvider} from '@taiga-ui/core'
-import {filter, Observable, of, Subscription, switchMap} from 'rxjs'
+import {filter, Observable, of, switchMap, takeUntil} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {currentUserSelector} from '../../../../../../auth/store/selectors'
 import {ConfidantInterface} from '../../../../../../shared/types/confidant.interface'
@@ -32,14 +34,14 @@ import {
       inheritColor: false,
       overlay: false,
     }),
+    TuiDestroyService,
   ],
 })
-export class EntityViewComponent implements OnInit, OnDestroy {
+export class EntityViewComponent implements OnInit {
   isProfileLoading$: Observable<boolean>
   isConfidantsLoading$: Observable<boolean>
   backendErrors$: Observable<null | string>
   profile$: Observable<null | any>
-  confidantsSub: Subscription
 
   index = 0
 
@@ -49,15 +51,17 @@ export class EntityViewComponent implements OnInit, OnDestroy {
     confidants: this.confidants,
   })
 
-  constructor(private fb: FormBuilder, private store: Store) {}
+  constructor(
+    private fb: FormBuilder,
+    private store: Store,
+    @Self()
+    @Inject(TuiDestroyService)
+    private destroy$: TuiDestroyService
+  ) {}
 
   ngOnInit(): void {
     this.fetchData()
     this.initializeValues()
-  }
-
-  ngOnDestroy(): void {
-    this.confidantsSub.unsubscribe()
   }
 
   initializeValues(): void {
@@ -67,7 +71,7 @@ export class EntityViewComponent implements OnInit, OnDestroy {
       .select(entityProfileSelector)
       .pipe(filter(Boolean))
 
-    this.confidantsSub = this.store
+    this.store
       .select(confidantsSelector)
       .pipe(
         filter(Boolean),
@@ -81,7 +85,8 @@ export class EntityViewComponent implements OnInit, OnDestroy {
               })
             )
           })
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe()
   }
@@ -97,7 +102,8 @@ export class EntityViewComponent implements OnInit, OnDestroy {
         switchMap((user: CurrentUserInterface) => {
           this.store.dispatch(getConfidantsAction({userId: user.id}))
           return of(user)
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe()
   }

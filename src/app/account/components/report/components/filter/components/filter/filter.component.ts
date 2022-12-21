@@ -2,13 +2,16 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
+  Inject,
   OnInit,
   Output,
+  Self,
 } from '@angular/core'
 import {FormBuilder} from '@angular/forms'
 import {Store} from '@ngrx/store'
+import {TuiDestroyService} from '@taiga-ui/cdk'
 import {tuiItemsHandlersProvider} from '@taiga-ui/kit'
-import {Observable} from 'rxjs'
+import {Observable, takeUntil} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {STRINGIFY_CITIES} from '../../../../../../../shared/handlers/string-handlers'
 import {EndCityInterface} from '../../../../../../../shared/types/end-city.interface'
@@ -27,7 +30,10 @@ import {
   selector: 'app-filter',
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.css'],
-  providers: [tuiItemsHandlersProvider({stringify: STRINGIFY_CITIES})],
+  providers: [
+    tuiItemsHandlersProvider({stringify: STRINGIFY_CITIES}),
+    TuiDestroyService,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FilterComponent implements OnInit {
@@ -45,7 +51,13 @@ export class FilterComponent implements OnInit {
     endCity: {value: null, disabled: true},
   })
 
-  constructor(private fb: FormBuilder, private store: Store) {}
+  constructor(
+    private fb: FormBuilder,
+    private store: Store,
+    @Self()
+    @Inject(TuiDestroyService)
+    private destroy$: TuiDestroyService
+  ) {}
 
   ngOnInit(): void {
     this.initializeValues()
@@ -66,7 +78,8 @@ export class FilterComponent implements OnInit {
           this.form.get('endCity').patchValue('')
           this.form.get('endCity').enable()
           this.store.dispatch(getEndCitiesAction({cityId: id}))
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe()
   }

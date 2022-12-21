@@ -78,7 +78,8 @@ export class ReportComponent implements OnInit {
           }
 
           return this.store.dispatch(getOrdersAction({ordersInput}))
-        })
+        }),
+        take(1)
       )
       .subscribe()
   }

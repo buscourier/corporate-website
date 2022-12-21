@@ -7,7 +7,7 @@ import {
   RouterStateSnapshot,
 } from '@angular/router'
 import {Store} from '@ngrx/store'
-import {Observable} from 'rxjs'
+import {Observable, take} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {isLoggedInSelector} from '../../auth/store/selectors'
 import {LoginService} from '../components/login/services/login.service'
@@ -32,7 +32,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
       // filter(Boolean),
       tap((isLoggedIn: boolean) => {
         if (!isLoggedIn) {
-          this.loginService.open(null).subscribe()
+          this.loginService.open(null).pipe(take(1)).subscribe()
         }
       })
     )

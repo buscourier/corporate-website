@@ -2,7 +2,7 @@ import {Inject, Injectable, Injector} from '@angular/core'
 import {Actions, createEffect, ofType} from '@ngrx/effects'
 import {TuiDialogService} from '@taiga-ui/core'
 import {PolymorpheusComponent} from '@tinkoff/ng-polymorpheus'
-import {catchError, map, of, switchMap} from 'rxjs'
+import {catchError, map, of, switchMap, take} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {AlertComponent} from '../../../../../../../shared/components/alert/alert.component'
 import {ReportService} from '../../../../services/report.service'
@@ -51,7 +51,8 @@ export class CancelOrderEffect {
                 size: 'auto',
               }
             )
-            .subscribe() //TODO: unsubscribe?
+            .pipe(take(1))
+            .subscribe()
         })
       ),
     {dispatch: false}
@@ -75,7 +76,8 @@ export class CancelOrderEffect {
                 size: 'auto',
               }
             )
-            .subscribe() //TODO: unsubscribe?
+            .pipe(take(1))
+            .subscribe()
         })
       ),
     {dispatch: false}

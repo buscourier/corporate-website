@@ -1,8 +1,14 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  OnInit,
+  Self,
+} from '@angular/core'
 import {Store} from '@ngrx/store'
+import {TuiDestroyService} from '@taiga-ui/cdk'
 import {tuiLoaderOptionsProvider} from '@taiga-ui/core'
-import {filter, map, Observable} from 'rxjs'
-import {tap} from 'rxjs/operators'
+import {filter, map, Observable, takeUntil} from 'rxjs'
 import {currentUserSelector} from '../../../../../../auth/store/selectors'
 import {CurrentUserInterface} from '../../../../../../shared/types/current-user.interface'
 import {getPersonalProfileAction} from './store/actions/get-personal-profile.action'
@@ -19,6 +25,7 @@ import {isLoadingSelector, personalProfileSelector} from './store/selectors'
       inheritColor: false,
       overlay: false,
     }),
+    TuiDestroyService,
   ],
 })
 export class PersonalViewComponent implements OnInit {
@@ -26,7 +33,12 @@ export class PersonalViewComponent implements OnInit {
   backendErrors$: Observable<null | string>
   profile$: Observable<null | any>
 
-  constructor(private store: Store) {}
+  constructor(
+    private store: Store,
+    @Self()
+    @Inject(TuiDestroyService)
+    private destroy$: TuiDestroyService
+  ) {}
 
   ngOnInit(): void {
     this.fetchData()
@@ -35,12 +47,9 @@ export class PersonalViewComponent implements OnInit {
 
   initializeValues(): void {
     this.isLoading$ = this.store.select(isLoadingSelector)
-    this.profile$ = this.store.select(personalProfileSelector).pipe(
-      filter(Boolean),
-      tap((profile) => {
-        console.log('profile', profile)
-      })
-    )
+    this.profile$ = this.store
+      .select(personalProfileSelector)
+      .pipe(filter(Boolean))
   }
 
   fetchData(): void {
@@ -52,7 +61,8 @@ export class PersonalViewComponent implements OnInit {
           return this.store.dispatch(
             getPersonalProfileAction({userId: user.id})
           )
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe()
   }

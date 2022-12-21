@@ -93,7 +93,7 @@ export class UpdateEntityProfileEffect {
               }
             )
             .pipe(take(1))
-            .subscribe() //TODO: unsubscribe?
+            .subscribe()
         })
       ),
     {dispatch: false}

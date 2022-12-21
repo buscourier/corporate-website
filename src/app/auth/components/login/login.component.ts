@@ -4,13 +4,14 @@ import {
   Inject,
   OnDestroy,
   OnInit,
+  Self,
 } from '@angular/core'
 import {FormBuilder, FormGroup, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
-import {TuiDialog} from '@taiga-ui/cdk'
+import {TuiDestroyService, TuiDialog} from '@taiga-ui/cdk'
 import {TUI_VALIDATION_ERRORS} from '@taiga-ui/kit'
 import {POLYMORPHEUS_CONTEXT} from '@tinkoff/ng-polymorpheus'
-import {Observable, Subscription} from 'rxjs'
+import {Observable, Subscription, takeUntil} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {BackendErrorsInterface} from '../../../shared/types/backend-errors.interface'
 import {clearValidationErrorsAction} from '../../store/actions/clear-validation-errors'
@@ -36,6 +37,7 @@ import {LoginRequestInterface} from '../../types/login-request.interface'
         email: `Укажите корректный email`,
       },
     },
+    TuiDestroyService,
   ],
 })
 export class LoginComponent implements OnInit, OnDestroy {
@@ -49,7 +51,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private store: Store,
     @Inject(POLYMORPHEUS_CONTEXT)
-    readonly context: TuiDialog<{}, boolean>
+    readonly context: TuiDialog<{}, boolean>,
+    @Self()
+    @Inject(TuiDestroyService)
+    private destroy$: TuiDestroyService
   ) {}
 
   ngOnInit(): void {
@@ -73,7 +78,8 @@ export class LoginComponent implements OnInit, OnDestroy {
           if (isLoggedIn) {
             this.context.completeWith(true)
           }
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe()
   }

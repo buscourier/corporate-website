@@ -1,8 +1,15 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  OnInit,
+  Self,
+} from '@angular/core'
 import {FormBuilder, FormGroup} from '@angular/forms'
 import {Store} from '@ngrx/store'
+import {TuiDestroyService} from '@taiga-ui/cdk'
 import {TUI_VALIDATION_ERRORS} from '@taiga-ui/kit'
-import {filter, map, Observable} from 'rxjs'
+import {filter, map, Observable, takeUntil} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {currentUserSelector} from '../../../../../../auth/store/selectors'
 import {CurrentUserInterface} from '../../../../../../shared/types/current-user.interface'
@@ -27,6 +34,7 @@ import {
         required: `Поле обязательно для заполнения`,
       },
     },
+    TuiDestroyService,
   ],
 })
 export class PersonalEditComponent implements OnInit {
@@ -43,7 +51,13 @@ export class PersonalEditComponent implements OnInit {
     passport: '',
   })
 
-  constructor(private store: Store, private fb: FormBuilder) {}
+  constructor(
+    private store: Store,
+    private fb: FormBuilder,
+    @Self()
+    @Inject(TuiDestroyService)
+    private destroy$: TuiDestroyService
+  ) {}
 
   ngOnInit(): void {
     this.fetchData()
@@ -60,7 +74,8 @@ export class PersonalEditComponent implements OnInit {
           return this.store.dispatch(
             getPersonalProfileAction({userId: user.id})
           )
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe()
   }
@@ -75,7 +90,8 @@ export class PersonalEditComponent implements OnInit {
         tap((profile: PersonalProfileInterface) => {
           this.profile = profile
           this.initializeForm()
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe()
   }

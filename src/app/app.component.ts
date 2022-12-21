@@ -1,12 +1,4 @@
-import {Component, HostListener, Inject, OnDestroy, OnInit} from '@angular/core'
-import {Store} from '@ngrx/store'
-import {delay, Observable, Subscription} from 'rxjs'
-import {tap} from 'rxjs/operators'
-import {LoginService} from './auth/components/login/services/login.service'
-import {getCurrentUserAction} from './auth/store/actions/get-current-user.action'
-import {isLoggedInSelector} from './auth/store/selectors'
-import {changeScreenSizeAction} from './store/global/actions/change-screen-size.action'
-import {isPageScrollBlockedSelector} from './store/global/selectors'
+import {Component, HostListener, Inject, OnInit, Self} from '@angular/core'
 import {
   NavigationCancel,
   NavigationEnd,
@@ -15,22 +7,34 @@ import {
   Router,
   RouterEvent,
 } from '@angular/router'
+import {Store} from '@ngrx/store'
+import {TuiDestroyService} from '@taiga-ui/cdk'
+import {Observable, take, takeUntil} from 'rxjs'
+import {tap} from 'rxjs/operators'
+import {LoginService} from './auth/components/login/services/login.service'
+import {getCurrentUserAction} from './auth/store/actions/get-current-user.action'
+import {isLoggedInSelector} from './auth/store/selectors'
+import {changeScreenSizeAction} from './store/global/actions/change-screen-size.action'
+import {isPageScrollBlockedSelector} from './store/global/selectors'
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
+  providers: [TuiDestroyService],
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit {
   title = 'Баскурьер'
   isLoggedIn$: Observable<boolean>
-  isPageScrollSub: Subscription
   isLoading = true
 
   constructor(
     @Inject(LoginService) private readonly loginService: LoginService,
     private store: Store,
-    private router: Router
+    private router: Router,
+    @Self()
+    @Inject(TuiDestroyService)
+    private destroy$: TuiDestroyService
   ) {}
 
   ngOnInit(): void {
@@ -39,13 +43,9 @@ export class AppComponent implements OnInit, OnDestroy {
     this.changeScreenSize()
   }
 
-  ngOnDestroy(): void {
-    this.isPageScrollSub.unsubscribe()
-  }
-
   initializeValues(): void {
     this.isLoggedIn$ = this.store.select(isLoggedInSelector)
-    this.isPageScrollSub = this.store
+    this.store
       .select(isPageScrollBlockedSelector)
       .pipe(
         tap((isBlocked: boolean) => {
@@ -54,7 +54,8 @@ export class AppComponent implements OnInit, OnDestroy {
           } else {
             document.documentElement.classList.remove('page-scroll-blocked')
           }
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe()
 
@@ -70,7 +71,8 @@ export class AppComponent implements OnInit, OnDestroy {
           ) {
             this.isLoading = false
           }
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe()
   }
@@ -80,7 +82,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   onClick() {
-    this.loginService.open(null).subscribe()
+    this.loginService.open(null).pipe(take(1)).subscribe()
   }
 
   @HostListener('window:resize', ['$event'])

@@ -15,7 +15,7 @@ import {
   TuiDurationOptions,
   tuiHeightCollapse,
 } from '@taiga-ui/core'
-import {filter, Observable} from 'rxjs'
+import {filter, Observable, take} from 'rxjs'
 import {LoginService} from '../../../auth/components/login/services/login.service'
 import {logoutAction} from '../../../auth/store/actions/sync.action'
 import {
@@ -103,7 +103,7 @@ export class PageHeaderComponent implements OnInit {
   }
 
   login() {
-    this.loginService.open(null).subscribe()
+    this.loginService.open(null).pipe(take(1)).subscribe()
   }
 
   logout() {
