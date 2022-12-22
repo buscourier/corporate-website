@@ -6,13 +6,11 @@
     Для получения тарифов, выберите регион и город, из которого планируется
     отправление.
   </p>
-  <div
-    class="grid grid-cols-1 gap-16 lg:grid-cols-[minmax(770px,1fr)_370px] lg:gap-8"
-  >
+  <div class="grid grid-cols-1 gap-16 xl:grid-cols-[1fr_370px] xl:gap-7.5">
     <div *tuiLet="isCitiesLoading$ | async as isCitiesLoading" class="w-full">
       <div
         *tuiLet="filteredCities$ | async as cities"
-        class="mb-10 flex flex-col space-y-10 border-b border-t border-gray-300 py-10 md:flex-row md:space-x-16 md:space-y-0 lg:space-x-32"
+        class="mb-10 flex flex-col space-y-10 border-b border-t border-gray-300 py-10 md:flex-row md:space-x-28 md:space-y-0 lg:space-x-28"
       >
         <div>
           <b class="mb-4 block text-lg font-medium">Регион:</b>
@@ -23,6 +21,7 @@
               [items]="regions"
               [itemContent]="regionsContent"
               orientation="vertical"
+              [class.opacity-0]="isCitiesLoading"
             ></tui-radio-list>
           </tui-loader>
           <ng-template #regionsContent let-data>
@@ -39,6 +38,7 @@
               [items]="cities"
               [itemContent]="citiesContent"
               class="tariff-cities"
+              [class.opacity-0]="isCitiesLoading"
             ></tui-radio-list>
           </tui-loader>
           <ng-template #citiesContent let-data>
@@ -231,6 +231,26 @@
         </ng-container>
       </ng-container>
     </div>
-    media
+    <div class="lg:w-[370px] lg:flex-shrink-0">
+      <!--       start media-->
+      <div
+        class="flex max-w-[370px] items-center rounded-sm pt-6 pr-9 pb-8 pl-7 shadow-xl"
+      >
+        <tui-svg
+          src="icons::pdf"
+          class="mr-5 !h-[42px] !w-[42px] self-start"
+        ></tui-svg>
+        <div>
+          <p class="mb-2.5 text-sm">Правила приемки и отправки грузов</p>
+          <button type="button" class="link-blue" (click)="showPdf(actions)">
+            <span><b class="font-medium">Открыть файл</b></span>
+          </button>
+        </div>
+      </div>
+      <!--        end media-->
+    </div>
   </div>
 </div>
+<ng-template #actions let-content="content">
+  <a tuiButton size="s" download [href]="content">Загрузить</a>
+</ng-template>

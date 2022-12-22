@@ -1,6 +1,10 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
+import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core'
 import {FormControl} from '@angular/forms'
+import {DomSanitizer} from '@angular/platform-browser'
 import {Store} from '@ngrx/store'
+import {TUI_IS_MOBILE} from '@taiga-ui/cdk'
+import {TuiPdfViewerOptions, TuiPdfViewerService} from '@taiga-ui/kit'
+import {PolymorpheusContent} from '@tinkoff/ng-polymorpheus'
 import {combineLatest, filter, map, Observable} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {StartCityInterface} from 'src/app/shared/types/start-city.interface'
@@ -63,7 +67,13 @@ export class TariffComponent implements OnInit {
   region = new FormControl(null)
   city = new FormControl(null)
 
-  constructor(private store: Store) {}
+  constructor(
+    private store: Store,
+    @Inject(DomSanitizer) private readonly sanitizer: DomSanitizer,
+    @Inject(TuiPdfViewerService)
+    private readonly pdfService: TuiPdfViewerService,
+    @Inject(TUI_IS_MOBILE) private readonly isMobile: boolean
+  ) {}
 
   ngOnInit(): void {
     this.initializeValues()
@@ -221,5 +231,23 @@ export class TariffComponent implements OnInit {
 
   fetchData(): void {
     this.store.dispatch(getCitiesAction())
+  }
+
+  showPdf(actions: PolymorpheusContent<TuiPdfViewerOptions>): void {
+    const link = `https://busbox.guru/uploads/pages/Правила_приёмки_и_отправки_грузов_Баскурьер.pdf`
+
+    this.pdfService
+      .open(
+        this.sanitizer.bypassSecurityTrustResourceUrl(
+          this.isMobile
+            ? `https://drive.google.com/viewerng/viewer?embedded=true&url=${link}`
+            : link
+        ),
+        {
+          label: `Правила приемки и отправки грузов`,
+          actions,
+        }
+      )
+      .subscribe()
   }
 }
