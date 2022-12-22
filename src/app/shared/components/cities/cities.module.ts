@@ -5,6 +5,7 @@ import {EffectsModule} from '@ngrx/effects'
 import {StoreModule} from '@ngrx/store'
 import {TuiAutoFocusModule, TuiLetModule} from '@taiga-ui/cdk'
 import {
+  TuiButtonModule,
   TuiLoaderModule,
   TuiScrollbarModule,
   TuiSvgModule,
@@ -26,6 +27,7 @@ import {CITIES_FEATURE} from './store/state'
     StoreModule.forFeature(CITIES_FEATURE, reducer),
     EffectsModule.forFeature([GetStartCitiesEffect, GetEndCitiesEffect]),
     TuiLoaderModule,
+    TuiButtonModule,
     TuiLetModule,
     TuiScrollbarModule,
     TuiInputModule,

@@ -7,11 +7,12 @@ import {
   Output,
   Self,
 } from '@angular/core'
-import {FormBuilder} from '@angular/forms'
+import {FormBuilder, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
 import {TuiDestroyService} from '@taiga-ui/cdk'
+import {tuiLoaderOptionsProvider} from '@taiga-ui/core'
 import {tuiItemsHandlersProvider} from '@taiga-ui/kit'
-import {Observable, takeUntil} from 'rxjs'
+import {filter, Observable, takeUntil} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {STRINGIFY_CITIES} from '../../../../../../../shared/handlers/string-handlers'
 import {EndCityInterface} from '../../../../../../../shared/types/end-city.interface'
@@ -33,6 +34,9 @@ import {
   providers: [
     tuiItemsHandlersProvider({stringify: STRINGIFY_CITIES}),
     TuiDestroyService,
+    tuiLoaderOptionsProvider({
+      size: 'm',
+    }),
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -47,8 +51,8 @@ export class FilterComponent implements OnInit {
 
   form = this.fb.group({
     range: [],
-    startCity: null,
-    endCity: {value: null, disabled: true},
+    startCity: [{value: null, disabled: true}, [Validators.required]],
+    endCity: [{value: null, disabled: true}, [Validators.required]],
   })
 
   constructor(
@@ -65,7 +69,15 @@ export class FilterComponent implements OnInit {
   }
 
   initializeValues(): void {
-    this.isStartCitiesLoading$ = this.store.select(isStartCitiesLoadingSelector)
+    this.isStartCitiesLoading$ = this.store
+      .select(isStartCitiesLoadingSelector)
+      .pipe(
+        filter(Boolean),
+        tap(() => {
+          console.log('tada')
+          this.form.get('startCity').enable({emitEvent: false})
+        })
+      )
     this.isEndCitiesLoading$ = this.store.select(isEndCitiesLoadingSelector)
     this.startCities$ = this.store.select(startCitiesSelector)
     this.endCities$ = this.store.select(endCitiesSelector)

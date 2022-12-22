@@ -1,10 +1,14 @@
-<button
-  type="button"
-  class="absolute top-6 right-6 text-gray-500 transition-colors hover:text-gray-700 lg:top-6 lg:right-6"
-  (click)="close()"
->
-  <tui-svg src="icons::close-2" class="!h-[22px] !w-[22px]"></tui-svg>
-</button>
+<div class="absolute top-6 right-6 z-10">
+  <button
+    tuiIconButton
+    type="button"
+    appearance="icon"
+    icon="icons::close-2"
+    size="xs"
+    class="text-gray-500 transition-colors hover:text-gray-700"
+    (click)="close()"
+  ></button>
+</div>
 
 <h3 class="mb-5 mt-2.5 text-lg font-medium md:text-xl">
   Населенные пункты<br class="sm:hidden" />

@@ -1,7 +1,9 @@
 <tui-root>
   <app-page-header></app-page-header>
   <tui-loader [showLoader]="isLoading" class="min-h-[500px]">
-    <router-outlet></router-outlet>
+    <div [class.opacity-0]="isLoading">
+      <router-outlet></router-outlet>
+    </div>
   </tui-loader>
   <app-page-footer></app-page-footer>
 </tui-root>
