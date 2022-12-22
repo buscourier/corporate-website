@@ -1,72 +1,74 @@
-<article class="relative flex flex-col items-center rounded-sm bg-white p-2">
+<div class="absolute top-4 right-4 z-10">
   <button
+    tuiIconButton
     type="button"
-    class="absolute -top-2 -right-2 text-gray-800"
+    appearance="icon"
+    icon="icons::close-2"
+    size="xs"
+    class="text-gray-500 transition-colors hover:text-gray-700"
     (click)="close()"
-  >
-    <tui-svg src="icons::close-2" class="!h-[22px] !w-[22px]"></tui-svg>
-  </button>
+  ></button>
+</div>
 
-  <div *ngIf="success" class="mt-2 mb-3">
-    <svg
-      width="53"
-      height="47"
-      viewBox="0 0 53 47"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
+<div *ngIf="success" class="mt-2 mb-3">
+  <svg
+    width="53"
+    height="47"
+    viewBox="0 0 53 47"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <circle cx="23" cy="24" r="22.5" fill="#FFDC00" stroke="black" />
+    <mask
+      id="mask0"
+      mask-type="alpha"
+      maskUnits="userSpaceOnUse"
+      x="0"
+      y="1"
+      width="46"
+      height="46"
     >
       <circle cx="23" cy="24" r="22.5" fill="#FFDC00" stroke="black" />
-      <mask
-        id="mask0"
-        mask-type="alpha"
-        maskUnits="userSpaceOnUse"
-        x="0"
-        y="1"
-        width="46"
-        height="46"
-      >
-        <circle cx="23" cy="24" r="22.5" fill="#FFDC00" stroke="black" />
-      </mask>
-      <g mask="url(#mask0)">
-        <path
-          opacity="0.1"
-          d="M44.5517 -1.60938L60 43.7366C60 45.0594 43.4862 47 42.1663 47H6.3854C5.06548 47 4 45.9322 4 44.6094V42.1391L4.12722 42.2108C47.9151 43.5017 34.6762 -4 34.6762 -4H42.1663C43.4862 -4 44.5517 -2.93211 44.5517 -1.60938Z"
-          fill="black"
-        />
-      </g>
-      <path d="M13 18.5814L23.5763 29L52 1" stroke="black" />
-    </svg>
-  </div>
-  <div *ngIf="failure" class="mt-2 mb-3">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 48 48"
-      width="48px"
-      height="48px"
-    >
+    </mask>
+    <g mask="url(#mask0)">
       <path
-        fill="#f44336"
-        d="M44,24c0,11.045-8.955,20-20,20S4,35.045,4,24S12.955,4,24,4S44,12.955,44,24z"
+        opacity="0.1"
+        d="M44.5517 -1.60938L60 43.7366C60 45.0594 43.4862 47 42.1663 47H6.3854C5.06548 47 4 45.9322 4 44.6094V42.1391L4.12722 42.2108C47.9151 43.5017 34.6762 -4 34.6762 -4H42.1663C43.4862 -4 44.5517 -2.93211 44.5517 -1.60938Z"
+        fill="black"
       />
-      <path
-        fill="#fff"
-        d="M29.656,15.516l2.828,2.828l-14.14,14.14l-2.828-2.828L29.656,15.516z"
-      />
-      <path
-        fill="#fff"
-        d="M32.484,29.656l-2.828,2.828l-14.14-14.14l2.828-2.828L32.484,29.656z"
-      />
-    </svg>
-  </div>
-  <h1 class="text-center text-md" [innerHTML]="heading"></h1>
-  <button
-    tuiButton
-    type="button"
-    appearance="accent"
-    size="m"
-    class="mt-6 min-w-[160px]"
-    (click)="close()"
+    </g>
+    <path d="M13 18.5814L23.5763 29L52 1" stroke="black" />
+  </svg>
+</div>
+<div *ngIf="failure" class="mt-2 mb-3">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 48 48"
+    width="48px"
+    height="48px"
   >
-    {{ success ? 'Хорошо, спасибо!' : 'Ok' }}
-  </button>
-</article>
+    <path
+      fill="#f44336"
+      d="M44,24c0,11.045-8.955,20-20,20S4,35.045,4,24S12.955,4,24,4S44,12.955,44,24z"
+    />
+    <path
+      fill="#fff"
+      d="M29.656,15.516l2.828,2.828l-14.14,14.14l-2.828-2.828L29.656,15.516z"
+    />
+    <path
+      fill="#fff"
+      d="M32.484,29.656l-2.828,2.828l-14.14-14.14l2.828-2.828L32.484,29.656z"
+    />
+  </svg>
+</div>
+<h1 class="text-center text-md" [innerHTML]="heading"></h1>
+<button
+  tuiButton
+  type="button"
+  appearance="accent"
+  size="m"
+  class="mt-6 min-w-[160px]"
+  (click)="close()"
+>
+  {{ success ? 'Хорошо, спасибо!' : 'Ok' }}
+</button>
