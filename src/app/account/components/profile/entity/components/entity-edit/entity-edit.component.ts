@@ -17,7 +17,7 @@ import {getEntityProfileAction} from './store/actions/get-entity-profile.action'
 import {updateEntityProfileAction} from './store/actions/update-entity-profile.action'
 import {
   entityProfileSelector,
-  isLoadingSelector,
+  isProfileLoadingSelector,
   isSubmittingSelector,
 } from './store/selectors'
 
@@ -29,7 +29,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EntityEditComponent implements OnInit {
-  isLoading$: Observable<boolean>
+  isProfileLoading$: Observable<boolean>
   backendErrors$: Observable<null | string>
   isSubmitting$: Observable<boolean>
   profile: any
@@ -77,7 +77,7 @@ export class EntityEditComponent implements OnInit {
   }
 
   initializeValues(): void {
-    this.isLoading$ = this.store.select(isLoadingSelector)
+    this.isProfileLoading$ = this.store.select(isProfileLoadingSelector)
     this.isSubmitting$ = this.store.select(isSubmittingSelector)
     this.store
       .select(entityProfileSelector)

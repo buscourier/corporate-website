@@ -7,7 +7,7 @@ export const EditEntityProfileFeatureSelector =
     EDIT_ENTITY_PROFILE_FEATURE
   )
 
-export const isLoadingSelector = createSelector(
+export const isProfileLoadingSelector = createSelector(
   EditEntityProfileFeatureSelector,
   (profileState: EditEntityProfileStateInterface) => profileState.isLoading
 )

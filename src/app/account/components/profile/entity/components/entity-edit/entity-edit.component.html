@@ -8,26 +8,30 @@
 <h1 class="mb-8 font-heading text-2xl font-bold sm:text-3xl">
   Персональные данные
 </h1>
-<div class="max-w-[570px]">
-  <tui-loader [showLoader]="isLoading$ | async">
-    <ng-container *ngIf="profile">
-      <ul class="mb-8 space-y-2 border-b border-gray-300 pb-11">
-        <li
-          class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
-        >
-          <span class="order-1 flex-shrink-0">Логин:</span>
-          <span class="order-3 flex-shrink-0">{{
-            profile['email'].value
-          }}</span>
-        </li>
-        <li
-          class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
-        >
-          <span class="order-1 flex-shrink-0">Пароль:</span>
-          <span class="order-3 flex-shrink-0">*********</span>
-        </li>
-      </ul>
-    </ng-container>
+<div
+  *tuiLet="isProfileLoading$ | async as isProfileLoading"
+  class="max-w-[570px]"
+>
+  <tui-loader [showLoader]="isProfileLoading" [class.h-32]="isProfileLoading">
+    <ul
+      *ngIf="profile"
+      class="mb-8 space-y-2 border-b border-gray-300 pb-11"
+      [class.opacity-0]="isProfileLoading"
+      [class.height-0]="isProfileLoading"
+    >
+      <li
+        class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
+      >
+        <span class="order-1 flex-shrink-0">Логин:</span>
+        <span class="order-3 flex-shrink-0">{{ profile['email'].value }}</span>
+      </li>
+      <li
+        class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
+      >
+        <span class="order-1 flex-shrink-0">Пароль:</span>
+        <span class="order-3 flex-shrink-0">*********</span>
+      </li>
+    </ul>
   </tui-loader>
   <h2 class="mb-6 font-heading text-lg font-bold">Данные организации</h2>
   <form
@@ -38,7 +42,7 @@
     <label class="col-span-2 block sm:col-span-1">
       <span
         class="mb-1 inline-block text-xs"
-        [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'"
+        [ngClass]="isProfileLoading ? 'opacity-0' : 'opacity-100'"
       >
         Наименование организации
       </span>
@@ -46,7 +50,7 @@
         tuiTextfieldSize="m"
         formControlName="name"
         [tuiTextfieldLabelOutside]="true"
-        [class.tui-skeleton]="isLoading$ | async"
+        [class.tui-skeleton]="isProfileLoading"
       >
         Нет данных
         <input tuiTextfield type="text" />
@@ -60,14 +64,14 @@
     <label class="col-span-2 block sm:col-span-1">
       <span
         class="mb-1 inline-block text-xs"
-        [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'"
+        [ngClass]="isProfileLoading ? 'opacity-0' : 'opacity-100'"
         >Руководитель</span
       >
       <tui-input
         tuiTextfieldSize="m"
         formControlName="contactperson"
         [tuiTextfieldLabelOutside]="true"
-        [class.tui-skeleton]="isLoading$ | async"
+        [class.tui-skeleton]="isProfileLoading"
       >
         Нет данных
         <input tuiTextfield type="text" />
@@ -81,14 +85,14 @@
     <label class="col-span-2 block sm:col-span-1">
       <span
         class="mb-1 inline-block text-xs"
-        [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'"
+        [ngClass]="isProfileLoading ? 'opacity-0' : 'opacity-100'"
         >Телефон</span
       >
       <tui-input
         tuiTextfieldSize="m"
         formControlName="phone"
         [tuiTextfieldLabelOutside]="true"
-        [class.tui-skeleton]="isLoading$ | async"
+        [class.tui-skeleton]="isProfileLoading"
       >
         Нет данных
         <input tuiTextfield type="text" />
@@ -102,14 +106,14 @@
     <label class="col-span-2 block sm:col-span-1">
       <span
         class="mb-1 inline-block text-xs"
-        [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'"
+        [ngClass]="isProfileLoading ? 'opacity-0' : 'opacity-100'"
         >ИНН</span
       >
       <tui-input
         tuiTextfieldSize="m"
         formControlName="inn"
         [tuiTextfieldLabelOutside]="true"
-        [class.tui-skeleton]="isLoading$ | async"
+        [class.tui-skeleton]="isProfileLoading"
       >
         Нет данных
         <input tuiTextfield type="text" />
@@ -123,14 +127,14 @@
     <label class="col-span-2 block sm:col-span-1">
       <span
         class="mb-1 inline-block text-xs"
-        [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'"
+        [ngClass]="isProfileLoading ? 'opacity-0' : 'opacity-100'"
         >КПП</span
       >
       <tui-input
         tuiTextfieldSize="m"
         formControlName="kpp"
         [tuiTextfieldLabelOutside]="true"
-        [class.tui-skeleton]="isLoading$ | async"
+        [class.tui-skeleton]="isProfileLoading"
       >
         Нет данных
         <input tuiTextfield type="text" />
@@ -144,14 +148,14 @@
     <label class="col-span-2 block sm:col-span-1">
       <span
         class="mb-1 inline-block text-xs"
-        [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'"
+        [ngClass]="isProfileLoading ? 'opacity-0' : 'opacity-100'"
         >ОГРН</span
       >
       <tui-input
         tuiTextfieldSize="m"
         formControlName="ogrn"
         [tuiTextfieldLabelOutside]="true"
-        [class.tui-skeleton]="isLoading$ | async"
+        [class.tui-skeleton]="isProfileLoading"
       >
         Нет данных
         <input tuiTextfield type="text" />
@@ -165,14 +169,14 @@
     <label class="col-span-2 block sm:col-span-1">
       <span
         class="mb-1 inline-block text-xs"
-        [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'"
+        [ngClass]="isProfileLoading ? 'opacity-0' : 'opacity-100'"
         >Банк</span
       >
       <tui-input
         tuiTextfieldSize="m"
         formControlName="bank"
         [tuiTextfieldLabelOutside]="true"
-        [class.tui-skeleton]="isLoading$ | async"
+        [class.tui-skeleton]="isProfileLoading"
       >
         Нет данных
         <input tuiTextfield type="text" />
@@ -186,14 +190,14 @@
     <label class="col-span-2 block sm:col-span-1">
       <span
         class="mb-1 inline-block text-xs"
-        [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'"
+        [ngClass]="isProfileLoading ? 'opacity-0' : 'opacity-100'"
         >Р/с</span
       >
       <tui-input
         tuiTextfieldSize="m"
         formControlName="rs"
         [tuiTextfieldLabelOutside]="true"
-        [class.tui-skeleton]="isLoading$ | async"
+        [class.tui-skeleton]="isProfileLoading"
       >
         Нет данных
         <input tuiTextfield type="text" />
@@ -207,14 +211,14 @@
     <label class="col-span-2 block sm:col-span-1">
       <span
         class="mb-1 inline-block text-xs"
-        [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'"
+        [ngClass]="isProfileLoading ? 'opacity-0' : 'opacity-100'"
         >К/с</span
       >
       <tui-input
         tuiTextfieldSize="m"
         formControlName="ks"
         [tuiTextfieldLabelOutside]="true"
-        [class.tui-skeleton]="isLoading$ | async"
+        [class.tui-skeleton]="isProfileLoading"
       >
         Нет данных
         <input tuiTextfield type="text" />
@@ -228,14 +232,14 @@
     <label class="col-span-2 block sm:col-span-1">
       <span
         class="mb-1 inline-block text-xs"
-        [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'"
+        [ngClass]="isProfileLoading ? 'opacity-0' : 'opacity-100'"
         >№ Договора</span
       >
       <tui-input
         tuiTextfieldSize="m"
         formControlName="contractNumber"
         [tuiTextfieldLabelOutside]="true"
-        [class.tui-skeleton]="isLoading$ | async"
+        [class.tui-skeleton]="isProfileLoading"
       >
         Нет данных
         <input tuiTextfield type="text" />
@@ -249,14 +253,14 @@
     <label class="col-span-2 block sm:col-span-1">
       <span
         class="mb-1 inline-block text-xs"
-        [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'"
+        [ngClass]="isProfileLoading ? 'opacity-0' : 'opacity-100'"
         >Дата договора</span
       >
       <tui-input
         tuiTextfieldSize="m"
         formControlName="contractDate"
         [tuiTextfieldLabelOutside]="true"
-        [class.tui-skeleton]="isLoading$ | async"
+        [class.tui-skeleton]="isProfileLoading"
       >
         Нет данных
         <input tuiTextfield type="text" />
@@ -273,7 +277,7 @@
     <button
       tuiButton
       type="submit"
-      [class.tui-skeleton]="isLoading$ | async"
+      [class.tui-skeleton]="isProfileLoading"
       size="m"
       [showLoader]="isSubmitting$ | async"
       class="col-span-2 mt-3 sm:col-span-1"
