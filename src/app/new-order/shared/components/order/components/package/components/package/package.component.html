@@ -62,7 +62,7 @@
           </tui-checkbox-labeled>
         </div>
         <ng-template #template let-observer>
-          <article>
+          <div class="p-5">
             <h1 class="text-lg font-medium">
               {{ box.get('data').value.short_name }} ({{
                 box.get('data').value.site_name
@@ -97,7 +97,7 @@
                 Ok
               </button>
             </div>
-          </article>
+          </div>
         </ng-template>
       </ng-container>
     </div>
@@ -156,7 +156,7 @@
           </tui-checkbox-labeled>
         </div>
         <ng-template #template let-observer>
-          <article>
+          <div class="p-5">
             <h1 class="text-lg font-medium">
               {{ pack.get('data').value.short_name }} ({{
                 pack.get('data').value.site_name
@@ -164,13 +164,14 @@
             </h1>
             <p class="mb-4 text-sm">{{ pack.get('data').value.property }}</p>
             <div class="flex items-end space-x-2">
-              <label class="block flex-grow">
+              <label class="counter block flex-grow">
                 <span class="mb-1 inline-block text-xs">Сколько штук?</span>
                 <tui-input-count
                   [formControl]="getControl(pack.get('count'))"
                   [tuiTextfieldLabelOutside]="true"
                   [min]="1"
                   [max]="20"
+                  tuiTextfieldSize="m"
                 >
                   <input tuiTextfield />
                 </tui-input-count>
@@ -178,6 +179,7 @@
               <button
                 type="button"
                 tuiButton
+                size="m"
                 (click)="
                   observer.complete();
                   closeDialog(
@@ -189,7 +191,7 @@
                 Ok
               </button>
             </div>
-          </article>
+          </div>
         </ng-template>
       </ng-container>
     </div>
@@ -248,7 +250,7 @@
           </tui-checkbox-labeled>
         </div>
         <ng-template #template let-observer>
-          <article>
+          <div class="p-5">
             <h1 class="text-lg font-medium">
               {{ pack.get('data').value.short_name }} ({{
                 pack.get('data').value.site_name
@@ -256,13 +258,14 @@
             </h1>
             <p class="mb-4 text-sm">{{ pack.get('data').value.property }}</p>
             <div class="flex items-end space-x-2">
-              <label class="block flex-grow">
+              <label class="counter block flex-grow">
                 <span class="mb-1 inline-block text-xs">Сколько штук?</span>
                 <tui-input-count
                   [formControl]="getControl(pack.get('count'))"
                   [tuiTextfieldLabelOutside]="true"
                   [min]="1"
                   [max]="20"
+                  tuiTextfieldSize="m"
                 >
                   <input tuiTextfield />
                 </tui-input-count>
@@ -270,6 +273,7 @@
               <button
                 type="button"
                 tuiButton
+                size="m"
                 (click)="
                   observer.complete();
                   closeDialog(
@@ -281,7 +285,7 @@
                 Ok
               </button>
             </div>
-          </article>
+          </div>
         </ng-template>
       </ng-container>
     </div>
@@ -340,7 +344,7 @@
           </tui-checkbox-labeled>
         </div>
         <ng-template #template let-observer>
-          <article>
+          <div class="p-5">
             <h1 class="text-lg font-medium">
               {{ skin.get('data').value.short_name }} ({{
                 skin.get('data').value.site_name
@@ -348,13 +352,14 @@
             </h1>
             <p class="mb-4 text-sm">{{ skin.get('data').value.property }}</p>
             <div class="flex items-end space-x-2">
-              <label class="block flex-grow">
+              <label class="counter block flex-grow">
                 <span class="mb-1 inline-block text-xs">Сколько штук?</span>
                 <tui-input-count
                   [formControl]="getControl(skin.get('count'))"
                   [tuiTextfieldLabelOutside]="true"
                   [min]="1"
                   [max]="20"
+                  tuiTextfieldSize="m"
                 >
                   <input tuiTextfield />
                 </tui-input-count>
@@ -362,6 +367,7 @@
               <button
                 type="button"
                 tuiButton
+                size="m"
                 (click)="
                   observer.complete();
                   closeDialog(
@@ -373,7 +379,7 @@
                 Ok
               </button>
             </div>
-          </article>
+          </div>
         </ng-template>
       </ng-container>
     </div>
@@ -432,7 +438,7 @@
           </tui-checkbox-labeled>
         </div>
         <ng-template #template let-observer>
-          <article>
+          <div class="p-5">
             <h1 class="text-lg font-medium">
               {{ item.get('data').value.short_name }} ({{
                 item.get('data').value.site_name
@@ -440,13 +446,14 @@
             </h1>
             <p class="mb-4 text-sm">{{ item.get('data').value.property }}</p>
             <div class="flex items-end space-x-2">
-              <label class="block flex-grow">
+              <label class="counter block flex-grow">
                 <span class="mb-1 inline-block text-xs">Сколько штук?</span>
                 <tui-input-count
                   [formControl]="getControl(item.get('count'))"
                   [tuiTextfieldLabelOutside]="true"
                   [min]="1"
                   [max]="20"
+                  tuiTextfieldSize="m"
                 >
                   <input tuiTextfield />
                 </tui-input-count>
@@ -454,6 +461,7 @@
               <button
                 type="button"
                 tuiButton
+                size="m"
                 (click)="
                   observer.complete();
                   closeDialog(
@@ -465,7 +473,7 @@
                 Ok
               </button>
             </div>
-          </article>
+          </div>
         </ng-template>
       </ng-container>
     </div>

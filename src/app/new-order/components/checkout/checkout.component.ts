@@ -9,6 +9,7 @@ import {FormBuilder} from '@angular/forms'
 import {NavigationEnd, Router, RouterEvent} from '@angular/router'
 import {Store} from '@ngrx/store'
 import {TuiScrollService} from '@taiga-ui/cdk'
+import {tuiLoaderOptionsProvider} from '@taiga-ui/core'
 import {filter, Subscription, switchMap} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {setCurrentStepAction} from './store/actions/set-current-step.action'
@@ -19,6 +20,11 @@ class NavigationEvent {}
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.css'],
+  providers: [
+    tuiLoaderOptionsProvider({
+      size: 'm',
+    }),
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CheckoutComponent implements OnInit, OnDestroy {
