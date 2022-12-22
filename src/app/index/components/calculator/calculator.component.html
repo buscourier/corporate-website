@@ -22,26 +22,24 @@
       </tui-loader>
     </label>
   </ng-container>
-  <ng-container *tuiLet="isEndCitiesLoading$ | async as isEndCitiesLoading">
-    <label class="mb-7 block" *tuiLet="endCities$ | async as endCites">
-      <span class="mb-1 inline-block text-xs text-black opacity-30"
-        >Куда отправляем?</span
+  <label class="mb-7 block" *tuiLet="endCities$ | async as endCites">
+    <span class="mb-1 inline-block text-xs text-black opacity-30"
+      >Куда отправляем?</span
+    >
+    <tui-loader [showLoader]="isEndCitiesLoading$ | async">
+      <tui-select
+        tuiTextfieldSize="m"
+        formControlName="endCity"
+        [tuiTextfieldLabelOutside]="true"
       >
-      <tui-loader [showLoader]="isEndCitiesLoading">
-        <tui-select
-          tuiTextfieldSize="m"
-          formControlName="endCity"
-          [tuiTextfieldLabelOutside]="true"
-        >
-          <span [class.opacity-0]="isEndCitiesLoading">Выберите город</span>
-          <tui-data-list-wrapper
-            *tuiDataList
-            [items]="endCites"
-          ></tui-data-list-wrapper>
-        </tui-select>
-      </tui-loader>
-    </label>
-  </ng-container>
+        Выберите город
+        <tui-data-list-wrapper
+          *tuiDataList
+          [items]="endCites"
+        ></tui-data-list-wrapper>
+      </tui-select>
+    </tui-loader>
+  </label>
   <button
     type="submit"
     tuiButton

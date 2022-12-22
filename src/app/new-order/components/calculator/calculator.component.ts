@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
 import {Router} from '@angular/router'
 import {Store} from '@ngrx/store'
+import {tuiLoaderOptionsProvider} from '@taiga-ui/core'
 import {Observable} from 'rxjs'
 import {isPhoneScreenSelector} from '../../../store/global/selectors'
 import {endPointSelector} from '../../shared/components/end-point/store/selectors'
@@ -13,6 +14,11 @@ import {StartPointStateInterface} from '../../shared/components/start-point/type
   selector: 'app-calculator',
   templateUrl: './calculator.component.html',
   styleUrls: ['./calculator.component.css'],
+  providers: [
+    tuiLoaderOptionsProvider({
+      size: 'm',
+    }),
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalculatorComponent implements OnInit {

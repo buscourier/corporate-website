@@ -1,18 +1,17 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  OnInit,
+  Self,
+} from '@angular/core'
 import {FormBuilder, Validators} from '@angular/forms'
 import {Router} from '@angular/router'
 import {Store} from '@ngrx/store'
+import {TuiDestroyService} from '@taiga-ui/cdk'
 import {tuiLoaderOptionsProvider} from '@taiga-ui/core'
 import {tuiItemsHandlersProvider} from '@taiga-ui/kit'
-import {
-  delay,
-  filter,
-  Observable,
-  of,
-  Subscription,
-  switchMap,
-  take,
-} from 'rxjs'
+import {delay, filter, Observable, of, switchMap, take, takeUntil} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {changeCityAction as changeEndCityAction} from '../../../new-order/shared/components/end-point/store/actions/change-city.action'
 import {changeCityAction as changeStartCityAction} from '../../../new-order/shared/components/start-point/store/actions/change-city.action'
@@ -38,6 +37,7 @@ import {
     tuiLoaderOptionsProvider({
       size: 'm',
     }),
+    TuiDestroyService,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -47,10 +47,9 @@ export class CalculatorComponent implements OnInit {
   startCities$: Observable<StartCityInterface[]>
   endCities$: Observable<EndCityInterface[]>
   backendErrors$: Observable<null | string>
-  valueChangesSub: Subscription
 
   form = this.fb.group({
-    startCity: [null, Validators.required],
+    startCity: [{value: null, disabled: true}, Validators.required],
     endCity: [{value: null, disabled: true}, Validators.required],
   })
 
@@ -59,7 +58,10 @@ export class CalculatorComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private store: Store,
-    private router: Router
+    private router: Router,
+    @Self()
+    @Inject(TuiDestroyService)
+    private destroy$: TuiDestroyService
   ) {}
 
   ngOnInit(): void {
@@ -67,25 +69,27 @@ export class CalculatorComponent implements OnInit {
     this.fetchData()
   }
 
-  ngOnDestroy(): void {
-    this.valueChangesSub.unsubscribe()
-  }
-
   initializeValues(): void {
     this.isStartCitiesLoading$ = this.store.select(isStartCitiesLoadingSelector)
     this.isEndCitiesLoading$ = this.store.select(isEndCitiesLoadingSelector)
-    this.startCities$ = this.store.select(startCitiesSelector)
+    this.startCities$ = this.store.select(startCitiesSelector).pipe(
+      filter(Boolean),
+      tap(() => {
+        this.form.get('startCity').enable({emitEvent: false})
+      })
+    )
     this.endCities$ = this.store.select(endCitiesSelector)
     this.backendErrors$ = this.store.select(backendErrorsSelector)
 
-    this.valueChangesSub = this.form
+    this.form
       .get('startCity')
       .valueChanges.pipe(
         tap((city: StartCityInterface) => {
           this.form.get('endCity').patchValue('')
           this.form.get('endCity').enable()
           this.store.dispatch(getEndCitiesAction({cityId: city.id}))
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe()
   }
