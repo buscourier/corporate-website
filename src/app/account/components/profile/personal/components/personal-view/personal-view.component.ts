@@ -12,7 +12,10 @@ import {filter, map, Observable, takeUntil} from 'rxjs'
 import {currentUserSelector} from '../../../../../../auth/store/selectors'
 import {CurrentUserInterface} from '../../../../../../shared/types/current-user.interface'
 import {getPersonalProfileAction} from './store/actions/get-personal-profile.action'
-import {isLoadingSelector, personalProfileSelector} from './store/selectors'
+import {
+  isProfileLoadingSelector,
+  personalProfileSelector,
+} from './store/selectors'
 
 @Component({
   selector: 'app-personal-view',
@@ -29,7 +32,7 @@ import {isLoadingSelector, personalProfileSelector} from './store/selectors'
   ],
 })
 export class PersonalViewComponent implements OnInit {
-  isLoading$: Observable<boolean>
+  isProfileLoading$: Observable<boolean>
   backendErrors$: Observable<null | string>
   profile$: Observable<null | any>
 
@@ -46,7 +49,7 @@ export class PersonalViewComponent implements OnInit {
   }
 
   initializeValues(): void {
-    this.isLoading$ = this.store.select(isLoadingSelector)
+    this.isProfileLoading$ = this.store.select(isProfileLoadingSelector)
     this.profile$ = this.store
       .select(personalProfileSelector)
       .pipe(filter(Boolean))

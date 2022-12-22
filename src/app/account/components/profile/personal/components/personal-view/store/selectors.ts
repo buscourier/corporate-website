@@ -5,17 +5,17 @@ import {PERSONAL_PROFILE_FEATURE} from './state'
 export const PersonalProfileFeatureSelector =
   createFeatureSelector<PersonalProfileStateInterface>(PERSONAL_PROFILE_FEATURE)
 
-export const isLoadingSelector = createSelector(
+export const isProfileLoadingSelector = createSelector(
   PersonalProfileFeatureSelector,
-  (profileState: PersonalProfileStateInterface) => profileState.isLoading
+  (state: PersonalProfileStateInterface) => state.isLoading
 )
 
 export const personalProfileSelector = createSelector(
   PersonalProfileFeatureSelector,
-  (profileState: PersonalProfileStateInterface) => profileState.data
+  (state: PersonalProfileStateInterface) => state.data
 )
 
 export const backendErrorsSelector = createSelector(
   PersonalProfileFeatureSelector,
-  (profileState: PersonalProfileStateInterface) => profileState.backendErrors
+  (state: PersonalProfileStateInterface) => state.backendErrors
 )
