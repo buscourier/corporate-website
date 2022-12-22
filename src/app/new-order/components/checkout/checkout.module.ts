@@ -18,8 +18,6 @@ import {SendOrderEffect} from './store/effects/send-order.effect'
 import {reducer} from './store/reducer'
 import {CHECKOUT_FEATURE} from './store/state'
 
-//TODO: Think need StepOne, StepTwo, StepThree, StepFour modules or not
-
 @NgModule({
   declarations: [CheckoutComponent],
   imports: [

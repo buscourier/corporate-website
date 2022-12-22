@@ -6,7 +6,10 @@
     Для получения тарифов, выберите регион и город, из которого планируется
     отправление.
   </p>
-  <div class="grid grid-cols-1 gap-16 xl:grid-cols-[1fr_370px] xl:gap-7.5">
+  <div
+    #navbar
+    class="grid grid-cols-1 gap-16 xl:grid-cols-[1fr_370px] xl:gap-7.5"
+  >
     <div *tuiLet="isCitiesLoading$ | async as isCitiesLoading" class="w-full">
       <div
         *tuiLet="filteredCities$ | async as cities"
@@ -53,7 +56,7 @@
         >
           <tui-loader
             [showLoader]="isZonesLoading || isZoneTariffsLoading"
-            [class.h-24]="isZonesLoading || isZoneTariffsLoading"
+            [class.h-40]="isZonesLoading || isZoneTariffsLoading"
           >
             <div
               [class.opacity-0]="isZonesLoading || isZoneTariffsLoading"

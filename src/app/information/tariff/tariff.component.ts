@@ -1,11 +1,19 @@
-import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Inject,
+  OnInit,
+  Self,
+  ViewChild,
+} from '@angular/core'
 import {FormControl} from '@angular/forms'
 import {DomSanitizer} from '@angular/platform-browser'
 import {Store} from '@ngrx/store'
-import {TUI_IS_MOBILE} from '@taiga-ui/cdk'
+import {TUI_IS_MOBILE, TuiDestroyService, TuiScrollService} from '@taiga-ui/cdk'
 import {TuiPdfViewerOptions, TuiPdfViewerService} from '@taiga-ui/kit'
 import {PolymorpheusContent} from '@tinkoff/ng-polymorpheus'
-import {combineLatest, filter, map, Observable} from 'rxjs'
+import {combineLatest, filter, map, Observable, take, takeUntil} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {StartCityInterface} from 'src/app/shared/types/start-city.interface'
 import {getCitiesAction} from './store/actions/get-cities.action'
@@ -45,9 +53,12 @@ const ParcelWeight = {
   selector: 'app-tariff',
   templateUrl: './tariff.component.html',
   styleUrls: ['./tariff.component.css'],
+  providers: [TuiDestroyService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TariffComponent implements OnInit {
+  @ViewChild('navbar', {read: ElementRef}) navbar: ElementRef
+
   isCitiesLoading$: Observable<boolean>
   isZonesLoading$: Observable<boolean>
   isZoneTariffsLoading$: Observable<boolean>
@@ -59,6 +70,8 @@ export class TariffComponent implements OnInit {
   otherZoneTariffs$: Observable<any>
   filteredCities$: Observable<StartCityInterface[]>
   backendErrors: Observable<string>
+
+  scrollDuration = 300
 
   regions = [
     {id: 1, name: 'Приморский край'},
@@ -73,7 +86,11 @@ export class TariffComponent implements OnInit {
     @Inject(DomSanitizer) private readonly sanitizer: DomSanitizer,
     @Inject(TuiPdfViewerService)
     private readonly pdfService: TuiPdfViewerService,
-    @Inject(TUI_IS_MOBILE) private readonly isMobile: boolean
+    @Inject(TUI_IS_MOBILE) private readonly isMobile: boolean,
+    @Inject(TuiScrollService) private readonly scrollService: TuiScrollService,
+    @Self()
+    @Inject(TuiDestroyService)
+    private destroy$: TuiDestroyService
   ) {}
 
   ngOnInit(): void {
@@ -198,11 +215,13 @@ export class TariffComponent implements OnInit {
       .pipe(
         filter(Boolean),
         tap((city: StartCityInterface) => {
+          this.scroll()
           //TODO maybe switch map?
           this.store.dispatch(getZonesAction({id: city.site_id}))
           this.store.dispatch(getZoneTariffsAction({id: city.site_id}))
         })
       )
+      .pipe(takeUntil(this.destroy$))
       .subscribe()
   }
 
@@ -253,6 +272,21 @@ export class TariffComponent implements OnInit {
           actions,
         }
       )
+      .pipe(take(1))
+      .subscribe()
+  }
+
+  scroll() {
+    const scrollTop = this.navbar.nativeElement.getBoundingClientRect().top
+
+    return this.scrollService
+      .scroll$(
+        document.documentElement,
+        scrollTop + window.scrollY,
+        0,
+        this.scrollDuration
+      )
+      .pipe(takeUntil(this.destroy$))
       .subscribe()
   }
 }
