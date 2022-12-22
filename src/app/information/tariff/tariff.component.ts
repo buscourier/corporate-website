@@ -33,11 +33,12 @@ const ZoneId = {
 }
 
 const ParcelWeight = {
-  '0 - 20': 0,
-  '20 - 40': 1,
-  '40 - 60': 2,
-  '60 - 80': 3,
-  '80 - 100': 4,
+  '0 - 10': 0,
+  '10 - 20': 1,
+  '20 - 40': 2,
+  '40 - 60': 3,
+  '60 - 80': 4,
+  '80 - 100': 5,
 }
 
 @Component({
@@ -132,7 +133,11 @@ export class TariffComponent implements OnInit {
       map((zones: any) => {
         return zones.map(({name, data}) => {
           const reduced = data.reduce((acc, {type, size, weight, price}) => {
-            acc[size] ??= {size: size, data: [null, null, null, null, null]}
+            acc[size] ??= {
+              size: size,
+              data: [null, null, null, null, null, null],
+            }
+
             acc[size].data.splice(ParcelWeight[weight], 1, {
               type,
               size,

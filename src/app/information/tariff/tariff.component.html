@@ -80,7 +80,8 @@
                           <th></th>
                           <th>Габариты</th>
                           <th>Документы</th>
-                          <th>До 20 кг</th>
+                          <th>0 - 10 кг</th>
+                          <th>10 - 20 кг</th>
                           <th>20 - 40 кг</th>
                           <th>40 - 60 кг</th>
                         </tr>
@@ -114,7 +115,7 @@
                                       let i = index
                                     "
                                   >
-                                    <td *ngIf="i < 3">
+                                    <td *ngIf="i < 4">
                                       {{
                                         data
                                           ? (data.price
