@@ -17,9 +17,7 @@ export class PackagingComponent {
     @Inject(TUI_IS_MOBILE) private readonly isMobile: boolean
   ) {}
 
-  showPdf(): void {
-    const link = `https://busbox.guru/uploads/pages/Расписание_отправлений_Владивосток.pdf`
-
+  showPdf({label, link}, actions): void {
     this.pdfService
       .open(
         this.sanitizer.bypassSecurityTrustResourceUrl(
@@ -28,7 +26,8 @@ export class PackagingComponent {
             : link
         ),
         {
-          label: `Правила приемки и отправки грузов`,
+          label,
+          actions,
         }
       )
       .subscribe()

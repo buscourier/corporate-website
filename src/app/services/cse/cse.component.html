@@ -3,30 +3,34 @@
     <div>
       <h1 class="mb-6 max-w-2xl font-heading text-2xl font-bold lg:text-3xl">
         Экспресс-доставка грузов<br class="hidden sm:block" />
-        и документов по всей России<br class="hidden sm:block" />
-        из Владивостока от 2 до 4 дней!
+        и документов по всей России<br class="hidden sm:block lg:hidden" />
+        из Владивостока от&nbsp;2&nbsp;до&nbsp;4&nbsp;дней!
       </h1>
       <app-map></app-map>
     </div>
-    <div>
-      <article class="rounded-md bg-yellow pt-11 pr-10 pb-10 pl-9">
-        <h3 class="mb-5 font-heading text-xl font-normal">
-          Рассчитайте стоимость
-        </h3>
-        <button
-          type="button"
-          tuiButton
-          appearance="accent"
-          size="m"
-          class="w-full max-w-[270px]"
-          (click)="openCalculator()"
+    <aside class="relative">
+      <div class="lg:absolute lg:h-[1000px]">
+        <div
+          class="rounded-md bg-yellow pt-11 pr-10 pb-10 pl-9 lg:sticky lg:top-10"
         >
-          Перейти в калькулятор
-        </button>
-      </article>
-    </div>
+          <h3 class="mb-5 font-heading text-xl font-normal">
+            Рассчитайте стоимость
+          </h3>
+          <button
+            type="button"
+            tuiButton
+            appearance="accent"
+            size="m"
+            class="w-full max-w-[270px]"
+            (click)="openCalculator()"
+          >
+            Перейти в калькулятор
+          </button>
+        </div>
+      </div>
+    </aside>
   </div>
-  <div class="max-w-[770px]">
+  <div class="max-w-2xl xl:max-w-[770px]">
     <h2 class="mb-10 font-heading text-lg font-medium">
       Мы являемся официальным представителем федеральной компании «Курьер Сервис
       Экспресс».
