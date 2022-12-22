@@ -1,12 +1,15 @@
 <button
   type="button"
-  class="absolute -top-5 -right-2 text-gray-800"
+  class="absolute top-6 right-6 text-gray-500 transition-colors hover:text-gray-700 lg:top-6 lg:right-6"
   (click)="close()"
 >
   <tui-svg src="icons::close-2" class="!h-[22px] !w-[22px]"></tui-svg>
 </button>
 
-<h3 class="mb-5 mt-2.5 text-lg font-medium">Населенные пункты получения</h3>
+<h3 class="mb-5 mt-2.5 text-lg font-medium md:text-xl">
+  Населенные пункты<br class="sm:hidden" />
+  {{ type === 'start' ? 'отправления' : 'получения' }}
+</h3>
 <form [formGroup]="form">
   <label class="mb-5 block">
     <span class="mb-1 inline-block text-xs text-gray-500"
@@ -26,8 +29,11 @@
 
 <ng-container *tuiLet="isLoading$ | async as isLoading">
   <ng-container *tuiLet="searchResult$ | async as searchResult">
-    <tui-loader [showLoader]="isLoading">
-      <tui-scrollbar *ngIf="searchResult && !isLoading" class="h-[330px]">
+    <tui-loader [showLoader]="isLoading" class="h-[330px]">
+      <tui-scrollbar
+        *ngIf="searchResult && !isLoading"
+        class="scroll-yellow h-full"
+      >
         <div class="grid gap-2.5 sm:grid-cols-2">
           <ng-container *ngFor="let col of searchResult">
             <div *ngIf="col.length">

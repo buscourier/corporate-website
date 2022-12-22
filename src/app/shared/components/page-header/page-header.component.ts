@@ -4,6 +4,7 @@ import {
   ElementRef,
   HostListener,
   Inject,
+  Injector,
   Input,
   OnInit,
   ViewChild,
@@ -12,11 +13,13 @@ import {Store} from '@ngrx/store'
 import {tuiPure} from '@taiga-ui/cdk'
 import {
   TUI_SVG_SRC_PROCESSOR,
+  TuiDialogService,
   TuiDurationOptions,
   tuiHeightCollapse,
 } from '@taiga-ui/core'
+import {PolymorpheusComponent} from '@tinkoff/ng-polymorpheus'
 import {filter, Observable, take} from 'rxjs'
-import {LoginService} from '../../../auth/components/login/services/login.service'
+import {LoginComponent} from '../../../auth/components/login/login.component'
 import {logoutAction} from '../../../auth/store/actions/sync.action'
 import {
   currentUserSelector,
@@ -77,7 +80,8 @@ export class PageHeaderComponent implements OnInit {
 
   constructor(
     private store: Store,
-    @Inject(LoginService) private readonly loginService: LoginService,
+    @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
+    @Inject(Injector) private readonly injector: Injector,
     private persistenceService: PersistenceService
   ) {}
 
@@ -103,7 +107,14 @@ export class PageHeaderComponent implements OnInit {
   }
 
   login() {
-    this.loginService.open(null).pipe(take(1)).subscribe()
+    this.dialogService
+      .open<any>(new PolymorpheusComponent(LoginComponent, this.injector), {
+        dismissible: true,
+        closeable: false,
+        size: 'auto',
+      })
+      .pipe(take(1))
+      .subscribe()
   }
 
   logout() {

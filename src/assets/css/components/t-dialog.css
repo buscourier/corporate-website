@@ -3,3 +3,16 @@
   justify-content: center;
   align-items: center !important;
 }
+
+tui-dialog {
+  @apply md:!rounded-md;
+}
+
+tui-dialog > .t-content {
+  @apply !p-0 md:!rounded-md;
+}
+
+/*tui-dialog .t-content {*/
+/*  padding: 0 !important;*/
+/*  border-radius: 0.625rem !important;*/
+/*}*/

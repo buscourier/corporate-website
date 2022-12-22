@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core'
 import {FormBuilder} from '@angular/forms'
 import {Store} from '@ngrx/store'
-import {TuiDialogContext} from '@taiga-ui/core'
+import {TuiDialogContext, tuiLoaderOptionsProvider} from '@taiga-ui/core'
 import {POLYMORPHEUS_CONTEXT} from '@tinkoff/ng-polymorpheus'
 import {combineLatest, filter, map, mergeMap, Observable, startWith} from 'rxjs'
 import {EndCityInterface} from '../../types/end-city.interface'
@@ -21,6 +21,11 @@ import {CityNameType} from './types/city-name.type'
   selector: 'app-cities',
   templateUrl: './cities.component.html',
   styleUrls: ['./cities.component.css'],
+  providers: [
+    tuiLoaderOptionsProvider({
+      size: 'l',
+    }),
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CitiesComponent implements OnInit {

@@ -1,29 +1,16 @@
-<article class="relative min-w-[370px] rounded-sm bg-yellow p-8">
-  <div class="absolute top-0 right-0 pt-2 pr-2">
+<article class="relative min-w-[370px] bg-yellow p-8 md:rounded-md">
+  <div class="absolute top-1.5 right-1.5 pt-2 pr-2">
     <button
       type="button"
-      class="rounded-md bg-transparent text-gray-600 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+      class="rounded-md bg-transparent text-gray-600 hover:text-gray-900 focus:outline-none"
       (click)="onClose()"
     >
-      <span class="sr-only">Clos</span>
-      <svg
-        class="h-8 w-8"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke-width="1.5"
-        stroke="currentColor"
-        aria-hidden="true"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M6 18L18 6M6 6l12 12"
-        />
-      </svg>
+      <tui-svg src="icons::close-2" class="!h-[22px] !w-[22px]"></tui-svg>
     </button>
   </div>
-  <h1 class="text-bold mb-4 text-center font-heading text-2xl">Авторизация</h1>
+  <h1 class="text-bold mb-5 mt-5 text-center font-heading text-2xl">
+    Авторизация
+  </h1>
   <div>
     <app-backend-error-messages
       *ngIf="backendErrors$ | async"

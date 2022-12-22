@@ -21,7 +21,12 @@ import {isPageScrollBlockedSelector} from './store/global/selectors'
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [TuiDestroyService],
+  providers: [
+    TuiDestroyService,
+    // tuiLoaderOptionsProvider({
+    //   size: 'l',
+    // }),
+  ],
 })
 export class AppComponent implements OnInit {
   title = 'Баскурьер'

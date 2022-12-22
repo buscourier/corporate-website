@@ -7,6 +7,7 @@ import {
   TuiButtonModule,
   TuiErrorModule,
   TuiLabelModule,
+  TuiSvgModule,
   TuiTextfieldControllerModule,
 } from '@taiga-ui/core'
 import {
@@ -16,7 +17,6 @@ import {
 } from '@taiga-ui/kit'
 import {BackendErrorMessagesModule} from '../../../shared/components/backend-error-messages/backend-error-messages.module'
 import {LoginComponent} from './login.component'
-import {LOGIN_PROVIDER} from './services/login.service'
 
 @NgModule({
   declarations: [LoginComponent],
@@ -33,8 +33,9 @@ import {LOGIN_PROVIDER} from './services/login.service'
     BackendErrorMessagesModule,
     RouterModule,
     TuiFieldErrorPipeModule,
+    TuiSvgModule,
   ],
   exports: [LoginComponent],
-  providers: [LOGIN_PROVIDER],
+  // providers: [LOGIN_PROVIDER],
 })
 export class LoginModule {}
