@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
 import {Router} from '@angular/router'
 import {Store} from '@ngrx/store'
+import {tuiLoaderOptionsProvider} from '@taiga-ui/core'
 import {filter, map, Observable} from 'rxjs'
 import {currentUserSelector} from '../auth/store/selectors'
 import {CurrentUserInterface} from '../shared/types/current-user.interface'
@@ -16,6 +17,11 @@ import {BalanceInterface} from './types/balance.interface'
   selector: 'app-account',
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.css'],
+  providers: [
+    tuiLoaderOptionsProvider({
+      size: 'm',
+    }),
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AccountComponent implements OnInit {

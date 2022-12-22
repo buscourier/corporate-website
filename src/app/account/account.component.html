@@ -3,7 +3,7 @@
     Личный кабинет
   </h1>
   <div class="flex flex-col md:flex-row md:space-x-10 lg:space-x-13">
-    <div class="order-2 flex-grow md:order-1">
+    <main class="order-2 flex-grow md:order-1">
       <!-- item-1-->
       <div
         [routerLink]="['report']"
@@ -42,52 +42,38 @@
           ></tui-svg>
         </div>
       </div>
-      <!-- item-3-->
-      <!--      <div-->
-      <!--        [routerLink]="['report']"-->
-      <!--        class="mb-2 flex border-y border-gray-200 py-5 px-4 hover:cursor-pointer hover:border-yellow sm:space-x-13 sm:py-9 sm:px-6 md:space-x-0 md:rounded-sm md:border-x md:px-8 lg:space-x-13 lg:pl-13 lg:pr-10"-->
-      <!--      >-->
-      <!--        <div class="hidden sm:block md:hidden lg:block">-->
-      <!--          <tui-svg src="icons::report" class="!h-[53px] !w-[48px]"></tui-svg>-->
-      <!--        </div>-->
-      <!--        <div class="basis-full">-->
-      <!--          <h2 class="mb-2 text-lg font-bold">Сформировать отчет</h2>-->
-      <!--          <p>Удобное формирование отчета с применением фильтров.</p>-->
-      <!--        </div>-->
-      <!--        <div class="hidden items-center sm:flex">-->
-      <!--          <tui-svg-->
-      <!--            src="icons::caret-right"-->
-      <!--            class="!h-[26px] !w-[13px]"-->
-      <!--          ></tui-svg>-->
-      <!--        </div>-->
-      <!--      </div>-->
-    </div>
+    </main>
     <!-- aside-->
-    <div
+    <aside
+      *tuiLet="isBalanceLoading$ | async as isBalanceLoading"
       class="order-1 mb-8 flex flex-shrink-0 flex-col items-start px-4 md:mb-0 md:px-0"
     >
-      <tui-loader [showLoader]="false">
-        <ng-container *tuiLet="balance$ | async as balance">
-          <div *ngIf="balance" class="mb-7 flex h-20 flex-col">
-            <span class="text-sm">Ваш баланс:</span>
-            <div class="flex items-center justify-between">
-              <b class="text-3xl"
-                >{{ balance.total }} {{ 'RUB' | tuiCurrency }}</b
+      <ng-container *tuiLet="balance$ | async as balance">
+        <div class="mb-7 flex w-full flex-col">
+          <span class="text-sm">Ваш баланс:</span>
+          <div class="flex max-w-[270px] items-center justify-between">
+            <tui-loader [showLoader]="isBalanceLoading" class="w-full">
+              <b
+                class="block h-13 w-full text-3xl"
+                [class.opacity-0]="isBalanceLoading"
+                >{{ balance && balance.total }} {{ 'RUB' | tuiCurrency }}</b
               >
-              <button
-                tuiIconButton
-                type="button"
-                appearance="icon"
-                icon="icons::refresh"
-                [tuiHint]="tooltip"
-                tuiHintAppearance="onDark"
-                class="ml-5"
-                [class.animate-spin]="isBalanceLoading$ | async"
-                (click)="loadBalance()"
-              ></button>
-            </div>
+            </tui-loader>
+            <button
+              tuiIconButton
+              type="button"
+              appearance="icon"
+              icon="icons::refresh"
+              [tuiHint]="!isBalanceLoading && tooltip"
+              tuiHintAppearance="onDark"
+              class="ml-5"
+              [class.animate-spin]="isBalanceLoading"
+              (click)="loadBalance()"
+            ></button>
           </div>
-          <ng-template #tooltip>
+        </div>
+        <ng-template #tooltip>
+          <ng-container *ngIf="balance">
             <div class="text-xs">За период:</div>
             <b class="text-xs">{{ balance.period }}</b>
             <br />
@@ -103,9 +89,9 @@
             <b class="text-xs"
               >{{ balance.serviceSum }} {{ 'RUB' | tuiCurrency }}</b
             >
-          </ng-template>
-        </ng-container>
-      </tui-loader>
+          </ng-container>
+        </ng-template>
+      </ng-container>
       <button
         tuiButton
         type="button"
@@ -119,6 +105,6 @@
         <span> Выйти из личного кабинета </span>
         <tui-svg src="icons::logout" class="!h-[27px] !w-[27px]"></tui-svg>
       </a>
-    </div>
+    </aside>
   </div>
 </div>
