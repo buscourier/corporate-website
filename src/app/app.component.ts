@@ -9,6 +9,7 @@ import {
 } from '@angular/router'
 import {Store} from '@ngrx/store'
 import {TuiDestroyService} from '@taiga-ui/cdk'
+import {tuiLoaderOptionsProvider} from '@taiga-ui/core'
 import {Observable, take, takeUntil} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {LoginService} from './auth/components/login/services/login.service'
@@ -23,9 +24,9 @@ import {isPageScrollBlockedSelector} from './store/global/selectors'
   styleUrls: ['./app.component.css'],
   providers: [
     TuiDestroyService,
-    // tuiLoaderOptionsProvider({
-    //   size: 'l',
-    // }),
+    tuiLoaderOptionsProvider({
+      size: 'l',
+    }),
   ],
 })
 export class AppComponent implements OnInit {

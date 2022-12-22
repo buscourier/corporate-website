@@ -1,18 +1,26 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
+import {FormBuilder, Validators} from '@angular/forms'
+import {Router} from '@angular/router'
+import {Store} from '@ngrx/store'
+import {tuiLoaderOptionsProvider} from '@taiga-ui/core'
+import {tuiItemsHandlersProvider} from '@taiga-ui/kit'
 import {
   delay,
   filter,
-  map,
   Observable,
   of,
   Subscription,
   switchMap,
   take,
 } from 'rxjs'
-import {StartCityInterface} from '../../../shared/types/start-city.interface'
+import {tap} from 'rxjs/operators'
+import {changeCityAction as changeEndCityAction} from '../../../new-order/shared/components/end-point/store/actions/change-city.action'
+import {changeCityAction as changeStartCityAction} from '../../../new-order/shared/components/start-point/store/actions/change-city.action'
+import {STRINGIFY_CITIES} from '../../../shared/handlers/string-handlers'
 import {EndCityInterface} from '../../../shared/types/end-city.interface'
-import {FormBuilder, Validators} from '@angular/forms'
-import {Store} from '@ngrx/store'
+import {StartCityInterface} from '../../../shared/types/start-city.interface'
+import {getEndCitiesAction} from './store/actions/get-end-cities.action'
+import {getStartCitiesAction} from './store/actions/get-start-cities.action'
 import {
   backendErrorsSelector,
   endCitiesSelector,
@@ -20,20 +28,17 @@ import {
   isStartCitiesLoadingSelector,
   startCitiesSelector,
 } from './store/selectors'
-import {tap} from 'rxjs/operators'
-import {tuiItemsHandlersProvider} from '@taiga-ui/kit'
-import {STRINGIFY_CITIES} from '../../../shared/handlers/string-handlers'
-import {getStartCitiesAction} from './store/actions/get-start-cities.action'
-import {getEndCitiesAction} from './store/actions/get-end-cities.action'
-import {changeCityAction as changeStartCityAction} from '../../../new-order/shared/components/start-point/store/actions/change-city.action'
-import {changeCityAction as changeEndCityAction} from '../../../new-order/shared/components/end-point/store/actions/change-city.action'
-import {Router} from '@angular/router'
 
 @Component({
   selector: 'app-calculator',
   templateUrl: './calculator.component.html',
   styleUrls: ['./calculator.component.css'],
-  providers: [tuiItemsHandlersProvider({stringify: STRINGIFY_CITIES})],
+  providers: [
+    tuiItemsHandlersProvider({stringify: STRINGIFY_CITIES}),
+    tuiLoaderOptionsProvider({
+      size: 'm',
+    }),
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalculatorComponent implements OnInit {
