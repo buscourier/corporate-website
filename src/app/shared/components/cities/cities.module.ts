@@ -3,7 +3,7 @@ import {NgModule} from '@angular/core'
 import {ReactiveFormsModule} from '@angular/forms'
 import {EffectsModule} from '@ngrx/effects'
 import {StoreModule} from '@ngrx/store'
-import {TuiLetModule} from '@taiga-ui/cdk'
+import {TuiAutoFocusModule, TuiLetModule} from '@taiga-ui/cdk'
 import {
   TuiLoaderModule,
   TuiScrollbarModule,
@@ -31,6 +31,7 @@ import {CITIES_FEATURE} from './store/state'
     TuiInputModule,
     TuiTextfieldControllerModule,
     TuiSvgModule,
+    TuiAutoFocusModule,
   ],
 })
 export class CitiesModule {}
