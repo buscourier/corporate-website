@@ -17,7 +17,7 @@ import {PersonalProfileInterface} from '../../types/personal-profile.interface'
 import {getPersonalProfileAction} from './store/actions/get-personal-profile.action'
 import {updatePersonalProfileAction} from './store/actions/update-personal-profile.action'
 import {
-  isLoadingSelector,
+  isProfileLoadingSelector,
   isSubmittingSelector,
   personalProfileSelector,
 } from './store/selectors'
@@ -38,7 +38,7 @@ import {
   ],
 })
 export class PersonalEditComponent implements OnInit {
-  isLoading$: Observable<boolean>
+  isProfileLoading$: Observable<boolean>
   backendErrors$: Observable<null | string>
   isSubmitting$: Observable<boolean>
   profile: PersonalProfileInterface
@@ -81,7 +81,7 @@ export class PersonalEditComponent implements OnInit {
   }
 
   initializeValues(): void {
-    this.isLoading$ = this.store.select(isLoadingSelector)
+    this.isProfileLoading$ = this.store.select(isProfileLoadingSelector)
     this.isSubmitting$ = this.store.select(isSubmittingSelector)
     this.store
       .select(personalProfileSelector)

@@ -9,6 +9,7 @@
   Персональные данные
 </h1>
 <form
+  *tuiLet="isProfileLoading$ | async as isProfileLoading"
   [formGroup]="form"
   (ngSubmit)="onSubmit()"
   class="grid grid-cols-2 gap-x-8 gap-y-4 md:max-w-[570px]"
@@ -16,14 +17,14 @@
   <label class="col-span-2 block sm:col-span-1">
     <span
       class="mb-1 inline-block text-xs"
-      [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'"
+      [ngClass]="isProfileLoading ? 'opacity-0' : 'opacity-100'"
       >ФИО</span
     >
     <tui-input
       tuiTextfieldSize="m"
       formControlName="email"
       [tuiTextfieldLabelOutside]="true"
-      [class.tui-skeleton]="isLoading$ | async"
+      [class.tui-skeleton]="isProfileLoading"
     >
       Нет данных
       <input tuiTextfield type="text" />
@@ -36,14 +37,14 @@
   <label class="col-span-2 block sm:col-span-1">
     <span
       class="mb-1 inline-block text-xs"
-      [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'"
+      [ngClass]="isProfileLoading ? 'opacity-0' : 'opacity-100'"
       >Email</span
     >
     <tui-input
       tuiTextfieldSize="m"
       formControlName="email"
       [tuiTextfieldLabelOutside]="true"
-      [class.tui-skeleton]="isLoading$ | async"
+      [class.tui-skeleton]="isProfileLoading"
     >
       Нет данных
       <input tuiTextfield type="text" />
@@ -56,14 +57,14 @@
   <label class="col-span-2 mb-3 block sm:col-span-1">
     <span
       class="mb-1 inline-block text-xs"
-      [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'"
+      [ngClass]="isProfileLoading ? 'opacity-0' : 'opacity-100'"
       >Телефон</span
     >
     <tui-input
       tuiTextfieldSize="m"
       formControlName="phone"
       [tuiTextfieldLabelOutside]="true"
-      [class.tui-skeleton]="isLoading$ | async"
+      [class.tui-skeleton]="isProfileLoading"
     >
       Нет данных
       <input tuiTextfield type="text" />
@@ -76,14 +77,14 @@
   <label class="col-span-2 mb-3 block sm:col-span-1">
     <span
       class="mb-1 inline-block text-xs"
-      [ngClass]="(isLoading$ | async) ? 'opacity-0' : 'opacity-100'"
+      [ngClass]="isProfileLoading ? 'opacity-0' : 'opacity-100'"
       >Паспорт</span
     >
     <tui-input
       tuiTextfieldSize="m"
       formControlName="passport"
       [tuiTextfieldLabelOutside]="true"
-      [class.tui-skeleton]="isLoading$ | async"
+      [class.tui-skeleton]="isProfileLoading"
     >
       Нет данных
       <input tuiTextfield type="text" />
@@ -96,7 +97,7 @@
   <button
     tuiButton
     type="submit"
-    [class.tui-skeleton]="isLoading$ | async"
+    [class.tui-skeleton]="isProfileLoading"
     size="m"
     [showLoader]="isSubmitting$ | async"
     class="col-span-2 mt-3 sm:col-span-1"

@@ -7,23 +7,22 @@ export const EditPersonalProfileFeatureSelector =
     EDIT_PERSONAL_PROFILE_FEATURE
   )
 
-export const isLoadingSelector = createSelector(
+export const isProfileLoadingSelector = createSelector(
   EditPersonalProfileFeatureSelector,
-  (profileState: EditPersonalProfileStateInterface) => profileState.isLoading
+  (state: EditPersonalProfileStateInterface) => state.isLoading
 )
 
 export const isSubmittingSelector = createSelector(
   EditPersonalProfileFeatureSelector,
-  (profileState: EditPersonalProfileStateInterface) => profileState.isSubmitting
+  (state: EditPersonalProfileStateInterface) => state.isSubmitting
 )
 
 export const personalProfileSelector = createSelector(
   EditPersonalProfileFeatureSelector,
-  (profileState: EditPersonalProfileStateInterface) => profileState.data
+  (state: EditPersonalProfileStateInterface) => state.data
 )
 
 export const backendErrorsSelector = createSelector(
   EditPersonalProfileFeatureSelector,
-  (profileState: EditPersonalProfileStateInterface) =>
-    profileState.backendErrors
+  (state: EditPersonalProfileStateInterface) => state.backendErrors
 )

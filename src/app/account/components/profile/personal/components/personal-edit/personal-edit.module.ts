@@ -4,6 +4,7 @@ import {ReactiveFormsModule} from '@angular/forms'
 import {RouterModule} from '@angular/router'
 import {EffectsModule} from '@ngrx/effects'
 import {StoreModule} from '@ngrx/store'
+import {TuiLetModule} from '@taiga-ui/cdk'
 import {
   TuiButtonModule,
   TuiErrorModule,
@@ -37,6 +38,7 @@ import {reducer} from './store/reducer'
       UpdatePersonalProfileEffect,
     ]),
     TuiFieldErrorPipeModule,
+    TuiLetModule,
   ],
   exports: [PersonalEditComponent],
 })
