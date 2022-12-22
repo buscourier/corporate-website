@@ -1,4 +1,4 @@
-import {Inject, Injectable} from '@angular/core'
+import {Inject, Injectable, Injector} from '@angular/core'
 import {
   ActivatedRouteSnapshot,
   CanActivate,
@@ -7,9 +7,12 @@ import {
   RouterStateSnapshot,
 } from '@angular/router'
 import {Store} from '@ngrx/store'
+import {TuiDialogService} from '@taiga-ui/core'
+import {PolymorpheusComponent} from '@tinkoff/ng-polymorpheus'
 import {Observable, take} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {isLoggedInSelector} from '../../auth/store/selectors'
+import {LoginComponent} from '../components/login/login.component'
 import {LoginService} from '../components/login/services/login.service'
 
 @Injectable()
@@ -19,6 +22,8 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   constructor(
     private store: Store,
     private router: Router,
+    @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
+    @Inject(Injector) private readonly injector: Injector,
     @Inject(LoginService) private readonly loginService: LoginService
   ) {}
 
@@ -32,7 +37,17 @@ export class AuthGuard implements CanActivate, CanActivateChild {
       // filter(Boolean),
       tap((isLoggedIn: boolean) => {
         if (!isLoggedIn) {
-          this.loginService.open(null).pipe(take(1)).subscribe()
+          this.dialogService
+            .open<any>(
+              new PolymorpheusComponent(LoginComponent, this.injector),
+              {
+                dismissible: true,
+                closeable: false,
+                size: 'auto',
+              }
+            )
+            .pipe(take(1))
+            .subscribe()
         }
       })
     )
