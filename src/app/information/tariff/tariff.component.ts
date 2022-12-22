@@ -1,9 +1,4 @@
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  Component,
-  OnInit,
-} from '@angular/core'
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
 import {FormControl} from '@angular/forms'
 import {Store} from '@ngrx/store'
 import {combineLatest, filter, map, Observable} from 'rxjs'
@@ -47,7 +42,7 @@ const ParcelWeight = {
   styleUrls: ['./tariff.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TariffComponent implements OnInit, AfterViewInit {
+export class TariffComponent implements OnInit {
   isCitiesLoading$: Observable<boolean>
   isZonesLoading$: Observable<boolean>
   isZoneTariffsLoading$: Observable<boolean>
@@ -70,10 +65,6 @@ export class TariffComponent implements OnInit, AfterViewInit {
 
   constructor(private store: Store) {}
 
-  ngAfterViewInit(): void {
-    this.region.setValue(this.regions[0])
-  }
-
   ngOnInit(): void {
     this.initializeValues()
     this.fetchData()
@@ -83,7 +74,12 @@ export class TariffComponent implements OnInit, AfterViewInit {
     this.isCitiesLoading$ = this.store.select(isCitiesLoadingSelector)
     this.isZonesLoading$ = this.store.select(isZonesLoadingSelector)
     this.isZoneTariffsLoading$ = this.store.select(isZoneTariffsLoadingSelector)
-    this.cities$ = this.store.select(citiesSelector)
+    this.cities$ = this.store.select(citiesSelector).pipe(
+      filter(Boolean),
+      tap(() => {
+        this.region.setValue(this.regions[0])
+      })
+    )
     this.zones$ = this.store.select(zonesSelector)
     this.zoneTariffs$ = this.store.select(zoneTariffsSelector)
     this.backendErrors = this.store.select(backendErrorsSelector)

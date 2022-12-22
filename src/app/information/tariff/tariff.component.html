@@ -9,39 +9,41 @@
   <div
     class="grid grid-cols-1 gap-16 lg:grid-cols-[minmax(770px,1fr)_370px] lg:gap-8"
   >
-    <div class="w-full">
+    <div *tuiLet="isCitiesLoading$ | async as isCitiesLoading" class="w-full">
       <div
+        *tuiLet="filteredCities$ | async as cities"
         class="mb-10 flex flex-col space-y-10 border-b border-t border-gray-300 py-10 md:flex-row md:space-x-16 md:space-y-0 lg:space-x-32"
       >
         <div>
           <b class="mb-4 block text-lg font-medium">Регион:</b>
-          <tui-radio-list
-            orientation="vertical"
-            [formControl]="region"
-            [items]="regions"
-            [itemContent]="regionsContent"
-          ></tui-radio-list>
+          <tui-loader [showLoader]="isCitiesLoading">
+            <tui-radio-list
+              *ngIf="cities"
+              [formControl]="region"
+              [items]="regions"
+              [itemContent]="regionsContent"
+              orientation="vertical"
+            ></tui-radio-list>
+          </tui-loader>
           <ng-template #regionsContent let-data>
             {{ data.name }}
           </ng-template>
         </div>
-        <div *tuiLet="filteredCities$ | async as cities">
+        <div>
           <b class="mb-4 block text-lg font-medium">Город:</b>
-          <ng-container *tuiLet="isCitiesLoading$ | async as isCitiesLoading">
-            <tui-loader [showLoader]="isCitiesLoading">
-              <tui-radio-list
-                *ngIf="!isCitiesLoading && cities"
-                orientation="horizontal"
-                [formControl]="city"
-                [items]="cities"
-                [itemContent]="citiesContent"
-                class="tariff-cities"
-              ></tui-radio-list>
-              <ng-template #citiesContent let-data>
-                {{ data.name }}
-              </ng-template>
-            </tui-loader>
-          </ng-container>
+          <tui-loader [showLoader]="isCitiesLoading">
+            <tui-radio-list
+              *ngIf="cities"
+              orientation="horizontal"
+              [formControl]="city"
+              [items]="cities"
+              [itemContent]="citiesContent"
+              class="tariff-cities"
+            ></tui-radio-list>
+          </tui-loader>
+          <ng-template #citiesContent let-data>
+            {{ data.name }}
+          </ng-template>
         </div>
       </div>
 
@@ -49,8 +51,14 @@
         <ng-container
           *tuiLet="isZoneTariffsLoading$ | async as isZoneTariffsLoading"
         >
-          <tui-loader [showLoader]="isZonesLoading || isZoneTariffsLoading">
-            <ng-container *ngIf="!isZonesLoading && !isZoneTariffsLoading">
+          <tui-loader
+            [showLoader]="isZonesLoading || isZoneTariffsLoading"
+            [class.h-24]="isZonesLoading || isZoneTariffsLoading"
+          >
+            <div
+              [class.opacity-0]="isZonesLoading || isZoneTariffsLoading"
+              [class.height-0]="isZonesLoading || isZoneTariffsLoading"
+            >
               <div
                 *ngFor="let zone of zones$ | async"
                 class="mb-2.5 rounded-sm bg-yellow p-7"
@@ -218,7 +226,7 @@
                 трёх сторон не более 130 см (30х30х70 см). Крупногабаритные
                 посылки рассчитываются на месте при приёме.
               </p>
-            </ng-container>
+            </div>
           </tui-loader>
         </ng-container>
       </ng-container>
