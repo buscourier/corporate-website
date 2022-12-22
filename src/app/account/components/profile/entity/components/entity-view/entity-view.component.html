@@ -5,124 +5,164 @@
 <h1 class="mb-8 font-heading text-2xl font-bold sm:text-3xl">
   Персональные данные
 </h1>
-<div class="mb-16 max-w-[570px]">
-  <tui-loader [showLoader]="isProfileLoading$ | async">
-    <ng-container *ngIf="profile$ | async as profile">
-      <ul class="mb-8 max-w-[520px] space-y-2 border-b border-gray-300 pb-11">
-        <li
-          class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
-        >
-          <span class="order-1 flex-shrink-0">Логин:</span>
-          <span class="order-3 flex-shrink-0">{{ profile.email.value }}</span>
-        </li>
-        <li
-          class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
-        >
-          <span class="order-1 flex-shrink-0">Пароль:</span>
-          <span class="order-3 flex-shrink-0">*********</span>
-        </li>
-      </ul>
-      <h2 class="font-heading text-lg font-bold">Данные организации</h2>
-      <ul class="mt-7 mb-8 max-w-[520px] space-y-2">
-        <li
-          class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
-        >
-          <span class="order-1 flex-shrink-0">Наименование организации:</span>
-          <span class="order-3 flex-shrink-0">{{ profile.name.value }}</span>
-        </li>
-        <li
-          class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
-        >
-          <span class="order-1 flex-shrink-0">Руководитель:</span>
-          <span class="order-3 flex-shrink-0">{{
-            profile.contactperson.value
-          }}</span>
-        </li>
-        <li
-          class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
-        >
-          <span class="order-1 flex-shrink-0">Телефон:</span>
-          <span class="order-3 flex-shrink-0">{{ profile.phone.value }}</span>
-        </li>
-        <li
-          class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
-        >
-          <span class="order-1 flex-shrink-0">ИНН:</span>
-          <span class="order-3 flex-shrink-0">{{ profile.inn.value }}</span>
-        </li>
-        <li
-          class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
-        >
-          <span class="order-1 flex-shrink-0">КПП:</span>
-          <span class="order-3 flex-shrink-0">{{ profile.kpp.value }}</span>
-        </li>
-        <li
-          class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
-        >
-          <span class="order-1 flex-shrink-0">ОГРН:</span>
-          <span class="order-3 flex-shrink-0">{{ profile.ogrn.value }}</span>
-        </li>
-        <li
-          class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
-        >
-          <span class="order-1 flex-shrink-0">Банк:</span>
-          <span class="order-3 flex-shrink-0">{{ profile.bank.value }}</span>
-        </li>
-        <li
-          class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
-        >
-          <span class="order-1 flex-shrink-0">Р/с:</span>
-          <span class="order-3 flex-shrink-0">{{ profile.rs.value }}</span>
-        </li>
-        <li
-          class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
-        >
-          <span class="order-1 flex-shrink-0">К/с:</span>
-          <span class="order-3 flex-shrink-0">{{ profile.ks.value }}</span>
-        </li>
-        <li
-          class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
-        >
-          <span class="order-1 flex-shrink-0">№ договора:</span>
-          <span class="order-3 flex-shrink-0">{{
-            profile.contractID.value
-          }}</span>
-        </li>
-        <li
-          class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
-        >
-          <span class="order-1 flex-shrink-0">Дата договора:</span>
-          <span class="order-3 flex-shrink-0">{{
-            profile.contractDate.value
-          }}</span>
-        </li>
-      </ul>
-      <button [routerLink]="['edit']" tuiButton type="button" size="m">
-        Изменить данные
-      </button>
-    </ng-container>
-  </tui-loader>
-</div>
-<section class="max-w-[570px] border-t border-gray-300 pt-5">
-  <h2 class="mb-7 font-heading text-lg font-bold">
-    Отправитель по доверенности
-  </h2>
-  <div [formGroup]="form">
-    <div class="relative -ml-5" formArrayName="confidants">
-      <tui-carousel #carousel [(index)]="index" [draggable]="true">
-        <ng-container
-          *ngFor="let control of confidants.controls; let i = index"
-        >
-          <app-confidant *tuiItem [formControlName]="i"> </app-confidant>
+<main class="max-w-[570px]">
+  <ng-container *tuiLet="isProfileLoading$ | async as isProfileLoading">
+    <ng-container *tuiLet="profile$ | async as profile">
+      <tui-loader
+        [showLoader]="isProfileLoading"
+        [class.h-20]="isProfileLoading"
+      >
+        <ng-container *ngIf="profile">
+          <section
+            class="mb-16"
+            [class.opacity-0]="isProfileLoading"
+            [class.height-0]="isProfileLoading"
+          >
+            <ul
+              class="mb-8 max-w-[520px] space-y-2 border-b border-gray-300 pb-11"
+            >
+              <li
+                class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
+              >
+                <span class="order-1 flex-shrink-0">Логин:</span>
+                <span class="order-3 flex-shrink-0">{{
+                  profile.email.value
+                }}</span>
+              </li>
+              <li
+                class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
+              >
+                <span class="order-1 flex-shrink-0">Пароль:</span>
+                <span class="order-3 flex-shrink-0">*********</span>
+              </li>
+            </ul>
+            <h2 class="font-heading text-lg font-bold">Данные организации</h2>
+            <ul class="mt-7 mb-8 max-w-[520px] space-y-2">
+              <li
+                class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
+              >
+                <span class="order-1 flex-shrink-0"
+                  >Наименование организации:</span
+                >
+                <span class="order-3 flex-shrink-0">{{
+                  profile.name.value
+                }}</span>
+              </li>
+              <li
+                class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
+              >
+                <span class="order-1 flex-shrink-0">Руководитель:</span>
+                <span class="order-3 flex-shrink-0">{{
+                  profile.contactperson.value
+                }}</span>
+              </li>
+              <li
+                class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
+              >
+                <span class="order-1 flex-shrink-0">Телефон:</span>
+                <span class="order-3 flex-shrink-0">{{
+                  profile.phone.value
+                }}</span>
+              </li>
+              <li
+                class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
+              >
+                <span class="order-1 flex-shrink-0">ИНН:</span>
+                <span class="order-3 flex-shrink-0">{{
+                  profile.inn.value
+                }}</span>
+              </li>
+              <li
+                class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
+              >
+                <span class="order-1 flex-shrink-0">КПП:</span>
+                <span class="order-3 flex-shrink-0">{{
+                  profile.kpp.value
+                }}</span>
+              </li>
+              <li
+                class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
+              >
+                <span class="order-1 flex-shrink-0">ОГРН:</span>
+                <span class="order-3 flex-shrink-0">{{
+                  profile.ogrn.value
+                }}</span>
+              </li>
+              <li
+                class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
+              >
+                <span class="order-1 flex-shrink-0">Банк:</span>
+                <span class="order-3 flex-shrink-0">{{
+                  profile.bank.value
+                }}</span>
+              </li>
+              <li
+                class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
+              >
+                <span class="order-1 flex-shrink-0">Р/с:</span>
+                <span class="order-3 flex-shrink-0">{{
+                  profile.rs.value
+                }}</span>
+              </li>
+              <li
+                class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
+              >
+                <span class="order-1 flex-shrink-0">К/с:</span>
+                <span class="order-3 flex-shrink-0">{{
+                  profile.ks.value
+                }}</span>
+              </li>
+              <li
+                class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
+              >
+                <span class="order-1 flex-shrink-0">№ договора:</span>
+                <span class="order-3 flex-shrink-0">{{
+                  profile.contractID.value
+                }}</span>
+              </li>
+              <li
+                class="flex items-baseline justify-between gap-1 after:order-2 after:h-1 after:basis-full after:border-b after:border-dotted after:border-gray-500"
+              >
+                <span class="order-1 flex-shrink-0">Дата договора:</span>
+                <span class="order-3 flex-shrink-0">{{
+                  profile.contractDate.value
+                }}</span>
+              </li>
+            </ul>
+            <button [routerLink]="['edit']" tuiButton type="button" size="m">
+              Изменить данные
+            </button>
+          </section>
+          <section
+            class="border-t border-gray-300 pt-5"
+            [class.opacity-0]="isProfileLoading"
+            [class.height-0]="isProfileLoading"
+          >
+            <h2 class="mb-7 font-heading text-lg font-bold">
+              Отправитель по доверенности
+            </h2>
+            <div [formGroup]="form">
+              <div class="relative -ml-5" formArrayName="confidants">
+                <tui-carousel #carousel [(index)]="index" [draggable]="true">
+                  <ng-container
+                    *ngFor="let control of confidants.controls; let i = index"
+                  >
+                    <app-confidant *tuiItem [formControlName]="i">
+                    </app-confidant>
+                  </ng-container>
+                </tui-carousel>
+                <tui-pagination
+                  size="m"
+                  [length]="confidants.controls.length"
+                  [(index)]="index"
+                  (indexChange)="onIndex($event)"
+                  class="relative mt-8"
+                ></tui-pagination>
+              </div>
+            </div>
+          </section>
         </ng-container>
-      </tui-carousel>
-      <tui-pagination
-        size="m"
-        [length]="confidants.controls.length"
-        [(index)]="index"
-        (indexChange)="onIndex($event)"
-        class="relative mt-8"
-      ></tui-pagination>
-    </div>
-  </div>
-</section>
+      </tui-loader>
+    </ng-container>
+  </ng-container>
+</main>

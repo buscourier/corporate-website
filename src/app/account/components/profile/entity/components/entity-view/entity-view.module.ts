@@ -4,6 +4,7 @@ import {ReactiveFormsModule} from '@angular/forms'
 import {RouterModule} from '@angular/router'
 import {EffectsModule} from '@ngrx/effects'
 import {StoreModule} from '@ngrx/store'
+import {TuiLetModule} from '@taiga-ui/cdk'
 import {TuiButtonModule, TuiLoaderModule, TuiSvgModule} from '@taiga-ui/core'
 import {TuiCarouselModule, TuiPaginationModule} from '@taiga-ui/kit'
 import {ConfidantsService} from '../../../../../../shared/services/confidants.service'
@@ -28,6 +29,7 @@ import {ENTITY_PROFILE_FEATURE} from './store/state'
     EffectsModule.forFeature([GetEntityProfileEffect, GetConfidantsEffect]),
     TuiCarouselModule,
     TuiPaginationModule,
+    TuiLetModule,
   ],
   exports: [EntityViewComponent],
   providers: [ConfidantsService],
