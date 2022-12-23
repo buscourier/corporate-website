@@ -2,7 +2,7 @@ import {HttpClient} from '@angular/common/http'
 import {Injectable} from '@angular/core'
 import {map, Observable} from 'rxjs'
 import {environment} from '../../../../../environments/environment'
-import {OrderCancelInputInterface} from '../components/report-details/types/order-cancel-input.interface'
+import {OrderCancelInputInterface} from '../types/order-cancel-input.interface'
 import {OrderInterface} from '../types/order.interface'
 import {ReportInputInterface} from '../types/report-input.interface'
 import {ReportResponseInterface} from '../types/report-response.interface'
@@ -56,9 +56,8 @@ export class ReportService {
     return this.http.get(`${url}/${environment.apiKey}/${id}`)
   }
 
-  cancelOrder(data: OrderCancelInputInterface) {
+  cancelOrder(input: OrderCancelInputInterface) {
     const url = `${environment.apiUrl}/order/ordercancel`
-
-    return this.http.post(`${url}`, JSON.stringify(data))
+    return this.http.post(`${url}`, JSON.stringify(input))
   }
 }

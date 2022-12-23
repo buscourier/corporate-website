@@ -43,7 +43,7 @@ export class PrintOrderComponent implements OnInit {
     this.backendErrors$ = this.store.select(backendErrorsSelector)
   }
 
-  fetchData() {
+  fetchData(): void {
     this.store.dispatch(
       getOrderDetailsAction({orderId: this.orderId.toString()})
     )

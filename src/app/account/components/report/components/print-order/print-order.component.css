@@ -1,0 +1,3 @@
+:host {
+  @apply relative block p-6 pt-12 md:p-8;
+}

@@ -75,7 +75,7 @@
                     <tr *tuiRow="let order of orders" tuiTr>
                       <td *tuiCell="'order_id'" tuiTd>
                         <b
-                          (click)="showDetails(order.order_id)"
+                          (click)="viewOrder(order.order_id)"
                           class="hover:cursor-pointer"
                           >{{ order.order_id }}</b
                         >
@@ -130,7 +130,7 @@
           <app-mobile-data
             key="Заказ"
             [value]="getIdValue(order.order_id)"
-            (click)="showDetails(order.order_id)"
+            (click)="viewOrder(order.order_id)"
           ></app-mobile-data>
           <app-mobile-data
             key="Дата заказа"

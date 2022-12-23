@@ -11,10 +11,10 @@
     ></button>
   </div>
 
-  <ng-container *tuiLet="isLoading$ | async as isLoading">
-    <tui-loader [showLoader]="isLoading" class="min-h-[470px]">
+  <ng-container *tuiLet="isOrderLoading$ | async as isOrderLoading">
+    <tui-loader [showLoader]="isOrderLoading" class="min-h-[470px]">
       <div
-        *ngIf="order && order.order && !isLoading"
+        *ngIf="order && order.order && !isOrderLoading"
         class="flex flex-col text-left font-base"
       >
         <b class="text-2xl font-bold">№ {{ order.order.order_id }}</b>

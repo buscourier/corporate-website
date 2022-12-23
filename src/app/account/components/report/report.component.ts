@@ -13,7 +13,7 @@ import {filter, map, Observable, take} from 'rxjs'
 import {currentUserSelector} from '../../../auth/store/selectors'
 import {CurrentUserInterface} from '../../../shared/types/current-user.interface'
 import {PrintOrderComponent} from './components/print-order/print-order.component'
-import {ReportDetailsComponent} from './components/report-details/components/report-details/report-details.component'
+import {ViewOrderComponent} from './components/view-order/view-order.component'
 import {getOrdersAction} from './store/actions/get-orders.action'
 import {isLoadingSelector, ordersSelector} from './store/selectors'
 import {FilterInterface} from './types/filter.interface'
@@ -109,20 +109,17 @@ export class ReportComponent implements OnInit {
     this.isLargeScreen = this.breakpoint && this.breakpoint.matches
   }
 
-  showDetails(id: string) {
+  viewOrder(id: string) {
     this.dialogService
-      .open<any>(
-        new PolymorpheusComponent(ReportDetailsComponent, this.injector),
-        {
-          data: {
-            orderId: id,
-            userId: this.userId,
-          },
-          dismissible: true,
-          closeable: false,
-          size: 's',
-        }
-      )
+      .open<any>(new PolymorpheusComponent(ViewOrderComponent, this.injector), {
+        data: {
+          orderId: id,
+          userId: this.userId,
+        },
+        dismissible: true,
+        closeable: false,
+        size: 's',
+      })
       .pipe(take(1))
       .subscribe()
   }

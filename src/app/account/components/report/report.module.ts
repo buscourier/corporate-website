@@ -17,7 +17,7 @@ import {MobileDataModule} from '../../../shared/components/mobile-data/mobile-da
 import {LetModule} from '../../../shared/directives/let/let.module'
 import {FilterModule} from './components/filter/filter.module'
 import {PrintOrderComponent} from './components/print-order/print-order.component'
-import {ReportDetailsModule} from './components/report-details/report-details.module'
+import {ViewOrderModule} from './components/view-order/view-order.module'
 import {ReportRoutingModule} from './report-routing.module'
 import {ReportComponent} from './report.component'
 import {ReportService} from './services/report.service'
@@ -31,7 +31,7 @@ import {REPORT_FEATURE} from './store/state'
   imports: [
     CommonModule,
     FilterModule,
-    ReportDetailsModule,
+    ViewOrderModule,
     ReportRoutingModule,
     StoreModule.forFeature(REPORT_FEATURE, reducer),
     EffectsModule.forFeature([GetOrdersEffect, GetOrderDetailsEffect]),

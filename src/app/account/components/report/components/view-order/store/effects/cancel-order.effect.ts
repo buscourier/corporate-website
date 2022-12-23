@@ -1,3 +1,4 @@
+import {HttpErrorResponse} from '@angular/common/http'
 import {Inject, Injectable, Injector} from '@angular/core'
 import {Actions, createEffect, ofType} from '@ngrx/effects'
 import {TuiDialogService} from '@taiga-ui/core'
@@ -24,10 +25,16 @@ export class CancelOrderEffect {
   cancelOrder$ = createEffect(() =>
     this.actions$.pipe(
       ofType(cancelOrderAction),
-      switchMap(({data}) =>
-        this.reportService.cancelOrder(data).pipe(
+      switchMap(({input}) =>
+        this.reportService.cancelOrder(input).pipe(
           map(() => cancelOrderSuccessAction()),
-          catchError(() => of(cancelOrderFailureAction()))
+          catchError((errorResponse: HttpErrorResponse) => {
+            return of(
+              cancelOrderFailureAction({
+                backendErrors: errorResponse.error || errorResponse.message,
+              })
+            )
+          })
         )
       )
     )
