@@ -31,3 +31,6 @@
     </tr>
   </thead>
 </table>
+<tui-loader [showLoader]="isOrderLoading$ | async">
+  order: {{ order$ | async | json }}
+</tui-loader>

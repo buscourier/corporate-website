@@ -10,15 +10,15 @@ import {Store} from '@ngrx/store'
 import {TuiDialogService} from '@taiga-ui/core'
 import {PolymorpheusComponent} from '@tinkoff/ng-polymorpheus'
 import {filter, map, Observable, take} from 'rxjs'
-import {currentUserSelector} from '../../../../../auth/store/selectors'
-import {CurrentUserInterface} from '../../../../../shared/types/current-user.interface'
-import {getOrdersAction} from '../../store/actions/get-orders.action'
-import {isLoadingSelector, ordersSelector} from '../../store/selectors'
-import {FilterInterface} from '../../types/filter.interface'
-import {OrderInterface} from '../../types/order.interface'
-import {ReportResponseInterface} from '../../types/report-response.interface'
-import {PrintComponent} from '../print/print.component'
-import {ReportDetailsComponent} from '../report-details/components/report-details/report-details.component'
+import {currentUserSelector} from '../../../auth/store/selectors'
+import {CurrentUserInterface} from '../../../shared/types/current-user.interface'
+import {PrintOrderComponent} from './components/print-order/print-order.component'
+import {ReportDetailsComponent} from './components/report-details/components/report-details/report-details.component'
+import {getOrdersAction} from './store/actions/get-orders.action'
+import {isLoadingSelector, ordersSelector} from './store/selectors'
+import {FilterInterface} from './types/filter.interface'
+import {OrderInterface} from './types/order.interface'
+import {ReportResponseInterface} from './types/report-response.interface'
 
 @Component({
   selector: 'app-report',
@@ -127,17 +127,20 @@ export class ReportComponent implements OnInit {
       .subscribe()
   }
 
-  showPrint(id: string) {
+  printOrder(id: string) {
     this.dialogService
-      .open<any>(new PolymorpheusComponent(PrintComponent, this.injector), {
-        data: {
-          orderId: id,
-          userId: this.userId,
-        },
-        dismissible: true,
-        closeable: false,
-        size: 'l',
-      })
+      .open<any>(
+        new PolymorpheusComponent(PrintOrderComponent, this.injector),
+        {
+          data: {
+            orderId: id,
+            userId: this.userId,
+          },
+          dismissible: true,
+          closeable: false,
+          size: 'l',
+        }
+      )
       .pipe(take(1))
       .subscribe()
   }

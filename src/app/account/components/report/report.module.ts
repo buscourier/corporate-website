@@ -16,24 +16,25 @@ import {TuiPaginationModule} from '@taiga-ui/kit'
 import {MobileDataModule} from '../../../shared/components/mobile-data/mobile-data.module'
 import {LetModule} from '../../../shared/directives/let/let.module'
 import {FilterModule} from './components/filter/filter.module'
-import {PrintComponent} from './components/print/print.component'
+import {PrintOrderComponent} from './components/print-order/print-order.component'
 import {ReportDetailsModule} from './components/report-details/report-details.module'
-import {ReportComponent} from './components/report/report.component'
 import {ReportRoutingModule} from './report-routing.module'
+import {ReportComponent} from './report.component'
 import {ReportService} from './services/report.service'
+import {GetOrderDetailsEffect} from './store/effects/get-order-details.effect'
 import {GetOrdersEffect} from './store/effects/get-orders.effect'
 import {reducer} from './store/reducer'
 import {REPORT_FEATURE} from './store/state'
 
 @NgModule({
-  declarations: [ReportComponent, PrintComponent],
+  declarations: [ReportComponent, PrintOrderComponent],
   imports: [
     CommonModule,
     FilterModule,
     ReportDetailsModule,
     ReportRoutingModule,
     StoreModule.forFeature(REPORT_FEATURE, reducer),
-    EffectsModule.forFeature([GetOrdersEffect]),
+    EffectsModule.forFeature([GetOrdersEffect, GetOrderDetailsEffect]),
     LetModule,
     TuiLetModule,
     TuiTableModule,
