@@ -2,19 +2,17 @@ import {
   ChangeDetectionStrategy,
   Component,
   Inject,
-  OnDestroy,
   OnInit,
+  Self,
 } from '@angular/core'
 import {FormBuilder} from '@angular/forms'
 import {NavigationEnd, Router, RouterEvent} from '@angular/router'
 import {Store} from '@ngrx/store'
-import {TuiScrollService} from '@taiga-ui/cdk'
+import {TuiDestroyService, TuiScrollService} from '@taiga-ui/cdk'
 import {tuiLoaderOptionsProvider} from '@taiga-ui/core'
-import {filter, Subscription, switchMap} from 'rxjs'
+import {filter, switchMap, takeUntil} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {setCurrentStepAction} from './store/actions/set-current-step.action'
-
-class NavigationEvent {}
 
 @Component({
   selector: 'app-checkout',
@@ -24,14 +22,14 @@ class NavigationEvent {}
     tuiLoaderOptionsProvider({
       size: 'm',
     }),
+    TuiDestroyService,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CheckoutComponent implements OnInit, OnDestroy {
+export class CheckoutComponent implements OnInit {
   currentStepIndex = 0
   scrollTop = 150
   duration = 300
-  routerSub: Subscription
 
   form = this.fb.group({})
 
@@ -39,31 +37,31 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private router: Router,
     private store: Store,
-    @Inject(TuiScrollService) private readonly scrollService: TuiScrollService
+    @Inject(TuiScrollService) private readonly scrollService: TuiScrollService,
+    @Self()
+    @Inject(TuiDestroyService)
+    private destroy$: TuiDestroyService
   ) {}
 
   ngOnInit(): void {
     this.initializeValues()
   }
 
-  ngOnDestroy(): void {
-    this.routerSub.unsubscribe()
-  }
-
   initializeValues(): void {
     this.navigate(this.router.url)
-    this.routerSub = this.scroll().subscribe()
+    this.scroll().pipe(takeUntil(this.destroy$)).subscribe()
 
-    this.routerSub = this.router.events
+    this.router.events
       .pipe(
         filter((event: RouterEvent) => event instanceof NavigationEnd),
         tap((event: RouterEvent) => {
           this.navigate(event.url)
         }),
-        switchMap((event: NavigationEvent) => {
+        switchMap(() => {
           return this.scroll()
         })
       )
+      .pipe(takeUntil(this.destroy$))
       .subscribe()
   }
 
