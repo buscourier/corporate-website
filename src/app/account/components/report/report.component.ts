@@ -135,7 +135,7 @@ export class ReportComponent implements OnInit {
           },
           dismissible: true,
           closeable: false,
-          size: 'l',
+          size: 'auto',
         }
       )
       .pipe(take(1))

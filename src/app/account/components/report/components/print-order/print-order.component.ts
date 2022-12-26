@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core'
 import {Store} from '@ngrx/store'
 import {TuiDialogContext} from '@taiga-ui/core'
 import {POLYMORPHEUS_CONTEXT} from '@tinkoff/ng-polymorpheus'
-import {Observable} from 'rxjs'
+import {filter, map, Observable} from 'rxjs'
 import {getOrderDetailsAction} from '../../store/actions/get-order-details.action'
 import {
   backendErrorsSelector,
@@ -10,6 +10,7 @@ import {
   orderDetailsSelector,
 } from '../../store/selectors'
 import {OrderDetailsInterface} from '../../types/order-details.interface'
+import {tap} from 'rxjs/operators'
 
 @Component({
   selector: 'app-print-order',
@@ -39,7 +40,12 @@ export class PrintOrderComponent implements OnInit {
 
   initializeValues(): void {
     this.isOrderLoading$ = this.store.select(isOrderDetailsLoadingSelector)
-    this.order$ = this.store.select(orderDetailsSelector)
+    this.order$ = this.store.select(orderDetailsSelector).pipe(
+      filter(Boolean),
+      map(({order}) => {
+        return order
+      })
+    )
     this.backendErrors$ = this.store.select(backendErrorsSelector)
   }
 
@@ -51,5 +57,13 @@ export class PrintOrderComponent implements OnInit {
 
   close() {
     this.context.completeWith(1)
+  }
+
+  print() {
+    window.print()
+  }
+
+  formatDate(date) {
+    return date.split(' ')[0]
   }
 }

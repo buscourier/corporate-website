@@ -1,3 +1,237 @@
 :host {
-  @apply relative block p-6 pt-12 md:p-8;
+  @apply relative block p-6 pt-12 md:p-8 print:!p-0;
+}
+
+table {
+  @apply border w-full;
+}
+
+
+.order-print.copy {
+  display: none;
+}
+.print-form .order-print:nth-child(3n) {
+  page-break-after: always;
+}
+.order-print {
+  width: 20cm!important;
+  height: auto!important;
+}
+.order-print tr {
+  height: 9mm!important;
+}
+.order-print td, .box-border {
+  font-size: 10px;
+  padding: 2px;
+  border: 1px solid #676767;
+}
+.box-border {
+  font-size: 12px;
+  min-width: 16px;
+}
+td.btop {
+  border-top: 1px solid #000;
+}
+td.bbottom {
+  border-bottom: 1px solid #000;
+}
+td.vertical {
+  width: 4mm!important;
+  padding-left: 0px!important;
+  background: #999999!important;
+  padding-right: 0px!important;
+}
+td.vertical span {
+  -webkit-writing-mode: vertical-lr;
+  -ms-writing-mode: tb-lr;
+  writing-mode: vertical-lr;
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  transform: rotate(180deg);
+  display: inline-block;
+  height: 120px;
+  text-align: center;
+}
+
+td.vtop {
+  vertical-align: top;
+  width: 95mm!important;
+}
+td.payment {
+  padding: 0px!important;
+}
+td.payment > div {
+  padding-bottom: 8px;
+}
+td.payment .half {
+  display: inline-block;
+  width:49%;
+  padding-left: 15px;
+}
+td.payment .pheader {
+  position: relative;
+  width: 100%;
+}
+td.payment .pheader div {
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  top: -6px;
+  background: #999999;
+
+}
+.half span.title {
+  width: 130px;
+  display: inline-block;
+}
+
+td span.title,
+td b.title {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+td span.label,
+td div.label {
+  font-size: 10px;
+}
+
+td.dimensions {
+  font-size: 8px!important;
+}
+td.dimensions > div {
+  display: inline-block;
+  padding: 0px 5px;
+  text-align: center;
+}
+td.services {
+  vertical-align: top;
+  padding-top: 0px;
+}
+td.services {
+  margin-bottom: 0px;
+}
+td.services {
+  padding: 0px;
+  padding-bottom: 5px;
+}
+td.services label input, .half label input {
+  float: left;
+  margin-top: 2px;
+  margin-right: 5px;
+  height: 12px;
+  width: 12px;
+}
+.half label input {
+  float: right;
+  margin-left: 5px;
+}
+td.services > div {
+  margin-left: 5px;
+  max-height: 28px;
+  overflow: hidden;
+}
+td.services div > span {
+  padding-left: 5px;
+}
+#print-form {
+  padding-top: 5px;
+}
+td.vtop {
+  position:relative;
+}
+
+td {
+  height: 36px;
+}
+
+span.user-info {
+  font-size: 16px;
+  position: absolute;
+  bottom: 2px;
+  right: 5px;
+  line-height: 15px;
+  text-align: right;
+}
+span.user-info:before {
+  content:'';
+  display: inline-block;
+  height: 15px;
+  width: 110px;
+  float: left;
+}
+span.user-info.city {
+  font-weight: bold;
+  font-size: 20px;
+  bottom: 5px;
+}
+.services label {
+  margin-bottom: 0px;
+}
+@media print {
+  * {
+    padding:0px!important;
+    margin:0px!important;
+    -webkit-print-color-adjust: exact!important;
+    print-color-adjust: exact!important;
+  }
+  .nav, .box.sidebar, .page-title, .header, #site-panel, #yii-debug-toolbar, .print-button {
+    display: none!important;
+  }
+  html, body, .box.content, .container, .wrapper, .main {
+    display:block!important;
+    width:100%!important;
+  }
+  .order-print {
+    width: 20cm!important;
+    height: 9cm!important;
+  }
+  .order-print.copy {
+    display: block;
+    margin-top: 12mm!important;
+  }
+  .order-print td {
+    padding: 0.2mm 1.5mm!important;
+  }
+  td.vertical, .wide {
+    padding-left: 0px!important;
+    padding-right: 0px!important;
+  }
+  td.vtop {
+    padding-top: 0px!important;
+  }
+  td.payment {
+    padding: 0px!important;
+  }
+  td.payment > div {
+    padding-bottom: 8px!important;
+  }
+  td.payment .half {
+    padding-left: 15px!important;
+  }
+  td.services {
+    padding: 0px!important;
+    padding-bottom: 5px!important;
+  }
+  .half label input {
+    margin-top: 2px!important;
+    margin-left: 5px!important;
+  }
+  td.services label input {
+    margin-top: 2px!important;
+    margin-right: 5px!important;
+  }
+  td.services > div {
+    margin-left: 5px!important;
+  }
+  td.services div > span {
+    padding-left: 5px!important;
+  }
+  td.dimensions > div {
+    padding: 0px 5px!important;
+  }
+  .services label {
+    margin-bottom: 0px!important;
+  }
 }
