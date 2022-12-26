@@ -1,10 +1,10 @@
-<button
-  type="button"
-  class="absolute -top-2 -right-2 text-gray-800 print:hidden"
-  (click)="close()"
->
-  <tui-svg src="icons::close-2" class="!h-[22px] !w-[22px]"></tui-svg>
-</button>
+<!--<button-->
+<!--  type="button"-->
+<!--  class="absolute -top-2 -right-2 text-gray-800 print:hidden"-->
+<!--  (click)="close()"-->
+<!--&gt;-->
+<!--  <tui-svg src="icons::close-2" class="!h-[22px] !w-[22px]"></tui-svg>-->
+<!--</button>-->
 
 <tui-loader [showLoader]="isOrderLoading$ | async" class="w-[783px]">
   <ng-container *ngIf="order$ | async as order">
@@ -226,6 +226,9 @@
         </td>
       </tr>
     </table>
-    <!--    <button type="button" class="print:invisible" tuiButton (click)="print()">Напечатать</button>-->
+        <div class="mt-4 space-x-2 print:invisible print:h-0">
+          <button type="button" tuiButton size="s" (click)="print()">Напечатать</button>
+          <button type="button" appearance="accent" tuiButton size="s" (click)="close()">Закрыть</button>
+        </div>
   </ng-container>
 </tui-loader>
