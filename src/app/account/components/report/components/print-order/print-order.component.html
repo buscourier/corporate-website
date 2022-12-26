@@ -50,7 +50,7 @@
         </td>
       </tr>
     </table>
-    <table style="height: 72mm; width: 100%">
+    <table #table style="height: 72mm; width: 100%">
       <tr>
         <td class="vertical bbottom btop" rowspan="4">
           <span class="label">отправитель</span>
@@ -226,9 +226,19 @@
         </td>
       </tr>
     </table>
-        <div class="mt-4 space-x-2 print:invisible print:h-0">
-          <button type="button" tuiButton size="s" (click)="print()">Напечатать</button>
-          <button type="button" appearance="accent" tuiButton size="s" (click)="close()">Закрыть</button>
-        </div>
+    <div class="mt-4 space-x-2 print:invisible print:h-0">
+      <button type="button" tuiButton size="s" (click)="print()">
+        Напечатать
+      </button>
+      <button
+        type="button"
+        appearance="accent"
+        tuiButton
+        size="s"
+        (click)="close()"
+      >
+        Закрыть
+      </button>
+    </div>
   </ng-container>
 </tui-loader>

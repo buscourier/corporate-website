@@ -21,6 +21,7 @@
             <ng-container *tuiLet="isLoading$ | async as isLoading">
               <tui-loader [showLoader]="isLoading">
                 <table
+                  #table
                   *ngIf="orders"
                   tuiTable
                   [columns]="columns"
@@ -175,7 +176,15 @@
         (indexChange)="goToPage($event)"
         class="ml-auto"
       ></tui-pagination>
-      <button type="button" tuiButton class="ml-auto">Экпорт в Exel</button>
+      <button
+        type="button"
+        tuiButton
+        class="ml-auto"
+        size="m"
+        (click)="exportToExcel('xlsx')"
+      >
+        Экпорт в Exel
+      </button>
     </div>
     <ng-container *tuiLet="isLoading$ | async as isLoading">
       <p

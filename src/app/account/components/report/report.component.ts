@@ -1,10 +1,12 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   HostListener,
   Inject,
   Injector,
   OnInit,
+  ViewChild,
 } from '@angular/core'
 import {Store} from '@ngrx/store'
 import {TuiDialogService} from '@taiga-ui/core'
@@ -19,6 +21,7 @@ import {isLoadingSelector, ordersSelector} from './store/selectors'
 import {FilterInterface} from './types/filter.interface'
 import {OrderInterface} from './types/order.interface'
 import {ReportResponseInterface} from './types/report-response.interface'
+import {read, writeFileXLSX, write, writeFile, utils} from 'xlsx'
 
 @Component({
   selector: 'app-report',
@@ -27,6 +30,8 @@ import {ReportResponseInterface} from './types/report-response.interface'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ReportComponent implements OnInit {
+  @ViewChild('table', {read: ElementRef}) table: ElementRef
+
   columns = [
     'order_id',
     'date',
@@ -153,5 +158,29 @@ export class ReportComponent implements OnInit {
 
   @HostListener('window:resize') resizeWindow() {
     this.isLargeScreen = this.breakpoint && this.breakpoint.matches
+  }
+
+  exportToExcel(type, fn = null, dl = false) {
+    const wb = utils.table_to_book(this.table.nativeElement, {
+      sheet: 'Страница 1',
+    })
+    return dl
+      ? write(wb, {bookType: type, bookSST: true, type: 'base64'})
+      : writeFile(
+          wb,
+          fn ||
+            `Выгрузка заказов на ${this.formatDate(Date.now())}.` +
+              (type || 'xlsx')
+        )
+  }
+
+  formatDate(date) {
+    const formattedDate = new Intl.DateTimeFormat('ru-Ru', {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+    }).format(new Date(date))
+
+    return formattedDate
   }
 }
