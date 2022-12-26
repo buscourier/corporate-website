@@ -5,11 +5,11 @@
 }
 
 tui-dialog {
-  @apply md:!rounded-md print:!rounded-none;
+  @apply print:!rounded-none md:!rounded-md;
 }
 
 tui-dialog > .t-content {
-  @apply !p-0 md:!rounded-md print:!rounded-none;
+  @apply !p-0 print:!rounded-none md:!rounded-md;
   @apply print:!shadow-none;
 }
 

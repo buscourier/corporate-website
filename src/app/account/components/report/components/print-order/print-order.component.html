@@ -6,23 +6,27 @@
   <tui-svg src="icons::close-2" class="!h-[22px] !w-[22px]"></tui-svg>
 </button>
 
-
 <tui-loader [showLoader]="isOrderLoading$ | async" class="w-[783px]">
   <ng-container *ngIf="order$ | async as order">
-    <table style="height:18mm">
+    <table style="height: 18mm">
       <tr>
-        <td style="width:25mm; height:18mm;text-align:center;">
-          <img src="/assets/images/print-logo.png" style="display:inline-block; width:20mm; height:auto;" alt="Logo">
+        <td style="width: 25mm; height: 18mm; text-align: center">
+          <img
+            src="/assets/images/print-logo.png"
+            style="display: inline-block; width: 20mm; height: auto"
+            alt="Logo"
+          />
         </td>
-        <td style="width:45mm;">
-          <b>ЗАКАЗ {{order.order_id}}</b><br />
-          <b>ДАТА {{order.order_date.date}}</b>
+        <td style="width: 45mm">
+          <b>ЗАКАЗ {{ order.order_id }}</b
+          ><br />
+          <b>ДАТА {{ order.order_date.date }}</b>
         </td>
-        <td rowspan="2" style="width:80mm;text-align:center">
-        <span style="font-size: 8px;"
-        >Bus-курьер, Приморский край, г. Владивосток, ул. Русская 2а, корп
-          3</span
-        >
+        <td rowspan="2" style="width: 80mm; text-align: center">
+          <span style="font-size: 8px"
+            >Bus-курьер, Приморский край, г. Владивосток, ул. Русская 2а, корп
+            3</span
+          >
           <br />
           <div style="font-size: 12px; padding-top: 1.5mm">
             Единая справочная: +7 (423) 293 78 79
@@ -30,159 +34,198 @@
             e-mail: inbox@busbox.guru сайт: баскурьер.рф / www.busbox.guru
           </div>
         </td>
-        <td style="width:64px;">
-          <img [src]="'http://chart.apis.google.com/chart?cht=qr&chs=128x128&chl=https://xn--80abnt4abdr6f.xn--p1ai/orders/track-order?id='+order.order_id" />
+        <td style="width: 64px">
+          <img
+            [src]="
+              'http://chart.apis.google.com/chart?cht=qr&chs=128x128&chl=https://xn--80abnt4abdr6f.xn--p1ai/orders/track-order?id=' +
+              order.order_id
+            "
+          />
         </td>
         <td rowspan="2">
-          <img alt='Barcode' [src]="'https://api.busbox.guru/barcode/?code=' + order.order_id" />
+          <img
+            alt="Barcode"
+            [src]="'https://api.busbox.guru/barcode/?code=' + order.order_id"
+          />
         </td>
       </tr>
     </table>
-    <table style="height: 72mm; width: 100%;">
+    <table style="height: 72mm; width: 100%">
       <tr>
-        <td class="vertical bbottom btop" rowspan="4"><span class="label">отправитель</span></td>
-        <td class="border-b border-r vtop border-black">
+        <td class="vertical bbottom btop" rowspan="4">
+          <span class="label">отправитель</span>
+        </td>
+        <td class="vtop border-b border-r border-black">
           <span class="title">Компания:</span>
-          <br /><span class="user-info">{{order.sender_company}}</span>
+          <br /><span class="user-info">{{ order.sender_company }}</span>
         </td>
-        <td class="border-b border-black" style="position:relative">
-          <span class="title">Мест: </span><span style="font-size: 20px; font-weight: bold">{{order.cargo_count}}</span>&nbsp;&nbsp;&nbsp;
+        <td class="border-b border-black" style="position: relative">
+          <span class="title">Мест: </span
+          ><span style="font-size: 20px; font-weight: bold">{{
+            order.cargo_count
+          }}</span
+          >&nbsp;&nbsp;&nbsp;
           <span class="title">Тип отправления: </span>
-          <span class="user-info">{{order.cargo_type}}</span>
+          <span class="user-info">{{ order.cargo_type }}</span>
         </td>
-        <td class="vertical bbottom btop" rowspan="4"><span class="label">описание отправления</span></td>
+        <td class="vertical bbottom btop" rowspan="4">
+          <span class="label">описание отправления</span>
+        </td>
       </tr>
       <tr>
-        <td class="border-b border-black border-r vtop">
+        <td class="vtop border-b border-r border-black">
           <span class="title">ФИО отправителя:</span>
-          <br /><span class="user-info">{{order.sender_name}}</span>
+          <br /><span class="user-info">{{ order.sender_name }}</span>
         </td>
-        <td class="border-b border-black vtop" style="position:relative">
+        <td class="vtop border-b border-black" style="position: relative">
           <span class="title">Описание вложения:</span>
-          <span class="user-info">{{order.cargo_description}}</span>
+          <span class="user-info">{{ order.cargo_description }}</span>
         </td>
       </tr>
       <tr>
-        <td class="border-b border-r border-black vtop">
+        <td class="vtop border-b border-r border-black">
           <span class="title">Пункт отправления:</span>
-          <br /><span class="user-info">{{order.city_from}}</span>
+          <br /><span class="user-info">{{ order.city_from }}</span>
         </td>
-        <td class="border-b border-black" style="font-size:10px!important;">
-          <span *ngFor="let dim of order.dimensions_raw">мест:{{dim.count}} {{dim.width}}x{{dim.height}}x{{dim.length}}(см) {{dim.weight}}кг</span>
+        <td class="border-b border-black" style="font-size: 10px !important">
+          <span *ngFor="let dim of order.dimensions_raw"
+            >мест:{{ dim.count }} {{ dim.width }}x{{ dim.height }}x{{
+              dim.length
+            }}(см) {{ dim.weight }}кг</span
+          >
           <!--          <?= $model->getDimensionsText()?>-->
-<!--          &lt;!&ndash;<span class="title">Количество мест: </span><span style="font-size: 20px; font-weight: bold"><?=$model->realCargoCount?></span>&emsp;&emsp;-->
-<!--          Менеджер: <?=$managerName?> Подпись:&ndash;&gt;-->
-<!--          <?php if ($wrong_package): ?>-->
-<!--          <div><?=Html::checkbox('', true, [-->
-<!--                            'label' => '<span class="title">'.($wrong_package ? 'Отправитель предупрежден о несоответствии упаковки _______' : '').'</span>'-->
-<!--            ])?></div>-->
-<!--          <?php endif; ?>-->
+          <!--          &lt;!&ndash;<span class="title">Количество мест: </span><span style="font-size: 20px; font-weight: bold"><?=$model->realCargoCount?></span>&emsp;&emsp;-->
+          <!--          Менеджер: <?=$managerName?> Подпись:&ndash;&gt;-->
+          <!--          <?php if ($wrong_package): ?>-->
+          <!--          <div><?=Html::checkbox('', true, [-->
+          <!--                            'label' => '<span class="title">'.($wrong_package ? 'Отправитель предупрежден о несоответствии упаковки _______' : '').'</span>'-->
+          <!--            ])?></div>-->
+          <!--          <?php endif; ?>-->
         </td>
       </tr>
       <tr>
-        <td class="border-r border-black bbottom vtop">
+        <td class="bbottom vtop border-r border-black">
           <span class="title">Телефон отправителя:</span>
-          <br /><span class="user-info">{{order.sender_phone}}</span>
+          <br /><span class="user-info">{{ order.sender_phone }}</span>
         </td>
         <td class="bbottom services vtop">
           <span class="title">Привязанные типы услуг:</span>
           <div>
-<!--            <?php-->
-<!--                        $activeServices = $model->activeServiceList;-->
-<!--            $services = $model->allServices;-->
-<!--            $comments = $model->activeServiceCommentsList;-->
-<!--            $services = \app\modules\service\models\Service::find()->where(['order_id' => $model->order_id])->all();-->
-<!--            if(!empty($services)){-->
-<!--            foreach($services as $service){-->
-<!--            $address = '';-->
-<!--            $type = \app\modules\service\models\ServiceType::find()->where(['id' => $service['type_id']])->one();-->
-<!--            $needTypes = [1,2,54];-->
-<!--            if(in_array($type['id'], $needTypes)){-->
-<!--            $field = \app\modules\service\models\ServiceField::find()->where(['type_id' => $type['id'], 'alias' => $type['id'] == 1 ? 'address_from' : 'address_to'])->one();-->
-<!--            if($field){-->
-<!--            $fieldValue = \app\modules\service\models\ServiceFieldValue::find()->where(['field_id' => $field['field_id'], 'service_id'=>$service['service_id']])->one();-->
-<!--            $address = ': '.$fieldValue['value'];-->
-<!--            }-->
-<!--            }-->
-<!--            echo '<span>'-->
-<!--                                    .Html::a($type['name'].$address)-->
-<!--                                    .'</span>; ';-->
+            <!--            <?php-->
+            <!--                        $activeServices = $model->activeServiceList;-->
+            <!--            $services = $model->allServices;-->
+            <!--            $comments = $model->activeServiceCommentsList;-->
+            <!--            $services = \app\modules\service\models\Service::find()->where(['order_id' => $model->order_id])->all();-->
+            <!--            if(!empty($services)){-->
+            <!--            foreach($services as $service){-->
+            <!--            $address = '';-->
+            <!--            $type = \app\modules\service\models\ServiceType::find()->where(['id' => $service['type_id']])->one();-->
+            <!--            $needTypes = [1,2,54];-->
+            <!--            if(in_array($type['id'], $needTypes)){-->
+            <!--            $field = \app\modules\service\models\ServiceField::find()->where(['type_id' => $type['id'], 'alias' => $type['id'] == 1 ? 'address_from' : 'address_to'])->one();-->
+            <!--            if($field){-->
+            <!--            $fieldValue = \app\modules\service\models\ServiceFieldValue::find()->where(['field_id' => $field['field_id'], 'service_id'=>$service['service_id']])->one();-->
+            <!--            $address = ': '.$fieldValue['value'];-->
+            <!--            }-->
+            <!--            }-->
+            <!--            echo '<span>'-->
+            <!--                                    .Html::a($type['name'].$address)-->
+            <!--                                    .'</span>; ';-->
 
-<!--            }-->
-<!--            }-->
+            <!--            }-->
+            <!--            }-->
 
-
-<!--            ?>-->
+            <!--            ?>-->
           </div>
         </td>
       </tr>
       <tr>
-        <td class="vertical" rowspan="4"><span class="label">получатель</span></td>
+        <td class="vertical" rowspan="4">
+          <span class="label">получатель</span>
+        </td>
         <td class="vtop border-b border-r border-black">
           <span class="title">Компания:</span>
-          <br /><span class="user-info">{{order.recipient_company}}</span>
+          <br /><span class="user-info">{{ order.recipient_company }}</span>
         </td>
         <td colspan="2" rowspan="2" class="payment">
-
           <div class="pheader mb-1.5">
             <div class="label">Информация об оплате</div>
           </div>
           <div class="half">
-            <b class="inline-block title mr-5">{{true ? 'Оплата отправителем' : 'Оплата получателем'}}</b> <input type="checkbox" checked disabled class="appearance-none" />
+            <b class="title mr-5 inline-block">{{
+              true ? 'Оплата отправителем' : 'Оплата получателем'
+            }}</b>
+            <input type="checkbox" checked disabled class="appearance-none" />
           </div>
           <div class="half">
-            <b class="inline-block title mr-5">{{true ? 'Наличный расчет' : 'Безналичный расчет'}}</b> <input type="checkbox" checked disabled />
+            <b class="title mr-5 inline-block">{{
+              true ? 'Наличный расчет' : 'Безналичный расчет'
+            }}</b>
+            <input type="checkbox" checked disabled />
           </div>
           <div class="half">
-            <div style="width: 100%; text-align: center; font-size: 10px;">
+            <div style="width: 100%; text-align: center; font-size: 10px">
               <span class="title !text-[10px]">СТОИМОСТЬ ДОСТАВКИ:</span>
-              <span style="font-size:16px;">{{order.order_price}} руб.</span>
+              <span style="font-size: 16px">{{ order.order_price }} руб.</span>
             </div>
           </div>
           <div class="half">
-            <div style="width: 100%; text-align: center; font-size: 10px;">
+            <div style="width: 100%; text-align: center; font-size: 10px">
               <span class="title !text-[10px]">ДАТА ОТПРАВКИ:</span>
-              <span style="font-size: 20px; font-weight: bold">{{formatDate(order.sending_date)}}</span>
+              <span style="font-size: 20px; font-weight: bold">{{
+                formatDate(order.sending_date)
+              }}</span>
             </div>
           </div>
-
         </td>
       </tr>
       <tr>
         <td class="vtop border-b border-r border-black">
           <span class="title">ФИО получателя:</span>
-          <br /><span class="user-info">{{order.recipient_name}}</span>
+          <br /><span class="user-info">{{ order.recipient_name }}</span>
         </td>
       </tr>
       <tr>
         <td class="vtop border-b border-r border-black">
           <span class="title">Пункт назначения:</span>
-          <br /><span class="user-info city">{{order.city_to}}</span>
+          <br /><span class="user-info city">{{ order.city_to }}</span>
         </td>
-        <td colspan="2" rowspan="2" style="text-align: justify; vertical-align: top;" class="border-t border-black">
-                    <div class="text-[7px] leading-tight">
-                      Настоящим я подтверждаю, что отправление не содержит предметы, запрещенные к пересылке.
-                      Согласен со всеми правилами перевозки грузов компании Баскурьер.
-                      Ознакомиться с правилами и отследить посылку можно на сайте или отсканировав QR-код на квитанции.
-                      Обязуюсь соблюдать все правила и условия. Соглашение между Исполнителем и заказчиком о приемке
-                      Груза на условиях, изложенных в Договоре и правилах перевозки грузов Баскурьер, считается заключенным
-                      с момента подписания Отправителем бланка накладной.
-                    </div>
-          <div style="width: 100%; text-align: left;">
-                        <span style="margin-right: 10px">
-                            <span class="title block">ФИО и подпись отправителя: ________________________________________</span>
-                            <span class="title block">Менеджер: {{order.manager}} Подпись: ______________</span>
-                        </span>
+        <td
+          colspan="2"
+          rowspan="2"
+          style="text-align: justify; vertical-align: top"
+          class="border-t border-black"
+        >
+          <div class="text-[7px] leading-tight">
+            Настоящим я подтверждаю, что отправление не содержит предметы,
+            запрещенные к пересылке. Согласен со всеми правилами перевозки
+            грузов компании Баскурьер. Ознакомиться с правилами и отследить
+            посылку можно на сайте или отсканировав QR-код на квитанции.
+            Обязуюсь соблюдать все правила и условия. Соглашение между
+            Исполнителем и заказчиком о приемке Груза на условиях, изложенных в
+            Договоре и правилах перевозки грузов Баскурьер, считается
+            заключенным с момента подписания Отправителем бланка накладной.
+          </div>
+          <div style="width: 100%; text-align: left">
+            <span style="margin-right: 10px">
+              <span class="title block"
+                >ФИО и подпись отправителя:
+                ________________________________________</span
+              >
+              <span class="title block"
+                >Менеджер: {{ order.manager }} Подпись: ______________</span
+              >
+            </span>
           </div>
         </td>
       </tr>
       <tr>
         <td class="vtop border-r border-black">
           <span class="title">Телефон получателя:</span>
-          <br /><span class="user-info">{{order.recipient_phone}}</span>
+          <br /><span class="user-info">{{ order.recipient_phone }}</span>
         </td>
       </tr>
     </table>
-<!--    <button type="button" class="print:invisible" tuiButton (click)="print()">Напечатать</button>-->
+    <!--    <button type="button" class="print:invisible" tuiButton (click)="print()">Напечатать</button>-->
   </ng-container>
 </tui-loader>

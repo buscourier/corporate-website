@@ -1,11 +1,10 @@
 :host {
-  @apply relative block p-6 pt-12 md:p-8 print:!p-0;
+  @apply relative block p-6 pt-12 print:!p-0 md:p-8;
 }
 
 table {
-  @apply border w-full;
+  @apply w-full border;
 }
-
 
 .order-print.copy {
   display: none;
@@ -14,13 +13,14 @@ table {
   page-break-after: always;
 }
 .order-print {
-  width: 20cm!important;
-  height: auto!important;
+  width: 20cm !important;
+  height: auto !important;
 }
 .order-print tr {
-  height: 9mm!important;
+  height: 9mm !important;
 }
-.order-print td, .box-border {
+.order-print td,
+.box-border {
   font-size: 10px;
   padding: 2px;
   border: 1px solid #676767;
@@ -36,10 +36,10 @@ td.bbottom {
   border-bottom: 1px solid #000;
 }
 td.vertical {
-  width: 4mm!important;
-  padding-left: 0px!important;
-  background: #999999!important;
-  padding-right: 0px!important;
+  width: 4mm !important;
+  padding-left: 0px !important;
+  background: #999999 !important;
+  padding-right: 0px !important;
 }
 td.vertical span {
   -webkit-writing-mode: vertical-lr;
@@ -56,17 +56,17 @@ td.vertical span {
 
 td.vtop {
   vertical-align: top;
-  width: 95mm!important;
+  width: 95mm !important;
 }
 td.payment {
-  padding: 0px!important;
+  padding: 0px !important;
 }
 td.payment > div {
   padding-bottom: 8px;
 }
 td.payment .half {
   display: inline-block;
-  width:49%;
+  width: 49%;
   padding-left: 15px;
 }
 td.payment .pheader {
@@ -79,7 +79,6 @@ td.payment .pheader div {
   width: 100%;
   top: -6px;
   background: #999999;
-
 }
 .half span.title {
   width: 130px;
@@ -98,7 +97,7 @@ td div.label {
 }
 
 td.dimensions {
-  font-size: 8px!important;
+  font-size: 8px !important;
 }
 td.dimensions > div {
   display: inline-block;
@@ -116,7 +115,8 @@ td.services {
   padding: 0px;
   padding-bottom: 5px;
 }
-td.services label input, .half label input {
+td.services label input,
+.half label input {
   float: left;
   margin-top: 2px;
   margin-right: 5px;
@@ -139,7 +139,7 @@ td.services div > span {
   padding-top: 5px;
 }
 td.vtop {
-  position:relative;
+  position: relative;
 }
 
 td {
@@ -155,7 +155,7 @@ span.user-info {
   text-align: right;
 }
 span.user-info:before {
-  content:'';
+  content: '';
   display: inline-block;
   height: 15px;
   width: 110px;
@@ -171,67 +171,79 @@ span.user-info.city {
 }
 @media print {
   * {
-    padding:0px!important;
-    margin:0px!important;
-    -webkit-print-color-adjust: exact!important;
-    print-color-adjust: exact!important;
+    padding: 0px !important;
+    margin: 0px !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
-  .nav, .box.sidebar, .page-title, .header, #site-panel, #yii-debug-toolbar, .print-button {
-    display: none!important;
+  .nav,
+  .box.sidebar,
+  .page-title,
+  .header,
+  #site-panel,
+  #yii-debug-toolbar,
+  .print-button {
+    display: none !important;
   }
-  html, body, .box.content, .container, .wrapper, .main {
-    display:block!important;
-    width:100%!important;
+  html,
+  body,
+  .box.content,
+  .container,
+  .wrapper,
+  .main {
+    display: block !important;
+    width: 100% !important;
   }
   .order-print {
-    width: 20cm!important;
-    height: 9cm!important;
+    width: 20cm !important;
+    height: 9cm !important;
   }
   .order-print.copy {
     display: block;
-    margin-top: 12mm!important;
+    margin-top: 12mm !important;
   }
   .order-print td {
-    padding: 0.2mm 1.5mm!important;
+    padding: 0.2mm 1.5mm !important;
   }
-  td.vertical, .wide {
-    padding-left: 0px!important;
-    padding-right: 0px!important;
+  td.vertical,
+  .wide {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
   }
   td.vtop {
-    padding-top: 0px!important;
+    padding-top: 0px !important;
   }
   td.payment {
-    padding: 0px!important;
+    padding: 0px !important;
   }
   td.payment > div {
-    padding-bottom: 8px!important;
+    padding-bottom: 8px !important;
   }
   td.payment .half {
-    padding-left: 15px!important;
+    padding-left: 15px !important;
   }
   td.services {
-    padding: 0px!important;
-    padding-bottom: 5px!important;
+    padding: 0px !important;
+    padding-bottom: 5px !important;
   }
   .half label input {
-    margin-top: 2px!important;
-    margin-left: 5px!important;
+    margin-top: 2px !important;
+    margin-left: 5px !important;
   }
   td.services label input {
-    margin-top: 2px!important;
-    margin-right: 5px!important;
+    margin-top: 2px !important;
+    margin-right: 5px !important;
   }
   td.services > div {
-    margin-left: 5px!important;
+    margin-left: 5px !important;
   }
   td.services div > span {
-    padding-left: 5px!important;
+    padding-left: 5px !important;
   }
   td.dimensions > div {
-    padding: 0px 5px!important;
+    padding: 0px 5px !important;
   }
   .services label {
-    margin-bottom: 0px!important;
+    margin-bottom: 0px !important;
   }
 }
