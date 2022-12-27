@@ -100,10 +100,10 @@
   </div>
 </div>
 <ng-template #taskOne let-observer>
-  <article class="relative flex flex-col rounded-sm bg-white md:p-2">
+  <article class="relative flex flex-col rounded-sm bg-white p-4 md:p-8">
     <button
       type="button"
-      class="absolute -top-2 -right-2 text-gray-800"
+      class="absolute top-3 right-3 text-gray-800"
       (click)="observer.complete()"
     >
       <tui-svg src="icons::close-2" class="!h-[22px] !w-[22px]"></tui-svg>
@@ -162,10 +162,10 @@
 </ng-template>
 
 <ng-template #taskTwo let-observer>
-  <article class="relative flex flex-col rounded-sm bg-white md:p-2">
+  <article class="relative flex flex-col rounded-sm bg-white p-4 md:p-8">
     <button
       type="button"
-      class="absolute -top-2 -right-2 text-gray-800"
+      class="absolute top-3 right-4 md:right-3 text-gray-800"
       (click)="observer.complete()"
     >
       <tui-svg src="icons::close-2" class="!h-[22px] !w-[22px]"></tui-svg>
@@ -210,10 +210,10 @@
 </ng-template>
 
 <ng-template #taskThree let-observer>
-  <article class="relative flex flex-col rounded-sm bg-white md:p-2">
+  <article class="relative flex flex-col rounded-sm bg-white p-4 md:p-8">
     <button
       type="button"
-      class="absolute -top-2 -right-2 text-gray-800"
+      class="absolute top-3 right-4 md:right-3 text-gray-800"
       (click)="observer.complete()"
     >
       <tui-svg src="icons::close-2" class="!h-[22px] !w-[22px]"></tui-svg>
