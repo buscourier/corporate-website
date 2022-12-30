@@ -44,7 +44,7 @@ export class ReportComponent implements OnInit {
     'print',
   ]
 
-  isLoading$: Observable<boolean>
+  isOrdersLoading$: Observable<boolean>
   orders$: Observable<OrderInterface[]>
   filterParams: {
     'start-date': string | null
@@ -100,7 +100,7 @@ export class ReportComponent implements OnInit {
   }
 
   initializeValues() {
-    this.isLoading$ = this.store.select(isLoadingSelector)
+    this.isOrdersLoading$ = this.store.select(isLoadingSelector)
     this.orders$ = this.store.select(ordersSelector).pipe(
       filter(Boolean),
       map((response: ReportResponseInterface) => {

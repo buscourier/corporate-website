@@ -1,4 +1,7 @@
-<div class="mx-auto max-w-[1170px] px-4 pb-10">
+<div
+  *tuiLet="isOrdersLoading$ | async as isOrdersLoading"
+  class="mx-auto max-w-[1170px] px-4 pb-10"
+>
   <a
     [routerLink]="['/account']"
     class="mt-16 mb-10 flex items-center hover:opacity-70"
@@ -11,188 +14,187 @@
   </a>
   <h1 class="mb-8 font-heading text-2xl font-bold lg:text-3xl">Мои заказы</h1>
   <app-filter (filterChanged)="fetchDataWithFilterParams($event)"></app-filter>
-  <ng-container *appLet="orders$ | async as orders">
+  <ng-container *tuiLet="orders$ | async as orders">
     <div *ngIf="isLargeScreen; else mobileData" class="mb-7 flex flex-col">
       <div class="mb-4 overflow-x-auto">
         <div class="inline-block min-w-full align-middle">
           <div
             class="overflow-hidden shadow-sm ring-1 ring-black ring-opacity-5"
           >
-            <ng-container *tuiLet="isLoading$ | async as isLoading">
-              <tui-loader [showLoader]="isLoading">
-                <table
-                  #table
-                  *ngIf="orders"
-                  tuiTable
-                  [columns]="columns"
-                  class="w-full"
-                  [class.opacity-0]="isLoading"
-                >
-                  <thead>
-                    <tr tuiThGroup>
-                      <th
-                        *tuiHead="'order_id'"
-                        tuiTh
-                        [sorter]="null"
-                        [sticky]="true"
+            <tui-loader [showLoader]="isOrdersLoading">
+              <table
+                #table
+                *ngIf="orders"
+                tuiTable
+                [columns]="columns"
+                class="w-full"
+                [class.opacity-0]="isOrdersLoading"
+              >
+                <thead>
+                  <tr tuiThGroup>
+                    <th
+                      *tuiHead="'order_id'"
+                      tuiTh
+                      [sorter]="null"
+                      [sticky]="true"
+                    >
+                      № Заказа
+                    </th>
+                    <th *tuiHead="'date'" tuiTh [sticky]="true">Дата заказа</th>
+                    <th
+                      *tuiHead="'sender_name'"
+                      tuiTh
+                      [sorter]="null"
+                      [sticky]="true"
+                    >
+                      Отправитель
+                    </th>
+                    <th *tuiHead="'recipient_name'" tuiTh [sticky]="true">
+                      Получатель
+                    </th>
+                    <th *tuiHead="'start_city'" tuiTh [sticky]="true">
+                      Город отправления
+                    </th>
+                    <th *tuiHead="'end_city'" tuiTh [sticky]="true">
+                      Город получения
+                    </th>
+                    <th *tuiHead="'order_price'" tuiTh [sticky]="true">Цена</th>
+                    <th *tuiHead="'status'" tuiTh [sticky]="true">Статус</th>
+                    <th
+                      *tuiHead="'print'"
+                      tuiTh
+                      [sorter]="null"
+                      [sticky]="true"
+                    >
+                      Печать
+                    </th>
+                  </tr>
+                </thead>
+                <tbody tuiTbody [data]="orders">
+                  <tr *tuiRow="let order of orders" tuiTr>
+                    <td *tuiCell="'order_id'" tuiTd>
+                      <b
+                        (click)="viewOrder(order.order_id)"
+                        class="hover:cursor-pointer"
+                        >{{ order.order_id }}</b
                       >
-                        № Заказа
-                      </th>
-                      <th *tuiHead="'date'" tuiTh [sticky]="true">
-                        Дата заказа
-                      </th>
-                      <th
-                        *tuiHead="'sender_name'"
-                        tuiTh
-                        [sorter]="null"
-                        [sticky]="true"
-                      >
-                        Отправитель
-                      </th>
-                      <th *tuiHead="'recipient_name'" tuiTh [sticky]="true">
-                        Получатель
-                      </th>
-                      <th *tuiHead="'start_city'" tuiTh [sticky]="true">
-                        Город отправления
-                      </th>
-                      <th *tuiHead="'end_city'" tuiTh [sticky]="true">
-                        Город получения
-                      </th>
-                      <th *tuiHead="'order_price'" tuiTh [sticky]="true">
-                        Цена
-                      </th>
-                      <th *tuiHead="'status'" tuiTh [sticky]="true">Статус</th>
-                      <th
-                        *tuiHead="'print'"
-                        tuiTh
-                        [sorter]="null"
-                        [sticky]="true"
-                      >
-                        Печать
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody tuiTbody [data]="orders">
-                    <tr *tuiRow="let order of orders" tuiTr>
-                      <td *tuiCell="'order_id'" tuiTd>
-                        <b
-                          (click)="viewOrder(order.order_id)"
-                          class="hover:cursor-pointer"
-                          >{{ order.order_id }}</b
-                        >
-                      </td>
-                      <td *tuiCell="'date'" tuiTd>
-                        {{ order.date }}
-                      </td>
-                      <td *tuiCell="'sender_name'" tuiTd>
-                        {{ order.sender_name }}
-                      </td>
-                      <td *tuiCell="'recipient_name'" tuiTd>
-                        {{ order.recipient_name }}
-                      </td>
-                      <td *tuiCell="'start_city'" tuiTd>
-                        {{ order.start_city }}
-                      </td>
-                      <td *tuiCell="'end_city'" tuiTd>
-                        {{ order.end_city }}
-                      </td>
-                      <td *tuiCell="'order_price'" tuiTd>
-                        {{ order.order_price }} {{ 'RUB' | tuiCurrency }}
-                      </td>
-                      <td *tuiCell="'status'" tuiTd>
-                        {{ order.status }}
-                      </td>
-                      <td *tuiCell="'print'" tuiTd>
-                        <button
-                          tuiIconButton
-                          type="button"
-                          appearance="icon"
-                          icon="tuiIconPrintLarge"
-                          (click)="printOrder(order.order_id)"
-                        ></button>
+                    </td>
+                    <td *tuiCell="'date'" tuiTd>
+                      {{ order.date }}
+                    </td>
+                    <td *tuiCell="'sender_name'" tuiTd>
+                      {{ order.sender_name }}
+                    </td>
+                    <td *tuiCell="'recipient_name'" tuiTd>
+                      {{ order.recipient_name }}
+                    </td>
+                    <td *tuiCell="'start_city'" tuiTd>
+                      {{ order.start_city }}
+                    </td>
+                    <td *tuiCell="'end_city'" tuiTd>
+                      {{ order.end_city }}
+                    </td>
+                    <td *tuiCell="'order_price'" tuiTd>
+                      {{ order.order_price }} {{ 'RUB' | tuiCurrency }}
+                    </td>
+                    <td *tuiCell="'status'" tuiTd>
+                      {{ order.status }}
+                    </td>
+                    <td *tuiCell="'print'" tuiTd>
+                      <button
+                        tuiIconButton
+                        type="button"
+                        appearance="icon"
+                        icon="tuiIconPrintLarge"
+                        (click)="printOrder(order.order_id)"
+                      ></button>
 
-                        <!--                      <b class="text-yellow hover:cursor-pointer">Напечатать</b>-->
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </tui-loader>
-            </ng-container>
+                      <!--                      <b class="text-yellow hover:cursor-pointer">Напечатать</b>-->
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </tui-loader>
           </div>
         </div>
       </div>
     </div>
     <ng-template #mobileData>
-      <tui-loader [showLoader]="isLoading$ | async">
-        <div
-          *ngFor="let order of orders"
-          class="mx-4 mb-7 border-b border-gray-300 pb-7"
-        >
-          <app-mobile-data
-            key="Заказ"
-            [value]="getIdValue(order.order_id)"
-            (click)="viewOrder(order.order_id)"
-          ></app-mobile-data>
-          <app-mobile-data
-            key="Дата заказа"
-            [value]="order.date"
-          ></app-mobile-data>
-          <app-mobile-data
-            key="Отправитель"
-            [value]="order.sender_name"
-          ></app-mobile-data>
-          <app-mobile-data
-            key="Получатель"
-            [value]="order.recipient_name"
-          ></app-mobile-data>
-          <app-mobile-data
-            key="Город отправления"
-            [value]="order.start_city"
-          ></app-mobile-data>
-          <app-mobile-data
-            key="Город получения"
-            [value]="order.end_city"
-          ></app-mobile-data>
-          <app-mobile-data
-            key="Цена"
-            [value]="order.order_price"
-          ></app-mobile-data>
-          <app-mobile-data
-            key="Статус"
-            [value]="order.status"
-          ></app-mobile-data>
-          <app-mobile-data
-            key="Действие"
-            value="<b class='text-yellow'>Напечатать</b>"
-          ></app-mobile-data>
-        </div>
+      <tui-loader [showLoader]="isOrdersLoading" [class.h-96]="isOrdersLoading">
+        <ng-container *ngIf="!isOrdersLoading">
+          <div
+            *ngFor="let order of orders"
+            class="mx-4 mb-7 border-b border-gray-300 pb-7"
+          >
+            <app-mobile-data
+              key="Заказ"
+              [value]="getIdValue(order.order_id)"
+              (click)="viewOrder(order.order_id)"
+            ></app-mobile-data>
+            <app-mobile-data
+              key="Дата заказа"
+              [value]="order.date"
+            ></app-mobile-data>
+            <app-mobile-data
+              key="Отправитель"
+              [value]="order.sender_name"
+            ></app-mobile-data>
+            <app-mobile-data
+              key="Получатель"
+              [value]="order.recipient_name"
+            ></app-mobile-data>
+            <app-mobile-data
+              key="Город отправления"
+              [value]="order.start_city"
+            ></app-mobile-data>
+            <app-mobile-data
+              key="Город получения"
+              [value]="order.end_city"
+            ></app-mobile-data>
+            <app-mobile-data
+              key="Цена"
+              [value]="order.order_price"
+            ></app-mobile-data>
+            <app-mobile-data
+              key="Статус"
+              [value]="order.status"
+            ></app-mobile-data>
+            <button
+              type="button"
+              size="s"
+              tuiButton
+              (click)="printOrder(order.order_id)"
+              class="mt-4"
+            >
+              Напечатать
+            </button>
+          </div>
+        </ng-container>
       </tui-loader>
     </ng-template>
-    <div class="flex items-center">
+    <div class="flex flex-col items-center space-y-8 md:flex-row md:space-y-0">
       <tui-pagination
         *ngIf="orders"
         [length]="pages"
         [index]="pageIndex"
         (indexChange)="goToPage($event)"
-        class="ml-auto"
+        class="md:ml-auto"
       ></tui-pagination>
       <button
         type="button"
         tuiButton
-        class="ml-auto"
+        class="md:ml-auto"
         size="m"
         (click)="exportToExcel('xlsx')"
       >
         Экпорт в Exel
       </button>
     </div>
-    <ng-container *tuiLet="isLoading$ | async as isLoading">
-      <p
-        *ngIf="!isLoading && !orders"
-        class="text-center text-xl text-gray-500"
-      >
-        По указанным параметрам нет данных
-      </p>
-    </ng-container>
+    <p
+      *ngIf="!isOrdersLoading && !orders"
+      class="text-center text-xl text-gray-500"
+    >
+      По указанным параметрам нет данных
+    </p>
   </ng-container>
 </div>
