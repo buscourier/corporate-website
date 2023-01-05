@@ -1,5 +1,5 @@
 :host {
-  @apply relative block p-6 pt-12 print:!p-0 md:p-8;
+  @apply relative block p-6 pt-12 print:!p-0 md:p-8 overflow-x-auto;
 }
 
 table {

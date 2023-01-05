@@ -74,7 +74,6 @@ export class FilterComponent implements OnInit {
       .pipe(
         filter(Boolean),
         tap(() => {
-          console.log('tada')
           this.form.get('startCity').enable({emitEvent: false})
         })
       )
