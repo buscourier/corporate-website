@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   ElementRef,
@@ -6,12 +7,13 @@ import {
   Inject,
   Injector,
   OnInit,
+  Self,
   ViewChild,
 } from '@angular/core'
 import {Store} from '@ngrx/store'
 import {TuiDialogService} from '@taiga-ui/core'
 import {PolymorpheusComponent} from '@tinkoff/ng-polymorpheus'
-import {filter, map, Observable, take} from 'rxjs'
+import {delay, filter, map, Observable, take, takeUntil} from 'rxjs'
 import {currentUserSelector} from '../../../auth/store/selectors'
 import {CurrentUserInterface} from '../../../shared/types/current-user.interface'
 import {PrintOrderComponent} from './components/print-order/print-order.component'
@@ -22,15 +24,24 @@ import {FilterInterface} from './types/filter.interface'
 import {OrderInterface} from './types/order.interface'
 import {ReportResponseInterface} from './types/report-response.interface'
 import {read, writeFileXLSX, write, writeFile, utils} from 'xlsx'
+import {TuiDestroyService, TuiScrollService} from '@taiga-ui/cdk'
+import {tap} from 'rxjs/operators'
+import {xsScreenSelector} from '../../../store/global/selectors'
 
 @Component({
   selector: 'app-report',
   templateUrl: './report.component.html',
   styleUrls: ['./report.component.css'],
+  providers: [TuiDestroyService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ReportComponent implements OnInit {
   @ViewChild('table', {read: ElementRef}) table: ElementRef
+  @ViewChild('filter', {read: ElementRef}) filter: ElementRef
+
+  isOrdersLoading$: Observable<boolean>
+  orders$: Observable<OrderInterface[]>
+  xs$: Observable<boolean>
 
   columns = [
     'order_id',
@@ -44,24 +55,25 @@ export class ReportComponent implements OnInit {
     'print',
   ]
 
-  isOrdersLoading$: Observable<boolean>
-  orders$: Observable<OrderInterface[]>
   filterParams: {
     'start-date': string | null
     'end-date': string | null
     'start-city': string | null
     'end-city': string | null
   }
-  pages = 8
+  pages = 0
   pageIndex = 0
+  ordersOnPage = 10
+  scrollDuration = 300
   breakpoint = window.matchMedia(`(min-width: 640px)`)
-  isLargeScreen: boolean
   userId: string
 
   constructor(
     private store: Store,
     @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
-    @Inject(Injector) private readonly injector: Injector
+    @Inject(Injector) private readonly injector: Injector,
+    @Inject(TuiScrollService) private readonly scrollService: TuiScrollService,
+    @Self() @Inject(TuiDestroyService) private destroy$: TuiDestroyService
   ) {}
 
   ngOnInit(): void {
@@ -74,11 +86,17 @@ export class ReportComponent implements OnInit {
       .select(currentUserSelector)
       .pipe(
         filter(Boolean),
+        delay(0),
+        tap(() => {
+          this.scroll()
+        }),
         map((user: CurrentUserInterface) => {
           this.userId = user.id
+
           const ordersInput = {
             'user-id': user.id,
             'page-num': (this.pageIndex + 1).toString(),
+            'elements-on-page': this.ordersOnPage.toString(),
             ...this.filterParams,
           }
 
@@ -105,13 +123,15 @@ export class ReportComponent implements OnInit {
       filter(Boolean),
       map((response: ReportResponseInterface) => {
         const pages = Number(response.rows)
-        const modulo = pages % 10
-        this.pages = Math.floor(pages / 10) + (modulo > 0 ? 1 : 0)
+        const modulo = pages % this.ordersOnPage
+        this.pages =
+          Math.floor(pages / this.ordersOnPage) + (modulo > 0 ? 1 : 0)
 
         return response.orders
       })
     )
-    this.isLargeScreen = this.breakpoint && this.breakpoint.matches
+
+    this.xs$ = this.store.select(xsScreenSelector)
   }
 
   viewOrder(id: string) {
@@ -156,10 +176,6 @@ export class ReportComponent implements OnInit {
     return `<b class="hover:cursor-pointer">№ ${id}</b>`
   }
 
-  @HostListener('window:resize') resizeWindow() {
-    this.isLargeScreen = this.breakpoint && this.breakpoint.matches
-  }
-
   exportToExcel(type, fn = null, dl = false) {
     const wb = utils.table_to_book(this.table.nativeElement, {
       sheet: 'Страница 1',
@@ -182,5 +198,19 @@ export class ReportComponent implements OnInit {
     }).format(new Date(date))
 
     return formattedDate
+  }
+
+  scroll() {
+    const scrollTop = this.filter.nativeElement.getBoundingClientRect().top
+
+    return this.scrollService
+      .scroll$(
+        document.documentElement,
+        scrollTop + window.scrollY - 10,
+        0,
+        this.scrollDuration
+      )
+      .pipe(takeUntil(this.destroy$))
+      .subscribe()
   }
 }
