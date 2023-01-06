@@ -79,7 +79,7 @@
   >
     <div
       *tuiLet="currentUser$ | async as currentUser"
-      class="relative z-20 mx-auto flex max-w-[1170px] justify-between space-x-10 px-4 pt-4 pb-5 sticky-header:space-x-14 lg:static lg:pt-7 lg:pb-10 sticky-header:pt-4 sticky-header:pb-4 xl:space-x-22 xl:sticky-header:space-x-8"
+      class="relative z-20 mx-auto flex max-w-[1170px] justify-between space-x-10 px-4 pt-4 pb-5 sticky-header:space-x-14 sticky-header:pt-4 sticky-header:pb-4 lg:static lg:pt-7 lg:pb-10 xl:space-x-22 xl:sticky-header:space-x-8"
     >
       <!--  header: logo -->
       <a routerLink="/">
@@ -124,7 +124,7 @@
               >
                 <div class="flex flex-col space-y-2">
                   <b class="whitespace-nowrap text-md text-gray-500"
-                  >Приморский край</b
+                    >Приморский край</b
                   >
                   <button
                     type="button"
@@ -159,7 +159,7 @@
                 </div>
                 <div class="flex flex-col space-y-2">
                   <b class="whitespace-nowrap text-md text-gray-500"
-                  >Хабаровский край</b
+                    >Хабаровский край</b
                   >
                   <button
                     type="button"
@@ -180,9 +180,7 @@
             <span>+7 4232 026532</span>
           </a>
           <!--  top bar: authorization -->
-          <div
-            class="relative z-30 pl-5"
-          >
+          <div class="relative z-30 pl-5">
             <button
               *ngIf="isAnonymous; else user"
               type="button"
@@ -265,19 +263,19 @@
                   [routerLink]="['/new-order']"
                   class="leading-7 text-gray-800 hover:text-black"
                   (click)="closeDropdown()"
-                >Заказать доставку</a
+                  >Заказать доставку</a
                 >
                 <a
                   [routerLink]="['/account', 'report']"
                   class="leading-7 text-gray-800 hover:text-black"
                   (click)="closeDropdown()"
-                >Мои заказы</a
+                  >Мои заказы</a
                 >
                 <a
                   [routerLink]="['/account', 'profile', 'entity']"
                   class="leading-7 text-gray-800 hover:text-black"
                   (click)="closeDropdown()"
-                >Персональные данные</a
+                  >Персональные данные</a
                 >
                 <button
                   type="button"
@@ -371,15 +369,13 @@
                 class="overflow-hidden font-base text-gray-800 hover:text-black"
                 (mouseenter)="showDropdown('current-user')"
               >
-                <tui-loader
-                  [showLoader]="isCurrentUserLoading"
-                >
+                <tui-loader [showLoader]="isCurrentUserLoading">
                   <ng-container *ngIf="currentUser && !isCurrentUserLoading">
                     <tui-svg
                       src="icons::user-logged-in"
                       class="!h-10 !w-10"
                     ></tui-svg>
-<!--                    <span class="inline-block">{{ getCurrentUserName(currentUser) }}</span>-->
+                    <!--                    <span class="inline-block">{{ getCurrentUserName(currentUser) }}</span>-->
                   </ng-container>
                 </tui-loader>
               </button>
@@ -411,7 +407,7 @@
             <div
               *ngIf="activeDropdown === 'current-user'"
               [@fadeInOut]
-              class="lg:w-52 absolute top-full right-0 w-full"
+              class="absolute top-full right-0 w-full lg:w-52"
             >
               <div
                 class="flex flex-col border-t-2 border-yellow bg-white pt-3 pr-5 pb-2 pl-4 shadow lg:mt-4"
@@ -420,19 +416,19 @@
                   [routerLink]="['/new-order']"
                   class="text-right leading-7 text-gray-800 hover:text-black lg:text-left"
                   (click)="closeDropdown()"
-                >Заказать доставку!</a
+                  >Заказать доставку!</a
                 >
                 <a
                   [routerLink]="['/account', 'report']"
                   class="text-right leading-7 text-gray-800 hover:text-black lg:text-left"
                   (click)="closeDropdown()"
-                >Мои заказы</a
+                  >Мои заказы</a
                 >
                 <a
                   [routerLink]="['/account', 'profile', 'entity']"
                   class="text-right leading-7 text-gray-800 hover:text-black lg:text-left"
                   (click)="closeDropdown()"
-                >Персональные данные</a
+                  >Персональные данные</a
                 >
                 <button
                   type="button"
@@ -453,7 +449,11 @@
           >
             <tui-svg src="tuiIconMenuLarge" class="!h-6 !w-6"> </tui-svg>
             <div
-              *tuiSidebar="isMobileMenuOpen; direction: 'right'; autoWidth: true"
+              *tuiSidebar="
+                isMobileMenuOpen;
+                direction: 'right';
+                autoWidth: true
+              "
               class="flex h-full w-[318px] flex-col bg-gray-50"
             >
               <!-- mobile-nav: header-->
@@ -537,7 +537,7 @@
                     <a
                       [routerLink]=""
                       class="mb-5 inline-block text-sm font-bold leading-6 text-black hover:text-gray-900"
-                    >inbox@busbox.guru</a
+                      >inbox@busbox.guru</a
                     >
                     <div class="space-y-2 text-2xs text-gray-700">
                       <p>Политика конфиденциальности</p>
@@ -545,7 +545,7 @@
                       <p>
                         Идея и дизайн сайта:
                         <a href="" class="text-black active:text-gray-900"
-                        >LEAD WAVE</a
+                          >LEAD WAVE</a
                         >
                       </p>
                     </div>
@@ -568,4 +568,3 @@
     ></div>
   </header>
 </ng-container>
-
