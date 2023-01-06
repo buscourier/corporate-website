@@ -139,13 +139,14 @@ export class PageHeaderComponent implements OnInit {
     this.isBannerClosed = true
   }
 
-  @HostListener('window:scroll', ['$event'])
-  scroll(e: Event) {
-    this.setStickyMenu()
-    // console.log('event', (e.currentTarget as Element).pageYOffset)
+  @HostListener('window:scroll')
+  scroll() {
+    if (window.scrollY > 0) {
+      this.isSticky = true
+    } else {
+      this.isSticky = false
+    }
   }
-
-  setStickyMenu() {}
 
   @tuiPure
   getAnimation(duration: number): TuiDurationOptions {
