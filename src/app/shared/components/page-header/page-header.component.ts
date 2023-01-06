@@ -16,6 +16,7 @@ import {
   TuiDialogService,
   TuiDurationOptions,
   tuiHeightCollapse,
+  tuiLoaderOptionsProvider,
 } from '@taiga-ui/core'
 import {PolymorpheusComponent} from '@tinkoff/ng-polymorpheus'
 import {filter, Observable, take} from 'rxjs'
@@ -24,6 +25,7 @@ import {logoutAction} from '../../../auth/store/actions/sync.action'
 import {
   currentUserSelector,
   isAnonymousSelector,
+  isLoadingSelector,
   isLoggedInSelector,
 } from '../../../auth/store/selectors'
 import {fadeIn} from '../../animations/fade'
@@ -46,6 +48,9 @@ export function iconsPath(name: string): string {
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [fadeIn, tuiHeightCollapse],
   providers: [
+    tuiLoaderOptionsProvider({
+      size: 's',
+    }),
     {
       provide: TUI_SVG_SRC_PROCESSOR,
       useFactory: () => {
@@ -76,6 +81,7 @@ export class PageHeaderComponent implements OnInit {
 
   isLoggedIn$: Observable<boolean>
   isAnonymous$: Observable<boolean>
+  isCurrentUserLoading$: Observable<boolean>
   currentUser$: Observable<CurrentUserInterface>
 
   constructor(
@@ -92,6 +98,7 @@ export class PageHeaderComponent implements OnInit {
   initializeValues() {
     this.isLoggedIn$ = this.store.select(isLoggedInSelector)
     this.isAnonymous$ = this.store.select(isAnonymousSelector)
+    this.isCurrentUserLoading$ = this.store.select(isLoadingSelector)
     this.currentUser$ = this.store
       .select(currentUserSelector)
       .pipe(filter(Boolean))
@@ -145,7 +152,7 @@ export class PageHeaderComponent implements OnInit {
     return {value: ``, params: {duration}}
   }
 
-  truncate(name: string) {
-    return name.slice(0, 20) + '...'
+  getCurrentUserName(user: CurrentUserInterface) {
+    return user.user_name.slice(0, 20) + '...'
   }
 }

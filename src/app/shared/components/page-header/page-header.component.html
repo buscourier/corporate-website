@@ -178,100 +178,113 @@
         </a>
         <!--  top bar: authorization -->
         <ng-container *tuiLet="isAnonymous$ | async as isAnonymous">
-          <div class="relative z-30 pl-5">
-            <button
-              *ngIf="isAnonymous; else user"
-              type="button"
-              class="font-base text-gray-800 hover:text-black"
-              aria-expanded="false"
-              (click)="login()"
-            >
-              <tui-svg
-                src="icons::user-anonymous"
-                class="mr-3 !h-[40px] !w-[40px]"
-              ></tui-svg>
-              <span>Войти</span>
-            </button>
-
-            <ng-template #user>
-              <div
-                class="font-base text-gray-800 hover:cursor-pointer hover:text-black"
-                (mouseenter)="showDropdown('current-user')"
+          <ng-container *tuiLet="isCurrentUserLoading$ | async as isCurrentUserLoading">
+            <div *tuiLet="currentUser$ | async as currentUser" class="relative z-30 pl-5">
+              <button
+                *ngIf="isAnonymous; else user"
+                type="button"
+                class="font-base text-gray-800 hover:text-black"
                 aria-expanded="false"
+                (click)="login()"
               >
-                <ng-container *tuiLet="currentUser$ | async as currentUser">
-                  <span *ngIf="currentUser">{{
-                    truncate(currentUser.user_name)
-                    }}</span>
-                </ng-container>
                 <tui-svg
-                  src="icons::chevron-down"
-                  class="mr-5 ml-0.5 !h-4 !w-4"
+                  src="icons::user-anonymous"
+                  class="mr-3 !h-[40px] !w-[40px]"
                 ></tui-svg>
-                <tui-svg
-                  src="icons::user-logged-in"
-                  class="!h-10 !w-10"
-                ></tui-svg>
-              </div>
-            </ng-template>
+                <span>Войти</span>
+              </button>
 
-            <!--  top bar: anonymous dropdown -->
-            <div
-              *ngIf="activeDropdown === 'anonymous-user'"
-              [@fadeInOut]
-              class="absolute top-full left-16 w-32"
-            >
+              <ng-template #user>
+                <div
+                  class="font-base text-gray-800 hover:cursor-pointer hover:text-black"
+                  (mouseenter)="showDropdown('current-user')"
+                  aria-expanded="false"
+                >
+                  <tui-loader
+                    [showLoader]="isCurrentUserLoading"
+                    [class.h-5]="isCurrentUserLoading"
+                    class="min-w-[100px]"
+                  >
+                    <ng-container *ngIf="currentUser && !isCurrentUserLoading">
+                      {{getCurrentUserName(currentUser)}}
+                      <tui-svg
+                        src="icons::chevron-down"
+                        class="mr-5 ml-0.5 !h-4 !w-4"
+                      ></tui-svg>
+                      <tui-svg
+                        src="icons::user-logged-in"
+                        class="!h-10 !w-10"
+                      ></tui-svg>
+                    </ng-container>
+                  </tui-loader>
+
+                  <!--                <ng-container *tuiLet="currentUser$ | async as currentUser">-->
+                  <!--                  <span *ngIf="currentUser">{{-->
+                  <!--                    truncate(currentUser.user_name)-->
+                  <!--                    }}</span>-->
+                  <!--                </ng-container>-->
+
+                </div>
+              </ng-template>
+
+              <!--  top bar: anonymous dropdown -->
+              <!--            <div-->
+              <!--              *ngIf="activeDropdown === 'anonymous-user'"-->
+              <!--              [@fadeInOut]-->
+              <!--              class="absolute top-full left-16 w-32"-->
+              <!--            >-->
+              <!--              <div-->
+              <!--                class="flex flex-col border-t-2 border-yellow bg-white pt-3 pr-5 pb-2 pl-4 shadow"-->
+              <!--              >-->
+              <!--                <button-->
+              <!--                  type="button"-->
+              <!--                  class="text-left leading-7 text-gray-800 hover:text-black"-->
+              <!--                  (click)="login()"-->
+              <!--                >-->
+              <!--                  Вход-->
+              <!--                </button>-->
+              <!--                <a-->
+              <!--                  href="#"-->
+              <!--                  class="text-left leading-7 text-gray-800 hover:text-black"-->
+              <!--                >Регистрация</a-->
+              <!--                >-->
+              <!--              </div>-->
+              <!--            </div>-->
+              <!--  top bar: logged-in dropdown -->
               <div
-                class="flex flex-col border-t-2 border-yellow bg-white pt-3 pr-5 pb-2 pl-4 shadow"
+                *ngIf="activeDropdown === 'current-user'"
+                [@fadeInOut]
+                class="absolute top-full right-0 z-20 w-52"
               >
-                <button
-                  type="button"
-                  class="text-left leading-7 text-gray-800 hover:text-black"
-                  (click)="login()"
+                <div
+                  class="mt-2 flex flex-col border-t-2 border-yellow bg-white pt-3 pr-5 pb-2 pl-4 shadow"
                 >
-                  Вход
-                </button>
-                <a
-                  href="#"
-                  class="text-left leading-7 text-gray-800 hover:text-black"
-                >Регистрация</a
-                >
+                  <a
+                    [routerLink]="['/new-order']"
+                    class="leading-7 text-gray-800 hover:text-black"
+                  >Заказать доставку</a
+                  >
+                  <a
+                    [routerLink]="['/account', 'report']"
+                    class="leading-7 text-gray-800 hover:text-black"
+                  >Мои заказы</a
+                  >
+                  <a
+                    [routerLink]="['/account', 'profile', 'entity']"
+                    class="leading-7 text-gray-800 hover:text-black"
+                  >Персональные данные</a
+                  >
+                  <button
+                    type="button"
+                    class="text-left leading-7 text-gray-800 hover:text-black"
+                    (click)="logout()"
+                  >
+                    Выйти
+                  </button>
+                </div>
               </div>
             </div>
-            <!--  top bar: logged-in dropdown -->
-            <div
-              *ngIf="activeDropdown === 'current-user'"
-              [@fadeInOut]
-              class="absolute top-full right-0 z-20 w-52"
-            >
-              <div
-                class="mt-2 flex flex-col border-t-2 border-yellow bg-white pt-3 pr-5 pb-2 pl-4 shadow"
-              >
-                <a
-                  [routerLink]="['/new-order']"
-                  class="leading-7 text-gray-800 hover:text-black"
-                >Заказать доставку</a
-                >
-                <a
-                  [routerLink]="['/account', 'report']"
-                  class="leading-7 text-gray-800 hover:text-black"
-                >Мои заказы</a
-                >
-                <a
-                  [routerLink]="['/account', 'profile', 'entity']"
-                  class="leading-7 text-gray-800 hover:text-black"
-                >Персональные данные</a
-                >
-                <button
-                  type="button"
-                  class="text-left leading-7 text-gray-800 hover:text-black"
-                  (click)="logout()"
-                >
-                  Выйти
-                </button>
-              </div>
-            </div>
-          </div>
+          </ng-container>
         </ng-container>
       </div>
       <!--  main nav -->
@@ -340,49 +353,53 @@
         <ng-container *tuiLet="isAnonymous$ | async as isAnonymous">
           <div class="mr-5 pl-5 lg:relative lg:hidden lg:sticky-header:flex">
             <button
+              *ngIf="isAnonymous; else currentUserMobile"
               type="button"
-              class="font-base text-gray-800 hover:text-black"
-              (mouseenter)="
-                showDropdown(isAnonymous ? 'anonymous-user' : 'current-user')
-              "
-              aria-expanded="false"
+              class="font-base text-gray-800 hover:text-black overflow-hidden"
+              (click)="login()"
             >
-              <span *ngIf="isAnonymous; else user">
-                <tui-svg
-                  src="icons::user-anonymous"
-                  class="!h-[40px] !w-[40px]"
-                ></tui-svg>
-              </span>
-              <ng-template #user>
-                <tui-svg
-                  src="icons::user-logged-in"
-                  class="!h-10 !w-10"
-                ></tui-svg>
-              </ng-template>
+              <tui-svg
+                src="icons::user-anonymous"
+                class="!h-[40px] !w-[40px]"
+              ></tui-svg>
             </button>
+           <ng-template #currentUserMobile>
+             <button
+               type="button"
+               class="font-base text-gray-800 hover:text-black overflow-hidden"
+               (mouseenter)="
+                showDropdown('current-user')
+              "
+             >
+               <tui-svg
+                 src="icons::user-logged-in"
+                 class="!h-10 !w-10"
+               ></tui-svg>
+             </button>
+           </ng-template>
             <!--  sticky & mobile: anonymous dropdown -->
-            <div
-              *ngIf="activeDropdown === 'anonymous-user'"
-              [@fadeInOut]
-              class="absolute top-full right-0 w-full lg:w-32"
-            >
-              <div
-                class="flex flex-col border-t-2 border-yellow bg-white pt-3 pr-5 pb-2 pl-4 shadow lg:mt-[18px]"
-              >
-                <button
-                  type="button"
-                  class="text-right leading-7 text-gray-800 hover:text-black lg:text-left"
-                  (click)="login()"
-                >
-                  Вход
-                </button>
-                <a
-                  href="#"
-                  class="text-right leading-7 text-gray-800 hover:text-black lg:text-left"
-                >Регистрация</a
-                >
-              </div>
-            </div>
+<!--            <div-->
+<!--              *ngIf="activeDropdown === 'anonymous-user'"-->
+<!--              [@fadeInOut]-->
+<!--              class="absolute top-full right-0 w-full lg:w-32"-->
+<!--            >-->
+<!--              <div-->
+<!--                class="flex flex-col border-t-2 border-yellow bg-white pt-3 pr-5 pb-2 pl-4 shadow lg:mt-[18px]"-->
+<!--              >-->
+<!--                <button-->
+<!--                  type="button"-->
+<!--                  class="text-right leading-7 text-gray-800 hover:text-black lg:text-left"-->
+<!--                  (click)="login()"-->
+<!--                >-->
+<!--                  Вход-->
+<!--                </button>-->
+<!--                <a-->
+<!--                  href="#"-->
+<!--                  class="text-right leading-7 text-gray-800 hover:text-black lg:text-left"-->
+<!--                >Регистрация</a-->
+<!--                >-->
+<!--              </div>-->
+<!--            </div>-->
             <!--  sticky & mobile: logged-in dropdown -->
             <div
               *ngIf="activeDropdown === 'current-user'"
@@ -395,16 +412,19 @@
                 <a
                   [routerLink]="['/new-order']"
                   class="text-right leading-7 text-gray-800 hover:text-black lg:text-left"
+                  (click)="closeDropdown()"
                 >Заказать доставку</a
                 >
                 <a
                   [routerLink]="['/account', 'report']"
                   class="text-right leading-7 text-gray-800 hover:text-black lg:text-left"
+                  (click)="closeDropdown()"
                 >Мои заказы</a
                 >
                 <a
                   [routerLink]="['/account', 'profile', 'entity']"
                   class="text-right leading-7 text-gray-800 hover:text-black lg:text-left"
+                  (click)="closeDropdown()"
                 >Персональные данные</a
                 >
                 <button
