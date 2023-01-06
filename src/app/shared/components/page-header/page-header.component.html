@@ -121,7 +121,7 @@
             >
               <div class="flex flex-col space-y-2">
                 <b class="whitespace-nowrap text-md text-gray-500"
-                >Приморский край</b
+                  >Приморский край</b
                 >
                 <button
                   type="button"
@@ -156,7 +156,7 @@
               </div>
               <div class="flex flex-col space-y-2">
                 <b class="whitespace-nowrap text-md text-gray-500"
-                >Хабаровский край</b
+                  >Хабаровский край</b
                 >
                 <button
                   type="button"
@@ -178,8 +178,13 @@
         </a>
         <!--  top bar: authorization -->
         <ng-container *tuiLet="isAnonymous$ | async as isAnonymous">
-          <ng-container *tuiLet="isCurrentUserLoading$ | async as isCurrentUserLoading">
-            <div *tuiLet="currentUser$ | async as currentUser" class="relative z-30 pl-5">
+          <ng-container
+            *tuiLet="isCurrentUserLoading$ | async as isCurrentUserLoading"
+          >
+            <div
+              *tuiLet="currentUser$ | async as currentUser"
+              class="relative z-30 pl-5"
+            >
               <button
                 *ngIf="isAnonymous; else user"
                 type="button"
@@ -206,7 +211,7 @@
                     class="min-w-[100px]"
                   >
                     <ng-container *ngIf="currentUser && !isCurrentUserLoading">
-                      {{getCurrentUserName(currentUser)}}
+                      {{ getCurrentUserName(currentUser) }}
                       <tui-svg
                         src="icons::chevron-down"
                         class="mr-5 ml-0.5 !h-4 !w-4"
@@ -223,7 +228,6 @@
                   <!--                    truncate(currentUser.user_name)-->
                   <!--                    }}</span>-->
                   <!--                </ng-container>-->
-
                 </div>
               </ng-template>
 
@@ -262,17 +266,17 @@
                   <a
                     [routerLink]="['/new-order']"
                     class="leading-7 text-gray-800 hover:text-black"
-                  >Заказать доставку</a
+                    >Заказать доставку</a
                   >
                   <a
                     [routerLink]="['/account', 'report']"
                     class="leading-7 text-gray-800 hover:text-black"
-                  >Мои заказы</a
+                    >Мои заказы</a
                   >
                   <a
                     [routerLink]="['/account', 'profile', 'entity']"
                     class="leading-7 text-gray-800 hover:text-black"
-                  >Персональные данные</a
+                    >Персональные данные</a
                   >
                   <button
                     type="button"
@@ -355,7 +359,7 @@
             <button
               *ngIf="isAnonymous; else currentUserMobile"
               type="button"
-              class="font-base text-gray-800 hover:text-black overflow-hidden"
+              class="overflow-hidden font-base text-gray-800 hover:text-black"
               (click)="login()"
             >
               <tui-svg
@@ -363,43 +367,41 @@
                 class="!h-[40px] !w-[40px]"
               ></tui-svg>
             </button>
-           <ng-template #currentUserMobile>
-             <button
-               type="button"
-               class="font-base text-gray-800 hover:text-black overflow-hidden"
-               (mouseenter)="
-                showDropdown('current-user')
-              "
-             >
-               <tui-svg
-                 src="icons::user-logged-in"
-                 class="!h-10 !w-10"
-               ></tui-svg>
-             </button>
-           </ng-template>
+            <ng-template #currentUserMobile>
+              <button
+                type="button"
+                class="overflow-hidden font-base text-gray-800 hover:text-black"
+                (mouseenter)="showDropdown('current-user')"
+              >
+                <tui-svg
+                  src="icons::user-logged-in"
+                  class="!h-10 !w-10"
+                ></tui-svg>
+              </button>
+            </ng-template>
             <!--  sticky & mobile: anonymous dropdown -->
-<!--            <div-->
-<!--              *ngIf="activeDropdown === 'anonymous-user'"-->
-<!--              [@fadeInOut]-->
-<!--              class="absolute top-full right-0 w-full lg:w-32"-->
-<!--            >-->
-<!--              <div-->
-<!--                class="flex flex-col border-t-2 border-yellow bg-white pt-3 pr-5 pb-2 pl-4 shadow lg:mt-[18px]"-->
-<!--              >-->
-<!--                <button-->
-<!--                  type="button"-->
-<!--                  class="text-right leading-7 text-gray-800 hover:text-black lg:text-left"-->
-<!--                  (click)="login()"-->
-<!--                >-->
-<!--                  Вход-->
-<!--                </button>-->
-<!--                <a-->
-<!--                  href="#"-->
-<!--                  class="text-right leading-7 text-gray-800 hover:text-black lg:text-left"-->
-<!--                >Регистрация</a-->
-<!--                >-->
-<!--              </div>-->
-<!--            </div>-->
+            <!--            <div-->
+            <!--              *ngIf="activeDropdown === 'anonymous-user'"-->
+            <!--              [@fadeInOut]-->
+            <!--              class="absolute top-full right-0 w-full lg:w-32"-->
+            <!--            >-->
+            <!--              <div-->
+            <!--                class="flex flex-col border-t-2 border-yellow bg-white pt-3 pr-5 pb-2 pl-4 shadow lg:mt-[18px]"-->
+            <!--              >-->
+            <!--                <button-->
+            <!--                  type="button"-->
+            <!--                  class="text-right leading-7 text-gray-800 hover:text-black lg:text-left"-->
+            <!--                  (click)="login()"-->
+            <!--                >-->
+            <!--                  Вход-->
+            <!--                </button>-->
+            <!--                <a-->
+            <!--                  href="#"-->
+            <!--                  class="text-right leading-7 text-gray-800 hover:text-black lg:text-left"-->
+            <!--                >Регистрация</a-->
+            <!--                >-->
+            <!--              </div>-->
+            <!--            </div>-->
             <!--  sticky & mobile: logged-in dropdown -->
             <div
               *ngIf="activeDropdown === 'current-user'"
@@ -413,19 +415,19 @@
                   [routerLink]="['/new-order']"
                   class="text-right leading-7 text-gray-800 hover:text-black lg:text-left"
                   (click)="closeDropdown()"
-                >Заказать доставку</a
+                  >Заказать доставку</a
                 >
                 <a
                   [routerLink]="['/account', 'report']"
                   class="text-right leading-7 text-gray-800 hover:text-black lg:text-left"
                   (click)="closeDropdown()"
-                >Мои заказы</a
+                  >Мои заказы</a
                 >
                 <a
                   [routerLink]="['/account', 'profile', 'entity']"
                   class="text-right leading-7 text-gray-800 hover:text-black lg:text-left"
                   (click)="closeDropdown()"
-                >Персональные данные</a
+                  >Персональные данные</a
                 >
                 <button
                   type="button"
@@ -531,7 +533,7 @@
                   <a
                     [routerLink]=""
                     class="mb-5 inline-block text-sm font-bold leading-6 text-black hover:text-gray-900"
-                  >inbox@busbox.guru</a
+                    >inbox@busbox.guru</a
                   >
                   <div class="space-y-2 text-2xs text-gray-700">
                     <p>Политика конфиденциальности</p>
@@ -539,7 +541,7 @@
                     <p>
                       Идея и дизайн сайта:
                       <a href="" class="text-black active:text-gray-900"
-                      >LEAD WAVE</a
+                        >LEAD WAVE</a
                       >
                     </p>
                   </div>
