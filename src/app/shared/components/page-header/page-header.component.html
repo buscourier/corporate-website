@@ -70,294 +70,289 @@
 <!--  </div>-->
 <!--</div>-->
 <!--page-header-->
-<header
-  #header
-  class="relative top-0 z-10 bg-white font-base shadow-sm"
-  [class.sticky-header]="isSticky"
->
-  <div
-    class="sticky-header:min-h-20 relative z-20 mx-auto flex max-w-[1170px] justify-between space-x-10 px-4 pt-4 pb-5 sticky-header:space-x-14 lg:static lg:pt-7 lg:pb-10 lg:sticky-header:pt-5 lg:sticky-header:pb-4 xl:space-x-22 xl:sticky-header:space-x-8"
+<ng-container *tuiLet="isAnonymous$ | async as isAnonymous">
+  <header
+    #header
+    *tuiLet="isCurrentUserLoading$ | async as isCurrentUserLoading"
+    class="relative top-0 z-10 bg-white font-base shadow-sm"
+    [class.sticky-header]="isSticky"
   >
-    <!--  header: logo -->
-    <a routerLink="/">
-      <tui-svg
-        *ngIf="!isMobileMenuOpen"
-        src="icons::header-logo"
-        class="!h-[40px] !w-[66px] sticky-header:!h-[40px] sticky-header:!w-[66px] lg:!h-[77px] lg:!w-[128px]"
-      ></tui-svg>
-    </a>
-    <!--  header: content -->
-    <nav class="ml-auto lg:basis-full">
-      <!--  top bar -->
-      <div
-        *ngIf="!isSticky"
-        class="hidden items-center justify-between lg:flex"
-      >
-        <!--  top bar: location -->
-        <div class="relative z-30">
-          <button
-            type="button"
-            class="group inline-flex items-center rounded-md bg-white text-gray-600 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow focus:ring-offset-2"
-            (mouseenter)="showDropdown('location')"
-            aria-expanded="false"
-          >
-            <tui-svg
-              src="icons::location-arrow"
-              class="mr-3 !h-4 !w-4"
-            ></tui-svg>
-            <span>Владивосток</span>
-            <tui-svg
-              src="icons::chevron-down"
-              class="mt-0.5 ml-0.5 !h-4 !w-4"
-            ></tui-svg>
-          </button>
-          <div
-            *ngIf="activeDropdown === 'location'"
-            [@fadeInOut]
-            class="absolute top-full left-0 pt-3"
-          >
-            <div
-              class="bt-2 flex gap-7 border-t-2 border-yellow bg-white pt-7 pr-20 pb-5 pl-11 shadow"
+    <div
+      *tuiLet="currentUser$ | async as currentUser"
+      class="sticky-header:min-h-20 relative z-20 mx-auto flex max-w-[1170px] justify-between space-x-10 px-4 pt-4 pb-5 sticky-header:space-x-14 lg:static lg:pt-7 lg:pb-10 lg:sticky-header:pt-5 lg:sticky-header:pb-4 xl:space-x-22 xl:sticky-header:space-x-8"
+    >
+      <!--  header: logo -->
+      <a routerLink="/">
+        <tui-svg
+          *ngIf="!isMobileMenuOpen"
+          src="icons::header-logo"
+          class="!h-[40px] !w-[66px] sticky-header:!h-[40px] sticky-header:!w-[66px] lg:!h-[77px] lg:!w-[128px]"
+        ></tui-svg>
+      </a>
+      <!--  header: content -->
+      <nav class="ml-auto lg:basis-full">
+        <!--  top bar -->
+        <div
+          *ngIf="!isSticky"
+          class="hidden items-center justify-between lg:flex"
+        >
+          <!--  top bar: location -->
+          <div class="relative z-30">
+            <button
+              type="button"
+              class="group inline-flex items-center rounded-md bg-white text-gray-600 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow focus:ring-offset-2"
+              (mouseenter)="showDropdown('location')"
+              aria-expanded="false"
             >
-              <div class="flex flex-col space-y-2">
-                <b class="whitespace-nowrap text-md text-gray-500"
+              <tui-svg
+                src="icons::location-arrow"
+                class="mr-3 !h-4 !w-4"
+              ></tui-svg>
+              <span>Владивосток</span>
+              <tui-svg
+                src="icons::chevron-down"
+                class="mt-0.5 ml-0.5 !h-4 !w-4"
+              ></tui-svg>
+            </button>
+            <div
+              *ngIf="activeDropdown === 'location'"
+              [@fadeInOut]
+              class="absolute top-full left-0 pt-3"
+            >
+              <div
+                class="bt-2 flex gap-7 border-t-2 border-yellow bg-white pt-7 pr-20 pb-5 pl-11 shadow"
+              >
+                <div class="flex flex-col space-y-2">
+                  <b class="whitespace-nowrap text-md text-gray-500"
                   >Приморский край</b
-                >
-                <button
-                  type="button"
-                  class="text-left text-sm leading-6 text-gray-800 hover:text-black"
-                >
-                  Владивосток
-                </button>
-                <button
-                  type="button"
-                  class="text-left text-sm leading-6 text-gray-800 hover:text-black"
-                >
-                  Артем
-                </button>
-                <button
-                  type="button"
-                  class="text-left text-sm leading-6 text-gray-800 hover:text-black"
-                >
-                  Уссурийск
-                </button>
-                <button
-                  type="button"
-                  class="text-left text-sm leading-6 text-gray-800 hover:text-black"
-                >
-                  Находка
-                </button>
-                <button
-                  type="button"
-                  class="text-left text-sm leading-6 text-gray-800 hover:text-black"
-                >
-                  Дальнегорск
-                </button>
-              </div>
-              <div class="flex flex-col space-y-2">
-                <b class="whitespace-nowrap text-md text-gray-500"
+                  >
+                  <button
+                    type="button"
+                    class="text-left text-sm leading-6 text-gray-800 hover:text-black"
+                  >
+                    Владивосток
+                  </button>
+                  <button
+                    type="button"
+                    class="text-left text-sm leading-6 text-gray-800 hover:text-black"
+                  >
+                    Артем
+                  </button>
+                  <button
+                    type="button"
+                    class="text-left text-sm leading-6 text-gray-800 hover:text-black"
+                  >
+                    Уссурийск
+                  </button>
+                  <button
+                    type="button"
+                    class="text-left text-sm leading-6 text-gray-800 hover:text-black"
+                  >
+                    Находка
+                  </button>
+                  <button
+                    type="button"
+                    class="text-left text-sm leading-6 text-gray-800 hover:text-black"
+                  >
+                    Дальнегорск
+                  </button>
+                </div>
+                <div class="flex flex-col space-y-2">
+                  <b class="whitespace-nowrap text-md text-gray-500"
                   >Хабаровский край</b
+                  >
+                  <button
+                    type="button"
+                    class="text-left text-sm leading-6 text-gray-800 hover:text-black"
+                  >
+                    Хабаровск
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--  top bar: contacts -->
+          <a
+            href="tel: 84232026532"
+            class="relative ml-auto space-x-3 rounded-lg bg-white px-5 py-3 shadow-xs transition-shadow hover:shadow-sm active:top-0.5"
+          >
+            <tui-svg src="icons::phone" class="!h-[15px] !w-[15px]"></tui-svg>
+            <span>+7 4232 026532</span>
+          </a>
+          <!--  top bar: authorization -->
+          <div
+            class="relative z-30 pl-5"
+          >
+            <button
+              *ngIf="isAnonymous; else user"
+              type="button"
+              class="font-base text-gray-800 hover:text-black"
+              aria-expanded="false"
+              (click)="login()"
+            >
+              <tui-svg
+                src="icons::user-anonymous"
+                class="mr-3 !h-[40px] !w-[40px]"
+              ></tui-svg>
+              <span>Войти</span>
+            </button>
+
+            <ng-template #user>
+              <div
+                class="font-base text-gray-800 hover:cursor-pointer hover:text-black"
+                (mouseenter)="showDropdown('current-user')"
+                aria-expanded="false"
+              >
+                <tui-loader
+                  [showLoader]="isCurrentUserLoading"
+                  [class.h-5]="isCurrentUserLoading"
+                  class="min-w-[100px]"
+                >
+                  <ng-container *ngIf="currentUser && !isCurrentUserLoading">
+                    {{ getCurrentUserName(currentUser) }}
+                    <tui-svg
+                      src="icons::chevron-down"
+                      class="mr-5 ml-0.5 !h-4 !w-4"
+                    ></tui-svg>
+                    <tui-svg
+                      src="icons::user-logged-in"
+                      class="!h-10 !w-10"
+                    ></tui-svg>
+                  </ng-container>
+                </tui-loader>
+
+                <!--                <ng-container *tuiLet="currentUser$ | async as currentUser">-->
+                <!--                  <span *ngIf="currentUser">{{-->
+                <!--                    truncate(currentUser.user_name)-->
+                <!--                    }}</span>-->
+                <!--                </ng-container>-->
+              </div>
+            </ng-template>
+
+            <!--  top bar: anonymous dropdown -->
+            <!--            <div-->
+            <!--              *ngIf="activeDropdown === 'anonymous-user'"-->
+            <!--              [@fadeInOut]-->
+            <!--              class="absolute top-full left-16 w-32"-->
+            <!--            >-->
+            <!--              <div-->
+            <!--                class="flex flex-col border-t-2 border-yellow bg-white pt-3 pr-5 pb-2 pl-4 shadow"-->
+            <!--              >-->
+            <!--                <button-->
+            <!--                  type="button"-->
+            <!--                  class="text-left leading-7 text-gray-800 hover:text-black"-->
+            <!--                  (click)="login()"-->
+            <!--                >-->
+            <!--                  Вход-->
+            <!--                </button>-->
+            <!--                <a-->
+            <!--                  href="#"-->
+            <!--                  class="text-left leading-7 text-gray-800 hover:text-black"-->
+            <!--                >Регистрация</a-->
+            <!--                >-->
+            <!--              </div>-->
+            <!--            </div>-->
+            <!--  top bar: logged-in dropdown -->
+            <div
+              *ngIf="activeDropdown === 'current-user'"
+              [@fadeInOut]
+              class="absolute top-full right-0 z-20 w-52"
+            >
+              <div
+                class="mt-2 flex flex-col border-t-2 border-yellow bg-white pt-3 pr-5 pb-2 pl-4 shadow"
+              >
+                <a
+                  [routerLink]="['/new-order']"
+                  class="leading-7 text-gray-800 hover:text-black"
+                >Заказать доставку</a
+                >
+                <a
+                  [routerLink]="['/account', 'report']"
+                  class="leading-7 text-gray-800 hover:text-black"
+                >Мои заказы</a
+                >
+                <a
+                  [routerLink]="['/account', 'profile', 'entity']"
+                  class="leading-7 text-gray-800 hover:text-black"
+                >Персональные данные</a
                 >
                 <button
                   type="button"
-                  class="text-left text-sm leading-6 text-gray-800 hover:text-black"
+                  class="text-left leading-7 text-gray-800 hover:text-black"
+                  (click)="logout()"
                 >
-                  Хабаровск
+                  Выйти
                 </button>
               </div>
             </div>
           </div>
         </div>
-        <!--  top bar: contacts -->
-        <a
-          href="tel: 84232026532"
-          class="relative ml-auto space-x-3 rounded-lg bg-white px-5 py-3 shadow-xs transition-shadow hover:shadow-sm active:top-0.5"
-        >
-          <tui-svg src="icons::phone" class="!h-[15px] !w-[15px]"></tui-svg>
-          <span>+7 4232 026532</span>
-        </a>
-        <!--  top bar: authorization -->
-        <ng-container *tuiLet="isAnonymous$ | async as isAnonymous">
-          <ng-container
-            *tuiLet="isCurrentUserLoading$ | async as isCurrentUserLoading"
+        <!--  main nav -->
+        <div class="flex basis-full items-center lg:relative lg:z-20">
+          <div
+            class="mt-4 hidden flex-grow justify-between sticky-header:mt-0 sticky-header:mr-14 lg:flex xl:sticky-header:mr-12"
           >
-            <div
-              *tuiLet="currentUser$ | async as currentUser"
-              class="relative z-30 pl-5"
-            >
-              <button
-                *ngIf="isAnonymous; else user"
-                type="button"
-                class="font-base text-gray-800 hover:text-black"
-                aria-expanded="false"
-                (click)="login()"
-              >
-                <tui-svg
-                  src="icons::user-anonymous"
-                  class="mr-3 !h-[40px] !w-[40px]"
-                ></tui-svg>
-                <span>Войти</span>
-              </button>
-
-              <ng-template #user>
-                <div
-                  class="font-base text-gray-800 hover:cursor-pointer hover:text-black"
-                  (mouseenter)="showDropdown('current-user')"
-                  aria-expanded="false"
+            <ng-container *ngFor="let item of nav">
+              <div *ngIf="item.dropdown; else link" class="relative">
+                <!--  main-nav: link -->
+                <a
+                  [routerLink]="item.link"
+                  class="flex items-center font-base text-[17px] text-gray-800 hover:text-black sticky-header:text-xs"
+                  routerLinkActive="active"
+                  (mouseenter)="showDropdown(item)"
                 >
-                  <tui-loader
-                    [showLoader]="isCurrentUserLoading"
-                    [class.h-5]="isCurrentUserLoading"
-                    class="min-w-[100px]"
+                  <span>{{ item.name }}</span>
+                  <tui-svg
+                    src="icons::chevron-down"
+                    class="mt-0.5 ml-0.5 !h-4 !w-4"
+                  ></tui-svg>
+                </a>
+                <!--  main-nav: dropdown -->
+                <div
+                  *ngIf="activeDropdown === item"
+                  [@fadeInOut]
+                  class="absolute top-full right-0 z-10 pt-10 sticky-header:pt-7 xl:right-auto xl:left-0"
+                >
+                  <div
+                    class="flex flex-col border-t-2 border-yellow bg-white pt-4 pr-8 pb-4 pl-5 shadow"
                   >
-                    <ng-container *ngIf="currentUser && !isCurrentUserLoading">
-                      {{ getCurrentUserName(currentUser) }}
-                      <tui-svg
-                        src="icons::chevron-down"
-                        class="mr-5 ml-0.5 !h-4 !w-4"
-                      ></tui-svg>
-                      <tui-svg
-                        src="icons::user-logged-in"
-                        class="!h-10 !w-10"
-                      ></tui-svg>
-                    </ng-container>
-                  </tui-loader>
-
-                  <!--                <ng-container *tuiLet="currentUser$ | async as currentUser">-->
-                  <!--                  <span *ngIf="currentUser">{{-->
-                  <!--                    truncate(currentUser.user_name)-->
-                  <!--                    }}</span>-->
-                  <!--                </ng-container>-->
+                    <a
+                      *ngFor="let item of item.dropdown"
+                      [routerLink]="item.link"
+                      class="whitespace-nowrap text-sm leading-8 text-gray-800 hover:text-black sticky-header:text-xs sticky-header:leading-8"
+                      routerLinkActive="active"
+                      (click)="activeDropdown = null"
+                    >
+                      {{ item.name }}
+                    </a>
+                  </div>
                 </div>
+              </div>
+              <ng-template #link>
+                <!--  main-nav: link -->
+                <a
+                  [routerLink]="item.link"
+                  class="font-base text-[17px] text-gray-800 hover:text-black sticky-header:text-xs"
+                  routerLinkActive="active"
+                  [class.text-sm]="isSticky"
+                >
+                  {{ item.name }}
+                </a>
               </ng-template>
-
-              <!--  top bar: anonymous dropdown -->
-              <!--            <div-->
-              <!--              *ngIf="activeDropdown === 'anonymous-user'"-->
-              <!--              [@fadeInOut]-->
-              <!--              class="absolute top-full left-16 w-32"-->
-              <!--            >-->
-              <!--              <div-->
-              <!--                class="flex flex-col border-t-2 border-yellow bg-white pt-3 pr-5 pb-2 pl-4 shadow"-->
-              <!--              >-->
-              <!--                <button-->
-              <!--                  type="button"-->
-              <!--                  class="text-left leading-7 text-gray-800 hover:text-black"-->
-              <!--                  (click)="login()"-->
-              <!--                >-->
-              <!--                  Вход-->
-              <!--                </button>-->
-              <!--                <a-->
-              <!--                  href="#"-->
-              <!--                  class="text-left leading-7 text-gray-800 hover:text-black"-->
-              <!--                >Регистрация</a-->
-              <!--                >-->
-              <!--              </div>-->
-              <!--            </div>-->
-              <!--  top bar: logged-in dropdown -->
-              <div
-                *ngIf="activeDropdown === 'current-user'"
-                [@fadeInOut]
-                class="absolute top-full right-0 z-20 w-52"
-              >
-                <div
-                  class="mt-2 flex flex-col border-t-2 border-yellow bg-white pt-3 pr-5 pb-2 pl-4 shadow"
-                >
-                  <a
-                    [routerLink]="['/new-order']"
-                    class="leading-7 text-gray-800 hover:text-black"
-                    >Заказать доставку</a
-                  >
-                  <a
-                    [routerLink]="['/account', 'report']"
-                    class="leading-7 text-gray-800 hover:text-black"
-                    >Мои заказы</a
-                  >
-                  <a
-                    [routerLink]="['/account', 'profile', 'entity']"
-                    class="leading-7 text-gray-800 hover:text-black"
-                    >Персональные данные</a
-                  >
-                  <button
-                    type="button"
-                    class="text-left leading-7 text-gray-800 hover:text-black"
-                    (click)="logout()"
-                  >
-                    Выйти
-                  </button>
-                </div>
-              </div>
-            </div>
-          </ng-container>
-        </ng-container>
-      </div>
-      <!--  main nav -->
-      <div class="flex basis-full items-center lg:relative lg:z-20">
-        <div
-          class="mt-4 hidden flex-grow justify-between sticky-header:mt-0 sticky-header:mr-14 lg:flex xl:sticky-header:mr-12"
-        >
-          <ng-container *ngFor="let item of nav">
-            <div *ngIf="item.dropdown; else link" class="relative">
-              <!--  main-nav: link -->
-              <a
-                [routerLink]="item.link"
-                class="flex items-center font-base text-[17px] text-gray-800 hover:text-black sticky-header:text-xs"
-                routerLinkActive="active"
-                (mouseenter)="showDropdown(item)"
-              >
-                <span>{{ item.name }}</span>
-                <tui-svg
-                  src="icons::chevron-down"
-                  class="mt-0.5 ml-0.5 !h-4 !w-4"
-                ></tui-svg>
-              </a>
-              <!--  main-nav: dropdown -->
-              <div
-                *ngIf="activeDropdown === item"
-                [@fadeInOut]
-                class="absolute top-full right-0 z-10 pt-10 sticky-header:pt-7 xl:right-auto xl:left-0"
-              >
-                <div
-                  class="flex flex-col border-t-2 border-yellow bg-white pt-4 pr-8 pb-4 pl-5 shadow"
-                >
-                  <a
-                    *ngFor="let item of item.dropdown"
-                    [routerLink]="item.link"
-                    class="whitespace-nowrap text-sm leading-8 text-gray-800 hover:text-black sticky-header:text-xs sticky-header:leading-8"
-                    routerLinkActive="active"
-                    (click)="activeDropdown = null"
-                  >
-                    {{ item.name }}
-                  </a>
-                </div>
-              </div>
-            </div>
-            <ng-template #link>
-              <!--  main-nav: link -->
-              <a
-                [routerLink]="item.link"
-                class="font-base text-[17px] text-gray-800 hover:text-black sticky-header:text-xs"
-                routerLinkActive="active"
-                [class.text-sm]="isSticky"
-              >
-                {{ item.name }}
-              </a>
-            </ng-template>
-          </ng-container>
-        </div>
-        <!--  sticky contacts -->
-        <a
-          href="tel: 84232026532"
-          class="relative ml-auto hidden h-10 w-10 items-center justify-center self-center whitespace-nowrap rounded-full bg-white shadow-xs transition-shadow hover:shadow-sm active:top-0.5 lg:sticky-header:flex xl:h-auto xl:w-auto xl:justify-start xl:space-x-3 xl:rounded-lg xl:px-5 xl:py-3"
-        >
-          <tui-svg src="icons::phone" class="!h-[15px] !w-[15px]"></tui-svg>
-          <span class="hidden xl:block">+7 4232 026532</span>
-        </a>
-        <!--  sticky & mobile authorization -->
-        <ng-container *tuiLet="isAnonymous$ | async as isAnonymous">
+            </ng-container>
+          </div>
+          <!--  sticky contacts -->
+          <a
+            href="tel: 84232026532"
+            class="relative ml-auto hidden h-10 w-10 items-center justify-center self-center whitespace-nowrap rounded-full bg-white shadow-xs transition-shadow hover:shadow-sm active:top-0.5 lg:sticky-header:flex xl:h-auto xl:w-auto xl:justify-start xl:space-x-3 xl:rounded-lg xl:px-5 xl:py-3"
+          >
+            <tui-svg src="icons::phone" class="!h-[15px] !w-[15px]"></tui-svg>
+            <span class="hidden xl:block">+7 4232 026532</span>
+          </a>
+          <!--  sticky & mobile authorization -->
           <div class="mr-5 pl-5 lg:relative lg:hidden lg:sticky-header:flex">
             <button
-              *ngIf="isAnonymous; else currentUserMobile"
+              *ngIf="isAnonymous; else userMobile"
               type="button"
               class="overflow-hidden font-base text-gray-800 hover:text-black"
               (click)="login()"
@@ -367,16 +362,23 @@
                 class="!h-[40px] !w-[40px]"
               ></tui-svg>
             </button>
-            <ng-template #currentUserMobile>
+            <ng-template #userMobile>
               <button
                 type="button"
                 class="overflow-hidden font-base text-gray-800 hover:text-black"
                 (mouseenter)="showDropdown('current-user')"
               >
-                <tui-svg
-                  src="icons::user-logged-in"
-                  class="!h-10 !w-10"
-                ></tui-svg>
+                <tui-loader
+                  [showLoader]="isCurrentUserLoading"
+                >
+                  <ng-container *ngIf="currentUser && !isCurrentUserLoading">
+                    <tui-svg
+                      src="icons::user-logged-in"
+                      class="!h-10 !w-10"
+                    ></tui-svg>
+<!--                    <span class="inline-block">{{ getCurrentUserName(currentUser) }}</span>-->
+                  </ng-container>
+                </tui-loader>
               </button>
             </ng-template>
             <!--  sticky & mobile: anonymous dropdown -->
@@ -415,19 +417,19 @@
                   [routerLink]="['/new-order']"
                   class="text-right leading-7 text-gray-800 hover:text-black lg:text-left"
                   (click)="closeDropdown()"
-                  >Заказать доставку</a
+                >Заказать доставку</a
                 >
                 <a
                   [routerLink]="['/account', 'report']"
                   class="text-right leading-7 text-gray-800 hover:text-black lg:text-left"
                   (click)="closeDropdown()"
-                  >Мои заказы</a
+                >Мои заказы</a
                 >
                 <a
                   [routerLink]="['/account', 'profile', 'entity']"
                   class="text-right leading-7 text-gray-800 hover:text-black lg:text-left"
                   (click)="closeDropdown()"
-                  >Персональные данные</a
+                >Персональные данные</a
                 >
                 <button
                   type="button"
@@ -439,127 +441,128 @@
               </div>
             </div>
           </div>
-        </ng-container>
-        <!--  mobile menu: burger -->
-        <button
-          type="button"
-          class="text-gray-800 hover:text-black lg:hidden"
-          (click)="toggleMobileMenu(true)"
-          (tuiActiveZoneChange)="toggleMobileMenu($event)"
-        >
-          <tui-svg src="tuiIconMenuLarge" class="!h-6 !w-6"> </tui-svg>
-          <div
-            *tuiSidebar="isMobileMenuOpen; direction: 'right'; autoWidth: true"
-            class="flex h-full w-[318px] flex-col bg-gray-50"
+          <!--  mobile menu: burger -->
+          <button
+            type="button"
+            class="text-gray-800 hover:text-black lg:hidden"
+            (click)="toggleMobileMenu(true)"
+            (tuiActiveZoneChange)="toggleMobileMenu($event)"
           >
-            <!-- mobile-nav: header-->
+            <tui-svg src="tuiIconMenuLarge" class="!h-6 !w-6"> </tui-svg>
             <div
-              class="relative box-border flex h-[76px] items-center justify-between border-b border-gray-300 pt-4 pr-4 pb-5 pl-5"
+              *tuiSidebar="isMobileMenuOpen; direction: 'right'; autoWidth: true"
+              class="flex h-full w-[318px] flex-col bg-gray-50"
             >
-              <button
-                class="absolute -left-10 text-yellow"
-                (click)="toggleMobileMenu(false)"
+              <!-- mobile-nav: header-->
+              <div
+                class="relative box-border flex h-[76px] items-center justify-between border-b border-gray-300 pt-4 pr-4 pb-5 pl-5"
               >
-                <tui-svg src="icons::close-2" class="!h-6 !w-6"></tui-svg>
-              </button>
-              <tui-svg
-                src="icons::header-logo"
-                class="!h-[40px] !w-[66px]"
-              ></tui-svg>
-              <!--  mobile [phone] -->
-              <a
-                href="tel: 84232026532"
-                class="relative flex h-11 w-11 items-center justify-center rounded-full bg-white shadow-xs transition-shadow hover:shadow-sm active:top-0.5"
-              >
+                <button
+                  class="absolute -left-10 text-yellow"
+                  (click)="toggleMobileMenu(false)"
+                >
+                  <tui-svg src="icons::close-2" class="!h-6 !w-6"></tui-svg>
+                </button>
                 <tui-svg
-                  src="icons::phone"
-                  class="!h-[15px] !w-[15px]"
+                  src="icons::header-logo"
+                  class="!h-[40px] !w-[66px]"
                 ></tui-svg>
-              </a>
-            </div>
-            <tui-scrollbar class="h-full">
-              <div class="flex flex-col">
-                <ng-container *ngFor="let item of nav">
-                  <div *ngIf="item.dropdown; else link" class="relative">
-                    <!--  mobile-nav: link -->
-                    <button
-                      type="button"
-                      class="flex w-full items-center justify-between border-t border-gray-300 p-4 pl-5 text-[18px] leading-6 text-gray-800 hover:text-black"
-                      [class.bg-white]="activeDropdown === item"
-                      [class.shadow-2xs]="activeDropdown === item"
-                      (click)="showDropdown(item)"
-                    >
-                      <span>{{ item.name }}</span>
-                      <tui-svg
-                        src="tuiIconChevronDownLarge"
-                        class="mt-0.5 ml-0.5 !h-4 !w-4 transition-transform"
-                        [class.rotate-180]="activeDropdown === item"
-                      ></tui-svg>
-                    </button>
-                    <!--  mobile-nav: dropdown -->
-                    <div
-                      *ngIf="activeDropdown === item"
-                      [@tuiHeightCollapse]="getAnimation(animationSpeed)"
-                      class="bg-gray-[#f7f7f7]"
-                    >
-                      <div class="flex flex-col pt-6 pr-8 pb-4 pl-5">
-                        <a
-                          *ngFor="let item of item.dropdown"
-                          [routerLink]="item.link"
-                          class="mb-4 text-sm leading-6 text-gray-800 transition-colors last-of-type:mb-0 hover:text-black active:bg-white"
-                          routerLinkActive="active"
-                          (click)="toggleMobileMenu(false)"
-                        >
-                          {{ item.name }}
-                        </a>
+                <!--  mobile [phone] -->
+                <a
+                  href="tel: 84232026532"
+                  class="relative flex h-11 w-11 items-center justify-center rounded-full bg-white shadow-xs transition-shadow hover:shadow-sm active:top-0.5"
+                >
+                  <tui-svg
+                    src="icons::phone"
+                    class="!h-[15px] !w-[15px]"
+                  ></tui-svg>
+                </a>
+              </div>
+              <tui-scrollbar class="h-full">
+                <div class="flex flex-col">
+                  <ng-container *ngFor="let item of nav">
+                    <div *ngIf="item.dropdown; else link" class="relative">
+                      <!--  mobile-nav: link -->
+                      <button
+                        type="button"
+                        class="flex w-full items-center justify-between border-t border-gray-300 p-4 pl-5 text-[18px] leading-6 text-gray-800 hover:text-black"
+                        [class.bg-white]="activeDropdown === item"
+                        [class.shadow-2xs]="activeDropdown === item"
+                        (click)="showDropdown(item)"
+                      >
+                        <span>{{ item.name }}</span>
+                        <tui-svg
+                          src="tuiIconChevronDownLarge"
+                          class="mt-0.5 ml-0.5 !h-4 !w-4 transition-transform"
+                          [class.rotate-180]="activeDropdown === item"
+                        ></tui-svg>
+                      </button>
+                      <!--  mobile-nav: dropdown -->
+                      <div
+                        *ngIf="activeDropdown === item"
+                        [@tuiHeightCollapse]="getAnimation(animationSpeed)"
+                        class="bg-gray-[#f7f7f7]"
+                      >
+                        <div class="flex flex-col pt-6 pr-8 pb-4 pl-5">
+                          <a
+                            *ngFor="let item of item.dropdown"
+                            [routerLink]="item.link"
+                            class="mb-4 text-sm leading-6 text-gray-800 transition-colors last-of-type:mb-0 hover:text-black active:bg-white"
+                            routerLinkActive="active"
+                            (click)="toggleMobileMenu(false)"
+                          >
+                            {{ item.name }}
+                          </a>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <ng-template #link>
-                    <!--  main-nav: link -->
-                    <a
-                      [routerLink]="item.link"
-                      class="border-t border-gray-300 p-4 pl-5 text-[18px] leading-6 text-gray-800 first-of-type:border-none hover:text-black"
-                      routerLinkActive="active"
-                      (click)="toggleMobileMenu(false)"
-                    >
-                      {{ item.name }}
-                    </a>
-                  </ng-template>
-                </ng-container>
-                <div
-                  class="mt-auto border-t border-gray-300 p-6 pr-4 pl-5 pb-7"
-                >
-                  <a
-                    [routerLink]=""
-                    class="mb-5 inline-block text-sm font-bold leading-6 text-black hover:text-gray-900"
-                    >inbox@busbox.guru</a
-                  >
-                  <div class="space-y-2 text-2xs text-gray-700">
-                    <p>Политика конфиденциальности</p>
-                    <p>2013-2022 © ООО «Приморье»</p>
-                    <p>
-                      Идея и дизайн сайта:
-                      <a href="" class="text-black active:text-gray-900"
-                        >LEAD WAVE</a
+                    <ng-template #link>
+                      <!--  main-nav: link -->
+                      <a
+                        [routerLink]="item.link"
+                        class="border-t border-gray-300 p-4 pl-5 text-[18px] leading-6 text-gray-800 first-of-type:border-none hover:text-black"
+                        routerLinkActive="active"
+                        (click)="toggleMobileMenu(false)"
                       >
-                    </p>
+                        {{ item.name }}
+                      </a>
+                    </ng-template>
+                  </ng-container>
+                  <div
+                    class="mt-auto border-t border-gray-300 p-6 pr-4 pl-5 pb-7"
+                  >
+                    <a
+                      [routerLink]=""
+                      class="mb-5 inline-block text-sm font-bold leading-6 text-black hover:text-gray-900"
+                    >inbox@busbox.guru</a
+                    >
+                    <div class="space-y-2 text-2xs text-gray-700">
+                      <p>Политика конфиденциальности</p>
+                      <p>2013-2022 © ООО «Приморье»</p>
+                      <p>
+                        Идея и дизайн сайта:
+                        <a href="" class="text-black active:text-gray-900"
+                        >LEAD WAVE</a
+                        >
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </tui-scrollbar>
-          </div>
-        </button>
-      </div>
-    </nav>
-  </div>
-  <!--  <div>-->
-  <!--    <app-breadcrumbs></app-breadcrumbs>-->
-  <!--  </div>-->
-  <!--  backdrop -->
-  <div
-    *ngIf="activeDropdown"
-    (mouseenter)="toggleMobileMenu(false)"
-    class="fixed inset-0 z-10"
-  ></div>
-</header>
+              </tui-scrollbar>
+            </div>
+          </button>
+        </div>
+      </nav>
+    </div>
+    <!--  <div>-->
+    <!--    <app-breadcrumbs></app-breadcrumbs>-->
+    <!--  </div>-->
+    <!--  backdrop -->
+    <div
+      *ngIf="activeDropdown"
+      (mouseenter)="toggleMobileMenu(false)"
+      class="fixed inset-0 z-10"
+    ></div>
+  </header>
+</ng-container>
+
