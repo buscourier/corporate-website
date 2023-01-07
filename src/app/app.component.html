@@ -1,6 +1,6 @@
 <tui-root>
   <app-page-header></app-page-header>
-  <tui-loader [showLoader]="isLoading">
+  <tui-loader [showLoader]="isLoading" [className]="url">
     <div
       [class.h-0]="isLoading"
       [class.opacity-0]="isLoading"

@@ -2,6 +2,6 @@
   @apply mt-16 block bg-gray;
 }
 
-app-contacts + :host {
+.contacts + :host {
   @apply mt-0;
 }

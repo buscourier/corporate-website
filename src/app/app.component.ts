@@ -33,6 +33,7 @@ export class AppComponent implements OnInit {
   title = 'Баскурьер'
   isLoggedIn$: Observable<boolean>
   isLoading = true
+  url = ''
 
   constructor(
     @Inject(LoginService) private readonly loginService: LoginService,
@@ -76,6 +77,7 @@ export class AppComponent implements OnInit {
             event instanceof NavigationError
           ) {
             this.isLoading = false
+            this.url = event.url.split('/')[1]
           }
         }),
         takeUntil(this.destroy$)
