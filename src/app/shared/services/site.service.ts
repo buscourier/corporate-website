@@ -20,4 +20,10 @@ export class SiteService {
 
     return this.http.post<any>(`${this.url}/mailer`, JSON.stringify(extPayload))
   }
+
+  getPolicy<T>(): Observable<T> {
+    const api = '8aab09f6-c5b3-43be-8895-153ea164984e/53'
+
+    return this.http.get<T>(`${this.url}/page/${api}`)
+  }
 }
