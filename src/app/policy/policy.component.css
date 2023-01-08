@@ -7,9 +7,9 @@
 }
 
 :host ::ng-deep strong {
-  @apply mt-10 mb-5 text-md block;
+  @apply mt-10 mb-5 block text-md;
 }
 
 :host ::ng-deep a {
-  @apply text-blue no-underline hover:underline underline-offset-1;
+  @apply text-blue no-underline underline-offset-1 hover:underline;
 }
