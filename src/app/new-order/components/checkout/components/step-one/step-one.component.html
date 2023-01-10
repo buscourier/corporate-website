@@ -33,11 +33,10 @@
     <app-person></app-person>
   </div>
   <div *ngIf="activeTabIndex === 1 && (isAnonymous$ | async)">
-    <p class="mt-11 text-center text-md"
-    >
+    <p class="mt-11 text-center text-md">
       Чтобы оформить заказ как юридическое лицо, вам необходимо
       <a [routerLink]="['/account']" class="text-blue hover:cursor-pointer"
-      >войти</a
+        >войти</a
       >,<br />
       затем вы сможете указать ваши данные.
     </p>
