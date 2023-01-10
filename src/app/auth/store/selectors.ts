@@ -38,12 +38,12 @@ export const currentUserSelector = createSelector(
 
 export const isEntitySelector = createSelector(
   currentUserSelector,
-  (user: CurrentUserInterface) => user.user_type === 'ur'
+  (user: CurrentUserInterface) => user && user.user_type === 'ur'
 )
 
 export const isPersonalSelector = createSelector(
   currentUserSelector,
-  (user: CurrentUserInterface) => user.user_type !== 'ur'
+  (user: CurrentUserInterface) => user && user.user_type !== 'ur'
 )
 
 export const validationErrorsSelector = createSelector(

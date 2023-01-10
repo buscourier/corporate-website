@@ -1,3 +1,7 @@
 .rc-anchor {
   display: none !important;
 }
+
+.grecaptcha-badge {
+  display: none !important;
+}

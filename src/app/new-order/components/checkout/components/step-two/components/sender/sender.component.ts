@@ -126,6 +126,7 @@ export class SenderComponent implements OnInit, AfterViewInit, OnDestroy {
     this.currentUserSub = this.store
       .select(currentUserSelector)
       .pipe(
+        filter(Boolean),
         tap((user: CurrentUserInterface) => {
           if (user.user_type === 'ur') {
             this.confidant.enable()
@@ -182,7 +183,11 @@ export class SenderComponent implements OnInit, AfterViewInit, OnDestroy {
     ])
       .pipe(
         tap(([person, currentUser]) => {
-          if (person.role === 'Отправитель' && currentUser.user_type !== 'ur') {
+          if (
+            person.role === 'Отправитель' &&
+            currentUser &&
+            currentUser.user_type !== 'ur'
+          ) {
             this.form.patchValue({
               fio: `${person.lastName} ${person.firstName} ${person.middleName}`,
               phone: person.phone,
