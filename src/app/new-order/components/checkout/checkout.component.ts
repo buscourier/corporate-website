@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   Inject,
+  OnDestroy,
   OnInit,
   Self,
 } from '@angular/core'
@@ -12,6 +13,10 @@ import {TuiDestroyService, TuiScrollService} from '@taiga-ui/cdk'
 import {tuiLoaderOptionsProvider} from '@taiga-ui/core'
 import {filter, switchMap, takeUntil} from 'rxjs'
 import {tap} from 'rxjs/operators'
+import {resetEndPointAction} from '../../shared/components/end-point/store/actions/reset-end-point.action'
+import {resetOrdersAction} from '../../shared/components/orders/store/actions/reset-orders.action'
+import {resetStartPointAction} from '../../shared/components/start-point/store/actions/reset-start-point.action'
+import {calculateTotalSumAction} from '../sidebar/store/actions/calculate-total-sum.action'
 import {setCurrentStepAction} from './store/actions/set-current-step.action'
 
 @Component({
@@ -26,7 +31,7 @@ import {setCurrentStepAction} from './store/actions/set-current-step.action'
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CheckoutComponent implements OnInit {
+export class CheckoutComponent implements OnInit, OnDestroy {
   currentStepIndex = 0
   scrollTop = 150
   duration = 300
@@ -45,6 +50,10 @@ export class CheckoutComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeValues()
+  }
+
+  ngOnDestroy(): void {
+    this.clearFormsData()
   }
 
   initializeValues(): void {
@@ -78,6 +87,13 @@ export class CheckoutComponent implements OnInit {
       0,
       this.duration
     )
+  }
+
+  clearFormsData() {
+    this.store.dispatch(resetStartPointAction())
+    this.store.dispatch(resetEndPointAction())
+    this.store.dispatch(resetOrdersAction())
+    this.store.dispatch(calculateTotalSumAction({isTotalSumCalculated: false}))
   }
 
   getCurrentStep(url: string): number {
