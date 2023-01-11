@@ -17,6 +17,8 @@ import {resetEndPointAction} from '../../shared/components/end-point/store/actio
 import {resetOrdersAction} from '../../shared/components/orders/store/actions/reset-orders.action'
 import {resetStartPointAction} from '../../shared/components/start-point/store/actions/reset-start-point.action'
 import {calculateTotalSumAction} from '../sidebar/store/actions/calculate-total-sum.action'
+import {resetPersonAction} from './components/step-one/components/person/store/actions/reset-person.action'
+import {resetRecipientAction} from './components/step-three/components/recipient/store/actions/reset-recipient.action'
 import {setCurrentStepAction} from './store/actions/set-current-step.action'
 
 @Component({
@@ -93,6 +95,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.store.dispatch(resetStartPointAction())
     this.store.dispatch(resetEndPointAction())
     this.store.dispatch(resetOrdersAction())
+    this.store.dispatch(resetPersonAction())
+    this.store.dispatch(resetRecipientAction())
     this.store.dispatch(calculateTotalSumAction({isTotalSumCalculated: false}))
   }
 
