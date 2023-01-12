@@ -32,8 +32,11 @@
 
     <tui-loader [showLoader]="isStatusesLoading">
       <ng-container *tuiLet="backendErrors$ | async as backendErrors">
-        <p *ngIf="backendErrors && !isStatusesLoading; else statuses" class="text-red mt-5">
-          {{backendErrors}}
+        <p
+          *ngIf="backendErrors && !isStatusesLoading; else statuses"
+          class="mt-5 text-red"
+        >
+          {{ backendErrors }}
         </p>
       </ng-container>
       <ng-template #statuses>
@@ -55,8 +58,8 @@
             </div>
             <div
               class="timeline-status timeline-status--{{
-              Status[status.charcode]
-            }}"
+                Status[status.charcode]
+              }}"
             >
               {{ status.lk_name }}
             </div>
