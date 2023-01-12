@@ -93,9 +93,6 @@ export class PackageComponent implements OnInit, OnDestroy {
             concatAll(),
             filter((service: ServiceInterface) => service.group_id === '1'),
             toArray(),
-            tap((arr) => {
-              console.log('arr', arr)
-            }),
             map((services: ServiceInterface[]) => {
               services.forEach((service: ServiceInterface) => {
                 switch (service.subgroup_id) {

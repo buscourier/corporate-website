@@ -107,9 +107,6 @@ export class TotalSumService {
     if (activeCargoType.id === '2') {
       const parcels = order.cargo.parcels ? order.cargo.parcels.parcels : []
 
-      console.log('order.cargo.value', order.cargo.value)
-      console.log('parcels', parcels)
-
       if (parcels.length) {
         result = this.getParcelsSum(
           startCityId,

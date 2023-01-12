@@ -56,8 +56,7 @@ const INSURANCE_MAX = 30000
       provide: TUI_VALIDATION_ERRORS,
       useValue: {
         required: `Поле обязательно для заполнения`,
-        pattern: (error) => {
-          console.log('error', error)
+        pattern: () => {
           return `Телефон указан некорректно`
         },
         max: (error) => {
@@ -166,7 +165,6 @@ export class ServicesComponent implements OnInit, OnDestroy {
           )
         }),
         tap(() => {
-          console.log('services form', this.form)
           this.cdr.markForCheck()
         })
       )
@@ -190,8 +188,6 @@ export class ServicesComponent implements OnInit, OnDestroy {
 
   writeValue(value: any) {
     if (value) {
-      console.log('services value', value)
-      console.log('services form', this.form.value)
       this.form.patchValue(value)
     }
   }
