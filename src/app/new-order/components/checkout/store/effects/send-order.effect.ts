@@ -44,7 +44,7 @@ export class SendOrderEffect {
       return this.actions$.pipe(
         ofType(sendOrderSuccessAction),
         tap(() => {
-          this.router.navigate(['success'], {relativeTo: this.route})
+          this.router.navigate(['/new-order', 'success'])
         })
       )
     },

@@ -2,6 +2,8 @@ import {NgModule} from '@angular/core'
 import {RouterModule, Routes} from '@angular/router'
 import {CalculatorComponent} from './components/calculator/calculator.component'
 import {IndexComponent} from './index.component'
+import {SuccessComponent} from './components/success/success.component'
+import {SuccessPageGuard} from './shared/services/success-page.guard'
 
 const routes: Routes = [
   {
@@ -20,6 +22,11 @@ const routes: Routes = [
           ),
       },
     ],
+  },
+  {
+    path: 'success',
+    component: SuccessComponent,
+    canActivate: [SuccessPageGuard],
   },
 ]
 

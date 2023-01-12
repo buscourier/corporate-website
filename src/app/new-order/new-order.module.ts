@@ -10,6 +10,8 @@ import {NewOrderRoutingModule} from './new-order-routing.module'
 import {FailurePageGuard} from './shared/services/failure-page.guard'
 import {NewOrderService} from './shared/services/new-order.service'
 import {SuccessPageGuard} from './shared/services/success-page.guard'
+import {SuccessModule} from './components/success/success.module'
+import {RouterModule} from '@angular/router'
 
 @NgModule({
   declarations: [IndexComponent],
@@ -21,6 +23,7 @@ import {SuccessPageGuard} from './shared/services/success-page.guard'
     TuiStepperModule,
     TuiButtonModule,
     SidebarModule,
+    SuccessModule,
   ],
   providers: [NewOrderService, SuccessPageGuard, FailurePageGuard],
 })
