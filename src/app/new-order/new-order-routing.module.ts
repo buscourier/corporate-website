@@ -1,11 +1,7 @@
 import {NgModule} from '@angular/core'
 import {RouterModule, Routes} from '@angular/router'
 import {CalculatorComponent} from './components/calculator/calculator.component'
-import {FailureComponent} from './components/failure/failure.component'
-import {SuccessComponent} from './components/success/success.component'
 import {IndexComponent} from './index.component'
-import {FailurePageGuard} from './shared/services/failure-page.guard'
-import {SuccessPageGuard} from './shared/services/success-page.guard'
 
 const routes: Routes = [
   {
@@ -24,16 +20,6 @@ const routes: Routes = [
           ),
       },
     ],
-  },
-  {
-    path: 'success',
-    component: SuccessComponent,
-    canActivate: [SuccessPageGuard],
-  },
-  {
-    path: 'failure',
-    component: FailureComponent,
-    canActivate: [FailurePageGuard],
   },
 ]
 

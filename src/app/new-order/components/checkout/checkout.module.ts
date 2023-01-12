@@ -17,6 +17,8 @@ import {StepGuard} from './services/step.guard'
 import {SendOrderEffect} from './store/effects/send-order.effect'
 import {reducer} from './store/reducer'
 import {CHECKOUT_FEATURE} from './store/state'
+import {SuccessModule} from './components/success/success.module'
+import {FailureModule} from './components/failure/failure.module'
 
 @NgModule({
   declarations: [CheckoutComponent],
@@ -32,6 +34,8 @@ import {CHECKOUT_FEATURE} from './store/state'
     StepThreeModule,
     StepFourModule,
     TuiStepperModule,
+    SuccessModule,
+    FailureModule,
     TuiSvgModule,
     StepperModule,
   ],

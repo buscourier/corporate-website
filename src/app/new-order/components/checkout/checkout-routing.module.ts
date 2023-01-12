@@ -6,6 +6,10 @@ import {StepOneComponent} from './components/step-one/step-one.component'
 import {StepThreeComponent} from './components/step-three/step-three.component'
 import {StepTwoComponent} from './components/step-two/step-two.component'
 import {StepGuard} from './services/step.guard'
+import {SuccessComponent} from './components/success/success.component'
+import {SuccessPageGuard} from '../../shared/services/success-page.guard'
+import {FailureComponent} from './components/failure/failure.component'
+import {FailurePageGuard} from '../../shared/services/failure-page.guard'
 
 const routes: Routes = [
   {
@@ -31,6 +35,16 @@ const routes: Routes = [
         path: '3',
         component: StepFourComponent,
         canActivate: [StepGuard],
+      },
+      {
+        path: 'success',
+        component: SuccessComponent,
+        canActivate: [SuccessPageGuard],
+      },
+      {
+        path: 'failure',
+        component: FailureComponent,
+        canActivate: [FailurePageGuard],
       },
     ],
   },

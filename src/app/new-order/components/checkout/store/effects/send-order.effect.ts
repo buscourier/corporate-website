@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core'
-import {Router} from '@angular/router'
+import {ActivatedRoute, Router} from '@angular/router'
 import {Actions, createEffect, ofType} from '@ngrx/effects'
 import {catchError, map, of, switchMap} from 'rxjs'
 import {tap} from 'rxjs/operators'
@@ -15,6 +15,7 @@ export class SendOrderEffect {
   constructor(
     private actions$: Actions,
     private newOrderService: NewOrderService,
+    private route: ActivatedRoute,
     private router: Router
   ) {}
 
@@ -43,7 +44,7 @@ export class SendOrderEffect {
       return this.actions$.pipe(
         ofType(sendOrderSuccessAction),
         tap(() => {
-          this.router.navigate(['/new-order', 'success'])
+          this.router.navigate(['success'], {relativeTo: this.route})
         })
       )
     },
@@ -55,7 +56,7 @@ export class SendOrderEffect {
       return this.actions$.pipe(
         ofType(sendOrderFailureAction),
         tap(() => {
-          this.router.navigate(['/new-order', 'failure'])
+          this.router.navigate(['/new-order', 'checkout', 'failure'])
         })
       )
     },
