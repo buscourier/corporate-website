@@ -9,13 +9,17 @@
     <div
       class="flex flex-col items-center text-center md:items-start md:text-start"
     >
-      <h1 class="mb-5 text-xl font-bold sm:text-3xl">Ой, что-то пошло не так!</h1>
+      <h1 class="mb-5 text-xl font-bold sm:text-3xl">
+        Ой, что-то пошло не так!
+      </h1>
       <p class="max-w-xl text-gray-700 sm:text-md">
         Возникла ошибка при создании заявки на перевозку!
       </p>
       <p class="mb-5 max-w-xl text-gray-700 sm:text-md">
-        Вы можете либо перейти на страницу заказа <a [routerLink]="['/new-order', 'checkout', '3']" class="link-blue">
-        и отправить заявку еще раз</a>, либо:
+        Вы можете либо перейти на страницу заказа
+        <a [routerLink]="['/new-order', 'checkout', '3']" class="link-blue">
+          и отправить заявку еще раз</a
+        >, либо:
       </p>
       <div
         class="flex flex-col items-center space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4"
@@ -24,7 +28,9 @@
           Написать в службу поддержки
         </button>
         <span>или позвонить</span>
-        <a href="tel:8(423)2937879" class="link-blue">8&nbsp;(423)&nbsp;293&nbsp;78&nbsp;79</a>
+        <a href="tel:8(423)2937879" class="link-blue"
+          >8&nbsp;(423)&nbsp;293&nbsp;78&nbsp;79</a
+        >
       </div>
     </div>
   </div>
