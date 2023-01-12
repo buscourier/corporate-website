@@ -30,7 +30,7 @@ import {isPageScrollBlockedSelector} from './store/global/selectors'
   ],
 })
 export class AppComponent implements OnInit {
-  title = 'Баскурьер'
+  title = 'Баскурьер | Служба курьерской доставки'
   isLoggedIn$: Observable<boolean>
   isLoading = true
   url = ''
