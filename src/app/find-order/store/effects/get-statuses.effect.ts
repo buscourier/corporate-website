@@ -18,15 +18,13 @@ export class GetStatusesEffect {
     this.actions$.pipe(
       ofType(getStatusesAction),
       delay(600),
-      switchMap(({orderNumber}) =>
-        this.service.getStatuses(orderNumber).pipe(
+      switchMap(({orderId}) =>
+        this.service.getStatuses(orderId).pipe(
           map((statuses: OrderStatusInterface[]) =>
             getStatusesSuccessAction({statuses})
           ),
-          catchError((errorResponse: HttpErrorResponse) => {
-            return of(
-              getStatusesFailureAction({errors: errorResponse.error.error})
-            )
+          catchError((errorResponse: string) => {
+            return of(getStatusesFailureAction({errors: errorResponse}))
           })
         )
       )

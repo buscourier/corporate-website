@@ -2,7 +2,7 @@
 
 import {HttpClient} from '@angular/common/http'
 import {Injectable} from '@angular/core'
-import {Observable} from 'rxjs'
+import {map, Observable} from 'rxjs'
 import {environment} from '../../../environments/environment'
 import {OrderStatusInterface} from '../types/order-status.interface'
 
@@ -12,9 +12,21 @@ export class FindOrderService {
 
   constructor(private http: HttpClient) {}
 
-  getStatuses(orderNumber: string): Observable<OrderStatusInterface[]> {
-    return this.http.get<OrderStatusInterface[]>(
-      `${this.url}/gettracking/${environment.apiKey}/${orderNumber}`
-    )
+  getStatuses(
+    orderNumber: string
+  ): Observable<OrderStatusInterface[] | string> {
+    return this.http
+      .get<OrderStatusInterface[] | string>(
+        `${this.url}/gettracking/${environment.apiKey}/${orderNumber}`
+      )
+      .pipe(
+        map((data: OrderStatusInterface[] | string) => {
+          if (typeof data === 'string') {
+            throw new Error('Заказ не найден')
+          } else {
+            return data
+          }
+        })
+      )
   }
 }

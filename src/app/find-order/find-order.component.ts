@@ -1,10 +1,16 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
 import {FormBuilder} from '@angular/forms'
 import {Store} from '@ngrx/store'
-import {Observable} from 'rxjs'
+import {filter, Observable} from 'rxjs'
 import {getStatusesAction} from './store/actions/get-statuses.action'
-import {isStatusesLoadingSelector, statusesSelector} from './store/selectors'
+import {
+  backendErrorsSelector,
+  isStatusesLoadingSelector,
+  statusesSelector,
+} from './store/selectors'
 import {OrderStatusInterface} from './types/order-status.interface'
+import {ActivatedRoute, Params} from '@angular/router'
+import {tap} from 'rxjs/operators'
 
 @Component({
   selector: 'app-find-order',
@@ -17,10 +23,10 @@ export class FindOrderComponent implements OnInit {
   statuses$: Observable<OrderStatusInterface[]>
   backendErrors$: Observable<string>
 
-  orderNumber = this.fb.control('')
+  orderId = this.fb.control('')
 
   form = this.fb.group({
-    orderNumber: this.orderNumber,
+    orderId: this.orderId,
   })
 
   public Status = {
@@ -37,11 +43,29 @@ export class FindOrderComponent implements OnInit {
     ORDER_CANCELED: 'red',
   }
 
-  constructor(private fb: FormBuilder, private store: Store) {}
+  constructor(
+    private fb: FormBuilder,
+    private store: Store,
+    public route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.isStatusesLoading$ = this.store.select(isStatusesLoadingSelector)
     this.statuses$ = this.store.select(statusesSelector)
+    this.backendErrors$ = this.store.select(backendErrorsSelector)
+    this.route.queryParams
+      .pipe(
+        tap(({orderId}: Params) => {
+          if (orderId) {
+            this.orderId.setValue(orderId)
+
+            setTimeout(() => {
+              this.onSubmit()
+            }, 0)
+          }
+        })
+      )
+      .subscribe()
   }
 
   onSubmit() {
@@ -49,8 +73,8 @@ export class FindOrderComponent implements OnInit {
       return
     }
 
-    const {orderNumber} = this.form.value
-    this.store.dispatch(getStatusesAction({orderNumber}))
+    const {orderId} = this.form.value
+    this.store.dispatch(getStatusesAction({orderId}))
   }
 
   formatDate(date) {

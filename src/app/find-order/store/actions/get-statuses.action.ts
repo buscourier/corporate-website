@@ -4,7 +4,7 @@ import {ActionTypes} from '../action-types'
 
 export const getStatusesAction = createAction(
   ActionTypes.GET_STATUSES,
-  props<{orderNumber: string}>()
+  props<{orderId: string}>()
 )
 
 export const getStatusesSuccessAction = createAction(
