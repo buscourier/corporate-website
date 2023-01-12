@@ -20,6 +20,7 @@ export class SuccessPageGuard implements CanActivate {
     state: RouterStateSnapshot
   ): boolean | Observable<boolean | UrlTree> {
     return this.store.select(createOrderSuccessSelector).pipe(
+      //TODO: rename to isOrderCreated
       tap((created: boolean) => {
         if (!created) {
           this.router.navigateByUrl('/new-order')
