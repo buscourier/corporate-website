@@ -57,6 +57,11 @@ tui-primitive-checkbox[data-size='m'] {
   height: 1.25rem !important;
 }
 
+.checkbox-white tui-primitive-checkbox [tuiWrapper][data-appearance='primary'],
+.checkbox-white tui-primitive-checkbox [tuiWrapper][data-appearance='outline'] {
+  @apply !bg-white;
+}
+
 tui-radio[data-size='m'] {
   width: 1.25rem !important;
   height: 1.25rem !important;
