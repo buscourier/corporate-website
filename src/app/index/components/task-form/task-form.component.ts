@@ -73,6 +73,10 @@ export class TaskFormComponent implements OnInit {
       .subscribe()
 
     this.validationErrors$ = this.store.select(validationErrorsSelector)
+
+    //@ts-ignore
+    const tracker = window.b24Tracker.guest.getTrace()
+    console.log('tracker', tracker)
   }
 
   onSubmit() {

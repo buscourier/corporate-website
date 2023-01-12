@@ -41,7 +41,7 @@
               "node_modules/@taiga-ui/styles/taiga-ui-global.less",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": ["src/bx24.js"]
           },
           "configurations": {
             "production": {
