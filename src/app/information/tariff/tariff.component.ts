@@ -16,6 +16,7 @@ import {PolymorpheusContent} from '@tinkoff/ng-polymorpheus'
 import {combineLatest, filter, map, Observable, take, takeUntil} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {StartCityInterface} from 'src/app/shared/types/start-city.interface'
+import settings from '../../settings'
 import {getCitiesAction} from './store/actions/get-cities.action'
 import {getZoneTariffsAction} from './store/actions/get-zone-tariffs.action'
 import {getZonesAction} from './store/actions/get-zones.action'
@@ -70,8 +71,6 @@ export class TariffComponent implements OnInit {
   otherZoneTariffs$: Observable<any>
   filteredCities$: Observable<StartCityInterface[]>
   backendErrors: Observable<string>
-
-  scrollDuration = 300
 
   regions = [
     {id: 1, name: 'Приморский край'},
@@ -277,15 +276,11 @@ export class TariffComponent implements OnInit {
   }
 
   scroll() {
-    const scrollTop = this.navbar.nativeElement.getBoundingClientRect().top
+    const scrollTop = 30
+    // const scrollTop = this.navbar.nativeElement.getBoundingClientRect().bottom
 
     return this.scrollService
-      .scroll$(
-        document.documentElement,
-        scrollTop + window.scrollY,
-        0,
-        this.scrollDuration
-      )
+      .scroll$(document.documentElement, scrollTop, 0, settings.scrollDuration)
       .pipe(takeUntil(this.destroy$))
       .subscribe()
   }
