@@ -4,7 +4,8 @@
       <ng-container *tuiLet="lg$ | async as lg">
         <ng-container *tuiLet="isOfficesLoading$ | async as isOfficesLoading">
           <!--main-->
-          <div
+          <main
+            #main
             *tuiLet="offices$ | async as offices"
             class="main-layout"
             [class.-translate-x-full]="xs && detailsOpened"
@@ -212,7 +213,7 @@
                 <ng-container *ngTemplateOutlet="details"></ng-container>
               </tui-loader>
             </div>
-          </div>
+          </main>
           <ng-template #details let-observer>
             <div
               class="relative h-full lg:p-6 lg:pt-8 xl:pt-8 xl:pr-4 xl:pb-14 xl:pl-8"

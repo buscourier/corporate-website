@@ -1,10 +1,12 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   Inject,
   Injector,
   OnInit,
   Self,
+  ViewChild,
 } from '@angular/core'
 import {FormControl} from '@angular/forms'
 import {Store} from '@ngrx/store'
@@ -43,6 +45,7 @@ import {
   isOfficesLoadingSelector,
   officesSelector,
 } from './store/selectors'
+import settings from '../settings'
 
 const defaultOffice = {
   id: '0',
@@ -75,6 +78,8 @@ const defaultOffice = {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactsComponent implements OnInit {
+  @ViewChild('main', {read: ElementRef}) main: ElementRef
+
   isOfficesLoading$: Observable<boolean>
   offices$: Observable<OfficeInterface[]>
   filteredOffices$: Observable<OfficeInterface[]>
@@ -92,8 +97,7 @@ export class ContactsComponent implements OnInit {
   isCurrentOfficeLoading = false
 
   mapZoom = 12
-  scrollTop = 150
-  duration = 300
+  scrollTop = 0
 
   activeTabIndex = 1
   activeFilter = null
@@ -209,6 +213,7 @@ export class ContactsComponent implements OnInit {
       tap((ok: boolean) => {
         if (ok) {
           this.isModalMode = false
+          this.scrollTop = 0
         }
       })
     )
@@ -216,6 +221,7 @@ export class ContactsComponent implements OnInit {
       tap((ok: boolean) => {
         if (ok) {
           this.isModalMode = true
+          this.scrollTop = 0
         }
       })
     )
@@ -223,6 +229,7 @@ export class ContactsComponent implements OnInit {
       tap((ok: boolean) => {
         if (ok) {
           this.isModalMode = true
+          this.scrollTop = 20
         }
       })
     )
@@ -236,6 +243,8 @@ export class ContactsComponent implements OnInit {
             //when resize screen and modal destroyed
             this.currentOffice = null
           }
+
+          this.scrollTop = 40
         }
       })
     )
@@ -337,7 +346,12 @@ export class ContactsComponent implements OnInit {
 
   scroll() {
     return this.scrollService
-      .scroll$(document.documentElement, this.scrollTop, 0, this.duration)
+      .scroll$(
+        document.documentElement,
+        this.scrollTop,
+        0,
+        settings.scrollDuration
+      )
       .pipe(takeUntil(this.destroy$))
       .subscribe()
   }
