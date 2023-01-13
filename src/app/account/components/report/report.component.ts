@@ -1,9 +1,7 @@
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  HostListener,
   Inject,
   Injector,
   OnInit,
@@ -11,11 +9,16 @@ import {
   ViewChild,
 } from '@angular/core'
 import {Store} from '@ngrx/store'
+import {TuiDestroyService, TuiScrollService} from '@taiga-ui/cdk'
 import {TuiDialogService} from '@taiga-ui/core'
 import {PolymorpheusComponent} from '@tinkoff/ng-polymorpheus'
 import {delay, filter, map, Observable, take, takeUntil} from 'rxjs'
+import {tap} from 'rxjs/operators'
+import {utils, write, writeFile} from 'xlsx'
 import {currentUserSelector} from '../../../auth/store/selectors'
+import settings from '../../../settings'
 import {CurrentUserInterface} from '../../../shared/types/current-user.interface'
+import {xsScreenSelector} from '../../../store/global/selectors'
 import {PrintOrderComponent} from './components/print-order/print-order.component'
 import {ViewOrderComponent} from './components/view-order/view-order.component'
 import {getOrdersAction} from './store/actions/get-orders.action'
@@ -23,10 +26,6 @@ import {isLoadingSelector, ordersSelector} from './store/selectors'
 import {FilterInterface} from './types/filter.interface'
 import {OrderInterface} from './types/order.interface'
 import {ReportResponseInterface} from './types/report-response.interface'
-import {read, writeFileXLSX, write, writeFile, utils} from 'xlsx'
-import {TuiDestroyService, TuiScrollService} from '@taiga-ui/cdk'
-import {tap} from 'rxjs/operators'
-import {xsScreenSelector} from '../../../store/global/selectors'
 
 @Component({
   selector: 'app-report',
@@ -64,7 +63,6 @@ export class ReportComponent implements OnInit {
   pages = 0
   pageIndex = 0
   ordersOnPage = 10
-  scrollDuration = 300
   breakpoint = window.matchMedia(`(min-width: 640px)`)
   userId: string
 
@@ -201,14 +199,15 @@ export class ReportComponent implements OnInit {
   }
 
   scroll() {
-    const scrollTop = this.filter.nativeElement.getBoundingClientRect().top
+    const scrollTop = 40
+    // const scrollTop = this.filter.nativeElement.getBoundingClientRect().top
 
     return this.scrollService
       .scroll$(
         document.documentElement,
-        scrollTop + window.scrollY - 10,
+        scrollTop, //scrollTop + window.scrollY - 10
         0,
-        this.scrollDuration
+        settings.scrollDuration
       )
       .pipe(takeUntil(this.destroy$))
       .subscribe()
