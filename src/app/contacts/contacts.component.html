@@ -216,7 +216,7 @@
           </main>
           <ng-template #details let-observer>
             <div
-              class="relative h-full lg:p-6 lg:pt-8 xl:pt-8 xl:pr-4 xl:pb-14 xl:pl-8"
+              class="relative h-full sm:p-5 lg:p-6 lg:pt-8 xl:pt-8 xl:pr-4 xl:pb-14 xl:pl-8"
             >
               <button
                 *ngIf="xs; else close"
@@ -233,7 +233,7 @@
                   type="button"
                   appearance="icon"
                   icon="icons::close-2"
-                  class="!absolute -top-6 -right-6 lg:top-0 lg:right-0"
+                  class="!absolute top-0 right-0"
                   (click)="closeDetails(observer)"
                 ></button>
               </ng-template>
