@@ -302,17 +302,11 @@ export class EndPointComponent implements OnInit, OnDestroy {
                 .map((item: [string, any]) => {
                   return item[0]
                 })
-            }),
-            first()
+            })
           )
         )
       )
       .subscribe((tabs: Array<string>) => {
-        //TODO: fix error in endpoint
-
-        // EmptyErrorImpl {stack: 'Error\n    at _super (http://localhost:4200/vendor.…mplete
-        // (http://localhost:4200/vendor.js:31023:12)',
-        // name: 'EmptyError', message: 'no elements in sequence'}
         this.tabs = tabs
       })
   }
