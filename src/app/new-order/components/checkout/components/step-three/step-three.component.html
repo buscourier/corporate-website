@@ -1,6 +1,8 @@
 <h2 class="mb-6 text-lg font-semibold">Пункт получения:</h2>
 <app-end-point></app-end-point>
-<app-orders></app-orders>
+<div class="mt-8">
+  <app-orders></app-orders>
+</div>
 <app-recipient *ngIf="isEndpointValid"></app-recipient>
 
 <div class="mt-5 flex justify-between">
