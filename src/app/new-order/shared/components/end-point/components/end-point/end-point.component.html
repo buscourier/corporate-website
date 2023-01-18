@@ -39,7 +39,7 @@
     <ng-container *tuiLet="isOfficesLoading$ | async as isOfficesLoading">
       <ng-container *tuiLet="offices$ | async as offices">
         <ng-container *tuiLet="tabs$ | async as tabs">
-          tabs: {{tabs | json}}
+          tabs: {{ tabs | json }}
           <ng-container *tuiLet="activeTabIndex$ | async as activeTabIndex">
             <tui-loader [showLoader]="isOfficesLoading">
               <div
@@ -50,10 +50,10 @@
                   type="button"
                   class="radius flex-grow py-3 px-1 text-center text-xs"
                   [class]="
-                  activeTabIndex === i && !isOfficesLoading
-                    ? 'bg-yellow'
-                    : 'bg-gray-100'
-                "
+                    activeTabIndex === i && !isOfficesLoading
+                      ? 'bg-yellow'
+                      : 'bg-gray-100'
+                  "
                   (click)="setActiveTabIndex(i)"
                 >
                   <span *ngIf="!isOfficesLoading">{{ TabName[tab] }}</span>
@@ -62,10 +62,7 @@
                   *ngIf="isNeedToMeet && tabs?.length"
                   type="button"
                   class="radius flex-grow py-3 px-1 text-center text-xs"
-                  [class]="
-                  activeTabIndex === 2
-                    ? 'bg-yellow'
-                    : 'bg-gray-100'"
+                  [class]="activeTabIndex === 2 ? 'bg-yellow' : 'bg-gray-100'"
                   (click)="setActiveTabIndex(2)"
                 >
                   <span>Встретить с автобуса</span>
@@ -74,14 +71,14 @@
             </tui-loader>
             <div *ngIf="activeTabIndex === 0">
               <label class="w-full">
-              <span class="mb-1 inline-block text-xs">
-                Выберите отделение
-                <sup
-                  class="text-red"
-                  *ngIf="get.errors && get.hasError('required')"
-                >*</sup
-                >
-              </span>
+                <span class="mb-1 inline-block text-xs">
+                  Выберите отделение
+                  <sup
+                    class="text-red"
+                    *ngIf="get.errors && get.hasError('required')"
+                    >*</sup
+                  >
+                </span>
                 <tui-loader [showLoader]="isOfficesLoading">
                   <tui-select
                     tuiTextfieldSize="m"
@@ -112,7 +109,7 @@
                 ></tui-svg>
                 <span
                   class="border-b border-dotted text-xs text-gray-700 hover:border-b-0"
-                >Посмотреть на карте</span
+                  >Посмотреть на карте</span
                 >
               </button>
             </div>
@@ -123,17 +120,17 @@
               class="mb-4 space-y-4"
             >
               <label class="block">
-              <span class="mb-1 inline-block text-xs">
-                Улица
-                <sup
-                  class="text-red"
-                  *ngIf="
-                    delivery.get('street').errors &&
-                    delivery.get('street').hasError('required')
-                  "
-                >*</sup
-                >
-              </span>
+                <span class="mb-1 inline-block text-xs">
+                  Улица
+                  <sup
+                    class="text-red"
+                    *ngIf="
+                      delivery.get('street').errors &&
+                      delivery.get('street').hasError('required')
+                    "
+                    >*</sup
+                  >
+                </span>
                 <tui-input
                   tuiTextfieldSize="m"
                   formControlName="street"
@@ -148,17 +145,17 @@
               </label>
               <div class="flex space-x-7">
                 <label class="mb-3 block flex-grow">
-                <span class="mb-1 inline-block text-xs">
-                  Дом, корпус, строение
-                  <sup
-                    class="text-red"
-                    *ngIf="
-                      delivery.get('building').errors &&
-                      delivery.get('building').hasError('required')
-                    "
-                  >*</sup
-                  >
-                </span>
+                  <span class="mb-1 inline-block text-xs">
+                    Дом, корпус, строение
+                    <sup
+                      class="text-red"
+                      *ngIf="
+                        delivery.get('building').errors &&
+                        delivery.get('building').hasError('required')
+                      "
+                      >*</sup
+                    >
+                  </span>
                   <tui-input
                     tuiTextfieldSize="m"
                     formControlName="building"
@@ -172,17 +169,17 @@
                   ></tui-error>
                 </label>
                 <label class="block">
-                <span class="mb-1 inline-block text-xs">
-                  Кв. / офис
-                  <sup
-                    class="text-red"
-                    *ngIf="
-                      delivery.get('apartment').errors &&
-                      delivery.get('apartment').hasError('required')
-                    "
-                  >*</sup
-                  >
-                </span>
+                  <span class="mb-1 inline-block text-xs">
+                    Кв. / офис
+                    <sup
+                      class="text-red"
+                      *ngIf="
+                        delivery.get('apartment').errors &&
+                        delivery.get('apartment').hasError('required')
+                      "
+                      >*</sup
+                    >
+                  </span>
                   <tui-input
                     tuiTextfieldSize="m"
                     formControlName="apartment"
@@ -197,17 +194,17 @@
                 </label>
               </div>
               <label class="mt-4 block">
-              <span class="mb-1.5 inline-block text-xs text-gray-500">
-                Удобное время для приезда курьера
-                <sup
-                  class="text-red"
-                  *ngIf="
-                    delivery.get('time').errors &&
-                    delivery.get('time').hasError('required')
-                  "
-                >*</sup
-                >
-              </span>
+                <span class="mb-1.5 inline-block text-xs text-gray-500">
+                  Удобное время для приезда курьера
+                  <sup
+                    class="text-red"
+                    *ngIf="
+                      delivery.get('time').errors &&
+                      delivery.get('time').hasError('required')
+                    "
+                    >*</sup
+                  >
+                </span>
                 <tui-radio-list
                   formControlName="time"
                   orientation="horizontal"
