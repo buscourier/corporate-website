@@ -19,12 +19,13 @@ import {
   map,
   Observable,
   of,
+  startWith,
   Subscription,
   switchMap,
   take,
   using,
 } from 'rxjs'
-import {concatAll, tap} from 'rxjs/operators'
+import {concatAll, tap, toArray} from 'rxjs/operators'
 import {ModalMapComponent} from '../../../../../../shared/components/modal-map/modal-map.component'
 import {STRINGIFY_CITIES} from '../../../../../../shared/handlers/string-handlers'
 import {EndCityInterface} from '../../../../../../shared/types/end-city.interface'
@@ -78,11 +79,11 @@ export class EndPointComponent implements OnInit, OnDestroy {
   cities$: Observable<EndCityInterface[]>
   offices$: Observable<OfficeInterface[]>
   backendErrors$: Observable<string | null>
+  tabs$: Observable<string[]>
   activeTabIndex$: Observable<number>
 
   readonly timeRange = ['8.00 - 14.00', '14.00 - 18.00']
   //TODO: add needToMeetTab
-  tabs: string[] = []
   isNeedToMeet = false
 
   city = this.fb.control(null, [Validators.required])
@@ -218,16 +219,10 @@ export class EndPointComponent implements OnInit, OnDestroy {
       tap((index: number) => {
         switch (index) {
           case 0:
-            if (this.isNeedToMeet) {
-              this.needToMeet.enable()
-              this.get.disable()
-            } else {
-              this.get.enable()
-              this.needToMeet.disable()
-            }
-
+            this.get.enable()
+            this.needToMeet.disable()
             this.delivery.disable()
-            this.store.dispatch(changeCourierAction({delivery: null}))
+            // this.store.dispatch(changeCourierAction({delivery: null}))
             break
           case 1:
             this.delivery.enable()
@@ -238,10 +233,16 @@ export class EndPointComponent implements OnInit, OnDestroy {
               this.delivery.patchValue({
                 street: '',
               })
-            }, 0),
-              //TODO: may be dont dispatch
-              this.store.dispatch(changeBusAction({needToMeet: false}))
-            this.store.dispatch(changeOfficeAction({get: null}))
+            }, 0)
+            //TODO: may be dont dispatch
+            // this.store.dispatch(changeBusAction({needToMeet: false}))
+            // this.store.dispatch(changeOfficeAction({get: null}))
+            break
+          case 2:
+            this.needToMeet.enable()
+            this.get.disable()
+            this.delivery.disable()
+            // this.store.dispatch(changeCourierAction({delivery: null}))
             break
         }
       })
@@ -253,7 +254,37 @@ export class EndPointComponent implements OnInit, OnDestroy {
         //   this.give.patchValue(offices[0])
         // }
         // this.form.get('give').setValue(offices[0]) //TODO consider another way to set default office
-        this.createTabControls(offices)
+      })
+    )
+
+    this.tabs$ = this.store.select(officesSelector).pipe(
+      switchMap((offices: OfficeInterface[]) =>
+        of(offices).pipe(
+          concatAll(),
+          map((office: OfficeInterface) => {
+            return Object.entries(office)
+              .filter((item: [string, string]) => {
+                return (
+                  (item[0] === 'get' && item[1] === '1') ||
+                  (item[0] === 'delivery' && item[1] === '1')
+                )
+              })
+              .map((item: [string, any]) => {
+                return item[0]
+              })
+          }),
+          toArray(),
+          map((tabs: unknown[]) => {
+            return tabs.flatMap((tab) => tab)
+          })
+        )
+      ),
+      tap((tabs: string[]) => {
+        if (this.isNeedToMeet && !tabs.length) {
+          // this.setActiveTabIndex(2)
+        } else {
+          // this.setActiveTabIndex(0)
+        }
       })
     )
 
@@ -282,42 +313,13 @@ export class EndPointComponent implements OnInit, OnDestroy {
       .subscribe()
   }
 
-  createTabControls(offices: OfficeInterface[]) {
-    return of(offices)
-      .pipe(
-        tap(() => {
-          this.tabs = []
-        }),
-        switchMap((offices: OfficeInterface[]) =>
-          of(offices).pipe(
-            concatAll(),
-            map((office: OfficeInterface) => {
-              return Object.entries(office)
-                .filter((item: [string, string]) => {
-                  return (
-                    (item[0] === 'get' && item[1] === '1') ||
-                    (item[0] === 'delivery' && item[1] === '1')
-                  )
-                })
-                .map((item: [string, any]) => {
-                  return item[0]
-                })
-            })
-          )
-        )
-      )
-      .subscribe((tabs: Array<string>) => {
-        this.tabs = tabs
-      })
-  }
-
   setActiveTabIndex(index: number) {
     this.store.dispatch(changeActiveTabAction({activeTabIndex: index}))
   }
 
-  findTab(name) {
-    return this.tabs.find((tabName: string) => tabName === name)
-  }
+  // findTab(name) {
+  //   return this.tabs.find((tabName: string) => tabName === name)
+  // }
 
   showMap() {
     const office: OfficeInterface = this.get.value
