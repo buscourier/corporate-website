@@ -38,6 +38,13 @@ export const officesSelector = createSelector(
   }
 )
 
+export const tabsSelector = createSelector(
+  endPointFeatureSelector,
+  (state: EndPointStateInterface) => {
+    return state.offices
+  }
+)
+
 export const endCitySelector = createSelector(
   endPointFeatureSelector,
   (state: EndPointStateInterface) => state.city

@@ -53,6 +53,7 @@ import {
   isEndPointPristineSelector,
   isOfficesLoadingSelector,
   officesSelector,
+  tabsSelector,
 } from '../../store/selectors'
 
 @Component({
@@ -100,18 +101,17 @@ export class EndPointComponent implements OnInit, OnDestroy {
     () =>
       this.city.valueChanges
         .pipe(
+          filter(Boolean),
           tap((city: EndCityInterface) => {
-            if (city) {
-              if (city.need_to_meet === '1') {
-                this.isNeedToMeet = true
-              } else {
-                this.isNeedToMeet = false
-              }
-
-              //TODO: Check is that way correct, maybe need switch to map
-              this.store.dispatch(changeCityAction({city}))
-              this.store.dispatch(getOfficesAction({id: city.office_id}))
+            if (city.need_to_meet === '1') {
+              this.isNeedToMeet = true
+            } else {
+              this.isNeedToMeet = false
             }
+
+            //TODO: Check is that way correct, maybe need switch to map
+            this.store.dispatch(changeCityAction({city}))
+            this.store.dispatch(getOfficesAction({id: city.office_id}))
           })
         )
         .subscribe(),
@@ -257,9 +257,11 @@ export class EndPointComponent implements OnInit, OnDestroy {
       })
     )
 
-    this.tabs$ = this.store.select(officesSelector).pipe(
-      switchMap((offices: OfficeInterface[]) =>
-        of(offices).pipe(
+    this.tabs$ = this.store.select(tabsSelector).pipe(
+      filter(Boolean),
+      switchMap((offices: OfficeInterface[]) => {
+        console.log('offices', offices)
+        return of(offices).pipe(
           concatAll(),
           map((office: OfficeInterface) => {
             return Object.entries(office)
@@ -278,12 +280,12 @@ export class EndPointComponent implements OnInit, OnDestroy {
             return tabs.flatMap((tab) => tab)
           })
         )
-      ),
+      }),
       tap((tabs: string[]) => {
         if (this.isNeedToMeet && !tabs.length) {
-          // this.setActiveTabIndex(2)
+          this.setActiveTabIndex(2)
         } else {
-          // this.setActiveTabIndex(0)
+          this.setActiveTabIndex(0)
         }
       })
     )
