@@ -40,7 +40,10 @@
       <ng-container *tuiLet="offices$ | async as offices">
         <ng-container *tuiLet="tabs$ | async as tabs">
           <ng-container *tuiLet="activeTabIndex$ | async as activeTabIndex">
-            <tui-loader *ngIf="isOfficesLoading || tabs?.length" [showLoader]="isOfficesLoading">
+            <tui-loader
+              *ngIf="isOfficesLoading || tabs?.length"
+              [showLoader]="isOfficesLoading"
+            >
               <div
                 class="mt-4 mb-5 flex h-12.5 bg-gray-50 [&>button:first-child]:rounded-tl-sm [&>button:first-child]:rounded-bl-sm [&>button:last-child]:rounded-tr-sm [&>button:last-child]:rounded-br-sm"
               >
