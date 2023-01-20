@@ -53,10 +53,10 @@
                     type="button"
                     class="radius flex-grow py-3 px-1 text-center text-xs"
                     [class]="
-                    activeTabIndex === i && !isOfficesLoading
-                      ? 'bg-yellow'
-                      : 'bg-gray-100'
-                  "
+                      activeTabIndex === i && !isOfficesLoading
+                        ? 'bg-yellow'
+                        : 'bg-gray-100'
+                    "
                     (click)="setActiveTabIndex(i)"
                   >
                     <span *ngIf="!isOfficesLoading">{{ TabName[tab] }}</span>
@@ -117,13 +117,11 @@
                 >
               </button>
             </div>
-            <div
-              *ngIf="activeTabIndex === 1"
-              class="mb-4 space-y-4"
-            >
+            <div *ngIf="activeTabIndex === 1" class="mb-4 space-y-4">
               <app-courier
                 [formControl]="delivery"
-                [setControlValue]="deliveryValues$ | async"></app-courier>
+                [setControlValue]="deliveryValues$ | async"
+              ></app-courier>
             </div>
             <div *ngIf="activeTabIndex === 2">
               <tui-checkbox-labeled

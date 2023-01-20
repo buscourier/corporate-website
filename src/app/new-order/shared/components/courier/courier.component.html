@@ -2,21 +2,15 @@
   <label class="block">
     <span class="mb-1 inline-block text-xs">
       Улица
-      <sup
-        class="text-red"
-        *ngIf="
-          street.errors &&
-          street.hasError('required')
-        "
-      >*</sup
+      <sup class="text-red" *ngIf="street.errors && street.hasError('required')"
+        >*</sup
       >
     </span>
     <tui-input
       tuiTextfieldSize="m"
       [formControl]="street"
       [tuiTextfieldLabelOutside]="true"
-      [pseudoInvalid]="
-          !!(street.invalid && form.touched)"
+      [pseudoInvalid]="!!(street.invalid && form.touched)"
     >
       <input tuiTextfield type="text" />
     </tui-input>
@@ -31,18 +25,15 @@
         Дом, корпус, строение
         <sup
           class="text-red"
-          *ngIf="
-            building.errors &&
-            building.hasError('required')
-          "
-        >*</sup>
+          *ngIf="building.errors && building.hasError('required')"
+          >*</sup
+        >
       </span>
       <tui-input
         tuiTextfieldSize="m"
         [formControl]="building"
         [tuiTextfieldLabelOutside]="true"
-        [pseudoInvalid]="
-          !!(building.invalid && form.touched)"
+        [pseudoInvalid]="!!(building.invalid && form.touched)"
       >
         <input tuiTextfield type="text" />
       </tui-input>
@@ -56,19 +47,15 @@
         Кв. / офис
         <sup
           class="text-red"
-          *ngIf="
-            apartment.errors &&
-            apartment.hasError('required')
-          "
-        >*</sup
+          *ngIf="apartment.errors && apartment.hasError('required')"
+          >*</sup
         >
       </span>
       <tui-input
         tuiTextfieldSize="m"
         [formControl]="apartment"
         [tuiTextfieldLabelOutside]="true"
-        [pseudoInvalid]="
-          !!(apartment.invalid && form.touched)"
+        [pseudoInvalid]="!!(apartment.invalid && form.touched)"
       >
         <input tuiTextfield type="text" />
       </tui-input>
@@ -81,13 +68,8 @@
   <label class="mt-4 block">
     <span class="mb-1.5 inline-block text-xs text-gray-500">
       Удобное время для приезда курьера
-      <sup
-        class="text-red"
-        *ngIf="
-          time.errors &&
-          time.hasError('required')
-        "
-      >*</sup
+      <sup class="text-red" *ngIf="time.errors && time.hasError('required')"
+        >*</sup
       >
     </span>
     <tui-radio-list
