@@ -13,6 +13,7 @@ import {TuiDialogService} from '@taiga-ui/core'
 import {TUI_VALIDATION_ERRORS, tuiItemsHandlersProvider} from '@taiga-ui/kit'
 import {PolymorpheusComponent} from '@tinkoff/ng-polymorpheus'
 import {
+  combineLatest,
   debounceTime,
   filter,
   first,
@@ -82,7 +83,7 @@ export class EndPointComponent implements OnInit, OnDestroy {
   cities$: Observable<EndCityInterface[]>
   offices$: Observable<OfficeInterface[]>
   backendErrors$: Observable<string | null>
-  tabs$: Observable<string[]>
+  tabs$: Observable<any>
   activeTabIndex$: Observable<number>
 
   //TODO: add needToMeetTab
@@ -145,7 +146,7 @@ export class EndPointComponent implements OnInit, OnDestroy {
         .pipe(
           pairwise(),
           tap(([prev, next]) => {
-            if (next === null) {
+            if (prev === null || next === null) {
               this.store.dispatch(changeCourierAction({delivery: null}))
             } else if (!this.utils.isObjectsEqual(prev, next)) {
               this.store.dispatch(changeCourierAction({delivery: next}))
@@ -259,36 +260,58 @@ export class EndPointComponent implements OnInit, OnDestroy {
       })
     )
 
-    this.tabs$ = this.store.select(tabsSelector).pipe(
-      filter(Boolean),
-      switchMap((offices: OfficeInterface[]) => {
-        console.log('offices', offices)
-        return of(offices).pipe(
-          concatAll(),
-          map((office: OfficeInterface) => {
-            return Object.entries(office)
-              .filter((item: [string, string]) => {
-                return (
-                  (item[0] === 'get' && item[1] === '1') ||
-                  (item[0] === 'delivery' && item[1] === '1')
-                )
-              })
-              .map((item: [string, any]) => {
-                return item[0]
-              })
-          }),
-          toArray(),
-          map((tabs: unknown[]) => {
-            return tabs.flatMap((tab) => tab)
-          })
-        )
+    this.tabs$ = combineLatest([
+      this.store.select(tabsSelector),
+      this.store.select(activeTabSelector),
+    ]).pipe(
+      switchMap(([offices, activeTab]) => {
+        const tabs = (offices || []).map((office: OfficeInterface) => {
+          return Object.entries(office)
+            .filter((item: [string, string]) => {
+              return (
+                (item[0] === 'get' && item[1] === '1') ||
+                (item[0] === 'delivery' && item[1] === '1')
+              )
+            })
+            .map((item: [string, any]) => {
+              return item[0]
+            })
+        })
+
+        return of([tabs, activeTab])
       }),
-      tap((tabs: string[]) => {
-        if (this.isNeedToMeet && !tabs.length) {
+      map(([tabsArray, activeTab]: [any, number]) => {
+        const tabs = tabsArray.length ? tabsArray[0] : []
+        const get = tabs.find((tab: string) => tab === 'get')
+        const delivery = tabs.find((tab: string) => tab === 'delivery')
+        console.log('tabs', tabs)
+        console.log('activeTab', activeTab)
+
+        // console.log('check', (tabs.length === 1 && tabs[0] === 'get') && this.isNeedToMeet && activeTab !== 2)
+
+        // if (
+        //   this.isNeedToMeet && !tabs.length
+        // ) {
+        //   this.setActiveTabIndex(2)
+        // } else if (
+        //   (tabs.length && !this.isNeedToMeet && activeTab === 2) ||
+        //   ((tabs.length === 1 && tabs[0] === 'get') && this.isNeedToMeet && activeTab !== 2)
+        // ) {
+        //   this.setActiveTabIndex(0)
+        // }
+
+        if (
+          (!tabs.length && this.isNeedToMeet) ||
+          (tabs.length && this.isNeedToMeet && activeTab === 2)
+        ) {
           this.setActiveTabIndex(2)
+        } else if (delivery && activeTab === 1) {
+          this.setActiveTabIndex(1)
         } else {
           this.setActiveTabIndex(0)
         }
+
+        return tabs
       })
     )
 
