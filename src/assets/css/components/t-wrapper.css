@@ -37,6 +37,10 @@
   pointer-events: auto !important;
 }
 
+.pointer-events-none._readonly {
+  pointer-events: none !important;
+}
+
 ._readonly tui-checkbox,
 ._readonly .checkbox-name,
 ._readonly .checkbox-label {

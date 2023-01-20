@@ -19,6 +19,7 @@ import {
   map,
   Observable,
   of,
+  pairwise,
   startWith,
   Subscription,
   switchMap,
@@ -55,6 +56,7 @@ import {
   officesSelector,
   tabsSelector,
 } from '../../store/selectors'
+import {UtilsService} from '../../../../../../shared/services/utils.service'
 
 @Component({
   selector: 'app-end-point',
@@ -83,19 +85,13 @@ export class EndPointComponent implements OnInit, OnDestroy {
   tabs$: Observable<string[]>
   activeTabIndex$: Observable<number>
 
-  readonly timeRange = ['8.00 - 14.00', '14.00 - 18.00']
   //TODO: add needToMeetTab
   isNeedToMeet = false
 
   city = this.fb.control(null, [Validators.required])
   get = this.fb.control(null, [Validators.required])
-  needToMeet = this.fb.control(true, [Validators.required])
-  delivery = this.fb.group({
-    street: ['', [Validators.required]],
-    building: ['', [Validators.required]],
-    apartment: ['', [Validators.required]],
-    time: [this.timeRange[0], [Validators.required]],
-  })
+  needToMeet = this.fb.control(null, [Validators.required])
+  delivery = this.fb.control(null, [Validators.required])
 
   cityValues$ = using(
     () =>
@@ -123,9 +119,7 @@ export class EndPointComponent implements OnInit, OnDestroy {
       this.get.valueChanges
         .pipe(
           tap((get: OfficeInterface) => {
-            if (get) {
-              this.store.dispatch(changeOfficeAction({get}))
-            }
+            this.store.dispatch(changeOfficeAction({get}))
           })
         )
         .subscribe(),
@@ -137,6 +131,7 @@ export class EndPointComponent implements OnInit, OnDestroy {
       this.needToMeet.valueChanges
         .pipe(
           tap((needToMeet: boolean) => {
+            console.log('needToMeet.valueChanges', needToMeet)
             this.store.dispatch(changeBusAction({needToMeet}))
           })
         )
@@ -148,8 +143,13 @@ export class EndPointComponent implements OnInit, OnDestroy {
     () =>
       this.delivery.valueChanges
         .pipe(
-          tap((delivery: CourierInterface) => {
-            this.store.dispatch(changeCourierAction({delivery}))
+          pairwise(),
+          tap(([prev, next]) => {
+            if (next === null) {
+              this.store.dispatch(changeCourierAction({delivery: null}))
+            } else if (!this.utils.isObjectsEqual(prev, next)) {
+              this.store.dispatch(changeCourierAction({delivery: next}))
+            }
           })
         )
         .subscribe(),
@@ -175,6 +175,7 @@ export class EndPointComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private store: Store,
+    private utils: UtilsService,
     @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
     @Inject(Injector) private readonly injector: Injector
   ) {}
@@ -220,28 +221,29 @@ export class EndPointComponent implements OnInit, OnDestroy {
         switch (index) {
           case 0:
             this.get.enable()
+            this.needToMeet.setValue(false)
             this.needToMeet.disable()
+            this.delivery.setValue(null)
             this.delivery.disable()
-            // this.store.dispatch(changeCourierAction({delivery: null}))
             break
           case 1:
             this.delivery.enable()
+            this.get.setValue(null)
             this.get.disable()
+            this.needToMeet.setValue(false)
             this.needToMeet.disable()
-
-            setTimeout(() => {
-              this.delivery.patchValue({
-                street: '',
-              })
-            }, 0)
-            //TODO: may be dont dispatch
-            // this.store.dispatch(changeBusAction({needToMeet: false}))
-            // this.store.dispatch(changeOfficeAction({get: null}))
             break
           case 2:
             this.needToMeet.enable()
+            this.get.setValue(null)
             this.get.disable()
+            this.delivery.setValue(null)
             this.delivery.disable()
+
+            setTimeout(() => {
+              this.needToMeet.setValue(true)
+            }, 0)
+
             // this.store.dispatch(changeCourierAction({delivery: null}))
             break
         }

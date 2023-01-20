@@ -8,7 +8,8 @@ import {NgControl} from '@angular/forms'
 export class SetControlValueDirective {
   @Input()
   set setControlValue(val: any) {
-    this.ngControl.control.setValue(val, {emitEvent: false})
+    // if (!val) return
+    this.ngControl.control.patchValue(val, {emitEvent: false})
   }
 
   constructor(private ngControl: NgControl) {}

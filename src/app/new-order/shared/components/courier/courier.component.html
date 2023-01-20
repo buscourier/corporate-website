@@ -1,0 +1,107 @@
+<div [formGroup]="form">
+  <label class="block">
+    <span class="mb-1 inline-block text-xs">
+      Улица
+      <sup
+        class="text-red"
+        *ngIf="
+          street.errors &&
+          street.hasError('required')
+        "
+      >*</sup
+      >
+    </span>
+    <tui-input
+      tuiTextfieldSize="m"
+      [formControl]="street"
+      [tuiTextfieldLabelOutside]="true"
+      [pseudoInvalid]="
+          !!(street.invalid && form.touched)"
+    >
+      <input tuiTextfield type="text" />
+    </tui-input>
+    <tui-error
+      [formControl]="street"
+      [error]="[] | tuiFieldError | async"
+    ></tui-error>
+  </label>
+  <div class="flex space-x-7">
+    <label class="mb-3 block flex-grow">
+      <span class="mb-1 inline-block text-xs">
+        Дом, корпус, строение
+        <sup
+          class="text-red"
+          *ngIf="
+            building.errors &&
+            building.hasError('required')
+          "
+        >*</sup>
+      </span>
+      <tui-input
+        tuiTextfieldSize="m"
+        [formControl]="building"
+        [tuiTextfieldLabelOutside]="true"
+        [pseudoInvalid]="
+          !!(building.invalid && form.touched)"
+      >
+        <input tuiTextfield type="text" />
+      </tui-input>
+      <tui-error
+        [formControl]="building"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
+    </label>
+    <label class="block">
+      <span class="mb-1 inline-block text-xs">
+        Кв. / офис
+        <sup
+          class="text-red"
+          *ngIf="
+            apartment.errors &&
+            apartment.hasError('required')
+          "
+        >*</sup
+        >
+      </span>
+      <tui-input
+        tuiTextfieldSize="m"
+        [formControl]="apartment"
+        [tuiTextfieldLabelOutside]="true"
+        [pseudoInvalid]="
+          !!(apartment.invalid && form.touched)"
+      >
+        <input tuiTextfield type="text" />
+      </tui-input>
+      <tui-error
+        [formControl]="apartment"
+        [error]="[] | tuiFieldError | async"
+      ></tui-error>
+    </label>
+  </div>
+  <label class="mt-4 block">
+    <span class="mb-1.5 inline-block text-xs text-gray-500">
+      Удобное время для приезда курьера
+      <sup
+        class="text-red"
+        *ngIf="
+          time.errors &&
+          time.hasError('required')
+        "
+      >*</sup
+      >
+    </span>
+    <tui-radio-list
+      [formControl]="time"
+      orientation="horizontal"
+      [items]="timeRange"
+      [itemContent]="timeContent"
+    ></tui-radio-list>
+    <ng-template #timeContent let-data>
+      {{ data }}
+    </ng-template>
+    <tui-error
+      [formControl]="time"
+      [error]="[] | tuiFieldError | async"
+    ></tui-error>
+  </label>
+</div>

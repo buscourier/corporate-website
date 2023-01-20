@@ -26,6 +26,8 @@ import {GetCitiesEffect} from './store/effects/get-cities.effect'
 import {GetOfficesEffect} from './store/effects/get-offices.effect'
 import {reducer} from './store/reducer'
 import {END_POINT_FEATURE} from './store/state'
+import {CourierModule} from '../courier/courier.module'
+import {UtilsService} from '../../../../shared/services/utils.service'
 
 @NgModule({
   declarations: [EndPointComponent],
@@ -48,7 +50,9 @@ import {END_POINT_FEATURE} from './store/state'
     TuiRadioListModule,
     TuiCheckboxLabeledModule,
     TuiSvgModule,
+    CourierModule,
   ],
   exports: [EndPointComponent],
+  providers: [UtilsService],
 })
 export class EndPointModule {}
