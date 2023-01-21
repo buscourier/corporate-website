@@ -62,7 +62,7 @@
                     <span *ngIf="!isOfficesLoading">{{ TabName[tab] }}</span>
                   </button>
                   <button
-                    *ngIf="isNeedToMeet && tabs?.length"
+                    *ngIf="needToMeetTab && tabs?.length && !isOfficesLoading"
                     type="button"
                     class="radius flex-grow py-3 px-1 text-center text-xs"
                     [class]="activeTabIndex === 2 ? 'bg-yellow' : 'bg-gray-100'"
@@ -73,7 +73,7 @@
                 </div>
               </tui-loader>
             </div>
-            <div *ngIf="activeTabIndex === 0">
+            <div *ngIf="activeTabIndex === 0 && !isOfficesLoading">
               <label class="w-full">
                 <span class="mb-1 inline-block text-xs">
                   Выберите отделение
@@ -117,13 +117,13 @@
                 >
               </button>
             </div>
-            <div *ngIf="activeTabIndex === 1" class="mb-4 space-y-4">
+            <div *ngIf="activeTabIndex === 1 && !isOfficesLoading" class="mb-4 space-y-4">
               <app-courier
                 [formControl]="delivery"
                 [setControlValue]="deliveryValues$ | async"
               ></app-courier>
             </div>
-            <div *ngIf="activeTabIndex === 2">
+            <div *ngIf="activeTabIndex === 2 && !isOfficesLoading">
               <tui-checkbox-labeled
                 [formControl]="needToMeet"
                 [setControlValue]="needToMeetValues$ | async"

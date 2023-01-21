@@ -87,7 +87,7 @@ export class EndPointComponent implements OnInit, OnDestroy {
   activeTabIndex$: Observable<number>
 
   //TODO: add needToMeetTab
-  isNeedToMeet = false
+  needToMeetTab = false
 
   city = this.fb.control(null, [Validators.required])
   get = this.fb.control(null, [Validators.required])
@@ -99,11 +99,14 @@ export class EndPointComponent implements OnInit, OnDestroy {
       this.city.valueChanges
         .pipe(
           filter(Boolean),
+          // tap(() => {
+          //   this.setActiveTabIndex(0)
+          // }),
           tap((city: EndCityInterface) => {
             if (city.need_to_meet === '1') {
-              this.isNeedToMeet = true
+              this.needToMeetTab = true
             } else {
-              this.isNeedToMeet = false
+              this.needToMeetTab = false
             }
 
             //TODO: Check is that way correct, maybe need switch to map
@@ -194,7 +197,7 @@ export class EndPointComponent implements OnInit, OnDestroy {
     this.store
       .select(isCitiesLoadedSelector)
       .pipe(
-        filter((isCitiesLoaded: boolean) => !isCitiesLoaded),
+        // filter((isCitiesLoaded: boolean) => !isCitiesLoaded),
         switchMap(() => {
           return this.store.select(startCitySelector).pipe(
             filter(Boolean),
@@ -284,25 +287,10 @@ export class EndPointComponent implements OnInit, OnDestroy {
         const tabs = tabsArray.length ? tabsArray[0] : []
         const get = tabs.find((tab: string) => tab === 'get')
         const delivery = tabs.find((tab: string) => tab === 'delivery')
-        console.log('tabs', tabs)
-        console.log('activeTab', activeTab)
-
-        // console.log('check', (tabs.length === 1 && tabs[0] === 'get') && this.isNeedToMeet && activeTab !== 2)
-
-        // if (
-        //   this.isNeedToMeet && !tabs.length
-        // ) {
-        //   this.setActiveTabIndex(2)
-        // } else if (
-        //   (tabs.length && !this.isNeedToMeet && activeTab === 2) ||
-        //   ((tabs.length === 1 && tabs[0] === 'get') && this.isNeedToMeet && activeTab !== 2)
-        // ) {
-        //   this.setActiveTabIndex(0)
-        // }
 
         if (
-          (!tabs.length && this.isNeedToMeet) ||
-          (tabs.length && this.isNeedToMeet && activeTab === 2)
+          (!tabs.length && this.needToMeetTab) ||
+          (tabs.length && this.needToMeetTab && activeTab === 2)
         ) {
           this.setActiveTabIndex(2)
         } else if (delivery && activeTab === 1) {
