@@ -117,7 +117,10 @@
                 >
               </button>
             </div>
-            <div *ngIf="activeTabIndex === 1 && !isOfficesLoading" class="mb-4 space-y-4">
+            <div
+              *ngIf="activeTabIndex === 1 && !isOfficesLoading"
+              class="mb-4 space-y-4"
+            >
               <app-courier
                 [formControl]="delivery"
                 [setControlValue]="deliveryValues$ | async"
