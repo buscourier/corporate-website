@@ -245,7 +245,7 @@ export class EndPointComponent implements OnInit, OnDestroy {
       this.store.select(endOfficeSelector),
     ]).pipe(
       tap(([offices, activeOffice]: [OfficeInterface[], OfficeInterface]) => {
-        if (activeOffice === null) {
+        if (activeOffice === null && this.get.enabled) {
           this.get.setValue(offices[0])
         }
       }),

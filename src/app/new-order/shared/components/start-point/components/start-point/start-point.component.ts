@@ -113,9 +113,7 @@ export class StartPointComponent implements OnInit, OnDestroy {
       this.give.valueChanges
         .pipe(
           tap((give: OfficeInterface) => {
-            if (give) {
-              this.store.dispatch(changeOfficeAction({give}))
-            }
+            this.store.dispatch(changeOfficeAction({give}))
           })
         )
         .subscribe(),
@@ -231,7 +229,7 @@ export class StartPointComponent implements OnInit, OnDestroy {
       this.store.select(startOfficeSelector),
     ]).pipe(
       tap(([offices, activeOffice]: [OfficeInterface[], OfficeInterface]) => {
-        if (activeOffice === null) {
+        if (activeOffice === null && this.give.enabled) {
           this.give.setValue(offices[0])
         }
       }),
