@@ -71,13 +71,10 @@ const endPointReducer = createReducer(
     ...state,
     needToMeet,
   })),
-  on(
-    changeActiveTabAction,
-    (state: EndPointStateInterface, {activeTabIndex}) => ({
-      ...state,
-      activeTabIndex,
-    })
-  ),
+  on(changeActiveTabAction, (state: EndPointStateInterface, {activeTab}) => ({
+    ...state,
+    activeTab,
+  })),
   on(changeValidityAction, (state: EndPointStateInterface, {isValid}) => ({
     ...state,
     isValid,

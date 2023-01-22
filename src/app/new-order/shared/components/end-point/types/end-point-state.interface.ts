@@ -14,5 +14,5 @@ export interface EndPointStateInterface {
   get: OfficeInterface | null
   delivery: CourierInterface
   needToMeet: boolean
-  activeTabIndex: string
+  activeTab: string
 }

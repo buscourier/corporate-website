@@ -67,7 +67,7 @@ export const busSelector = createSelector(
 
 export const activeTabSelector = createSelector(
   endPointFeatureSelector,
-  (state: EndPointStateInterface) => state.activeTabIndex
+  (state: EndPointStateInterface) => state.activeTab
 )
 
 export const isEndPointValidSelector = createSelector(

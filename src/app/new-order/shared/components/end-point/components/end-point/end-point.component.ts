@@ -286,9 +286,9 @@ export class EndPointComponent implements OnInit, OnDestroy {
         const isActiveTabExists = tabs.find((tab: string) => tab === activeTab)
 
         if (activeTab && isActiveTabExists) {
-          this.setActiveTabIndex(activeTab)
+          this.setActiveTab(activeTab)
         } else {
-          this.setActiveTabIndex(tabs[0])
+          this.setActiveTab(tabs[0])
         }
 
         return tabs
@@ -319,8 +319,8 @@ export class EndPointComponent implements OnInit, OnDestroy {
       .subscribe()
   }
 
-  setActiveTabIndex(index: string) {
-    this.store.dispatch(changeActiveTabAction({activeTabIndex: index}))
+  setActiveTab(activeTab: string) {
+    this.store.dispatch(changeActiveTabAction({activeTab}))
   }
 
   showMap() {
