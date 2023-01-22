@@ -49,10 +49,10 @@
                   type="button"
                   class="radius flex-grow py-3 px-1 text-center text-xs"
                   [class]="
-                  activeTab === tab && !isOfficesLoading
-                    ? 'bg-yellow'
-                    : 'bg-gray-100'
-                "
+                    activeTab === tab && !isOfficesLoading
+                      ? 'bg-yellow'
+                      : 'bg-gray-100'
+                  "
                   (click)="setActiveTab(tab)"
                 >
                   <span *ngIf="!isOfficesLoading">{{ TabName[tab] }}</span>
@@ -61,14 +61,14 @@
             </tui-loader>
             <div *ngIf="activeTab === 'give'">
               <label class="w-full">
-              <span class="mb-1 inline-block text-xs">
-                Выберите отделение
-                <sup
-                  class="text-red"
-                  *ngIf="give.errors && give.hasError('required')"
-                >*</sup
-                >
-              </span>
+                <span class="mb-1 inline-block text-xs">
+                  Выберите отделение
+                  <sup
+                    class="text-red"
+                    *ngIf="give.errors && give.hasError('required')"
+                    >*</sup
+                  >
+                </span>
                 <tui-loader [showLoader]="isOfficesLoading">
                   <tui-select
                     tuiTextfieldSize="m"
