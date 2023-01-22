@@ -240,12 +240,17 @@ export class EndPointComponent implements OnInit, OnDestroy {
       })
     )
 
-    this.offices$ = this.store.select(officesSelector).pipe(
-      tap((offices: OfficeInterface[]) => {
-        // if (offices.length < 2) {
-        //   this.give.patchValue(offices[0])
-        // }
-        // this.form.get('give').setValue(offices[0]) //TODO consider another way to set default office
+    this.offices$ = combineLatest([
+      this.store.select(officesSelector),
+      this.store.select(endOfficeSelector),
+    ]).pipe(
+      tap(([offices, activeOffice]: [OfficeInterface[], OfficeInterface]) => {
+        if (activeOffice === null) {
+          this.get.setValue(offices[0])
+        }
+      }),
+      map(([offices]: [OfficeInterface[], OfficeInterface]) => {
+        return offices
       })
     )
 
