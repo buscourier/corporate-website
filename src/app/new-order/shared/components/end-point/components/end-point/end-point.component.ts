@@ -87,9 +87,6 @@ export class EndPointComponent implements OnInit, OnDestroy {
   tabs$: Observable<any>
   activeTabIndex$: Observable<string>
 
-  //TODO: add needToMeetTab
-  needToMeetTab = false
-
   city = this.fb.control(null, [Validators.required])
   get = this.fb.control(null, [Validators.required])
   needToMeet = this.fb.control(null, [Validators.required])
@@ -100,16 +97,7 @@ export class EndPointComponent implements OnInit, OnDestroy {
       this.city.valueChanges
         .pipe(
           filter(Boolean),
-          // tap(() => {
-          //   this.setActiveTabIndex(0)
-          // }),
           tap((city: EndCityInterface) => {
-            // if (city.need_to_meet === '1') {
-            //   this.needToMeetTab = true
-            // } else {
-            //   this.needToMeetTab = false
-            // }
-
             //TODO: Check is that way correct, maybe need switch to map
             this.store.dispatch(changeCityAction({city}))
             this.store.dispatch(getOfficesAction({id: city.office_id}))
@@ -136,7 +124,6 @@ export class EndPointComponent implements OnInit, OnDestroy {
       this.needToMeet.valueChanges
         .pipe(
           tap((needToMeet: boolean) => {
-            console.log('needToMeet.valueChanges', needToMeet)
             this.store.dispatch(changeBusAction({needToMeet}))
           })
         )
@@ -223,8 +210,6 @@ export class EndPointComponent implements OnInit, OnDestroy {
 
     this.activeTabIndex$ = this.store.select(activeTabSelector).pipe(
       tap((index: any) => {
-        console.log('tab', index)
-
         switch (index) {
           case 'get':
             this.get.enable()
@@ -250,8 +235,6 @@ export class EndPointComponent implements OnInit, OnDestroy {
             setTimeout(() => {
               this.needToMeet.setValue(true)
             }, 0)
-
-            // this.store.dispatch(changeCourierAction({delivery: null}))
             break
         }
       })
@@ -332,13 +315,8 @@ export class EndPointComponent implements OnInit, OnDestroy {
   }
 
   setActiveTabIndex(index: string) {
-    console.log('setActiveTabIndex', index)
     this.store.dispatch(changeActiveTabAction({activeTabIndex: index}))
   }
-
-  // findTab(name) {
-  //   return this.tabs.find((tabName: string) => tabName === name)
-  // }
 
   showMap() {
     const office: OfficeInterface = this.get.value
