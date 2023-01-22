@@ -36,7 +36,10 @@ import {EndCityInterface} from '../../../../../../shared/types/end-city.interfac
 import {OfficeInterface} from '../../../../../../shared/types/office.interface'
 import {StartCityInterface} from '../../../../../../shared/types/start-city.interface'
 import {CourierInterface} from '../../../../types/courier.interface'
-import {startCitySelector} from '../../../start-point/store/selectors'
+import {
+  isStartPointValidSelector,
+  startCitySelector,
+} from '../../../start-point/store/selectors'
 import {changeActiveTabAction} from '../../store/actions/change-active-tab.action'
 import {changeBusAction} from '../../store/actions/change-bus.action'
 import {changeCityAction} from '../../store/actions/change-city.action'
@@ -84,6 +87,7 @@ export class EndPointComponent implements OnInit, OnDestroy {
   isCitiesLoading$: Observable<boolean>
   isCitiesLoaded$: Observable<boolean>
   isOfficesLoading$: Observable<boolean>
+  isStartPointValid$: Observable<boolean>
   cities$: Observable<EndCityInterface[]>
   offices$: Observable<OfficeInterface[]>
   backendErrors$: Observable<string | null>
@@ -209,10 +213,18 @@ export class EndPointComponent implements OnInit, OnDestroy {
   initializeValues() {
     this.isCitiesLoading$ = this.store.select(isCitiesLoadingSelector)
     this.isOfficesLoading$ = this.store.select(isOfficesLoadingSelector)
-    this.cities$ = this.store.select(citiesSelector).pipe(
-      filter(Boolean),
-      tap(() => {
-        this.city.enable()
+    this.cities$ = combineLatest([
+      this.store.select(citiesSelector),
+      this.store.select(isStartPointValidSelector),
+    ]).pipe(
+      map(([cities, isStartPointValid]) => {
+        if (cities && isStartPointValid) {
+          this.city.enable()
+        } else {
+          this.city.disable()
+        }
+
+        return cities
       })
     )
 
