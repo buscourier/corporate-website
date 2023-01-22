@@ -14,5 +14,5 @@ export const initialState: EndPointStateInterface = {
   get: null,
   delivery: null,
   needToMeet: false,
-  activeTabIndex: 0,
+  activeTabIndex: null,
 }

@@ -25,6 +25,7 @@ import {
   Subscription,
   switchMap,
   take,
+  takeLast,
   using,
 } from 'rxjs'
 import {concatAll, tap, toArray} from 'rxjs/operators'
@@ -84,7 +85,7 @@ export class EndPointComponent implements OnInit, OnDestroy {
   offices$: Observable<OfficeInterface[]>
   backendErrors$: Observable<string | null>
   tabs$: Observable<any>
-  activeTabIndex$: Observable<number>
+  activeTabIndex$: Observable<string>
 
   //TODO: add needToMeetTab
   needToMeetTab = false
@@ -103,11 +104,11 @@ export class EndPointComponent implements OnInit, OnDestroy {
           //   this.setActiveTabIndex(0)
           // }),
           tap((city: EndCityInterface) => {
-            if (city.need_to_meet === '1') {
-              this.needToMeetTab = true
-            } else {
-              this.needToMeetTab = false
-            }
+            // if (city.need_to_meet === '1') {
+            //   this.needToMeetTab = true
+            // } else {
+            //   this.needToMeetTab = false
+            // }
 
             //TODO: Check is that way correct, maybe need switch to map
             this.store.dispatch(changeCityAction({city}))
@@ -173,7 +174,7 @@ export class EndPointComponent implements OnInit, OnDestroy {
   readonly TabName = {
     get: 'Забрать в отделение',
     delivery: 'Вызвать курьера',
-    needToMeet: 'Встретить с автобуса',
+    meet: 'Встретить с автобуса',
   }
 
   constructor(
@@ -197,7 +198,7 @@ export class EndPointComponent implements OnInit, OnDestroy {
     this.store
       .select(isCitiesLoadedSelector)
       .pipe(
-        // filter((isCitiesLoaded: boolean) => !isCitiesLoaded),
+        filter((isCitiesLoaded: boolean) => !isCitiesLoaded),
         switchMap(() => {
           return this.store.select(startCitySelector).pipe(
             filter(Boolean),
@@ -221,23 +222,25 @@ export class EndPointComponent implements OnInit, OnDestroy {
     )
 
     this.activeTabIndex$ = this.store.select(activeTabSelector).pipe(
-      tap((index: number) => {
+      tap((index: any) => {
+        console.log('tab', index)
+
         switch (index) {
-          case 0:
+          case 'get':
             this.get.enable()
             this.needToMeet.setValue(false)
             this.needToMeet.disable()
             this.delivery.setValue(null)
             this.delivery.disable()
             break
-          case 1:
+          case 'delivery':
             this.delivery.enable()
             this.get.setValue(null)
             this.get.disable()
             this.needToMeet.setValue(false)
             this.needToMeet.disable()
             break
-          case 2:
+          case 'meet':
             this.needToMeet.enable()
             this.get.setValue(null)
             this.get.disable()
@@ -266,8 +269,9 @@ export class EndPointComponent implements OnInit, OnDestroy {
     this.tabs$ = combineLatest([
       this.store.select(tabsSelector),
       this.store.select(activeTabSelector),
+      this.store.select(endCitySelector),
     ]).pipe(
-      switchMap(([offices, activeTab]) => {
+      switchMap(([offices, activeTab, city]) => {
         const tabs = (offices || []).map((office: OfficeInterface) => {
           return Object.entries(office)
             .filter((item: [string, string]) => {
@@ -281,22 +285,22 @@ export class EndPointComponent implements OnInit, OnDestroy {
             })
         })
 
-        return of([tabs, activeTab])
+        return of([tabs, activeTab, city])
       }),
-      map(([tabsArray, activeTab]: [any, number]) => {
+      debounceTime(300),
+      map(([tabsArray, activeTab, city]: [any, string, EndCityInterface]) => {
         const tabs = tabsArray.length ? tabsArray[0] : []
-        const get = tabs.find((tab: string) => tab === 'get')
-        const delivery = tabs.find((tab: string) => tab === 'delivery')
 
-        if (
-          (!tabs.length && this.needToMeetTab) ||
-          (tabs.length && this.needToMeetTab && activeTab === 2)
-        ) {
-          this.setActiveTabIndex(2)
-        } else if (delivery && activeTab === 1) {
-          this.setActiveTabIndex(1)
+        if (city.need_to_meet === '1') {
+          tabs.push('meet')
+        }
+
+        const isActiveTabExists = tabs.find((tab: string) => tab === activeTab)
+
+        if (activeTab && isActiveTabExists) {
+          this.setActiveTabIndex(activeTab)
         } else {
-          this.setActiveTabIndex(0)
+          this.setActiveTabIndex(tabs[0])
         }
 
         return tabs
@@ -304,7 +308,6 @@ export class EndPointComponent implements OnInit, OnDestroy {
     )
 
     this.city.disable()
-    // this.setActiveTabIndex(0)
 
     this.formValuesSub = this.form.valueChanges
       .pipe(
@@ -328,7 +331,8 @@ export class EndPointComponent implements OnInit, OnDestroy {
       .subscribe()
   }
 
-  setActiveTabIndex(index: number) {
+  setActiveTabIndex(index: string) {
+    console.log('setActiveTabIndex', index)
     this.store.dispatch(changeActiveTabAction({activeTabIndex: index}))
   }
 

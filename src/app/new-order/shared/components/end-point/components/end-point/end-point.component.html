@@ -49,31 +49,22 @@
                   class="mt-4 flex h-12.5 bg-gray-50 [&>button:first-child]:rounded-tl-sm [&>button:first-child]:rounded-bl-sm [&>button:last-child]:rounded-tr-sm [&>button:last-child]:rounded-br-sm"
                 >
                   <button
-                    *ngFor="let tab of tabs; let i = index"
+                    *ngFor="let tab of tabs"
                     type="button"
                     class="radius flex-grow py-3 px-1 text-center text-xs"
                     [class]="
-                      activeTabIndex === i && !isOfficesLoading
+                      activeTabIndex === tab && !isOfficesLoading
                         ? 'bg-yellow'
                         : 'bg-gray-100'
                     "
-                    (click)="setActiveTabIndex(i)"
+                    (click)="setActiveTabIndex(tab)"
                   >
                     <span *ngIf="!isOfficesLoading">{{ TabName[tab] }}</span>
-                  </button>
-                  <button
-                    *ngIf="needToMeetTab && tabs?.length && !isOfficesLoading"
-                    type="button"
-                    class="radius flex-grow py-3 px-1 text-center text-xs"
-                    [class]="activeTabIndex === 2 ? 'bg-yellow' : 'bg-gray-100'"
-                    (click)="setActiveTabIndex(2)"
-                  >
-                    <span>Встретить с автобуса</span>
                   </button>
                 </div>
               </tui-loader>
             </div>
-            <div *ngIf="activeTabIndex === 0 && !isOfficesLoading">
+            <div *ngIf="activeTabIndex === 'get' && !isOfficesLoading">
               <label class="w-full">
                 <span class="mb-1 inline-block text-xs">
                   Выберите отделение
@@ -118,7 +109,7 @@
               </button>
             </div>
             <div
-              *ngIf="activeTabIndex === 1 && !isOfficesLoading"
+              *ngIf="activeTabIndex === 'delivery' && !isOfficesLoading"
               class="mb-4 space-y-4"
             >
               <app-courier
@@ -126,7 +117,7 @@
                 [setControlValue]="deliveryValues$ | async"
               ></app-courier>
             </div>
-            <div *ngIf="activeTabIndex === 2 && !isOfficesLoading">
+            <div *ngIf="activeTabIndex === 'meet' && !isOfficesLoading">
               <tui-checkbox-labeled
                 [formControl]="needToMeet"
                 [setControlValue]="needToMeetValues$ | async"
