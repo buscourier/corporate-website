@@ -85,7 +85,7 @@ export class EndPointComponent implements OnInit, OnDestroy {
   offices$: Observable<OfficeInterface[]>
   backendErrors$: Observable<string | null>
   tabs$: Observable<any>
-  activeTabIndex$: Observable<string>
+  activeTab$: Observable<string>
 
   city = this.fb.control(null, [Validators.required])
   get = this.fb.control(null, [Validators.required])
@@ -208,9 +208,9 @@ export class EndPointComponent implements OnInit, OnDestroy {
       })
     )
 
-    this.activeTabIndex$ = this.store.select(activeTabSelector).pipe(
-      tap((index: any) => {
-        switch (index) {
+    this.activeTab$ = this.store.select(activeTabSelector).pipe(
+      tap((tab: any) => {
+        switch (tab) {
           case 'get':
             this.get.enable()
             this.needToMeet.setValue(false)
