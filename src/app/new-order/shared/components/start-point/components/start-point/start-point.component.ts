@@ -79,6 +79,7 @@ import {calculateTotalSumAction} from '../../../../../components/sidebar/store/a
 })
 export class StartPointComponent implements OnInit, OnDestroy {
   @Input() boldCityLabel: boolean
+  @Input('reset') resetProps = false
 
   isCitiesLoading$: Observable<boolean>
   isCitiesLoaded$: Observable<boolean>
@@ -103,7 +104,11 @@ export class StartPointComponent implements OnInit, OnDestroy {
           tap((city: StartCityInterface) => {
             if (city) {
               //TODO: Check is that way correct, maybe need switch to map
-              // this.reset()
+
+              if (this.resetProps) {
+                this.reset()
+              }
+
               this.store.dispatch(changeCityAction({city}))
               this.store.dispatch(getOfficesAction({id: city.office_id}))
             }
@@ -213,9 +218,11 @@ export class StartPointComponent implements OnInit, OnDestroy {
     )
 
     this.activeTab$ = this.store.select(activeTabSelector).pipe(
-      // tap(() => {
-      //   this.reset()
-      // }),
+      tap(() => {
+        if (this.resetProps) {
+          this.reset()
+        }
+      }),
       tap((tab: string) => {
         switch (tab) {
           case 'give':

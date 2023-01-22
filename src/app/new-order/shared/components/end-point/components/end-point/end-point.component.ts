@@ -79,6 +79,7 @@ import {resetOrdersAction} from '../../../orders/store/actions/reset-orders.acti
 })
 export class EndPointComponent implements OnInit, OnDestroy {
   @Input() boldCityLabel: boolean
+  @Input('reset') resetProps = false
 
   isCitiesLoading$: Observable<boolean>
   isCitiesLoaded$: Observable<boolean>
@@ -98,11 +99,16 @@ export class EndPointComponent implements OnInit, OnDestroy {
     () =>
       this.city.valueChanges
         .pipe(
-          filter(Boolean),
           tap((city: EndCityInterface) => {
             //TODO: Check is that way correct, maybe need switch to map
-            this.store.dispatch(changeCityAction({city}))
-            this.store.dispatch(getOfficesAction({id: city.office_id}))
+            if (city) {
+              if (this.resetProps) {
+                this.reset()
+              }
+
+              this.store.dispatch(changeCityAction({city}))
+              this.store.dispatch(getOfficesAction({id: city.office_id}))
+            }
           })
         )
         .subscribe(),
@@ -211,9 +217,11 @@ export class EndPointComponent implements OnInit, OnDestroy {
     )
 
     this.activeTab$ = this.store.select(activeTabSelector).pipe(
-      // tap(() => {
-      //   this.store.dispatch(resetOrdersAction())
-      // }),
+      tap(() => {
+        if (this.resetProps) {
+          this.reset()
+        }
+      }),
       delay(0),
       tap((tab: any) => {
         switch (tab) {
@@ -347,5 +355,9 @@ export class EndPointComponent implements OnInit, OnDestroy {
       })
       .pipe(take(1))
       .subscribe()
+  }
+
+  reset() {
+    this.store.dispatch(resetOrdersAction())
   }
 }
