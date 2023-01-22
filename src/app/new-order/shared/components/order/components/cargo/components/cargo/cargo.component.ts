@@ -64,6 +64,7 @@ export class CargoComponent implements OnInit {
 
   initializeValues(): void {
     this.cargoTypes$ = this.store.select(allCargosSelector).pipe(
+      filter(Boolean),
       switchMap((cargos: CargoInterface[]) => {
         return of(cargos).pipe(
           concatAll(),
