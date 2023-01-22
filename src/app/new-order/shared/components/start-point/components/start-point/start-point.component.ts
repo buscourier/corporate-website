@@ -57,6 +57,10 @@ import {
 } from '../../store/selectors'
 import {initialState} from '../../store/state'
 import {UtilsService} from '../../../../../../shared/services/utils.service'
+import {resetStartPointAction} from '../../store/actions/reset-start-point.action'
+import {resetEndPointAction} from '../../../end-point/store/actions/reset-end-point.action'
+import {resetOrdersAction} from '../../../orders/store/actions/reset-orders.action'
+import {calculateTotalSumAction} from '../../../../../components/sidebar/store/actions/calculate-total-sum.action'
 
 @Component({
   selector: 'app-start-point',
@@ -99,6 +103,7 @@ export class StartPointComponent implements OnInit, OnDestroy {
           tap((city: StartCityInterface) => {
             if (city) {
               //TODO: Check is that way correct, maybe need switch to map
+              this.reset()
               this.store.dispatch(changeCityAction({city}))
               this.store.dispatch(getOfficesAction({id: city.office_id}))
             }
@@ -208,6 +213,9 @@ export class StartPointComponent implements OnInit, OnDestroy {
     )
 
     this.activeTab$ = this.store.select(activeTabSelector).pipe(
+      // tap(() => {
+      //   this.reset()
+      // }),
       tap((tab: string) => {
         switch (tab) {
           case 'give':
@@ -325,5 +333,11 @@ export class StartPointComponent implements OnInit, OnDestroy {
       })
       .pipe(take(1))
       .subscribe()
+  }
+
+  reset() {
+    this.store.dispatch(resetEndPointAction())
+    this.store.dispatch(resetOrdersAction())
+    this.store.dispatch(calculateTotalSumAction({isTotalSumCalculated: false}))
   }
 }

@@ -15,6 +15,7 @@ import {PolymorpheusComponent} from '@tinkoff/ng-polymorpheus'
 import {
   combineLatest,
   debounceTime,
+  delay,
   filter,
   first,
   map,
@@ -59,6 +60,7 @@ import {
   tabsSelector,
 } from '../../store/selectors'
 import {UtilsService} from '../../../../../../shared/services/utils.service'
+import {resetOrdersAction} from '../../../orders/store/actions/reset-orders.action'
 
 @Component({
   selector: 'app-end-point',
@@ -209,6 +211,10 @@ export class EndPointComponent implements OnInit, OnDestroy {
     )
 
     this.activeTab$ = this.store.select(activeTabSelector).pipe(
+      tap(() => {
+        this.store.dispatch(resetOrdersAction())
+      }),
+      delay(0),
       tap((tab: any) => {
         switch (tab) {
           case 'get':
