@@ -14,7 +14,10 @@
           [class.border-gray-100]="startPoint.isValid && endPoint.isValid"
           [class.pb-8]="startPoint.isValid && endPoint.isValid"
         >
-          <app-start-point [boldCityLabel]="true" [reset]="true"></app-start-point>
+          <app-start-point
+            [boldCityLabel]="true"
+            [reset]="true"
+          ></app-start-point>
           <app-end-point [boldCityLabel]="true"></app-end-point>
         </div>
         <app-orders></app-orders>
