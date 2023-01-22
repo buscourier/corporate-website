@@ -15,5 +15,5 @@ export interface StartPointStateInterface {
   give: OfficeInterface | null
   pickup: CourierInterface | null
   date: TuiDay | null
-  activeTabIndex: number
+  activeTab: string
 }

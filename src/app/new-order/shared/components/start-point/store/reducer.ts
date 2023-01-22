@@ -74,13 +74,10 @@ const startPointReducer = createReducer(
     ...state,
     date,
   })),
-  on(
-    changeActiveTabAction,
-    (state: StartPointStateInterface, {activeTabIndex}) => ({
-      ...state,
-      activeTabIndex,
-    })
-  ),
+  on(changeActiveTabAction, (state: StartPointStateInterface, {activeTab}) => ({
+    ...state,
+    activeTab,
+  })),
   on(changeValidityAction, (state: StartPointStateInterface, {isValid}) => ({
     ...state,
     isValid,

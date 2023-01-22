@@ -38,6 +38,13 @@ export const officesSelector = createSelector(
   }
 )
 
+export const tabsSelector = createSelector(
+  startPointFeatureSelector,
+  (state: StartPointStateInterface) => {
+    return state.offices
+  }
+)
+
 export const startCitySelector = createSelector(
   startPointFeatureSelector,
   (state: StartPointStateInterface) => state.city
@@ -60,7 +67,7 @@ export const dateSelector = createSelector(
 
 export const activeTabSelector = createSelector(
   startPointFeatureSelector,
-  (state: StartPointStateInterface) => state.activeTabIndex
+  (state: StartPointStateInterface) => state.activeTab
 )
 
 export const isStartPointValidSelector = createSelector(

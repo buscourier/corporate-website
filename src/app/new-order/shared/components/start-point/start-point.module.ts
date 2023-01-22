@@ -28,6 +28,7 @@ import {GetCitiesEffect} from './store/effects/get-cities.effect'
 import {GetOfficesEffect} from './store/effects/get-offices.effect'
 import {reducer} from './store/reducer'
 import {START_POINT_FEATURE} from './store/state'
+import {CourierModule} from '../courier/courier.module'
 
 @NgModule({
   declarations: [StartPointComponent],
@@ -52,6 +53,7 @@ import {START_POINT_FEATURE} from './store/state'
     PatchFormGroupValuesModule,
     TuiComboBoxModule,
     ModalMapModule,
+    CourierModule,
   ],
   exports: [StartPointComponent],
 })

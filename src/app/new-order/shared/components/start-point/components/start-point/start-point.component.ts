@@ -14,12 +14,14 @@ import {TuiDialogService} from '@taiga-ui/core'
 import {TUI_VALIDATION_ERRORS, tuiItemsHandlersProvider} from '@taiga-ui/kit'
 import {PolymorpheusComponent} from '@tinkoff/ng-polymorpheus'
 import {
+  combineLatest,
   debounceTime,
   filter,
   first,
   map,
   Observable,
   of,
+  pairwise,
   Subscription,
   switchMap,
   take,
@@ -51,8 +53,10 @@ import {
   startCitySelector,
   startCourierSelector,
   startOfficeSelector,
+  tabsSelector,
 } from '../../store/selectors'
 import {initialState} from '../../store/state'
+import {UtilsService} from '../../../../../../shared/services/utils.service'
 
 @Component({
   selector: 'app-start-point',
@@ -78,19 +82,15 @@ export class StartPointComponent implements OnInit, OnDestroy {
   cities$: Observable<StartCityInterface[]>
   offices$: Observable<OfficeInterface[]>
   backendErrors$: Observable<string | null>
-  activeTabIndex$: Observable<number>
+  tabs$: Observable<any>
+  activeTab$: Observable<string>
 
   readonly timeRange = ['8.00 - 14.00', '14.00 - 18.00']
 
   city = this.fb.control(null, [Validators.required])
   give = this.fb.control(null, [Validators.required])
   date = this.fb.control(initialState.date, [Validators.required])
-  pickup = this.fb.group({
-    street: ['', [Validators.required]],
-    building: ['', [Validators.required]],
-    apartment: ['', [Validators.required]],
-    time: [this.timeRange[0], [Validators.required]],
-  })
+  pickup = this.fb.control(null, [Validators.required])
 
   cityValues$ = using(
     () =>
@@ -138,8 +138,13 @@ export class StartPointComponent implements OnInit, OnDestroy {
     () =>
       this.pickup.valueChanges
         .pipe(
-          tap((pickup: CourierInterface) => {
-            this.store.dispatch(changeCourierAction({pickup}))
+          pairwise(),
+          tap(([prev, next]) => {
+            if (prev === null || next === null) {
+              this.store.dispatch(changeCourierAction({pickup: null}))
+            } else if (!this.utils.isObjectsEqual(prev, next)) {
+              this.store.dispatch(changeCourierAction({pickup: next}))
+            }
           })
         )
         .subscribe(),
@@ -167,7 +172,8 @@ export class StartPointComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private store: Store,
     @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
-    @Inject(Injector) private readonly injector: Injector
+    @Inject(Injector) private readonly injector: Injector,
+    private utils: UtilsService
   ) {}
 
   ngOnInit(): void {
@@ -203,41 +209,73 @@ export class StartPointComponent implements OnInit, OnDestroy {
       })
     )
 
-    this.activeTabIndex$ = this.store.select(activeTabSelector).pipe(
-      tap((index: number) => {
-        switch (index) {
-          case 0:
+    this.activeTab$ = this.store.select(activeTabSelector).pipe(
+      tap((tab: string) => {
+        switch (tab) {
+          case 'give':
             this.give.enable()
+            this.pickup.setValue(null)
             this.pickup.disable()
-            this.store.dispatch(changeCourierAction({pickup: null}))
             break
-          case 1:
+          case 'pickup':
             this.pickup.enable()
+            this.give.setValue(null)
             this.give.disable()
-
-            setTimeout(() => {
-              this.pickup.patchValue({
-                street: '',
-              })
-            }, 0),
-              this.store.dispatch(changeOfficeAction({give: null}))
             break
         }
       })
     )
 
-    this.offices$ = this.store.select(officesSelector).pipe(
-      tap((offices: OfficeInterface[]) => {
-        // if (offices.length < 2) {
-        //   this.give.patchValue(offices[0])
-        // }
-        // this.form.get('give').setValue(offices[0]) //TODO consider another way to set default office
-        this.createTabControls(offices)
+    this.offices$ = combineLatest([
+      this.store.select(officesSelector),
+      this.store.select(startOfficeSelector),
+    ]).pipe(
+      tap(([offices, activeOffice]: [OfficeInterface[], OfficeInterface]) => {
+        if (activeOffice === null) {
+          this.give.setValue(offices[0])
+        }
+      }),
+      map(([offices]: [OfficeInterface[], OfficeInterface]) => {
+        return offices
+      })
+    )
+
+    this.tabs$ = combineLatest([
+      this.store.select(tabsSelector),
+      this.store.select(activeTabSelector),
+    ]).pipe(
+      switchMap(([offices, activeTab]) => {
+        const tabs = (offices || []).map((office: OfficeInterface) => {
+          return Object.entries(office)
+            .filter((item: [string, string]) => {
+              return (
+                (item[0] === 'give' && item[1] === '1') ||
+                (item[0] === 'pickup' && item[1] === '1')
+              )
+            })
+            .map((item: [string, any]) => {
+              return item[0]
+            })
+        })
+
+        return of([tabs, activeTab])
+      }),
+      map(([tabsArray, activeTab]: [any, string]) => {
+        const tabs = tabsArray.length ? tabsArray[0] : []
+
+        const isActiveTabExists = tabs.find((tab: string) => tab === activeTab)
+
+        if (activeTab && isActiveTabExists) {
+          this.setActiveTab(activeTab)
+        } else {
+          this.setActiveTab(tabs[0])
+        }
+
+        return tabs
       })
     )
 
     this.city.disable()
-    // this.setActiveTabIndex(0)
 
     this.formValuesSub = this.form.valueChanges
       .pipe(
@@ -261,34 +299,8 @@ export class StartPointComponent implements OnInit, OnDestroy {
       .subscribe()
   }
 
-  createTabControls(offices: OfficeInterface[]) {
-    return of(offices)
-      .pipe(
-        switchMap((offices: OfficeInterface[]) =>
-          of(offices).pipe(
-            concatAll(),
-            map((office: OfficeInterface) => {
-              return Object.entries(office)
-                .filter((item: [string, string]) => {
-                  return (
-                    (item[0] === 'give' && item[1] === '1') ||
-                    (item[0] === 'pickup' && item[1] === '1')
-                  )
-                })
-                .map((item: [string, any]) => {
-                  return item[0]
-                })
-            })
-          )
-        )
-      )
-      .subscribe((tabs: Array<string>) => {
-        this.tabs = tabs
-      })
-  }
-
-  setActiveTabIndex(index: number) {
-    this.store.dispatch(changeActiveTabAction({activeTabIndex: index}))
+  setActiveTab(activeTab: string) {
+    this.store.dispatch(changeActiveTabAction({activeTab}))
   }
 
   setCurrentDate = () => {
