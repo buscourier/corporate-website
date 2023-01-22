@@ -211,9 +211,9 @@ export class EndPointComponent implements OnInit, OnDestroy {
     )
 
     this.activeTab$ = this.store.select(activeTabSelector).pipe(
-      tap(() => {
-        this.store.dispatch(resetOrdersAction())
-      }),
+      // tap(() => {
+      //   this.store.dispatch(resetOrdersAction())
+      // }),
       delay(0),
       tap((tab: any) => {
         switch (tab) {

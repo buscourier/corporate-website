@@ -103,7 +103,7 @@ export class StartPointComponent implements OnInit, OnDestroy {
           tap((city: StartCityInterface) => {
             if (city) {
               //TODO: Check is that way correct, maybe need switch to map
-              this.reset()
+              // this.reset()
               this.store.dispatch(changeCityAction({city}))
               this.store.dispatch(getOfficesAction({id: city.office_id}))
             }
