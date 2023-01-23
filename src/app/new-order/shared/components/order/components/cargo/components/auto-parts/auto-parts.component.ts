@@ -14,7 +14,7 @@ import {
 } from '@angular/forms'
 import {Store} from '@ngrx/store'
 import {TUI_VALIDATION_ERRORS, tuiItemsHandlersProvider} from '@taiga-ui/kit'
-import {combineLatest, Observable, of, Subscription} from 'rxjs'
+import {combineLatest, delay, Observable, of, Subscription} from 'rxjs'
 import {concatAll, filter, switchMap, tap, toArray} from 'rxjs/operators'
 import {CargoInterface} from 'src/app/new-order/shared/types/cargo.interface'
 import {STRINGIFY_CARGOS} from '../../../../../../../../shared/handlers/string-handlers'
@@ -142,7 +142,8 @@ export class AutoPartsComponent implements OnInit, OnDestroy {
               endOffice.home_id === VladivostokOffice.GOGOLYA)
 
           this.courierLimits = !!(startCourier || endCourier)
-        })
+        }),
+        delay(0)
       )
       .subscribe(() => {
         this.form.updateValueAndValidity()

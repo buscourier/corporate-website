@@ -13,7 +13,7 @@ import {
 } from '@angular/forms'
 import {Store} from '@ngrx/store'
 import {TUI_VALIDATION_ERRORS, tuiItemsHandlersProvider} from '@taiga-ui/kit'
-import {combineLatest, Observable, of, Subscription} from 'rxjs'
+import {combineLatest, delay, Observable, of, Subscription} from 'rxjs'
 import {concatAll, filter, switchMap, tap, toArray} from 'rxjs/operators'
 import {STRINGIFY_CARGOS} from '../../../../../../../../shared/handlers/string-handlers'
 import {CargoInterface} from '../../../../../../types/cargo.interface'
@@ -49,7 +49,7 @@ import {VladivostokOffice} from '../../../../enums/vladivostokOffice'
         required: `Поле обязательно для заполнения`,
         startOffice: `Из выбранного офиса габаритные посылки не отправляются`,
         endOffice: `Выбранный офис габаритные посылки не принимает`,
-        courier: `Доставка габаритные посылкок курьером невозможна`,
+        courier: `Доставка габаритных посылок курьером невозможна`,
       },
     },
     tuiItemsHandlersProvider({stringify: STRINGIFY_CARGOS}),
@@ -138,7 +138,8 @@ export class OtherCargosComponent implements OnInit {
               endOffice.home_id === VladivostokOffice.GOGOLYA)
 
           this.courierLimits = !!(startCourier || endCourier)
-        })
+        }),
+        delay(0)
       )
       .subscribe(() => {
         this.form.updateValueAndValidity()
