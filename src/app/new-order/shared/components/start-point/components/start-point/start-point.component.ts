@@ -256,7 +256,16 @@ export class StartPointComponent implements OnInit, OnDestroy {
       this.store.select(startOfficeSelector),
     ]).pipe(
       tap(([offices, activeOffice]: [OfficeInterface[], OfficeInterface]) => {
-        if (activeOffice === null && this.give.enabled) {
+        const activeOfficeIndex =
+          activeOffice &&
+          offices.findIndex(
+            (office: OfficeInterface) => office.id === activeOffice.id
+          )
+
+        if (
+          (activeOffice === null || activeOfficeIndex === -1) &&
+          this.give.enabled
+        ) {
           this.give.setValue(offices[0])
         }
       }),
