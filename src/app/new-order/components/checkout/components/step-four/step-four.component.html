@@ -47,7 +47,21 @@
         [value]="startPoint.city.name"
       ></app-data>
       <app-data key="Дата" [value]="startPoint.date"></app-data>
-      <app-data key="Отделение" [value]="startPoint.give?.name"></app-data>
+      <app-data
+        *ngIf="startPoint.give"
+        key="Отделение"
+        [value]="startPoint.give.name"
+      ></app-data>
+      <app-data
+        *ngIf="startPoint.pickup"
+        key="Забор курьером"
+        [value]="getCourierAddress(startPoint.pickup)"
+      ></app-data>
+      <app-data
+        *ngIf="startPoint.pickup"
+        key="Время приезда курьера"
+        [value]="startPoint.pickup.time"
+      ></app-data>
     </div>
   </ng-container>
 </ng-container>
@@ -69,7 +83,26 @@
     </h2>
     <div class="mb-14 space-y-4 border-b-2 border-b border-b-gray-100 pb-10">
       <app-data key="Населенный пункт" [value]="endPoint.city.name"></app-data>
-      <app-data key="Отделение" [value]="endPoint.get?.name"></app-data>
+      <app-data
+        *ngIf="endPoint.get"
+        key="Отделение"
+        [value]="endPoint.get.name"
+      ></app-data>
+      <app-data
+        *ngIf="endPoint.delivery"
+        key="Доставка курьером"
+        [value]="getCourierAddress(endPoint.delivery)"
+      ></app-data>
+      <app-data
+        *ngIf="endPoint.delivery"
+        key="Время приезда курьера"
+        [value]="endPoint.delivery.time"
+      ></app-data>
+      <app-data
+        *ngIf="endPoint.needToMeet"
+        key="Встретить с автобуса"
+        value="Да"
+      ></app-data>
     </div>
   </ng-container>
 </ng-container>

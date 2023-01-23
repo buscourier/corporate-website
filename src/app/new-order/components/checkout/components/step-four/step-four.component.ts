@@ -289,6 +289,10 @@ export class StepFourComponent implements OnInit, OnDestroy {
     return formattedServices.length ? formattedServices.join(', ') : 'Нет'
   }
 
+  getCourierAddress(data: CourierInterface) {
+    return `ул. ${data.street}, д. ${data.building}, кв. ${data.apartment}`
+  }
+
   executeRecaptcha() {
     this.recaptchaSub = this.recaptchaService
       .execute('createNewOrder')
