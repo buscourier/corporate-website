@@ -146,16 +146,14 @@ export class ParcelComponent implements OnInit, AfterViewInit, OnDestroy {
 
           if (startOffice) {
             startOfficeLimit =
-              startOffice.office_id === VladivostokOffice.RUSSKAYA ||
-              startOffice.office_id === VladivostokOffice.ALEUTSKAYA ||
-              startOffice.office_id === VladivostokOffice.GOGOLYA
+              startOffice.home_id === VladivostokOffice.ALEUTSKAYA ||
+              startOffice.home_id === VladivostokOffice.GOGOLYA
           }
 
           if (endOffice) {
             endOfficeLimit =
-              endOffice.office_id === VladivostokOffice.RUSSKAYA ||
-              endOffice.office_id === VladivostokOffice.ALEUTSKAYA ||
-              endOffice.office_id === VladivostokOffice.GOGOLYA
+              endOffice.home_id === VladivostokOffice.ALEUTSKAYA ||
+              endOffice.home_id === VladivostokOffice.GOGOLYA
           }
 
           if (cityLimit) {
@@ -170,6 +168,9 @@ export class ParcelComponent implements OnInit, AfterViewInit, OnDestroy {
           ) {
             this.maxWeight = limitWeight
             this.maxDimensionsSum = limitDimensionsSum
+          } else {
+            this.maxWeight = 100
+            this.maxDimensionsSum = 250
           }
         })
       )
