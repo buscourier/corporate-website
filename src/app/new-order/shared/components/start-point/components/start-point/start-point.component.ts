@@ -16,6 +16,7 @@ import {PolymorpheusComponent} from '@tinkoff/ng-polymorpheus'
 import {
   combineLatest,
   debounceTime,
+  delay,
   filter,
   first,
   map,
@@ -101,18 +102,25 @@ export class StartPointComponent implements OnInit, OnDestroy {
     () =>
       this.city.valueChanges
         .pipe(
-          tap((city: StartCityInterface) => {
-            if (city) {
-              //TODO: Check is that way correct, maybe need switch to map
-
-              if (this.resetProps) {
-                this.reset()
-              }
-
-              this.store.dispatch(changeCityAction({city}))
-              this.store.dispatch(getOfficesAction({id: city.office_id}))
+          filter(Boolean),
+          tap(() => {
+            if (this.resetProps) {
+              this.reset()
             }
+          }),
+          switchMap((city: StartCityInterface) => {
+            this.store.dispatch(changeCityAction({city}))
+
+            return of(city).pipe(
+              tap((city: StartCityInterface) => {
+                this.store.dispatch(getOfficesAction({id: city.office_id}))
+              })
+            )
           })
+          // delay(0),
+          // tap(() => {
+          //   this.give.setValue(null)
+          // })
         )
         .subscribe(),
     () => this.store.select(startCitySelector)

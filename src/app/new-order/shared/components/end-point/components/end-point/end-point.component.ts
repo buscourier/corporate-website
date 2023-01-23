@@ -103,16 +103,20 @@ export class EndPointComponent implements OnInit, OnDestroy {
     () =>
       this.city.valueChanges
         .pipe(
-          tap((city: EndCityInterface) => {
-            //TODO: Check is that way correct, maybe need switch to map
-            if (city) {
-              if (this.resetProps) {
-                this.reset()
-              }
-
-              this.store.dispatch(changeCityAction({city}))
-              this.store.dispatch(getOfficesAction({id: city.office_id}))
+          filter(Boolean),
+          tap(() => {
+            if (this.resetProps) {
+              this.reset()
             }
+          }),
+          switchMap((city: EndCityInterface) => {
+            this.store.dispatch(changeCityAction({city}))
+
+            return of(city).pipe(
+              tap((city: EndCityInterface) => {
+                this.store.dispatch(getOfficesAction({id: city.office_id}))
+              })
+            )
           })
         )
         .subscribe(),
