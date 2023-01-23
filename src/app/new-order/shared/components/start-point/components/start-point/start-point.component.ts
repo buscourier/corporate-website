@@ -131,6 +131,10 @@ export class StartPointComponent implements OnInit, OnDestroy {
       this.give.valueChanges
         .pipe(
           tap((give: OfficeInterface) => {
+            if (this.resetProps) {
+              this.reset()
+            }
+
             this.store.dispatch(changeOfficeAction({give}))
           })
         )

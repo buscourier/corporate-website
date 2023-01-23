@@ -128,6 +128,10 @@ export class EndPointComponent implements OnInit, OnDestroy {
       this.get.valueChanges
         .pipe(
           tap((get: OfficeInterface) => {
+            if (this.resetProps) {
+              this.reset()
+            }
+
             this.store.dispatch(changeOfficeAction({get}))
           })
         )
