@@ -123,6 +123,7 @@
           tuiUnfinishedValidator="Выберите дату"
           [tuiTextfieldLabelOutside]="true"
           tuiTextfieldSize="m"
+          [min]="getMinDate()"
           [formControl]="date"
           [setControlValue]="dateValues$ | async"
         >

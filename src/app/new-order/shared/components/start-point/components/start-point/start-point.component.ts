@@ -368,4 +368,11 @@ export class StartPointComponent implements OnInit, OnDestroy {
     this.store.dispatch(resetOrdersAction())
     this.store.dispatch(calculateTotalSumAction({isTotalSumCalculated: false}))
   }
+
+  getMinDate() {
+    const date = new Date()
+    // date.setDate(date.getDate() - 1)
+
+    return new TuiDay(date.getFullYear(), date.getMonth(), date.getDate())
+  }
 }
