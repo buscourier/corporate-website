@@ -3,8 +3,8 @@ import {
   ChangeDetectorRef,
   Component,
   Inject,
-  OnDestroy,
   OnInit,
+  Self,
 } from '@angular/core'
 import {
   FormBuilder,
@@ -13,9 +13,10 @@ import {
   NG_VALUE_ACCESSOR,
 } from '@angular/forms'
 import {Store} from '@ngrx/store'
+import {TuiDestroyService} from '@taiga-ui/cdk'
 import {TuiDialogContext, TuiDialogService} from '@taiga-ui/core'
 import {PolymorpheusContent} from '@tinkoff/ng-polymorpheus'
-import {concatAll, filter, map, of, Subscription, take, toArray} from 'rxjs'
+import {concatAll, filter, map, of, take, takeUntil, toArray} from 'rxjs'
 import {switchMap, tap} from 'rxjs/operators'
 import {allServicesSelector} from 'src/app/new-order/shared/components/orders/store/selectors'
 import {ServiceInterface} from '../../../../../../types/service.interface'
@@ -30,12 +31,11 @@ import {ServiceInterface} from '../../../../../../types/service.interface'
       multi: true,
       useExisting: PackageComponent,
     },
+    TuiDestroyService,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PackageComponent implements OnInit, OnDestroy {
-  servicesSub: Subscription
-
+export class PackageComponent implements OnInit {
   boxes = this.fb.array<FormGroup>([])
   safePacks = this.fb.array<FormGroup>([])
   plasticPacks = this.fb.array<FormGroup>([])
@@ -51,22 +51,18 @@ export class PackageComponent implements OnInit, OnDestroy {
   })
 
   onTouched = () => {}
-  onChangeSub: Subscription
 
   constructor(
     private fb: FormBuilder,
     private store: Store,
     @Inject(TuiDialogService)
     private readonly dialogService: TuiDialogService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    @Self() @Inject(TuiDestroyService) private destroy$: TuiDestroyService
   ) {}
 
   ngOnInit(): void {
     this.initializeValues()
-  }
-
-  ngOnDestroy() {
-    this.servicesSub.unsubscribe()
   }
 
   initializeValues() {
@@ -83,11 +79,11 @@ export class PackageComponent implements OnInit, OnDestroy {
       return
     }
 
-    this.servicesSub = this.store
+    this.store
       .select(allServicesSelector)
       .pipe(
         filter(Boolean),
-        take(1),
+        take(1), //fix package duplicate
         switchMap((services: ServiceInterface[]) => {
           return of(services).pipe(
             concatAll(),
@@ -150,7 +146,8 @@ export class PackageComponent implements OnInit, OnDestroy {
         }),
         tap(() => {
           this.cdr.markForCheck()
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe()
   }
@@ -207,7 +204,7 @@ export class PackageComponent implements OnInit, OnDestroy {
   }
 
   registerOnChange(onChange: any) {
-    this.onChangeSub = this.form.valueChanges.subscribe(onChange)
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(onChange)
   }
 
   setDisabledState(disabled: boolean) {

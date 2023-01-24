@@ -4,36 +4,37 @@ import {
   Inject,
   Injector,
   Input,
-  OnDestroy,
   OnInit,
+  Self,
 } from '@angular/core'
 import {FormBuilder, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
-import {TuiDay} from '@taiga-ui/cdk'
+import {TuiDay, TuiDestroyService} from '@taiga-ui/cdk'
 import {TuiDialogService} from '@taiga-ui/core'
 import {TUI_VALIDATION_ERRORS, tuiItemsHandlersProvider} from '@taiga-ui/kit'
 import {PolymorpheusComponent} from '@tinkoff/ng-polymorpheus'
 import {
   combineLatest,
   debounceTime,
-  delay,
   filter,
-  first,
   map,
   Observable,
   of,
   pairwise,
-  Subscription,
   switchMap,
   take,
+  takeUntil,
   using,
 } from 'rxjs'
-import {concatAll, tap} from 'rxjs/operators'
+import {tap} from 'rxjs/operators'
 import {ModalMapComponent} from '../../../../../../shared/components/modal-map/modal-map.component'
 import {STRINGIFY_CITIES} from '../../../../../../shared/handlers/string-handlers'
+import {UtilsService} from '../../../../../../shared/services/utils.service'
 import {OfficeInterface} from '../../../../../../shared/types/office.interface'
 import {StartCityInterface} from '../../../../../../shared/types/start-city.interface'
-import {CourierInterface} from '../../../../types/courier.interface'
+import {calculateTotalSumAction} from '../../../../../components/sidebar/store/actions/calculate-total-sum.action'
+import {resetEndPointAction} from '../../../end-point/store/actions/reset-end-point.action'
+import {resetOrdersAction} from '../../../orders/store/actions/reset-orders.action'
 import {changeActiveTabAction} from '../../store/actions/change-active-tab.action'
 import {changeCityAction} from '../../store/actions/change-city.action'
 import {changeCourierAction} from '../../store/actions/change-courier.action'
@@ -57,11 +58,6 @@ import {
   tabsSelector,
 } from '../../store/selectors'
 import {initialState} from '../../store/state'
-import {UtilsService} from '../../../../../../shared/services/utils.service'
-import {resetStartPointAction} from '../../store/actions/reset-start-point.action'
-import {resetEndPointAction} from '../../../end-point/store/actions/reset-end-point.action'
-import {resetOrdersAction} from '../../../orders/store/actions/reset-orders.action'
-import {calculateTotalSumAction} from '../../../../../components/sidebar/store/actions/calculate-total-sum.action'
 
 @Component({
   selector: 'app-start-point',
@@ -75,10 +71,11 @@ import {calculateTotalSumAction} from '../../../../../components/sidebar/store/a
         required: `Поле обязательно для заполнения`,
       },
     },
+    TuiDestroyService,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StartPointComponent implements OnInit, OnDestroy {
+export class StartPointComponent implements OnInit {
   @Input() boldCityLabel: boolean
   @Input('reset') resetProps = false
 
@@ -178,11 +175,6 @@ export class StartPointComponent implements OnInit, OnDestroy {
     date: this.date,
   })
 
-  formValuesSub: Subscription
-  isStartPointPristineSub: Subscription
-
-  tabs: string[]
-
   readonly TabName = {
     give: 'Сдать в отделение',
     pickup: 'Вызвать курьера',
@@ -193,6 +185,7 @@ export class StartPointComponent implements OnInit, OnDestroy {
     private store: Store,
     @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
     @Inject(Injector) private readonly injector: Injector,
+    @Self() @Inject(TuiDestroyService) private destroy$: TuiDestroyService,
     private utils: UtilsService
   ) {}
 
@@ -201,20 +194,13 @@ export class StartPointComponent implements OnInit, OnDestroy {
     this.initializeValues()
   }
 
-  ngOnDestroy() {
-    this.formValuesSub.unsubscribe()
-
-    if (this.isStartPointPristineSub) {
-      this.isStartPointPristineSub.unsubscribe()
-    }
-  }
-
   fetchData() {
     this.store
       .select(isCitiesLoadedSelector)
       .pipe(
         filter((isCitiesLoaded: boolean) => !isCitiesLoaded),
-        tap(() => this.store.dispatch(getCitiesAction()))
+        tap(() => this.store.dispatch(getCitiesAction())),
+        takeUntil(this.destroy$)
       )
       .subscribe()
   }
@@ -311,16 +297,17 @@ export class StartPointComponent implements OnInit, OnDestroy {
 
     this.city.disable()
 
-    this.formValuesSub = this.form.valueChanges
+    this.form.valueChanges
       .pipe(
         debounceTime(500),
         tap(() => {
           this.store.dispatch(changeValidityAction({isValid: this.form.valid}))
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe()
 
-    this.isStartPointPristineSub = this.store
+    this.store
       .select(isStartPointPristineSelector)
       .pipe(
         tap((isPristine: boolean) => {
@@ -328,7 +315,8 @@ export class StartPointComponent implements OnInit, OnDestroy {
             this.form.reset()
             this.date.setValue(this.setCurrentDate())
           }
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe()
   }
@@ -371,8 +359,6 @@ export class StartPointComponent implements OnInit, OnDestroy {
 
   getMinDate() {
     const date = new Date()
-    // date.setDate(date.getDate() - 1)
-
     return new TuiDay(date.getFullYear(), date.getMonth(), date.getDate())
   }
 }

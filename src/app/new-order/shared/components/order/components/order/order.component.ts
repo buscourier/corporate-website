@@ -1,8 +1,9 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  OnDestroy,
+  Inject,
   OnInit,
+  Self,
 } from '@angular/core'
 import {
   AbstractControl,
@@ -11,8 +12,8 @@ import {
   NG_VALUE_ACCESSOR,
   ValidationErrors,
 } from '@angular/forms'
-import {Store} from '@ngrx/store'
-import {Subscription} from 'rxjs'
+import {TuiDestroyService} from '@taiga-ui/cdk'
+import {takeUntil} from 'rxjs'
 
 @Component({
   selector: 'app-order',
@@ -29,12 +30,12 @@ import {Subscription} from 'rxjs'
       useExisting: OrderComponent,
       multi: true,
     },
+    TuiDestroyService,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OrderComponent implements OnInit, OnDestroy {
+export class OrderComponent implements OnInit {
   onTouched = () => {}
-  onChangeSub: Subscription
 
   form = this.fb.group({
     cargo: '',
@@ -42,16 +43,13 @@ export class OrderComponent implements OnInit, OnDestroy {
     services: [],
   })
 
-  constructor(private fb: FormBuilder, private store: Store) {}
+  constructor(
+    private fb: FormBuilder,
+    @Self() @Inject(TuiDestroyService) private destroy$: TuiDestroyService
+  ) {}
 
   ngOnInit(): void {
     this.initializeValues()
-  }
-
-  ngOnDestroy() {
-    if (this.onChangeSub) {
-      this.onChangeSub.unsubscribe()
-    }
   }
 
   initializeValues(): void {}
@@ -67,7 +65,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   }
 
   registerOnChange(onChange: any) {
-    this.onChangeSub = this.form.valueChanges.subscribe(onChange)
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(onChange)
   }
 
   setDisabledState(disabled: boolean) {

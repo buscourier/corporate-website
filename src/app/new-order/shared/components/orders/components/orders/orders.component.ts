@@ -1,19 +1,21 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  OnDestroy,
+  Inject,
   OnInit,
+  Self,
 } from '@angular/core'
 import {FormArray, FormBuilder, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
+import {TuiDestroyService} from '@taiga-ui/cdk'
 import {
   combineLatest,
   filter,
   map,
   Observable,
-  Subscription,
   switchMap,
   take,
+  takeUntil,
 } from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {
@@ -44,19 +46,16 @@ import {
   selector: 'app-orders',
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.css'],
+  providers: [TuiDestroyService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OrdersComponent implements OnInit, OnDestroy {
+export class OrdersComponent implements OnInit {
   isAllCargosLoading$: Observable<boolean>
   isAllServicesLoading$: Observable<boolean>
   isAllCargosLoaded$: Observable<boolean>
   isAllServicesLoaded$: Observable<boolean>
   orders$: Observable<any>
   activeOrderIndex$: Observable<number>
-
-  formChangesSub: Subscription
-  dataLoadingSub: Subscription
-  isOrdersPristineSub: Subscription
 
   orders = this.fb.array([])
 
@@ -76,17 +75,22 @@ export class OrdersComponent implements OnInit, OnDestroy {
   //   () => this.store.select(ordersSelector)
   // )
 
-  constructor(private fb: FormBuilder, private store: Store) {}
+  constructor(
+    private fb: FormBuilder,
+    private store: Store,
+    @Self() @Inject(TuiDestroyService) private destroy$: TuiDestroyService
+  ) {}
 
   ngOnInit(): void {
     this.initializeValues()
 
-    this.formChangesSub = this.form.valueChanges
+    this.form.valueChanges
       .pipe(
         tap((orders: any) => {
           this.store.dispatch(ordersValueChangesAction({orders}))
           this.store.dispatch(changeValidityAction({isValid: this.form.valid}))
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe()
 
@@ -113,23 +117,10 @@ export class OrdersComponent implements OnInit, OnDestroy {
           })
 
           return orders
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe()
-  }
-
-  ngOnDestroy() {
-    if (this.formChangesSub) {
-      this.formChangesSub.unsubscribe()
-    }
-
-    if (this.dataLoadingSub) {
-      this.dataLoadingSub.unsubscribe()
-    }
-
-    if (this.isOrdersPristineSub) {
-      this.isOrdersPristineSub.unsubscribe()
-    }
   }
 
   initializeValues(): void {
@@ -139,7 +130,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this.isAllServicesLoaded$ = this.store.select(isAllServicesLoadedSelector)
     this.activeOrderIndex$ = this.store.select(activeOrderSelector)
 
-    this.dataLoadingSub = combineLatest([
+    combineLatest([
       this.store.select(startCitySelector),
       this.store.select(endCitySelector),
       this.store.select(isStartPointValidSelector),
@@ -167,18 +158,20 @@ export class OrdersComponent implements OnInit, OnDestroy {
 
             return [startCity, endCity]
           }
-        )
+        ),
+        takeUntil(this.destroy$)
       )
       .subscribe()
 
-    this.isOrdersPristineSub = this.store
+    this.store
       .select(isOrdersPristineSelector)
       .pipe(
         tap((isPristine: boolean) => {
           if (isPristine) {
             this.form.reset()
           }
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe()
   }

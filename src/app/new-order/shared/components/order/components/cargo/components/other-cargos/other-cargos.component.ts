@@ -2,7 +2,9 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  Inject,
   OnInit,
+  Self,
 } from '@angular/core'
 import {
   FormBuilder,
@@ -12,8 +14,9 @@ import {
   Validators,
 } from '@angular/forms'
 import {Store} from '@ngrx/store'
+import {TuiDestroyService} from '@taiga-ui/cdk'
 import {TUI_VALIDATION_ERRORS, tuiItemsHandlersProvider} from '@taiga-ui/kit'
-import {combineLatest, delay, Observable, of, Subscription} from 'rxjs'
+import {combineLatest, delay, Observable, of, takeUntil} from 'rxjs'
 import {concatAll, filter, switchMap, tap, toArray} from 'rxjs/operators'
 import {STRINGIFY_CARGOS} from '../../../../../../../../shared/handlers/string-handlers'
 import {CargoInterface} from '../../../../../../types/cargo.interface'
@@ -53,16 +56,13 @@ import {VladivostokOffice} from '../../../../enums/vladivostokOffice'
       },
     },
     tuiItemsHandlersProvider({stringify: STRINGIFY_CARGOS}),
+    TuiDestroyService,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OtherCargosComponent implements OnInit {
   cargos$: Observable<CargoInterface[]>
-  combineAllSub: Subscription
-
   onTouched = () => {}
-  onChangeSub: Subscription
-  detailChangedSub: Subscription
 
   detail = this.fb.control(null, [Validators.required])
   places = this.fb.control(1, [Validators.required])
@@ -79,16 +79,12 @@ export class OtherCargosComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private store: Store,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    @Self() @Inject(TuiDestroyService) private destroy$: TuiDestroyService
   ) {}
 
   ngOnInit(): void {
     this.initializeValues()
-  }
-
-  ngOnDestroy() {
-    this.detailChangedSub.unsubscribe()
-    this.combineAllSub.unsubscribe()
   }
 
   initializeValues() {
@@ -108,18 +104,19 @@ export class OtherCargosComponent implements OnInit {
       })
     )
 
-    this.detailChangedSub = this.detail.valueChanges
+    this.detail.valueChanges
       .pipe(
         tap((value) => {
           if (value) {
             this.places.enable()
             // this.detail.disable({emitEvent: false})
           }
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe()
 
-    this.combineAllSub = combineLatest([
+    combineLatest([
       this.store.select(startOfficeSelector),
       this.store.select(startCourierSelector),
       this.store.select(endOfficeSelector),
@@ -139,7 +136,8 @@ export class OtherCargosComponent implements OnInit {
 
           this.courierLimits = !!(startCourier || endCourier)
         }),
-        delay(0)
+        delay(0),
+        takeUntil(this.destroy$)
       )
       .subscribe(() => {
         this.form.updateValueAndValidity()
@@ -169,7 +167,7 @@ export class OtherCargosComponent implements OnInit {
   }
 
   registerOnChange(onChange: any) {
-    this.onChangeSub = this.form.valueChanges.subscribe(onChange)
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(onChange)
   }
 
   setDisabledState(disabled: boolean) {

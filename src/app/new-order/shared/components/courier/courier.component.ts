@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
+import {ChangeDetectionStrategy, Component, Inject, Self} from '@angular/core'
 import {
   FormBuilder,
   NG_VALIDATORS,
@@ -6,8 +6,9 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms'
-import {Subscription, take} from 'rxjs'
+import {TuiDestroyService} from '@taiga-ui/cdk'
 import {TUI_VALIDATION_ERRORS} from '@taiga-ui/kit'
+import {takeUntil} from 'rxjs'
 
 @Component({
   selector: 'app-courier',
@@ -30,12 +31,12 @@ import {TUI_VALIDATION_ERRORS} from '@taiga-ui/kit'
         required: `Все поля обязательны для заполнения`,
       },
     },
+    TuiDestroyService,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CourierComponent {
   onTouched = () => {}
-  onChangeSub: Subscription
 
   readonly timeRange = ['8.00 - 14.00', '14.00 - 18.00']
 
@@ -51,7 +52,10 @@ export class CourierComponent {
     time: this.time,
   })
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    @Self() @Inject(TuiDestroyService) private destroy$: TuiDestroyService
+  ) {}
 
   requiredError(): ValidationErrors | null {
     const error = Object.entries(this.form.controls).some(([, control]) => {
@@ -77,7 +81,7 @@ export class CourierComponent {
   }
 
   registerOnChange(onChange: any) {
-    this.onChangeSub = this.form.valueChanges.subscribe(onChange)
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(onChange)
   }
 
   setDisabledState(disabled: boolean) {

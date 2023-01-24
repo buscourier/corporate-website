@@ -2,8 +2,9 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  OnDestroy,
+  Inject,
   OnInit,
+  Self,
 } from '@angular/core'
 import {
   FormBuilder,
@@ -15,6 +16,7 @@ import {
   Validators,
 } from '@angular/forms'
 import {Store} from '@ngrx/store'
+import {TuiDestroyService} from '@taiga-ui/cdk'
 import {TUI_VALIDATION_ERRORS} from '@taiga-ui/kit'
 import {
   concatAll,
@@ -24,6 +26,7 @@ import {
   Subscription,
   switchMap,
   take,
+  takeUntil,
   toArray,
 } from 'rxjs'
 import {tap} from 'rxjs/operators'
@@ -64,12 +67,11 @@ const INSURANCE_MAX = 30000
         },
       },
     },
+    TuiDestroyService,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ServicesComponent implements OnInit, OnDestroy {
-  servicesSub: Subscription
-
+export class ServicesComponent implements OnInit {
   services = this.fb.array<FormGroup>([])
 
   form = this.fb.group({
@@ -79,19 +81,16 @@ export class ServicesComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private store: Store,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    @Self() @Inject(TuiDestroyService) private destroy$: TuiDestroyService
   ) {}
 
   ngOnInit(): void {
     this.initializeValues()
   }
 
-  ngOnDestroy() {
-    this.servicesSub.unsubscribe()
-  }
-
   initializeValues() {
-    this.servicesSub = this.store
+    this.store
       .select(allServicesSelector)
       .pipe(
         filter(Boolean),
@@ -166,7 +165,8 @@ export class ServicesComponent implements OnInit, OnDestroy {
         }),
         tap(() => {
           this.cdr.markForCheck()
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe()
   }
@@ -197,7 +197,7 @@ export class ServicesComponent implements OnInit, OnDestroy {
   }
 
   registerOnChange(onChange: any) {
-    this.onChangeSub = this.form.valueChanges.subscribe(onChange)
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(onChange)
   }
 
   setDisabledState(disabled: boolean) {

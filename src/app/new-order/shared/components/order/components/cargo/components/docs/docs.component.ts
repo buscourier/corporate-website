@@ -1,4 +1,10 @@
-import {AfterViewInit, ChangeDetectionStrategy, Component} from '@angular/core'
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  Self,
+} from '@angular/core'
 import {
   FormBuilder,
   NG_VALIDATORS,
@@ -6,8 +12,9 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms'
+import {TuiDestroyService} from '@taiga-ui/cdk'
 import {TUI_VALIDATION_ERRORS} from '@taiga-ui/kit'
-import {Subscription} from 'rxjs'
+import {takeUntil} from 'rxjs'
 
 const MIN = 1
 
@@ -35,6 +42,7 @@ const MIN = 1
         },
       },
     },
+    TuiDestroyService,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -45,7 +53,10 @@ export class DocsComponent implements AfterViewInit {
     places: this.places,
   })
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    @Self() @Inject(TuiDestroyService) private destroy$: TuiDestroyService
+  ) {}
 
   ngAfterViewInit(): void {
     if (!this.places.value) {
@@ -54,7 +65,6 @@ export class DocsComponent implements AfterViewInit {
   }
 
   onTouched = () => {}
-  onChangeSub: Subscription
 
   writeValue(value: any) {
     if (value) {
@@ -67,7 +77,7 @@ export class DocsComponent implements AfterViewInit {
   }
 
   registerOnChange(onChange: any) {
-    this.onChangeSub = this.form.valueChanges.subscribe(onChange)
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(onChange)
   }
 
   setDisabledState(disabled: boolean) {

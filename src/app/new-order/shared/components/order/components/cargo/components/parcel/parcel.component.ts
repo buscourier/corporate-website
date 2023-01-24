@@ -2,8 +2,9 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
-  OnDestroy,
+  Inject,
   OnInit,
+  Self,
 } from '@angular/core'
 import {
   FormBuilder,
@@ -13,8 +14,9 @@ import {
   Validators,
 } from '@angular/forms'
 import {Store} from '@ngrx/store'
+import {TuiDestroyService} from '@taiga-ui/cdk'
 import {TUI_VALIDATION_ERRORS} from '@taiga-ui/kit'
-import {combineLatest, Observable, Subscription} from 'rxjs'
+import {combineLatest, Observable, takeUntil} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {EndCityInterface} from 'src/app/shared/types/end-city.interface'
 import {OfficeInterface} from '../../../../../../../../shared/types/office.interface'
@@ -64,19 +66,18 @@ interface CityLimitInterface {
         },
       },
     },
+    TuiDestroyService,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ParcelComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ParcelComponent implements OnInit, AfterViewInit {
   endCity$: Observable<EndCityInterface>
   startOffice$: Observable<OfficeInterface>
   startCourier$: Observable<CourierInterface>
   endOffice$: Observable<OfficeInterface>
   endCourier$: Observable<CourierInterface>
-  combineAllSub: Subscription
 
   onTouched = () => {}
-  onChangeSub: Subscription
 
   count = this.fb.control(null, [Validators.required])
   weight = this.fb.control(null, [Validators.required])
@@ -109,7 +110,11 @@ export class ParcelComponent implements OnInit, AfterViewInit, OnDestroy {
     ['1627, 207, 30, 235, 119, 1808, 180']: {name: 'Ольга', maxWeight: 50},
   }
 
-  constructor(private fb: FormBuilder, private store: Store) {}
+  constructor(
+    private fb: FormBuilder,
+    private store: Store,
+    @Self() @Inject(TuiDestroyService) private destroy$: TuiDestroyService
+  ) {}
 
   ngOnInit(): void {
     this.form.setValidators(Validators.required)
@@ -120,12 +125,8 @@ export class ParcelComponent implements OnInit, AfterViewInit, OnDestroy {
     this.count.setValue(1)
   }
 
-  ngOnDestroy() {
-    this.combineAllSub.unsubscribe()
-  }
-
   initializeValues() {
-    this.combineAllSub = combineLatest([
+    combineLatest([
       this.store.select(endCitySelector),
       this.store.select(startOfficeSelector),
       this.store.select(startCourierSelector),
@@ -172,7 +173,8 @@ export class ParcelComponent implements OnInit, AfterViewInit, OnDestroy {
             this.maxWeight = 100
             this.maxDimensionsSum = 250
           }
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe()
   }
@@ -245,7 +247,7 @@ export class ParcelComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   registerOnChange(onChange: any) {
-    this.onChangeSub = this.form.valueChanges.subscribe(onChange)
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(onChange)
   }
 
   setDisabledState(disabled: boolean) {

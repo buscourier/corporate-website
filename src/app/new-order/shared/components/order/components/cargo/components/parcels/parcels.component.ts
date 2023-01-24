@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core'
+import {ChangeDetectionStrategy, Component, Inject, Self} from '@angular/core'
 import {
   AbstractControl,
   FormBuilder,
@@ -6,7 +6,8 @@ import {
   NG_VALUE_ACCESSOR,
   ValidationErrors,
 } from '@angular/forms'
-import {Subscription} from 'rxjs'
+import {TuiDestroyService} from '@taiga-ui/cdk'
+import {takeUntil} from 'rxjs'
 import {ParcelFormInterface} from '../../types/parcel-form.interface'
 
 @Component({
@@ -24,12 +25,12 @@ import {ParcelFormInterface} from '../../types/parcel-form.interface'
       useExisting: ParcelsComponent,
       multi: true,
     },
+    TuiDestroyService,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ParcelsComponent {
   onTouched = () => {}
-  onChangeSub: Subscription
 
   parcels = this.fb.array([])
 
@@ -37,7 +38,10 @@ export class ParcelsComponent {
     parcels: this.parcels,
   })
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    @Self() @Inject(TuiDestroyService) private destroy$: TuiDestroyService
+  ) {}
 
   addParcel() {
     this.parcels.push(this.fb.control<ParcelFormInterface>(null))
@@ -64,7 +68,7 @@ export class ParcelsComponent {
   }
 
   registerOnChange(onChange: any) {
-    this.onChangeSub = this.form.valueChanges.subscribe(onChange)
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(onChange)
   }
 
   setDisabledState(disabled: boolean) {

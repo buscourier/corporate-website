@@ -4,12 +4,12 @@ import {
   Inject,
   Injector,
   Input,
-  OnDestroy,
   OnInit,
   Self,
 } from '@angular/core'
 import {FormBuilder, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
+import {TuiDestroyService} from '@taiga-ui/cdk'
 import {TuiDialogService} from '@taiga-ui/core'
 import {TUI_VALIDATION_ERRORS, tuiItemsHandlersProvider} from '@taiga-ui/kit'
 import {PolymorpheusComponent} from '@tinkoff/ng-polymorpheus'
@@ -18,26 +18,23 @@ import {
   debounceTime,
   delay,
   filter,
-  first,
   map,
   Observable,
   of,
   pairwise,
-  startWith,
-  Subscription,
   switchMap,
   take,
-  takeLast,
   takeUntil,
   using,
 } from 'rxjs'
-import {concatAll, tap, toArray} from 'rxjs/operators'
+import {tap} from 'rxjs/operators'
 import {ModalMapComponent} from '../../../../../../shared/components/modal-map/modal-map.component'
 import {STRINGIFY_CITIES} from '../../../../../../shared/handlers/string-handlers'
+import {UtilsService} from '../../../../../../shared/services/utils.service'
 import {EndCityInterface} from '../../../../../../shared/types/end-city.interface'
 import {OfficeInterface} from '../../../../../../shared/types/office.interface'
 import {StartCityInterface} from '../../../../../../shared/types/start-city.interface'
-import {CourierInterface} from '../../../../types/courier.interface'
+import {resetOrdersAction} from '../../../orders/store/actions/reset-orders.action'
 import {
   isStartPointValidSelector,
   startCitySelector,
@@ -64,9 +61,6 @@ import {
   officesSelector,
   tabsSelector,
 } from '../../store/selectors'
-import {UtilsService} from '../../../../../../shared/services/utils.service'
-import {resetOrdersAction} from '../../../orders/store/actions/reset-orders.action'
-import {TuiDestroyService} from '@taiga-ui/cdk'
 
 @Component({
   selector: 'app-end-point',
@@ -179,9 +173,6 @@ export class EndPointComponent implements OnInit {
     needToMeet: this.needToMeet,
   })
 
-  formValuesSub: Subscription
-  isEndPointPristineSub: Subscription
-
   readonly TabName = {
     get: 'Забрать в отделение',
     delivery: 'Вызвать курьера',
@@ -214,7 +205,8 @@ export class EndPointComponent implements OnInit {
               this.store.dispatch(getCitiesAction({cityId: startCity.id}))
             })
           )
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe()
   }
@@ -341,7 +333,7 @@ export class EndPointComponent implements OnInit {
 
     this.city.disable()
 
-    this.formValuesSub = this.form.valueChanges
+    this.form.valueChanges
       .pipe(
         debounceTime(500),
         tap(() => {
@@ -351,7 +343,7 @@ export class EndPointComponent implements OnInit {
       )
       .subscribe()
 
-    this.isEndPointPristineSub = this.store
+    this.store
       .select(isEndPointPristineSelector)
       .pipe(
         tap((isPristine: boolean) => {
@@ -359,7 +351,8 @@ export class EndPointComponent implements OnInit {
             this.form.reset()
             this.city.disable()
           }
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe()
   }
