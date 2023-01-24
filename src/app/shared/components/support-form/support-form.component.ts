@@ -1,8 +1,15 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  OnInit,
+  Self,
+} from '@angular/core'
 import {FormBuilder, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
+import {TuiDestroyService} from '@taiga-ui/cdk'
 import {TUI_VALIDATION_ERRORS} from '@taiga-ui/kit'
-import {Observable} from 'rxjs'
+import {Observable, takeUntil} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {Pattern} from '../../pattern/pattern'
 import {sendMessageAction} from './store/actions/send-message.action'
@@ -31,6 +38,7 @@ import {ResponseInterface} from './types/response.interface'
         },
       },
     },
+    TuiDestroyService,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -61,20 +69,25 @@ export class SupportFormComponent implements OnInit {
     agree: [false, [Validators.required]],
   })
 
-  constructor(private fb: FormBuilder, private store: Store) {}
+  constructor(
+    private fb: FormBuilder,
+    private store: Store,
+    @Self() @Inject(TuiDestroyService) private destroy$: TuiDestroyService
+  ) {}
 
   ngOnInit(): void {
     this.isSubmitting$ = this.store.select(isSubmittingSelector)
+    this.validationErrors$ = this.store.select(validationErrorsSelector)
+
     this.store
       .select(responseSelector)
       .pipe(
         tap(() => {
           this.form.reset()
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe()
-
-    this.validationErrors$ = this.store.select(validationErrorsSelector)
   }
 
   onSubmit() {

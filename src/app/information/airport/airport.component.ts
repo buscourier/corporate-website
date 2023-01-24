@@ -2,9 +2,12 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  Inject,
+  Self,
 } from '@angular/core'
 import {Store} from '@ngrx/store'
-import {Observable} from 'rxjs'
+import {TuiDestroyService} from '@taiga-ui/cdk'
+import {Observable, takeUntil} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {screenSizeSelector} from '../../store/global/selectors'
 
@@ -12,6 +15,7 @@ import {screenSizeSelector} from '../../store/global/selectors'
   selector: 'app-airport',
   templateUrl: './airport.component.html',
   styleUrls: ['./airport.component.css'],
+  providers: [TuiDestroyService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AirportComponent {
@@ -38,7 +42,11 @@ export class AirportComponent {
     },
   ]
 
-  constructor(private store: Store, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private store: Store,
+    private cdr: ChangeDetectorRef,
+    @Self() @Inject(TuiDestroyService) private destroy$: TuiDestroyService
+  ) {}
 
   ngOnInit(): void {
     this.store
@@ -61,7 +69,8 @@ export class AirportComponent {
           }
 
           this.pointsIndex = 0
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe(() => {
         this.cdr.markForCheck()

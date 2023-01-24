@@ -2,10 +2,13 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  Inject,
   OnInit,
+  Self,
 } from '@angular/core'
 import {Store} from '@ngrx/store'
-import {Observable} from 'rxjs'
+import {TuiDestroyService} from '@taiga-ui/cdk'
+import {Observable, takeUntil} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {screenSizeSelector} from '../store/global/selectors'
 
@@ -13,6 +16,7 @@ import {screenSizeSelector} from '../store/global/selectors'
   selector: 'app-shops',
   templateUrl: './shops.component.html',
   styleUrls: ['./shops.component.css'],
+  providers: [TuiDestroyService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ShopsComponent implements OnInit {
@@ -61,7 +65,11 @@ export class ShopsComponent implements OnInit {
     },
   ]
 
-  constructor(private store: Store, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private store: Store,
+    private cdr: ChangeDetectorRef,
+    @Self() @Inject(TuiDestroyService) private destroy$: TuiDestroyService
+  ) {}
 
   ngOnInit(): void {
     this.store
@@ -88,7 +96,8 @@ export class ShopsComponent implements OnInit {
           }
 
           this.shopIndex = 0
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe(() => {
         this.cdr.markForCheck()

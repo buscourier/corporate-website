@@ -1,12 +1,13 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core'
+import {ChangeDetectionStrategy, Component, Inject, Self} from '@angular/core'
 import {
   FormBuilder,
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
   ValidationErrors,
 } from '@angular/forms'
+import {TuiDestroyService} from '@taiga-ui/cdk'
 import {TUI_VALIDATION_ERRORS} from '@taiga-ui/kit'
-import {Subscription} from 'rxjs'
+import {takeUntil} from 'rxjs'
 
 @Component({
   selector: 'app-confidant',
@@ -35,6 +36,7 @@ import {Subscription} from 'rxjs'
         },
       },
     },
+    TuiDestroyService,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -50,9 +52,11 @@ export class ConfidantComponent {
   })
 
   onTouched = () => {}
-  onChangeSub: Subscription
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    @Self() @Inject(TuiDestroyService) private destroy$: TuiDestroyService
+  ) {}
 
   writeValue(value: any) {
     if (value) {
@@ -65,7 +69,7 @@ export class ConfidantComponent {
   }
 
   registerOnChange(onChange: any) {
-    this.onChangeSub = this.form.valueChanges.subscribe(onChange)
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(onChange)
   }
 
   setDisabledState(disabled: boolean) {

@@ -1,7 +1,8 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core'
+import {ChangeDetectionStrategy, Component, Inject, Self} from '@angular/core'
 import {FormBuilder, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
-import {Observable} from 'rxjs'
+import {TuiDestroyService} from '@taiga-ui/cdk'
+import {Observable, takeUntil} from 'rxjs'
 import {tap} from 'rxjs/operators'
 
 import {Pattern} from '../shared/pattern/pattern'
@@ -17,6 +18,7 @@ import {ResponseInterface} from './types/response.interface'
   selector: 'app-feedback',
   templateUrl: './feedback.component.html',
   styleUrls: ['./feedback.component.css'],
+  providers: [TuiDestroyService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FeedbackComponent {
@@ -55,20 +57,25 @@ export class FeedbackComponent {
     agree: [false, [Validators.required]],
   })
 
-  constructor(private fb: FormBuilder, private store: Store) {}
+  constructor(
+    private fb: FormBuilder,
+    private store: Store,
+    @Self() @Inject(TuiDestroyService) private destroy$: TuiDestroyService
+  ) {}
 
   ngOnInit(): void {
     this.isSubmitting$ = this.store.select(isSubmittingSelector)
+    this.validationErrors$ = this.store.select(validationErrorsSelector)
+
     this.store
       .select(responseSelector)
       .pipe(
         tap(() => {
           this.form.reset()
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe()
-
-    this.validationErrors$ = this.store.select(validationErrorsSelector)
   }
 
   onSubmit() {

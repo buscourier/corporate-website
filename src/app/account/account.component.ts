@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
 import {Router} from '@angular/router'
 import {Store} from '@ngrx/store'
 import {tuiLoaderOptionsProvider} from '@taiga-ui/core'
-import {filter, map, Observable} from 'rxjs'
+import {filter, map, Observable, of, switchMap, take} from 'rxjs'
 import {currentUserSelector} from '../auth/store/selectors'
 import {CurrentUserInterface} from '../shared/types/current-user.interface'
 import {getBalanceAction} from './store/actions/get-balance.action'
@@ -98,11 +98,12 @@ export class AccountComponent implements OnInit {
       .select(currentUserSelector)
       .pipe(
         filter(Boolean),
-        //TODO: map or switchMap or smth else?
-        map((user: CurrentUserInterface) => {
-          return this.store.dispatch(getBalanceAction({userId: user.id}))
-        })
+        switchMap((user: CurrentUserInterface) => {
+          this.store.dispatch(getBalanceAction({userId: user.id}))
+          return of(user)
+        }),
+        take(1)
       )
-      .subscribe() //TODO: unsubscribe?
+      .subscribe()
   }
 }
