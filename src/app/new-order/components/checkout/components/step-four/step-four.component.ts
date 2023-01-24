@@ -1,13 +1,15 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  OnDestroy,
+  Inject,
   OnInit,
+  Self,
 } from '@angular/core'
 import {FormBuilder} from '@angular/forms'
 import {Store} from '@ngrx/store'
+import {TuiDestroyService} from '@taiga-ui/cdk'
 import {ReCaptchaV3Service} from 'ng-recaptcha'
-import {filter, Observable, Subscription, tap} from 'rxjs'
+import {filter, Observable, takeUntil, tap} from 'rxjs'
 import {EndCityInterface} from '../../../../../shared/types/end-city.interface'
 import {OfficeInterface} from '../../../../../shared/types/office.interface'
 import {StartCityInterface} from '../../../../../shared/types/start-city.interface'
@@ -43,9 +45,10 @@ interface TotalServicesInterface {
   selector: 'app-step-four',
   templateUrl: './step-four.component.html',
   styleUrls: ['./step-four.component.css'],
+  providers: [TuiDestroyService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StepFourComponent implements OnInit, OnDestroy {
+export class StepFourComponent implements OnInit {
   startPoint$: Observable<StartPointStateInterface>
   endPoint$: Observable<EndPointStateInterface>
   person$: Observable<PersonStateInterface>
@@ -84,23 +87,17 @@ export class StepFourComponent implements OnInit, OnDestroy {
 
   token = ''
   tokenError?: {error: any}
-  recaptchaSub: Subscription
 
   constructor(
     private fb: FormBuilder,
     private store: Store,
     private totalSumService: TotalSumService,
-    private recaptchaService: ReCaptchaV3Service
+    private recaptchaService: ReCaptchaV3Service,
+    @Self() @Inject(TuiDestroyService) private destroy$: TuiDestroyService
   ) {}
 
   ngOnInit(): void {
     this.initializeValues()
-  }
-
-  ngOnDestroy(): void {
-    if (this.recaptchaSub) {
-      this.recaptchaSub.unsubscribe()
-    }
   }
 
   initializeValues() {
@@ -238,7 +235,8 @@ export class StepFourComponent implements OnInit, OnDestroy {
           if (value) {
             this.executeRecaptcha()
           }
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe()
   }
@@ -294,8 +292,9 @@ export class StepFourComponent implements OnInit, OnDestroy {
   }
 
   executeRecaptcha() {
-    this.recaptchaSub = this.recaptchaService
+    this.recaptchaService
       .execute('createNewOrder')
+      .pipe(takeUntil(this.destroy$))
       .subscribe(
         (token: string) => {
           this.token = token

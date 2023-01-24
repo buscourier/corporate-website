@@ -1,11 +1,13 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  OnDestroy,
+  Inject,
   OnInit,
+  Self,
 } from '@angular/core'
 import {Store} from '@ngrx/store'
-import {combineLatest, map, Subscription} from 'rxjs'
+import {TuiDestroyService} from '@taiga-ui/cdk'
+import {combineLatest, map, takeUntil} from 'rxjs'
 import {isEndPointValidSelector} from 'src/app/new-order/shared/components/end-point/store/selectors'
 import {isOrdersValidSelector} from '../../../../shared/components/orders/store/selectors'
 import {setCurrentStepStateAction} from '../../store/actions/set-current-step-state.action'
@@ -15,17 +17,20 @@ import {isRecipientValidSelector} from './components/recipient/store/selectors'
   selector: 'app-step-three',
   templateUrl: './step-three.component.html',
   styleUrls: ['./step-three.component.css'],
+  providers: [TuiDestroyService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StepThreeComponent implements OnInit, OnDestroy {
-  combineAllSub: Subscription
+export class StepThreeComponent implements OnInit {
   isEndpointValid = false
   isCurrentStepValid = false
 
-  constructor(private store: Store) {}
+  constructor(
+    private store: Store,
+    @Self() @Inject(TuiDestroyService) private destroy$: TuiDestroyService
+  ) {}
 
   ngOnInit(): void {
-    this.combineAllSub = combineLatest([
+    combineLatest([
       this.store.select(isEndPointValidSelector),
       this.store.select(isOrdersValidSelector),
       this.store.select(isRecipientValidSelector),
@@ -41,12 +46,9 @@ export class StepThreeComponent implements OnInit, OnDestroy {
               isValid: this.isCurrentStepValid,
             })
           )
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe()
-  }
-
-  ngOnDestroy(): void {
-    this.combineAllSub.unsubscribe()
   }
 }

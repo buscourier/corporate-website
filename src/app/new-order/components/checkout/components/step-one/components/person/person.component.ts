@@ -2,13 +2,15 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
-  OnDestroy,
+  Inject,
   OnInit,
+  Self,
 } from '@angular/core'
 import {FormBuilder, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
+import {TuiDestroyService} from '@taiga-ui/cdk'
 import {TUI_VALIDATION_ERRORS} from '@taiga-ui/kit'
-import {Subscription, using} from 'rxjs'
+import {takeUntil, using} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {Pattern} from '../../../../../../../shared/pattern/pattern'
 import {changeValidityAction} from './store/actions/change-validity.action'
@@ -34,10 +36,11 @@ import {PersonStateInterface} from './types/person-state.interface'
         },
       },
     },
+    TuiDestroyService,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PersonComponent implements OnInit, AfterViewInit, OnDestroy {
+export class PersonComponent implements OnInit, AfterViewInit {
   //TODO: rename PersonComponent -> AuthorComponent
 
   roles = ['Отправитель', 'Получатель']
@@ -72,8 +75,6 @@ export class PersonComponent implements OnInit, AfterViewInit, OnDestroy {
     role: ['', Validators.required],
   })
 
-  isPersonPristineSub: Subscription
-
   formValues$ = using(
     () =>
       this.form.valueChanges
@@ -92,26 +93,27 @@ export class PersonComponent implements OnInit, AfterViewInit, OnDestroy {
     () => this.store.select(personSelector)
   )
 
-  constructor(private fb: FormBuilder, private store: Store) {}
+  constructor(
+    private fb: FormBuilder,
+    private store: Store,
+    @Self() @Inject(TuiDestroyService) private destroy$: TuiDestroyService
+  ) {}
 
   ngOnInit(): void {
-    this.isPersonPristineSub = this.store
+    this.store
       .select(isPersonPristineSelector)
       .pipe(
         tap((isPristine: boolean) => {
           if (isPristine) {
             this.form.reset()
           }
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe()
   }
 
   ngAfterViewInit() {
     this.form.get('role').setValue(this.roles[0])
-  }
-
-  ngOnDestroy(): void {
-    this.isPersonPristineSub.unsubscribe()
   }
 }

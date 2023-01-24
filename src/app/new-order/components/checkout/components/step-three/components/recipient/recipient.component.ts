@@ -2,21 +2,22 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
-  OnDestroy,
+  Inject,
   OnInit,
+  Self,
 } from '@angular/core'
 import {FormBuilder, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
-import {Subscription, tap, using} from 'rxjs'
+import {TuiDestroyService} from '@taiga-ui/cdk'
+import {TUI_VALIDATION_ERRORS} from '@taiga-ui/kit'
+import {takeUntil, tap, using} from 'rxjs'
+import {Pattern} from '../../../../../../../shared/pattern/pattern'
 import {personSelector} from '../../../step-one/components/person/store/selectors'
 import {PersonStateInterface} from '../../../step-one/components/person/types/person-state.interface'
 import {changeValidityAction} from './store/actions/change-validity.action'
 import {changeValuesAction} from './store/actions/change-values.action'
 import {isRecipientPristineSelector, recipientSelector} from './store/selectors'
 import {RecipientStateInterface} from './types/recipient-state.interface'
-import {TUI_VALIDATION_ERRORS, tuiItemsHandlersProvider} from '@taiga-ui/kit'
-import {STRINGIFY_DOCTYPE} from '../../../../../../../shared/handlers/string-handlers'
-import {Pattern} from '../../../../../../../shared/pattern/pattern'
 
 @Component({
   selector: 'app-recipient',
@@ -35,13 +36,11 @@ import {Pattern} from '../../../../../../../shared/pattern/pattern'
         },
       },
     },
+    TuiDestroyService,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RecipientComponent implements OnInit, AfterViewInit, OnDestroy {
-  personSub: Subscription
-  isRecipientPristineSub: Subscription
-
+export class RecipientComponent implements OnInit, AfterViewInit {
   form = this.fb.group({
     fio: [
       '',
@@ -72,23 +71,28 @@ export class RecipientComponent implements OnInit, AfterViewInit, OnDestroy {
     () => this.store.select(recipientSelector)
   )
 
-  constructor(private fb: FormBuilder, private store: Store) {}
+  constructor(
+    private fb: FormBuilder,
+    private store: Store,
+    @Self() @Inject(TuiDestroyService) private destroy$: TuiDestroyService
+  ) {}
 
   ngOnInit(): void {
-    this.isRecipientPristineSub = this.store
+    this.store
       .select(isRecipientPristineSelector)
       .pipe(
         tap((isPristine: boolean) => {
           if (isPristine) {
             this.form.reset()
           }
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe()
   }
 
   ngAfterViewInit() {
-    this.personSub = this.store
+    this.store
       .select(personSelector)
       .pipe(
         tap((person: PersonStateInterface) => {
@@ -98,13 +102,9 @@ export class RecipientComponent implements OnInit, AfterViewInit, OnDestroy {
               phone: person.phone,
             })
           }
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe()
-  }
-
-  ngOnDestroy(): void {
-    this.isRecipientPristineSub.unsubscribe()
-    this.personSub.unsubscribe()
   }
 }

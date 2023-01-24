@@ -3,13 +3,13 @@ import {
   ChangeDetectorRef,
   Component,
   Inject,
-  OnDestroy,
   OnInit,
+  Self,
 } from '@angular/core'
 import {DomSanitizer} from '@angular/platform-browser'
 import {NavigationEnd, Router, RouterEvent} from '@angular/router'
 import {Store} from '@ngrx/store'
-import {TUI_IS_MOBILE} from '@taiga-ui/cdk'
+import {TUI_IS_MOBILE, TuiDestroyService} from '@taiga-ui/cdk'
 import {tuiHeightCollapse} from '@taiga-ui/core'
 import {TuiPdfViewerOptions, TuiPdfViewerService} from '@taiga-ui/kit'
 import {PolymorpheusContent} from '@tinkoff/ng-polymorpheus'
@@ -18,7 +18,8 @@ import {
   debounceTime,
   filter,
   Observable,
-  Subscription,
+  switchMap,
+  takeUntil,
 } from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {isPhoneScreenSelector} from '../../../../../store/global/selectors'
@@ -50,16 +51,15 @@ import {isTotalSumCalculatedSelector} from '../../store/selectors'
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css'],
   animations: [tuiHeightCollapse],
+  providers: [TuiDestroyService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SidebarComponent implements OnInit, OnDestroy {
+export class SidebarComponent implements OnInit {
   isOrdersValid$: Observable<boolean>
   startPoint$: Observable<StartPointStateInterface>
   endPoint$: Observable<EndPointStateInterface>
   isPhoneScreen$: Observable<boolean>
-  totalSumCalculatedSub: Subscription
 
-  combineAllSub: Subscription
   totalSum = 0
   orders = null
   isSidebarOpened = false
@@ -77,16 +77,12 @@ export class SidebarComponent implements OnInit, OnDestroy {
     @Inject(DomSanitizer) private readonly sanitizer: DomSanitizer,
     @Inject(TuiPdfViewerService)
     private readonly pdfService: TuiPdfViewerService,
-    @Inject(TUI_IS_MOBILE) private readonly isMobile: boolean
+    @Inject(TUI_IS_MOBILE) private readonly isMobile: boolean,
+    @Self() @Inject(TuiDestroyService) private destroy$: TuiDestroyService
   ) {}
 
   ngOnInit(): void {
     this.initializeValues()
-  }
-
-  ngOnDestroy(): void {
-    this.combineAllSub.unsubscribe()
-    this.totalSumCalculatedSub.unsubscribe()
   }
 
   initializeValues() {
@@ -101,7 +97,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
       })
     )
 
-    this.combineAllSub = combineLatest([
+    combineLatest([
       this.store.select(startCitySelector),
       this.store.select(endCitySelector),
       this.store.select(startCourierSelector),
@@ -110,7 +106,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     ])
       .pipe(
         debounceTime(500),
-        tap(([startCity, endCity, startCourier, endCourier, orders]) => {
+        switchMap(([startCity, endCity, startCourier, endCourier, orders]) => {
           const startCityId = startCity ? startCity.id : null
           const endCityId = endCity ? endCity.id : null
           const startCourierId = startCourier ? '1' : null
@@ -120,7 +116,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
             this.orders = orders
           }
 
-          this.totalSumService
+          return this.totalSumService
             .calculateTotalSum(
               startCityId,
               endCityId,
@@ -139,27 +135,30 @@ export class SidebarComponent implements OnInit, OnDestroy {
                 }
               })
             )
-            .subscribe(() => {
-              this.cdr.markForCheck()
-            })
-        })
+        }),
+        takeUntil(this.destroy$)
       )
-      .subscribe()
+      .subscribe(() => {
+        this.cdr.markForCheck()
+      })
 
-    this.totalSumCalculatedSub = this.store
+    this.store
       .select(isTotalSumCalculatedSelector)
       .pipe(
         tap((isCalculated: boolean) => {
           this.isTotalSumCalculated = isCalculated
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe()
 
     this.isCheckoutPage = this.isCheckout(this.router.url)
 
-    //TODO: need unsubscribe?
     this.router.events
-      .pipe(filter((event: RouterEvent) => event instanceof NavigationEnd))
+      .pipe(
+        filter((event: RouterEvent) => event instanceof NavigationEnd),
+        takeUntil(this.destroy$)
+      )
       .subscribe((event: RouterEvent) => {
         this.isCheckoutPage = this.isCheckout(event.url)
       })

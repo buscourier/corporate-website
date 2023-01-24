@@ -2,14 +2,16 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
-  OnDestroy,
+  Inject,
   OnInit,
+  Self,
 } from '@angular/core'
 import {FormBuilder, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
+import {TuiDestroyService} from '@taiga-ui/cdk'
 import {TuiTextMaskOptions} from '@taiga-ui/core'
 import {TUI_VALIDATION_ERRORS, tuiItemsHandlersProvider} from '@taiga-ui/kit'
-import {combineLatest, filter, Observable, Subscription, tap, using} from 'rxjs'
+import {combineLatest, filter, Observable, takeUntil, tap, using} from 'rxjs'
 import {currentUserSelector} from 'src/app/auth/store/selectors'
 import {
   STRINGIFY_CONFIDANT,
@@ -51,10 +53,11 @@ import {SenderStateInterface} from './types/sender-state.interface'
         },
       },
     },
+    TuiDestroyService,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SenderComponent implements OnInit, AfterViewInit, OnDestroy {
+export class SenderComponent implements OnInit, AfterViewInit {
   documents = [
     {id: 'passport', name: 'Паспорт РФ'},
     {id: 'driver', name: 'Водительское удостоверение'},
@@ -63,10 +66,6 @@ export class SenderComponent implements OnInit, AfterViewInit, OnDestroy {
 
   isConfidantsLoading$: Observable<boolean>
   confidants$: Observable<ConfidantInterface[]>
-  currentUserSub: Subscription
-  personSub: Subscription
-  docTypeSub: Subscription
-  isSenderPristineSub: Subscription
 
   isEntity = false
 
@@ -112,7 +111,11 @@ export class SenderComponent implements OnInit, AfterViewInit, OnDestroy {
 
   _docMask: TuiTextMaskOptions = null
 
-  constructor(private fb: FormBuilder, private store: Store) {}
+  constructor(
+    private fb: FormBuilder,
+    private store: Store,
+    @Self() @Inject(TuiDestroyService) private destroy$: TuiDestroyService
+  ) {}
 
   ngOnInit(): void {
     this.isConfidantsLoading$ = this.store.select(isConfidantsLoadingSelector)
@@ -123,7 +126,7 @@ export class SenderComponent implements OnInit, AfterViewInit, OnDestroy {
       })
     )
 
-    this.currentUserSub = this.store
+    this.store
       .select(currentUserSelector)
       .pipe(
         filter(Boolean),
@@ -138,18 +141,20 @@ export class SenderComponent implements OnInit, AfterViewInit, OnDestroy {
           } else {
             this.fio.enable()
           }
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe()
 
-    this.isSenderPristineSub = this.store
+    this.store
       .select(isSenderPristineSelector)
       .pipe(
         tap((isPristine: boolean) => {
           if (isPristine) {
             this.form.reset()
           }
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe()
 
@@ -159,17 +164,19 @@ export class SenderComponent implements OnInit, AfterViewInit, OnDestroy {
           if (value instanceof Object) {
             this.phone.setValue(value.phone)
           }
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe()
 
-    this.docTypeSub = this.docType.valueChanges
+    this.docType.valueChanges
       .pipe(
         tap((doc: DocTypeInterface) => {
           this.docNumber.setValue('')
           this.docNumber.markAsUntouched()
           this.docMask = doc.id
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe()
   }
@@ -177,7 +184,8 @@ export class SenderComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     this.docType.setValue(this.documents[0])
 
-    this.personSub = combineLatest([
+    //Todo: move it from afterViewInit?
+    combineLatest([
       this.store.select(personSelector),
       this.store.select(currentUserSelector),
     ])
@@ -193,7 +201,8 @@ export class SenderComponent implements OnInit, AfterViewInit, OnDestroy {
               phone: person.phone,
             })
           }
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe()
   }
@@ -236,11 +245,5 @@ export class SenderComponent implements OnInit, AfterViewInit, OnDestroy {
       guide: false,
       mask,
     }
-  }
-
-  ngOnDestroy(): void {
-    this.isSenderPristineSub.unsubscribe()
-    this.docTypeSub.unsubscribe()
-    this.currentUserSub.unsubscribe()
   }
 }
