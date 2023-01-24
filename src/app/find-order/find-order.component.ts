@@ -1,7 +1,13 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  OnInit,
+  Self,
+} from '@angular/core'
 import {FormBuilder} from '@angular/forms'
 import {Store} from '@ngrx/store'
-import {filter, Observable} from 'rxjs'
+import {filter, interval, Observable, switchMap, takeUntil} from 'rxjs'
 import {getStatusesAction} from './store/actions/get-statuses.action'
 import {
   backendErrorsSelector,
@@ -11,11 +17,13 @@ import {
 import {OrderStatusInterface} from './types/order-status.interface'
 import {ActivatedRoute, Params} from '@angular/router'
 import {tap} from 'rxjs/operators'
+import {TuiDestroyService} from '@taiga-ui/cdk'
 
 @Component({
   selector: 'app-find-order',
   templateUrl: './find-order.component.html',
   styleUrls: ['./find-order.component.css'],
+  providers: [TuiDestroyService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FindOrderComponent implements OnInit {
@@ -46,7 +54,8 @@ export class FindOrderComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private store: Store,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    @Self() @Inject(TuiDestroyService) private destroy$: TuiDestroyService
   ) {}
 
   ngOnInit(): void {
@@ -63,7 +72,8 @@ export class FindOrderComponent implements OnInit {
               this.onSubmit()
             }, 0)
           }
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe()
   }

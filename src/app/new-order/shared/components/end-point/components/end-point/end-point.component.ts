@@ -6,6 +6,7 @@ import {
   Input,
   OnDestroy,
   OnInit,
+  Self,
 } from '@angular/core'
 import {FormBuilder, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
@@ -27,6 +28,7 @@ import {
   switchMap,
   take,
   takeLast,
+  takeUntil,
   using,
 } from 'rxjs'
 import {concatAll, tap, toArray} from 'rxjs/operators'
@@ -64,6 +66,7 @@ import {
 } from '../../store/selectors'
 import {UtilsService} from '../../../../../../shared/services/utils.service'
 import {resetOrdersAction} from '../../../orders/store/actions/reset-orders.action'
+import {TuiDestroyService} from '@taiga-ui/cdk'
 
 @Component({
   selector: 'app-end-point',
@@ -77,10 +80,11 @@ import {resetOrdersAction} from '../../../orders/store/actions/reset-orders.acti
         required: `Поле обязательно для заполнения`,
       },
     },
+    TuiDestroyService,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EndPointComponent implements OnInit, OnDestroy {
+export class EndPointComponent implements OnInit {
   @Input() boldCityLabel: boolean
   @Input('reset') resetProps = false
 
@@ -189,16 +193,13 @@ export class EndPointComponent implements OnInit, OnDestroy {
     private store: Store,
     private utils: UtilsService,
     @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
-    @Inject(Injector) private readonly injector: Injector
+    @Inject(Injector) private readonly injector: Injector,
+    @Self() @Inject(TuiDestroyService) private destroy$: TuiDestroyService
   ) {}
 
   ngOnInit(): void {
     this.fetchData()
     this.initializeValues()
-  }
-
-  ngOnDestroy() {
-    this.formValuesSub.unsubscribe()
   }
 
   fetchData() {
@@ -345,7 +346,8 @@ export class EndPointComponent implements OnInit, OnDestroy {
         debounceTime(500),
         tap(() => {
           this.store.dispatch(changeValidityAction({isValid: this.form.valid}))
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe()
 
