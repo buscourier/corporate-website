@@ -209,6 +209,7 @@
       tuiButton
       size="m"
       [showLoader]="isSubmitting$ | async"
+      [disabled]="!policy.value"
     >
       Оформить заказ
     </button>
