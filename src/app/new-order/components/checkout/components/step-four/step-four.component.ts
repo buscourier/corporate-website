@@ -203,8 +203,10 @@ export class StepFourComponent implements OnInit {
               cargo_count = cargo.docs.places
               break
             case '2':
-              cargo_count = this.totalSumService.getParcelPlaces(cargo.parcels)
-              dimensions = cargo.parcels.length
+              cargo_count = this.totalSumService.getParcelPlaces(
+                cargo.parcels.parcels
+              )
+              dimensions = cargo.parcels.parcels.length
               break
             case '5':
               //TODO: need interface
