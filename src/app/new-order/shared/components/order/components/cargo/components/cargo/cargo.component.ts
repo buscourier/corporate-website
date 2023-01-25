@@ -86,7 +86,7 @@ export class CargoComponent implements OnInit {
         )
       }),
       tap((types: CargoInterface[]) => {
-        console.log('this.active.value', this.active.value)
+        // console.log('this.active.value', this.active.value)
 
         if (!this.active.value) {
           const docs = types[0]
@@ -109,7 +109,7 @@ export class CargoComponent implements OnInit {
   }
 
   changeCargoType(id) {
-    console.log('cargo', id)
+    // console.log('cargo', id)
 
     switch (id) {
       case '1':
@@ -140,7 +140,7 @@ export class CargoComponent implements OnInit {
   }
 
   writeValue(cargo: unknown) {
-    console.log('writeValue', cargo)
+    // console.log('writeValue', cargo)
 
     if (cargo) {
       this.form.patchValue(cargo)
