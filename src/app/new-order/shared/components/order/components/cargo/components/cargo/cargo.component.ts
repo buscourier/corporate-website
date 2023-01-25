@@ -82,22 +82,36 @@ export class CargoComponent implements OnInit {
               return cargo
             }
           }),
-          toArray(),
-          tap((types: CargoInterface[]) => {
-            if (!this.active.value) {
-              const docs = types[0]
-
-              this.active.setValue(docs)
-              this.changeCargoType()
-            }
-          })
+          toArray()
         )
+      }),
+      tap((types: CargoInterface[]) => {
+        console.log('this.active.value', this.active.value)
+
+        if (!this.active.value) {
+          const docs = types[0]
+          this.active.setValue(docs)
+        } else {
+          this.active.setValue(this.active.value)
+        }
       })
     )
+
+    this.active.valueChanges
+      .pipe(
+        filter(Boolean),
+        tap((cargo: CargoInterface) => {
+          this.changeCargoType(cargo.id)
+        }),
+        takeUntil(this.destroy$)
+      )
+      .subscribe()
   }
 
-  changeCargoType() {
-    switch (this.active.value.id) {
+  changeCargoType(id) {
+    console.log('cargo', id)
+
+    switch (id) {
       case '1':
         this.docs.enable()
         this.parcels.disable()
@@ -125,10 +139,11 @@ export class CargoComponent implements OnInit {
     }
   }
 
-  writeValue(value: any) {
-    if (value) {
-      this.form.patchValue(value)
-      this.changeCargoType()
+  writeValue(cargo: unknown) {
+    console.log('writeValue', cargo)
+
+    if (cargo) {
+      this.form.patchValue(cargo)
     }
   }
 

@@ -12,7 +12,6 @@
       [formControl]="active"
       [items]="cargoTypes"
       [itemContent]="cargoTypesContent"
-      (change)="changeCargoType()"
     ></tui-radio-list>
     <ng-template #cargoTypesContent let-data>
       {{ data.name }}
