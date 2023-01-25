@@ -101,7 +101,7 @@ export class StartPointComponent implements OnInit {
         .pipe(
           filter(Boolean),
           tap(() => {
-            if (this.resetProps) {
+            if (this.resetProps && !this.form.pristine) {
               this.reset()
             }
           }),
@@ -128,7 +128,7 @@ export class StartPointComponent implements OnInit {
       this.give.valueChanges
         .pipe(
           tap((give: OfficeInterface) => {
-            if (this.resetProps) {
+            if (this.resetProps && !this.form.pristine) {
               this.reset()
             }
 
@@ -217,7 +217,7 @@ export class StartPointComponent implements OnInit {
 
     this.activeTab$ = this.store.select(activeTabSelector).pipe(
       tap(() => {
-        if (this.resetProps) {
+        if (this.resetProps && !this.form.pristine) {
           this.reset()
         }
       }),

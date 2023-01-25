@@ -103,7 +103,7 @@ export class EndPointComponent implements OnInit {
         .pipe(
           filter(Boolean),
           tap(() => {
-            if (this.resetProps) {
+            if (this.resetProps && !this.form.pristine) {
               this.reset()
             }
           }),
@@ -126,7 +126,7 @@ export class EndPointComponent implements OnInit {
       this.get.valueChanges
         .pipe(
           tap((get: OfficeInterface) => {
-            if (this.resetProps) {
+            if (this.resetProps && !this.form.pristine) {
               this.reset()
             }
 
@@ -219,7 +219,7 @@ export class EndPointComponent implements OnInit {
       this.store.select(isStartPointValidSelector),
     ]).pipe(
       map(([cities, isStartPointValid]) => {
-        if (cities && isStartPointValid) {
+        if (cities) {
           this.city.enable()
         } else {
           this.city.disable()
@@ -231,7 +231,7 @@ export class EndPointComponent implements OnInit {
 
     this.activeTab$ = this.store.select(activeTabSelector).pipe(
       tap(() => {
-        if (this.resetProps) {
+        if (this.resetProps && !this.form.pristine) {
           this.reset()
         }
       }),
