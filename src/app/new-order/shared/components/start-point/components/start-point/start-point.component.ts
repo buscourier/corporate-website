@@ -21,6 +21,8 @@ import {
   Observable,
   of,
   pairwise,
+  startWith,
+  Subject,
   switchMap,
   take,
   takeUntil,
@@ -87,6 +89,7 @@ export class StartPointComponent implements OnInit {
   backendErrors$: Observable<string | null>
   tabs$: Observable<any>
   activeTab$: Observable<string>
+  readonly searchCity$: Subject<string | null> = new Subject()
 
   readonly timeRange = ['8.00 - 14.00', '14.00 - 18.00']
 
@@ -208,10 +211,24 @@ export class StartPointComponent implements OnInit {
   initializeValues() {
     this.isCitiesLoading$ = this.store.select(isCitiesLoadingSelector)
     this.isOfficesLoading$ = this.store.select(isOfficesLoadingSelector)
-    this.cities$ = this.store.select(citiesSelector).pipe(
-      filter(Boolean),
+    this.cities$ = combineLatest([
+      this.store.select(citiesSelector).pipe(filter(Boolean)),
+      this.searchCity$.pipe(
+        startWith(''),
+        filter((str: string | null) => str !== null)
+      ),
+    ]).pipe(
+      map(([cities, searchQuery]: [StartCityInterface[], string]) => {
+        return cities.filter((city: StartCityInterface) => {
+          return city.name
+            .toLowerCase()
+            .includes(searchQuery && searchQuery.toLowerCase())
+        })
+      }),
       tap(() => {
-        this.city.enable()
+        if (this.city.disabled) {
+          this.city.enable()
+        }
       })
     )
 
@@ -360,5 +377,9 @@ export class StartPointComponent implements OnInit {
   getMinDate() {
     const date = new Date()
     return new TuiDay(date.getFullYear(), date.getMonth(), date.getDate())
+  }
+
+  onSearchChange(searchQuery: string | null): void {
+    this.searchCity$.next(searchQuery)
   }
 }
