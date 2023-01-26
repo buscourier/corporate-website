@@ -20,7 +20,7 @@
           ></app-start-point>
           <app-end-point [boldCityLabel]="true" [reset]="true"></app-end-point>
         </div>
-        <app-orders></app-orders>
+        <app-orders *ngIf="startPoint.isValid && endPoint.isValid"></app-orders>
         <button
           *ngIf="isPhoneScreen && startPoint.isValid && endPoint.isValid"
           type="button"

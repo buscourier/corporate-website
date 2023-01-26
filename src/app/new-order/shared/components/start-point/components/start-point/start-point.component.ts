@@ -32,9 +32,6 @@ import {STRINGIFY_CITIES} from '../../../../../../shared/handlers/string-handler
 import {UtilsService} from '../../../../../../shared/services/utils.service'
 import {OfficeInterface} from '../../../../../../shared/types/office.interface'
 import {StartCityInterface} from '../../../../../../shared/types/start-city.interface'
-import {calculateTotalSumAction} from '../../../../../components/sidebar/store/actions/calculate-total-sum.action'
-import {resetEndPointAction} from '../../../end-point/store/actions/reset-end-point.action'
-import {resetOrdersAction} from '../../../orders/store/actions/reset-orders.action'
 import {changeActiveTabAction} from '../../store/actions/change-active-tab.action'
 import {changeCityAction} from '../../store/actions/change-city.action'
 import {changeCourierAction} from '../../store/actions/change-courier.action'
@@ -238,10 +235,13 @@ export class StartPointComponent implements OnInit {
     )
 
     this.offices$ = combineLatest([
-      this.store.select(officesSelector),
+      this.store.select(officesSelector).pipe(filter(Boolean), take(1)), //take 1 ?
       this.store.select(startOfficeSelector),
     ]).pipe(
       tap(([offices, activeOffice]: [OfficeInterface[], OfficeInterface]) => {
+        console.log('offices', offices)
+        console.log('active office', activeOffice)
+
         const activeOfficeIndex =
           activeOffice &&
           offices.findIndex(
@@ -261,11 +261,13 @@ export class StartPointComponent implements OnInit {
     )
 
     this.tabs$ = combineLatest([
-      this.store.select(tabsSelector),
+      this.store.select(tabsSelector).pipe(filter(Boolean)),
       this.store.select(activeTabSelector),
     ]).pipe(
       switchMap(([offices, activeTab]) => {
-        const tabs = (offices || []).map((office: OfficeInterface) => {
+        console.log('tabs offices', offices)
+
+        const tabs = offices.map((office: OfficeInterface) => {
           return Object.entries(office)
             .filter((item: [string, string]) => {
               return (
@@ -284,6 +286,8 @@ export class StartPointComponent implements OnInit {
         const tabs = tabsArray.length ? tabsArray[0] : []
 
         const isActiveTabExists = tabs.find((tab: string) => tab === activeTab)
+
+        console.log('tabs', tabs)
 
         if (activeTab && isActiveTabExists) {
           this.setActiveTab(activeTab)
@@ -312,8 +316,8 @@ export class StartPointComponent implements OnInit {
       .pipe(
         tap((isPristine: boolean) => {
           if (isPristine) {
-            this.form.reset()
-            this.date.setValue(this.setCurrentDate())
+            // this.form.reset()
+            // this.date.setValue(this.setCurrentDate())
           }
         }),
         takeUntil(this.destroy$)
@@ -352,9 +356,9 @@ export class StartPointComponent implements OnInit {
   }
 
   reset() {
-    this.store.dispatch(resetEndPointAction())
-    this.store.dispatch(resetOrdersAction())
-    this.store.dispatch(calculateTotalSumAction({isTotalSumCalculated: false}))
+    // this.store.dispatch(resetEndPointAction())
+    // this.store.dispatch(resetOrdersAction())
+    // this.store.dispatch(calculateTotalSumAction({isTotalSumCalculated: false}))
   }
 
   getMinDate() {

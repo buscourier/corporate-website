@@ -34,7 +34,6 @@ import {UtilsService} from '../../../../../../shared/services/utils.service'
 import {EndCityInterface} from '../../../../../../shared/types/end-city.interface'
 import {OfficeInterface} from '../../../../../../shared/types/office.interface'
 import {StartCityInterface} from '../../../../../../shared/types/start-city.interface'
-import {resetOrdersAction} from '../../../orders/store/actions/reset-orders.action'
 import {
   isStartPointValidSelector,
   startCitySelector,
@@ -109,12 +108,11 @@ export class EndPointComponent implements OnInit {
           }),
           switchMap((city: EndCityInterface) => {
             this.store.dispatch(changeCityAction({city}))
-
-            return of(city).pipe(
-              tap((city: EndCityInterface) => {
-                this.store.dispatch(getOfficesAction({id: city.office_id}))
-              })
-            )
+            return of(city)
+          }),
+          switchMap((city: EndCityInterface) => {
+            this.store.dispatch(getOfficesAction({id: city.office_id}))
+            return of(city)
           })
         )
         .subscribe(),
@@ -199,12 +197,11 @@ export class EndPointComponent implements OnInit {
       .pipe(
         filter((isCitiesLoaded: boolean) => !isCitiesLoaded),
         switchMap(() => {
-          return this.store.select(startCitySelector).pipe(
-            filter(Boolean),
-            tap((startCity: StartCityInterface) => {
-              this.store.dispatch(getCitiesAction({cityId: startCity.id}))
-            })
-          )
+          return this.store.select(startCitySelector).pipe(filter(Boolean))
+        }),
+        switchMap((startCity: StartCityInterface) => {
+          this.store.dispatch(getCitiesAction({cityId: startCity.id}))
+          return of(null)
         }),
         takeUntil(this.destroy$)
       )
@@ -215,15 +212,19 @@ export class EndPointComponent implements OnInit {
     this.isCitiesLoading$ = this.store.select(isCitiesLoadingSelector)
     this.isOfficesLoading$ = this.store.select(isOfficesLoadingSelector)
     this.cities$ = combineLatest([
-      this.store.select(citiesSelector),
+      this.store.select(citiesSelector).pipe(filter(Boolean)),
       this.store.select(isStartPointValidSelector),
     ]).pipe(
       map(([cities, isStartPointValid]) => {
-        if (cities) {
+        console.log('isStartPointValid', isStartPointValid)
+        console.log('cities', cities)
+        if (cities && isStartPointValid) {
           this.city.enable()
-        } else {
-          this.city.disable()
         }
+
+        // else {
+        //   this.city.disable()
+        // }
 
         return cities
       })
@@ -268,10 +269,12 @@ export class EndPointComponent implements OnInit {
     )
 
     this.offices$ = combineLatest([
-      this.store.select(officesSelector),
+      this.store.select(officesSelector).pipe(filter(Boolean), take(1)), //take 1 ?
       this.store.select(endOfficeSelector),
     ]).pipe(
       tap(([offices, activeOffice]: [OfficeInterface[], OfficeInterface]) => {
+        console.log('offices', offices)
+        console.log('activeOffice', activeOffice)
         const activeOfficeIndex =
           activeOffice &&
           offices.findIndex(
@@ -282,21 +285,24 @@ export class EndPointComponent implements OnInit {
           (activeOffice === null || activeOfficeIndex === -1) &&
           this.get.enabled
         ) {
+          console.log('set value', offices[0])
           this.get.setValue(offices[0])
         }
       }),
       map(([offices]: [OfficeInterface[], OfficeInterface]) => {
+        console.log('return offices')
         return offices
       })
     )
 
     this.tabs$ = combineLatest([
-      this.store.select(tabsSelector),
+      this.store.select(tabsSelector).pipe(filter(Boolean)),
       this.store.select(activeTabSelector),
-      this.store.select(endCitySelector),
+      this.store.select(endCitySelector).pipe(filter(Boolean)),
     ]).pipe(
       switchMap(([offices, activeTab, city]) => {
-        const tabs = (offices || []).map((office: OfficeInterface) => {
+        console.log('tabs', offices)
+        const tabs = offices.map((office: OfficeInterface) => {
           return Object.entries(office)
             .filter((item: [string, string]) => {
               return (
@@ -348,8 +354,8 @@ export class EndPointComponent implements OnInit {
       .pipe(
         tap((isPristine: boolean) => {
           if (isPristine) {
-            this.form.reset()
-            this.city.disable()
+            // this.form.reset()
+            // this.city.disable()
           }
         }),
         takeUntil(this.destroy$)
@@ -382,6 +388,6 @@ export class EndPointComponent implements OnInit {
   }
 
   reset() {
-    this.store.dispatch(resetOrdersAction())
+    // this.store.dispatch(resetOrdersAction())
   }
 }

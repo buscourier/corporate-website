@@ -53,7 +53,7 @@ registerLocaleData(ruLocale, 'ru')
     environment.production
       ? []
       : StoreDevtoolsModule.instrument({
-          maxAge: 25,
+          maxAge: 100,
           logOnly: environment.production,
         }),
     StoreRouterConnectingModule.forRoot(),

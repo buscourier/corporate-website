@@ -34,7 +34,7 @@ export const officesSelector = createSelector(
           ...office,
           name: office.address,
         }))
-      : []
+      : null
   }
 )
 
