@@ -16,11 +16,14 @@ import {PolymorpheusComponent} from '@tinkoff/ng-polymorpheus'
 import {
   combineLatest,
   debounceTime,
+  delay,
   filter,
   map,
   Observable,
   of,
   pairwise,
+  startWith,
+  Subject,
   switchMap,
   take,
   takeUntil,
@@ -84,6 +87,7 @@ export class StartPointComponent implements OnInit {
   backendErrors$: Observable<string | null>
   tabs$: Observable<any>
   activeTab$: Observable<string>
+  searchCity$: Subject<string | null> = new Subject()
 
   readonly timeRange = ['8.00 - 14.00', '14.00 - 18.00']
 
@@ -205,10 +209,27 @@ export class StartPointComponent implements OnInit {
   initializeValues() {
     this.isCitiesLoading$ = this.store.select(isCitiesLoadingSelector)
     this.isOfficesLoading$ = this.store.select(isOfficesLoadingSelector)
-    this.cities$ = this.store.select(citiesSelector).pipe(
-      filter(Boolean),
+
+    this.cities$ = combineLatest([
+      this.store.select(citiesSelector).pipe(filter(Boolean)),
+      this.searchCity$.pipe(
+        startWith(''),
+        filter((searchQuery: string | null) => searchQuery !== null)
+      ),
+    ]).pipe(
+      debounceTime(1000),
+      map(([cities, searchQuery]: [StartCityInterface[], string]) => {
+        console.log('cities', cities)
+        return cities.filter((city: StartCityInterface) => {
+          return city.name
+            .toLowerCase()
+            .includes(searchQuery && searchQuery.toLowerCase())
+        })
+      }),
       tap(() => {
-        this.city.enable()
+        if (this.city.disabled) {
+          this.city.enable()
+        }
       })
     )
 
@@ -238,6 +259,7 @@ export class StartPointComponent implements OnInit {
       this.store.select(officesSelector).pipe(filter(Boolean), take(1)), //take 1 ?
       this.store.select(startOfficeSelector),
     ]).pipe(
+      delay(0),
       tap(([offices, activeOffice]: [OfficeInterface[], OfficeInterface]) => {
         console.log('offices', offices)
         console.log('active office', activeOffice)
@@ -364,5 +386,9 @@ export class StartPointComponent implements OnInit {
   getMinDate() {
     const date = new Date()
     return new TuiDay(date.getFullYear(), date.getMonth(), date.getDate())
+  }
+
+  onSearchChange(searchQuery: string | null): void {
+    this.searchCity$.next(searchQuery)
   }
 }
