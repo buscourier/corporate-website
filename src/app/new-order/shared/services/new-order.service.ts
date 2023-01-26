@@ -18,13 +18,32 @@ export class NewOrderService {
   constructor(private http: HttpClient) {}
 
   getStartCities(): Observable<StartCityInterface[]> {
-    return this.http.get<StartCityInterface[]>(`${this.url}/getcitiesfrom`)
+    return this.http
+      .get<StartCityInterface[]>(`${this.url}/getcitiesfrom`)
+      .pipe(
+        concatAll(),
+        filter((city: StartCityInterface) => {
+          return city.id !== '249'
+        }),
+        toArray(),
+        map((cities: StartCityInterface[]) => {
+          return cities.sort((a: StartCityInterface, b: StartCityInterface) => {
+            return a.name.localeCompare(b.name)
+          })
+        })
+      )
   }
 
   getEndCities(startCityId: string): Observable<EndCityInterface[]> {
-    return this.http.get<EndCityInterface[]>(
-      `${this.url}/getcitiesto/${startCityId}/0`
-    )
+    return this.http
+      .get<EndCityInterface[]>(`${this.url}/getcitiesto/${startCityId}/0`)
+      .pipe(
+        map((cities: EndCityInterface[]) => {
+          return cities.sort((a: EndCityInterface, b: EndCityInterface) => {
+            return a.name.localeCompare(b.name)
+          })
+        })
+      )
   }
 
   getOffices(id: string): Observable<OfficeInterface[]> {

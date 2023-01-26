@@ -25,6 +25,11 @@ export class ContactsService {
           }),
           toArray()
         )
+      }),
+      map((offices: OfficeInterface[]) => {
+        return offices.sort((a: OfficeInterface, b: OfficeInterface) => {
+          return a.name.localeCompare(b.name)
+        })
       })
     )
   }
