@@ -367,10 +367,12 @@ export class EndPointComponent implements OnInit {
     this.store
       .select(isStartPointValidSelector)
       .pipe(
+        delay(0),
         tap((isValid: boolean) => {
-          if (isValid) {
+          if (isValid && this.form.disabled) {
             this.form.enable({emitEvent: false})
-          } else {
+            this.city.updateValueAndValidity({onlySelf: true})
+          } else if (!isValid) {
             this.form.disable({emitEvent: false})
           }
         }),
