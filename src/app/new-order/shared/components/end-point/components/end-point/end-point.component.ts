@@ -217,40 +217,12 @@ export class EndPointComponent implements OnInit {
 
     this.cities$ = combineLatest([
       this.store.select(citiesSelector).pipe(filter(Boolean)),
-      this.store.select(isStartPointValidSelector),
-    ]).pipe(
-      map(([cities, isStartPointValid]) => {
-        // else {
-        //   this.city.disable()
-        // }
-
-        return cities
-      })
-    )
-
-    this.cities$ = combineLatest([
-      this.store.select(citiesSelector).pipe(filter(Boolean)),
-      this.store.select(isStartPointValidSelector),
       this.searchCity$.pipe(
         startWith(''),
         filter((searchQuery: string | null) => searchQuery !== null)
       ),
     ]).pipe(
       debounceTime(1000),
-      map(
-        ([cities, isStartPointValid, searchQuery]: [
-          EndCityInterface[],
-          boolean,
-          string
-        ]) => {
-          console.log('isStartPointValid', isStartPointValid)
-          if (cities && isStartPointValid && this.city.disabled) {
-            this.city.enable()
-          }
-
-          return [cities, searchQuery]
-        }
-      ),
       map(([cities, searchQuery]: [EndCityInterface[], string]) => {
         console.log('cities', cities)
         return cities.filter((city: EndCityInterface) => {
@@ -370,8 +342,6 @@ export class EndPointComponent implements OnInit {
       })
     )
 
-    this.city.disable()
-
     this.form.valueChanges
       .pipe(
         debounceTime(500),
@@ -388,7 +358,20 @@ export class EndPointComponent implements OnInit {
         tap((isPristine: boolean) => {
           if (isPristine) {
             // this.form.reset()
-            // this.city.disable()
+          }
+        }),
+        takeUntil(this.destroy$)
+      )
+      .subscribe()
+
+    this.store
+      .select(isStartPointValidSelector)
+      .pipe(
+        tap((isValid: boolean) => {
+          if (isValid) {
+            this.form.enable({emitEvent: false})
+          } else {
+            this.form.disable({emitEvent: false})
           }
         }),
         takeUntil(this.destroy$)

@@ -59,6 +59,9 @@
                         ? 'bg-yellow'
                         : 'bg-gray-100'
                     "
+                    [class.bg-gray-100]="form.disabled"
+                    [class.text-gray-400]="form.disabled"
+                    [class.pointer-events-none]="form.disabled"
                     (click)="setActiveTab(tab)"
                   >
                     <span *ngIf="!isOfficesLoading">{{ TabName[tab] }}</span>
@@ -98,6 +101,7 @@
                 *ngIf="get.value"
                 type="button"
                 class="mt-4 text-left"
+                [class.pointer-events-none]="form.disabled"
                 (click)="showMap()"
               >
                 <tui-svg
@@ -106,6 +110,7 @@
                 ></tui-svg>
                 <span
                   class="border-b border-dotted text-xs text-gray-700 hover:border-b-0"
+                  [class.text-gray-300]="form.disabled"
                   >Посмотреть на карте</span
                 >
               </button>
