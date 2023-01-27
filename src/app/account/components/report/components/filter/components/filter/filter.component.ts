@@ -12,7 +12,16 @@ import {Store} from '@ngrx/store'
 import {TuiDestroyService} from '@taiga-ui/cdk'
 import {tuiLoaderOptionsProvider} from '@taiga-ui/core'
 import {tuiItemsHandlersProvider} from '@taiga-ui/kit'
-import {filter, Observable, takeUntil} from 'rxjs'
+import {
+  combineLatest,
+  debounceTime,
+  filter,
+  map,
+  Observable,
+  startWith,
+  Subject,
+  takeUntil,
+} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {STRINGIFY_CITIES} from '../../../../../../../shared/handlers/string-handlers'
 import {EndCityInterface} from '../../../../../../../shared/types/end-city.interface'
@@ -46,6 +55,8 @@ export class FilterComponent implements OnInit {
   startCities$: Observable<StartCityInterface[]>
   endCities$: Observable<EndCityInterface[]>
   backendErrors$: Observable<null | string>
+  searchStartCity$: Subject<string | null> = new Subject()
+  searchEndCity$: Subject<string | null> = new Subject()
 
   @Output('filterChanged') filterChangedEvent = new EventEmitter<any>()
 
@@ -69,25 +80,64 @@ export class FilterComponent implements OnInit {
   }
 
   initializeValues(): void {
-    this.isStartCitiesLoading$ = this.store
-      .select(isStartCitiesLoadingSelector)
-      .pipe(
-        filter(Boolean),
-        tap(() => {
-          this.form.get('startCity').enable({emitEvent: false})
-        })
-      )
+    this.isStartCitiesLoading$ = this.store.select(isStartCitiesLoadingSelector)
     this.isEndCitiesLoading$ = this.store.select(isEndCitiesLoadingSelector)
-    this.startCities$ = this.store.select(startCitiesSelector)
-    this.endCities$ = this.store.select(endCitiesSelector)
     this.backendErrors$ = this.store.select(backendErrorsSelector)
+
+    this.startCities$ = combineLatest([
+      this.store.select(startCitiesSelector).pipe(
+        filter(Boolean),
+        tap((cities: StartCityInterface[]) => {
+          if (cities && this.form.get('startCity').disabled) {
+            this.form.get('startCity').enable()
+          }
+        })
+      ),
+      this.searchStartCity$.pipe(
+        startWith(''),
+        filter((searchQuery: string | null) => searchQuery !== null)
+      ),
+    ]).pipe(
+      debounceTime(1000),
+      map(([cities, searchQuery]: [StartCityInterface[], string]) => {
+        return cities.filter((city: StartCityInterface) => {
+          return city.name
+            .toLowerCase()
+            .includes(searchQuery && searchQuery.toLowerCase())
+        })
+      })
+    )
+
+    this.endCities$ = combineLatest([
+      this.store.select(endCitiesSelector).pipe(
+        filter(Boolean),
+        tap((cities: EndCityInterface[]) => {
+          if (cities && this.form.get('endCity').disabled) {
+            this.form.get('endCity').enable()
+          }
+        })
+      ),
+      this.searchEndCity$.pipe(
+        startWith(''),
+        filter((searchQuery: string | null) => searchQuery !== null)
+      ),
+    ]).pipe(
+      debounceTime(1000),
+      map(([cities, searchQuery]: [EndCityInterface[], string]) => {
+        return cities.filter((city: EndCityInterface) => {
+          return city.name
+            .toLowerCase()
+            .includes(searchQuery && searchQuery.toLowerCase())
+        })
+      })
+    )
 
     this.form
       .get('startCity')
       .valueChanges.pipe(
+        filter(Boolean),
         tap(({id}: StartCityInterface) => {
           this.form.get('endCity').patchValue('')
-          this.form.get('endCity').enable()
           this.store.dispatch(getEndCitiesAction({cityId: id}))
         }),
         takeUntil(this.destroy$)
@@ -97,6 +147,14 @@ export class FilterComponent implements OnInit {
 
   fetchData(): void {
     this.store.dispatch(getStartCitiesAction())
+  }
+
+  onSearchStartCityChange(searchQuery: string | null): void {
+    this.searchStartCity$.next(searchQuery)
+  }
+
+  onSearchEndCityChange(searchQuery: string | null): void {
+    this.searchEndCity$.next(searchQuery)
   }
 
   onSubmit() {

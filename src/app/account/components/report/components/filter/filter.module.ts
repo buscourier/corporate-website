@@ -12,6 +12,7 @@ import {
   TuiTextfieldControllerModule,
 } from '@taiga-ui/core'
 import {
+  TuiComboBoxModule,
   TuiDataListWrapperModule,
   TuiInputDateRangeModule,
   TuiInputModule,
@@ -46,6 +47,7 @@ import {REPORT_FILTER_FEATURE} from './store/state'
     TuiDataListWrapperModule,
     StoreModule.forFeature(REPORT_FILTER_FEATURE, reducer),
     EffectsModule.forFeature([GetStartCitiesEffect, GetEndCitiesEffect]),
+    TuiComboBoxModule,
   ],
   exports: [FilterComponent],
   providers: [FilterService],
