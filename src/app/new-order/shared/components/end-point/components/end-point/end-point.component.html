@@ -21,6 +21,8 @@
           [formControl]="city"
           [setControlValue]="cityValues$ | async"
           [tuiTextfieldLabelOutside]="true"
+          [tuiTextfieldCleaner]="true"
+          (searchChange)="onSearchChange($event)"
         >
           {{ isCitiesLoading ? '' : 'Выберите город' }}
           <tui-data-list-wrapper

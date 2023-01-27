@@ -22,6 +22,8 @@ import {
   Observable,
   of,
   pairwise,
+  startWith,
+  Subject,
   switchMap,
   take,
   takeUntil,
@@ -90,6 +92,7 @@ export class EndPointComponent implements OnInit {
   backendErrors$: Observable<string | null>
   tabs$: Observable<any>
   activeTab$: Observable<string>
+  searchCity$: Subject<string | null> = new Subject()
 
   city = this.fb.control(null, [Validators.required])
   get = this.fb.control(null, [Validators.required])
@@ -211,22 +214,50 @@ export class EndPointComponent implements OnInit {
   initializeValues() {
     this.isCitiesLoading$ = this.store.select(isCitiesLoadingSelector)
     this.isOfficesLoading$ = this.store.select(isOfficesLoadingSelector)
+
     this.cities$ = combineLatest([
       this.store.select(citiesSelector).pipe(filter(Boolean)),
       this.store.select(isStartPointValidSelector),
     ]).pipe(
       map(([cities, isStartPointValid]) => {
-        console.log('isStartPointValid', isStartPointValid)
-        console.log('cities', cities)
-        if (cities && isStartPointValid) {
-          this.city.enable()
-        }
-
         // else {
         //   this.city.disable()
         // }
 
         return cities
+      })
+    )
+
+    this.cities$ = combineLatest([
+      this.store.select(citiesSelector).pipe(filter(Boolean)),
+      this.store.select(isStartPointValidSelector),
+      this.searchCity$.pipe(
+        startWith(''),
+        filter((searchQuery: string | null) => searchQuery !== null)
+      ),
+    ]).pipe(
+      debounceTime(1000),
+      map(
+        ([cities, isStartPointValid, searchQuery]: [
+          EndCityInterface[],
+          boolean,
+          string
+        ]) => {
+          console.log('isStartPointValid', isStartPointValid)
+          if (cities && isStartPointValid && this.city.disabled) {
+            this.city.enable()
+          }
+
+          return [cities, searchQuery]
+        }
+      ),
+      map(([cities, searchQuery]: [EndCityInterface[], string]) => {
+        console.log('cities', cities)
+        return cities.filter((city: EndCityInterface) => {
+          return city.name
+            .toLowerCase()
+            .includes(searchQuery && searchQuery.toLowerCase())
+        })
       })
     )
 
@@ -272,7 +303,7 @@ export class EndPointComponent implements OnInit {
       this.store.select(officesSelector).pipe(filter(Boolean)), //take(1)
       this.store.select(endOfficeSelector),
     ]).pipe(
-      delay(0),
+      // delay(0),
       debounceTime(300),
       tap(([offices, activeOffice]: [OfficeInterface[], OfficeInterface]) => {
         console.log('offices', offices)
@@ -391,5 +422,9 @@ export class EndPointComponent implements OnInit {
 
   reset() {
     // this.store.dispatch(resetOrdersAction())
+  }
+
+  onSearchChange(searchQuery: string | null): void {
+    this.searchCity$.next(searchQuery)
   }
 }

@@ -218,6 +218,11 @@ export class StartPointComponent implements OnInit {
       ),
     ]).pipe(
       debounceTime(1000),
+      tap(([cities]) => {
+        if (cities && this.city.disabled) {
+          this.city.enable()
+        }
+      }),
       map(([cities, searchQuery]: [StartCityInterface[], string]) => {
         console.log('cities', cities)
         return cities.filter((city: StartCityInterface) => {
@@ -225,11 +230,6 @@ export class StartPointComponent implements OnInit {
             .toLowerCase()
             .includes(searchQuery && searchQuery.toLowerCase())
         })
-      }),
-      tap(() => {
-        if (this.city.disabled) {
-          this.city.enable()
-        }
       })
     )
 
@@ -259,7 +259,7 @@ export class StartPointComponent implements OnInit {
       this.store.select(officesSelector).pipe(filter(Boolean)), // take(1)
       this.store.select(startOfficeSelector),
     ]).pipe(
-      delay(0),
+      // delay(0),
       debounceTime(300),
       tap(([offices, activeOffice]: [OfficeInterface[], OfficeInterface]) => {
         console.log('offices', offices)
