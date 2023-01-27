@@ -16,7 +16,6 @@ import {PolymorpheusComponent} from '@tinkoff/ng-polymorpheus'
 import {
   combineLatest,
   debounceTime,
-  delay,
   filter,
   map,
   Observable,
@@ -263,26 +262,26 @@ export class StartPointComponent implements OnInit {
     ]).pipe(
       // delay(0),
       debounceTime(300),
-      tap(([offices, activeOffice]: [OfficeInterface[], OfficeInterface]) => {
-        console.log('offices', offices)
-        console.log('active office', activeOffice)
+      switchMap(
+        ([offices, activeOffice]: [OfficeInterface[], OfficeInterface]) => {
+          console.log('offices', offices)
+          console.log('active office', activeOffice)
+          const activeOfficeIndex =
+            activeOffice &&
+            offices.findIndex(
+              (office: OfficeInterface) => office.id === activeOffice.id
+            )
 
-        const activeOfficeIndex =
-          activeOffice &&
-          offices.findIndex(
-            (office: OfficeInterface) => office.id === activeOffice.id
-          )
+          if (
+            (activeOffice === null || activeOfficeIndex === -1) &&
+            this.give.enabled
+          ) {
+            this.give.setValue(offices[0])
+          }
 
-        if (
-          (activeOffice === null || activeOfficeIndex === -1) &&
-          this.give.enabled
-        ) {
-          this.give.setValue(offices[0])
+          return of(offices)
         }
-      }),
-      map(([offices]: [OfficeInterface[], OfficeInterface]) => {
-        return offices
-      })
+      )
     )
 
     this.tabs$ = combineLatest([
@@ -291,8 +290,8 @@ export class StartPointComponent implements OnInit {
         .pipe(filter(Boolean), map(this.createTabs)),
       this.store.select(activeTabSelector),
     ]).pipe(
-      map(([tabsArray, activeTab]: [any, string]) => {
-        const tabs = tabsArray.length ? tabsArray[0] : []
+      map(([tabs_, activeTab]: [any, string]) => {
+        const tabs = tabs_.length ? tabs_[0] : []
 
         const isActiveTabExists = tabs.find((tab: string) => tab === activeTab)
 
