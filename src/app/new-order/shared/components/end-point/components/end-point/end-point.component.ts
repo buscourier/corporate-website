@@ -269,9 +269,11 @@ export class EndPointComponent implements OnInit {
     )
 
     this.offices$ = combineLatest([
-      this.store.select(officesSelector).pipe(filter(Boolean), take(1)), //take 1 ?
+      this.store.select(officesSelector).pipe(filter(Boolean)), //take(1)
       this.store.select(endOfficeSelector),
     ]).pipe(
+      delay(0),
+      debounceTime(300),
       tap(([offices, activeOffice]: [OfficeInterface[], OfficeInterface]) => {
         console.log('offices', offices)
         console.log('activeOffice', activeOffice)
