@@ -7,7 +7,11 @@ import {
   TuiLoaderModule,
   TuiTextfieldControllerModule,
 } from '@taiga-ui/core'
-import {TuiDataListWrapperModule, TuiSelectModule} from '@taiga-ui/kit'
+import {
+  TuiComboBoxModule,
+  TuiDataListWrapperModule,
+  TuiSelectModule,
+} from '@taiga-ui/kit'
 import {StoreModule} from '@ngrx/store'
 import {reducer} from './store/reducer'
 import {EffectsModule} from '@ngrx/effects'
@@ -30,6 +34,7 @@ import {CALCULATOR_FEATURE} from './store/state'
     TuiDataListWrapperModule,
     TuiLetModule,
     TuiButtonModule,
+    TuiComboBoxModule,
   ],
   exports: [CalculatorComponent],
   providers: [CitiesService],

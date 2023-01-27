@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   Inject,
+  OnDestroy,
   OnInit,
   Self,
 } from '@angular/core'
@@ -11,7 +12,20 @@ import {Store} from '@ngrx/store'
 import {TuiDestroyService} from '@taiga-ui/cdk'
 import {tuiLoaderOptionsProvider} from '@taiga-ui/core'
 import {tuiItemsHandlersProvider} from '@taiga-ui/kit'
-import {delay, filter, Observable, of, switchMap, take, takeUntil} from 'rxjs'
+import {
+  combineLatest,
+  debounceTime,
+  delay,
+  filter,
+  map,
+  Observable,
+  of,
+  startWith,
+  Subject,
+  switchMap,
+  take,
+  takeUntil,
+} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {changeCityAction as changeEndCityAction} from '../../../new-order/shared/components/end-point/store/actions/change-city.action'
 import {changeCityAction as changeStartCityAction} from '../../../new-order/shared/components/start-point/store/actions/change-city.action'
@@ -27,6 +41,7 @@ import {
   isStartCitiesLoadingSelector,
   startCitiesSelector,
 } from './store/selectors'
+import {citiesSelector} from '../../../new-order/shared/components/start-point/store/selectors'
 
 @Component({
   selector: 'app-calculator',
@@ -41,12 +56,14 @@ import {
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CalculatorComponent implements OnInit {
+export class CalculatorComponent implements OnInit, OnDestroy {
   isStartCitiesLoading$: Observable<boolean>
   isEndCitiesLoading$: Observable<boolean>
   startCities$: Observable<StartCityInterface[]>
   endCities$: Observable<EndCityInterface[]>
   backendErrors$: Observable<null | string>
+  searchStartCity$: Subject<string | null> = new Subject()
+  searchEndCity$: Subject<string | null> = new Subject()
 
   form = this.fb.group({
     startCity: [{value: null, disabled: true}, Validators.required],
@@ -69,6 +86,10 @@ export class CalculatorComponent implements OnInit {
     this.fetchData()
   }
 
+  ngOnDestroy() {
+    this.form.reset()
+  }
+
   initializeValues(): void {
     this.isStartCitiesLoading$ = this.store.select(isStartCitiesLoadingSelector)
     this.isEndCitiesLoading$ = this.store.select(isEndCitiesLoadingSelector)
@@ -78,12 +99,57 @@ export class CalculatorComponent implements OnInit {
         this.form.get('startCity').enable({emitEvent: false})
       })
     )
-    this.endCities$ = this.store.select(endCitiesSelector)
+
+    this.startCities$ = combineLatest([
+      this.store.select(startCitiesSelector).pipe(filter(Boolean)),
+      this.searchStartCity$.pipe(
+        startWith(''),
+        filter((searchQuery: string | null) => searchQuery !== null)
+      ),
+    ]).pipe(
+      debounceTime(1000),
+      tap(([cities]) => {
+        if (cities && this.form.get('startCity').disabled) {
+          this.form.get('startCity').enable()
+        }
+      }),
+      map(([cities, searchQuery]: [StartCityInterface[], string]) => {
+        return cities.filter((city: StartCityInterface) => {
+          return city.name
+            .toLowerCase()
+            .includes(searchQuery && searchQuery.toLowerCase())
+        })
+      })
+    )
+
+    this.endCities$ = combineLatest([
+      this.store.select(endCitiesSelector).pipe(filter(Boolean)),
+      this.searchEndCity$.pipe(
+        startWith(''),
+        filter((searchQuery: string | null) => searchQuery !== null)
+      ),
+    ]).pipe(
+      debounceTime(1000),
+      tap(([cities]) => {
+        if (cities && this.form.get('endCity').disabled) {
+          this.form.get('endCity').enable()
+        }
+      }),
+      map(([cities, searchQuery]: [EndCityInterface[], string]) => {
+        return cities.filter((city: EndCityInterface) => {
+          return city.name
+            .toLowerCase()
+            .includes(searchQuery && searchQuery.toLowerCase())
+        })
+      })
+    )
+
     this.backendErrors$ = this.store.select(backendErrorsSelector)
 
     this.form
       .get('startCity')
       .valueChanges.pipe(
+        filter(Boolean),
         tap((city: StartCityInterface) => {
           this.form.get('endCity').patchValue('')
           this.form.get('endCity').enable()
@@ -96,6 +162,14 @@ export class CalculatorComponent implements OnInit {
 
   fetchData(): void {
     this.store.dispatch(getStartCitiesAction())
+  }
+
+  onSearchStartCityChange(searchQuery: string | null): void {
+    this.searchStartCity$.next(searchQuery)
+  }
+
+  onSearchEndCityChange(searchQuery: string | null): void {
+    this.searchEndCity$.next(searchQuery)
   }
 
   onSubmit() {

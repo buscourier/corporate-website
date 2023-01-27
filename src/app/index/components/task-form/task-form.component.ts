@@ -88,8 +88,8 @@ export class TaskFormComponent implements OnInit {
       .subscribe()
 
     //@ts-ignore
-    const tracker = window.b24Tracker.guest.getTrace()
-    console.log('tracker', tracker)
+    // const tracker = window.b24Tracker.guest.getTrace()
+    // console.log('tracker', tracker)
   }
 
   onSubmit() {
