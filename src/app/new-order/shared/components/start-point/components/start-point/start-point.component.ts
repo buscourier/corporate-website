@@ -211,18 +211,20 @@ export class StartPointComponent implements OnInit {
     this.isOfficesLoading$ = this.store.select(isOfficesLoadingSelector)
 
     this.cities$ = combineLatest([
-      this.store.select(citiesSelector).pipe(filter(Boolean)),
+      this.store.select(citiesSelector).pipe(
+        filter(Boolean),
+        tap((cities: StartCityInterface[]) => {
+          if (cities && this.city.disabled) {
+            this.city.enable()
+          }
+        })
+      ),
       this.searchCity$.pipe(
         startWith(''),
         filter((searchQuery: string | null) => searchQuery !== null)
       ),
     ]).pipe(
       debounceTime(1000),
-      tap(([cities]) => {
-        if (cities && this.city.disabled) {
-          this.city.enable()
-        }
-      }),
       map(([cities, searchQuery]: [StartCityInterface[], string]) => {
         console.log('cities', cities)
         return cities.filter((city: StartCityInterface) => {
@@ -284,27 +286,11 @@ export class StartPointComponent implements OnInit {
     )
 
     this.tabs$ = combineLatest([
-      this.store.select(tabsSelector).pipe(filter(Boolean)),
+      this.store
+        .select(tabsSelector)
+        .pipe(filter(Boolean), map(this.createTabs)),
       this.store.select(activeTabSelector),
     ]).pipe(
-      switchMap(([offices, activeTab]) => {
-        console.log('tabs offices', offices)
-
-        const tabs = offices.map((office: OfficeInterface) => {
-          return Object.entries(office)
-            .filter((item: [string, string]) => {
-              return (
-                (item[0] === 'give' && item[1] === '1') ||
-                (item[0] === 'pickup' && item[1] === '1')
-              )
-            })
-            .map((item: [string, any]) => {
-              return item[0]
-            })
-        })
-
-        return of([tabs, activeTab])
-      }),
       map(([tabsArray, activeTab]: [any, string]) => {
         const tabs = tabsArray.length ? tabsArray[0] : []
 
@@ -346,6 +332,21 @@ export class StartPointComponent implements OnInit {
         takeUntil(this.destroy$)
       )
       .subscribe()
+  }
+
+  createTabs(offices: OfficeInterface[]) {
+    return offices.map((office: OfficeInterface) => {
+      return Object.entries(office)
+        .filter((item: [string, string]) => {
+          return (
+            (item[0] === 'give' && item[1] === '1') ||
+            (item[0] === 'pickup' && item[1] === '1')
+          )
+        })
+        .map((item: [string, any]) => {
+          return item[0]
+        })
+    })
   }
 
   setActiveTab(activeTab: string) {
