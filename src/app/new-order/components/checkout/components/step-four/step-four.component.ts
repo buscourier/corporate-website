@@ -328,11 +328,9 @@ export class StepFourComponent implements OnInit {
 
   onSubmit() {
     const {message} = this.form.value
-    // let note = this.note.unshift(message)
-    // note.join(', ')
-    //
-    // this.orderData.note = this.note
+    this.note.unshift(message)
 
+    this.orderData.note = this.note.join(', ')
     this.store.dispatch(sendOrderAction({order: this.orderData}))
   }
 }
