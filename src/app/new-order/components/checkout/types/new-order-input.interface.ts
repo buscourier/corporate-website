@@ -13,4 +13,5 @@ export interface NewOrderInputInterface {
   recipient_phone: string
   orders: any[]
   note: string
+  server?: string
 }
