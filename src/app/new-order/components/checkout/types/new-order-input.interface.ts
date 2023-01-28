@@ -3,6 +3,9 @@ export interface NewOrderInputInterface {
   start_city: string
   end_city: string
   sending_date: string
+  sender_id?: string
+  sender_type?: string
+  sender_company?: string
   sender_name: string
   sender_phone: string
   sender_passport: string

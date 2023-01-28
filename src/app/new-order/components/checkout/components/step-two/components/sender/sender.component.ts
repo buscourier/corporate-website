@@ -129,9 +129,8 @@ export class SenderComponent implements OnInit, AfterViewInit {
     this.store
       .select(currentUserSelector)
       .pipe(
-        filter(Boolean),
         tap((user: CurrentUserInterface) => {
-          if (user.user_type === 'ur') {
+          if (user && user.user_type === 'ur') {
             this.confidant.enable()
             this.docType.disable()
             this.docNumber.disable()

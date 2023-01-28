@@ -9,7 +9,7 @@ import {FormBuilder} from '@angular/forms'
 import {Store} from '@ngrx/store'
 import {TuiDestroyService} from '@taiga-ui/cdk'
 import {ReCaptchaV3Service} from 'ng-recaptcha'
-import {filter, Observable, takeUntil, tap} from 'rxjs'
+import {filter, Observable, switchMap, takeUntil, tap} from 'rxjs'
 import {EndCityInterface} from '../../../../../shared/types/end-city.interface'
 import {OfficeInterface} from '../../../../../shared/types/office.interface'
 import {StartCityInterface} from '../../../../../shared/types/start-city.interface'
@@ -35,6 +35,8 @@ import {RecipientStateInterface} from '../step-three/components/recipient/types/
 import {senderSelector} from '../step-two/components/sender/store/selectors'
 import {SenderStateInterface} from '../step-two/components/sender/types/sender-state.interface'
 import {isSubmittingSelector} from './store/selectors'
+import {currentUserSelector} from '../../../../../auth/store/selectors'
+import {CurrentUserInterface} from '../../../../../shared/types/current-user.interface'
 
 interface TotalServicesInterface {
   id: string
@@ -76,6 +78,9 @@ export class StepFourComponent implements OnInit {
     start_city: '',
     end_city: '',
     sending_date: '',
+    // sender_id: '',
+    // sender_type: '',
+    // sender_company: '',
     sender_name: '',
     sender_phone: '',
     sender_passport: '',
@@ -154,14 +159,26 @@ export class StepFourComponent implements OnInit {
     this.person$ = this.store.select(personSelector)
     this.entity$ = this.store.select(entitySelector)
 
-    this.sender$ = this.store.select(senderSelector).pipe(
+    this.sender$ = this.store.select(currentUserSelector).pipe(
+      tap((user: CurrentUserInterface) => {
+        if (user && user.user_type === 'ur') {
+          this.orderData.sender_id = user.id
+          this.orderData.sender_company = user.user_name
+          this.orderData.sender_type = user.user_type
+        }
+      }),
+      switchMap(() => {
+        return this.store.select(senderSelector)
+      }),
       filter(Boolean),
       tap((sender: SenderStateInterface) => {
+        console.log('sender', sender)
         this.orderData.sender_name = sender.confidant
           ? sender.confidant.name
           : sender.fio
         this.orderData.sender_passport = sender.docNumber
         this.orderData.sender_phone = sender.phone
+        console.log('this.orderData', this.orderData)
       })
     )
 
