@@ -12,6 +12,7 @@ import {TUI_VALIDATION_ERRORS} from '@taiga-ui/kit'
 import {Observable, takeUntil} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {Pattern} from '../../../shared/pattern/pattern'
+import {SiteService} from '../../../shared/services/site.service'
 import {sendMessageAction} from './store/actions/send-message.action'
 import {
   isSubmittingSelector,
@@ -65,12 +66,14 @@ export class TaskFormComponent implements OnInit {
       ],
     ],
     agree: [false, [Validators.required]],
+    trace: [''],
   })
 
   constructor(
     private fb: FormBuilder,
     private store: Store,
-    @Self() @Inject(TuiDestroyService) private destroy$: TuiDestroyService
+    @Self() @Inject(TuiDestroyService) private destroy$: TuiDestroyService,
+    private siteService: SiteService
   ) {}
 
   ngOnInit(): void {
@@ -80,7 +83,11 @@ export class TaskFormComponent implements OnInit {
     this.store
       .select(responseSelector)
       .pipe(
-        tap(() => {
+        tap((response: boolean) => {
+          if (response) {
+            this.siteService.sendToBitrix(this.form.value)
+          }
+
           this.form.reset()
         }),
         takeUntil(this.destroy$)
@@ -88,8 +95,8 @@ export class TaskFormComponent implements OnInit {
       .subscribe()
 
     //@ts-ignore
-    const tracker = window.b24Tracker.guest.getTrace()
-    console.log('tracker', tracker)
+    this.form.get('trace').setValue(window.b24Tracker.guest.getTrace())
+    console.log('tracker', this.form.get('trace').value)
   }
 
   onSubmit() {
@@ -98,6 +105,7 @@ export class TaskFormComponent implements OnInit {
     }
 
     const payload = this.form.value
+    console.log('this.form.value', this.form.value)
     this.store.dispatch(sendMessageAction({payload}))
   }
 }

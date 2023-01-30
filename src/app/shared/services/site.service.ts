@@ -1,10 +1,8 @@
 import {HttpClient} from '@angular/common/http'
 import {Injectable} from '@angular/core'
 import {Observable} from 'rxjs'
-import {environment} from '../../../environments/environment'
-import {EndCityInterface} from '../types/end-city.interface'
-import {StartCityInterface} from '../types/start-city.interface'
 import {tap} from 'rxjs/operators'
+import {environment} from '../../../environments/environment'
 
 @Injectable()
 export class SiteService {
@@ -25,5 +23,20 @@ export class SiteService {
     const api = '8aab09f6-c5b3-43be-8895-153ea164984e/53'
 
     return this.http.get<T>(`${this.url}/page/${api}`)
+  }
+
+  sendToBitrix(payload) {
+    console.log('sendToBitrix', payload)
+    return this.http
+      .get(
+        `https://bitrix.busbox.guru/rest/1/xk0350plspumy30m/crm.lead.add?
+    fields[TITLE]=Описание заказа:&fields[NAME]=${payload.name}&fields[PHONE][0][VALUE]=${payload.phone}
+    &fields[EMAIL][0][VALUE]=${payload.email}[SOURCE_ID]=UC_90HLMC&fields[COMMENTS]=${payload.message}&fields[TRACE]=${payload.trace}`
+      )
+      .pipe(
+        tap((response) => {
+          console.log('response', response)
+        })
+      )
   }
 }
