@@ -7,6 +7,7 @@ import {CurrentUserInterface} from '../../shared/types/current-user.interface'
 import {AuthResponseInterface} from '../types/auth-response.interface'
 import {LoginRequestInterface} from '../types/login-request.interface'
 import {RegisterRequestInterface} from '../types/register-request.interface'
+import {OrderStatusInterface} from '../../find-order/types/order-status.interface'
 
 @Injectable()
 export class AuthService {
@@ -27,14 +28,24 @@ export class AuthService {
   login({user}: LoginRequestInterface): Observable<CurrentUserInterface> {
     const url = `${environment.apiUrl}/account/login`
 
-    return this.http.post<CurrentUserInterface>(
-      url,
-      JSON.stringify({
-        'api-key': environment.apiKey,
-        login: user.email,
-        password: user.password,
-      })
-    )
+    return this.http
+      .post<CurrentUserInterface>(
+        url,
+        JSON.stringify({
+          'api-key': environment.apiKey,
+          login: user.email,
+          password: user.password,
+        })
+      )
+      .pipe(
+        map((data: CurrentUserInterface | any) => {
+          if (data.error) {
+            throw new Error(data.error)
+          } else {
+            return data
+          }
+        })
+      )
   }
 
   getCurrentUser(token: string): Observable<CurrentUserInterface> {

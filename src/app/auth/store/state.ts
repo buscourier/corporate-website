@@ -7,5 +7,5 @@ export const initialState: AuthStateInterface = {
   isLoading: false,
   currentUser: null,
   isLoggedIn: null,
-  validationErrors: null,
+  backendErrors: null,
 }

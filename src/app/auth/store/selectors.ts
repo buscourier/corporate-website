@@ -46,7 +46,7 @@ export const isPersonalSelector = createSelector(
   (user: CurrentUserInterface) => user && user.user_type !== 'ur'
 )
 
-export const validationErrorsSelector = createSelector(
+export const backendErrorsSelector = createSelector(
   authFeatureSelector,
-  (authSate: AuthStateInterface) => authSate.validationErrors
+  (authSate: AuthStateInterface) => authSate.backendErrors
 )

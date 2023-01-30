@@ -27,7 +27,7 @@ const authReducer = createReducer(
     (state): AuthStateInterface => ({
       ...state,
       isSubmitting: true,
-      validationErrors: null,
+      backendErrors: null,
     })
   ),
   on(
@@ -41,10 +41,10 @@ const authReducer = createReducer(
   ),
   on(
     registerFailureAction,
-    (state, action): AuthStateInterface => ({
+    (state, {backendErrors}): AuthStateInterface => ({
       ...state,
       isSubmitting: false,
-      validationErrors: action.errors,
+      backendErrors,
     })
   ),
   on(
@@ -53,7 +53,7 @@ const authReducer = createReducer(
       ...state,
       isLoading: true,
       isSubmitting: true,
-      validationErrors: null,
+      backendErrors: null,
     })
   ),
   on(
@@ -68,11 +68,11 @@ const authReducer = createReducer(
   ),
   on(
     loginFailureAction,
-    (state, action): AuthStateInterface => ({
+    (state, {backendErrors}): AuthStateInterface => ({
       ...state,
       isLoading: false,
       isSubmitting: false,
-      // validationErrors: action.errors,
+      backendErrors,
     })
   ),
   on(
@@ -118,7 +118,7 @@ const authReducer = createReducer(
     clearValidationErrorsAction,
     (state): AuthStateInterface => ({
       ...initialState,
-      validationErrors: null,
+      backendErrors: null,
     })
   )
 )

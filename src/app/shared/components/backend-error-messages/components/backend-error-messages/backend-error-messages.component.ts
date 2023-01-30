@@ -10,15 +10,17 @@ import {BackendErrorsInterface} from '../../../../types/backend-errors.interface
 export class BackendErrorMessagesComponent implements OnInit {
   @Input('backendErrors') backendErrorsProps: BackendErrorsInterface
 
-  errorMessages: string[]
+  errorMessages: string
 
   ngOnInit(): void {
-    this.errorMessages = Object.keys(this.backendErrorsProps).map(
-      (name: string) => {
-        const messages = this.backendErrorsProps[name].join(', ')
+    this.errorMessages = this.backendErrorsProps.toString().split(': ')[1]
 
-        return `${name} ${messages}`
-      }
-    )
+    // this.errorMessages = Object.keys(this.backendErrorsProps).map(
+    //   (name: string) => {
+    //     const messages = this.backendErrorsProps[name].join(', ')
+    //
+    //     return `${name} ${messages}`
+    //   }
+    // )
   }
 }

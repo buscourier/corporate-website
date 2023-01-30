@@ -6,7 +6,7 @@ import {BackendErrorsInterface} from '../../../shared/types/backend-errors.inter
 import {registerAction} from '../../store/actions/register.action'
 import {
   isSubmittingSelector,
-  validationErrorsSelector,
+  backendErrorsSelector,
 } from '../../store/selectors'
 import {RegisterRequestInterface} from '../../types/register-request.interface'
 
@@ -30,7 +30,7 @@ export class RegisterComponent implements OnInit {
 
   initializeValues(): void {
     this.isSubmitting$ = this.store.select(isSubmittingSelector)
-    this.backendErrors$ = this.store.select(validationErrorsSelector)
+    this.backendErrors$ = this.store.select(backendErrorsSelector)
   }
 
   initializeForm(): void {

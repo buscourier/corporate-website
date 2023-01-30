@@ -11,6 +11,7 @@ import {
   loginFailureAction,
   loginSuccessAction,
 } from '../actions/login.action'
+import {BackendErrorsInterface} from '../../../shared/types/backend-errors.interface'
 
 @Injectable()
 export class LoginEffect {
@@ -30,10 +31,11 @@ export class LoginEffect {
             this.persistenceService.set('accessToken', currentUser.auth_key)
             return loginSuccessAction({currentUser})
           }),
-          catchError((errorResponse: HttpErrorResponse) =>
-            // of(loginFailureAction({errors: errorResponse.error.errors}))
-            of(loginFailureAction())
-          )
+          catchError((errorResponse: BackendErrorsInterface) => {
+            console.log('errorResponse', errorResponse)
+            return of(loginFailureAction({backendErrors: errorResponse}))
+            // of(loginFailureAction())
+          })
         )
       )
     )

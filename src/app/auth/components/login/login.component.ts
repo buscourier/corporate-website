@@ -20,7 +20,7 @@ import {
   isLoadingSelector,
   isLoggedInSelector,
   isSubmittingSelector,
-  validationErrorsSelector,
+  backendErrorsSelector,
 } from '../../store/selectors'
 import {LoginRequestInterface} from '../../types/login-request.interface'
 
@@ -65,7 +65,7 @@ export class LoginComponent implements OnInit {
   initializeValues(): void {
     this.isLoading$ = this.store.select(isLoadingSelector)
     this.isSubmitting$ = this.store.select(isSubmittingSelector)
-    this.backendErrors$ = this.store.select(validationErrorsSelector)
+    this.backendErrors$ = this.store.select(backendErrorsSelector)
 
     this.store
       .select(isLoggedInSelector)

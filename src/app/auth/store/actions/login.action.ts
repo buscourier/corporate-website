@@ -2,6 +2,7 @@ import {createAction, props} from '@ngrx/store'
 import {CurrentUserInterface} from '../../../shared/types/current-user.interface'
 import {LoginRequestInterface} from '../../types/login-request.interface'
 import {ActionTypes} from '../action-types'
+import {BackendErrorsInterface} from '../../../shared/types/backend-errors.interface'
 
 export const loginAction = createAction(
   ActionTypes.LOGIN,
@@ -14,6 +15,6 @@ export const loginSuccessAction = createAction(
 )
 
 export const loginFailureAction = createAction(
-  ActionTypes.LOGIN_FAILURE
-  // props<{errors: BackendErrorsInterface}>()
+  ActionTypes.LOGIN_FAILURE,
+  props<{backendErrors: BackendErrorsInterface}>()
 )
