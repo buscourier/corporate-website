@@ -51,7 +51,7 @@
     size="m"
     class="w-full"
     [showLoader]="isSubmitting"
-    [disabled]="form.invalid"
+    [disabled]="form.pristine || form.invalid"
   >
     Рассчитать
   </button>

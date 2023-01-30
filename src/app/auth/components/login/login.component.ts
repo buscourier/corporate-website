@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   Inject,
+  OnDestroy,
   OnInit,
   Self,
 } from '@angular/core'
@@ -11,7 +12,13 @@ import {TuiDestroyService} from '@taiga-ui/cdk'
 import {TuiDialogContext} from '@taiga-ui/core'
 import {TUI_VALIDATION_ERRORS} from '@taiga-ui/kit'
 import {POLYMORPHEUS_CONTEXT} from '@tinkoff/ng-polymorpheus'
-import {Observable, Subscription, takeUntil} from 'rxjs'
+import {
+  combineLatest,
+  debounceTime,
+  Observable,
+  Subscription,
+  takeUntil,
+} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {BackendErrorsInterface} from '../../../shared/types/backend-errors.interface'
 import {clearValidationErrorsAction} from '../../store/actions/clear-validation-errors'
@@ -40,7 +47,7 @@ import {LoginRequestInterface} from '../../types/login-request.interface'
     TuiDestroyService,
   ],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   form: FormGroup
   isLoading$: Observable<boolean>
   isSubmitting$: Observable<boolean>
@@ -60,6 +67,10 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.initializeValues()
     this.initializeForm()
+  }
+
+  ngOnDestroy() {
+    this.clearValidationErrors()
   }
 
   initializeValues(): void {
@@ -104,6 +115,5 @@ export class LoginComponent implements OnInit {
 
   onClose() {
     this.context.completeWith(false)
-    this.clearValidationErrors()
   }
 }

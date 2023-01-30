@@ -31,9 +31,8 @@ export class LoginEffect {
             this.persistenceService.set('accessToken', currentUser.auth_key)
             return loginSuccessAction({currentUser})
           }),
-          catchError((errorResponse: BackendErrorsInterface) => {
-            console.log('errorResponse', errorResponse)
-            return of(loginFailureAction({backendErrors: errorResponse}))
+          catchError((backendErrors: BackendErrorsInterface) => {
+            return of(loginFailureAction({backendErrors}))
             // of(loginFailureAction())
           })
         )

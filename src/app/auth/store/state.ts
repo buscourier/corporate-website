@@ -6,6 +6,6 @@ export const initialState: AuthStateInterface = {
   isSubmitting: false,
   isLoading: false,
   currentUser: null,
-  isLoggedIn: null,
+  isLoggedIn: false,
   backendErrors: null,
 }
