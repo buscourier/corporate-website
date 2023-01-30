@@ -117,7 +117,7 @@ const authReducer = createReducer(
   on(
     clearValidationErrorsAction,
     (state): AuthStateInterface => ({
-      ...initialState,
+      ...state,
       backendErrors: null,
     })
   )

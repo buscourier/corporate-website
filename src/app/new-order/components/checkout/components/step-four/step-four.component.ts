@@ -173,13 +173,13 @@ export class StepFourComponent implements OnInit {
       }),
       filter(Boolean),
       tap((sender: SenderStateInterface) => {
-        console.log('sender', sender)
+        // console.log('sender', sender)
         this.orderData.sender_name = sender.confidant
           ? sender.confidant.name
           : sender.fio
         this.orderData.sender_passport = sender.docNumber
         this.orderData.sender_phone = sender.phone
-        console.log('this.orderData', this.orderData)
+        // console.log('this.orderData', this.orderData)
       })
     )
 

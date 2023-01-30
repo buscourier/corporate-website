@@ -224,7 +224,7 @@ export class EndPointComponent implements OnInit {
     ]).pipe(
       debounceTime(1000),
       map(([cities, searchQuery]: [EndCityInterface[], string]) => {
-        console.log('cities', cities)
+        // console.log('cities', cities)
         return cities.filter((city: EndCityInterface) => {
           return city.name
             .toLowerCase()
@@ -278,8 +278,8 @@ export class EndPointComponent implements OnInit {
       // delay(0),
       debounceTime(300),
       tap(([offices, activeOffice]: [OfficeInterface[], OfficeInterface]) => {
-        console.log('offices', offices)
-        console.log('activeOffice', activeOffice)
+        // console.log('offices', offices)
+        // console.log('activeOffice', activeOffice)
         const activeOfficeIndex =
           activeOffice &&
           offices.findIndex(
@@ -290,12 +290,12 @@ export class EndPointComponent implements OnInit {
           (activeOffice === null || activeOfficeIndex === -1) &&
           this.get.enabled
         ) {
-          console.log('set value', offices[0])
+          // console.log('set value', offices[0])
           this.get.setValue(offices[0])
         }
       }),
       map(([offices]: [OfficeInterface[], OfficeInterface]) => {
-        console.log('return offices')
+        // console.log('return offices')
         return offices
       })
     )
@@ -306,7 +306,7 @@ export class EndPointComponent implements OnInit {
       this.store.select(endCitySelector).pipe(filter(Boolean)),
     ]).pipe(
       switchMap(([offices, activeTab, city]) => {
-        console.log('tabs', offices)
+        // console.log('tabs', offices)
         const tabs = offices.map((office: OfficeInterface) => {
           return Object.entries(office)
             .filter((item: [string, string]) => {

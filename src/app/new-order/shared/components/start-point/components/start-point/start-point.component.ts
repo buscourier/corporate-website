@@ -225,7 +225,7 @@ export class StartPointComponent implements OnInit {
     ]).pipe(
       debounceTime(1000),
       map(([cities, searchQuery]: [StartCityInterface[], string]) => {
-        console.log('cities', cities)
+        // console.log('cities', cities)
         return cities.filter((city: StartCityInterface) => {
           return city.name
             .toLowerCase()
@@ -264,8 +264,8 @@ export class StartPointComponent implements OnInit {
       debounceTime(300),
       switchMap(
         ([offices, activeOffice]: [OfficeInterface[], OfficeInterface]) => {
-          console.log('offices', offices)
-          console.log('active office', activeOffice)
+          // console.log('offices', offices)
+          // console.log('active office', activeOffice)
           const activeOfficeIndex =
             activeOffice &&
             offices.findIndex(
@@ -295,7 +295,7 @@ export class StartPointComponent implements OnInit {
 
         const isActiveTabExists = tabs.find((tab: string) => tab === activeTab)
 
-        console.log('tabs', tabs)
+        // console.log('tabs', tabs)
 
         if (activeTab && isActiveTabExists) {
           this.setActiveTab(activeTab)
