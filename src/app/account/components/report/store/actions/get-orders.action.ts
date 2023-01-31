@@ -1,4 +1,5 @@
 import {createAction, props} from '@ngrx/store'
+import {BackendErrorsInterface} from '../../../../../shared/types/backend-errors.interface'
 import {ReportInputInterface} from '../../types/report-input.interface'
 import {ReportResponseInterface} from '../../types/report-response.interface'
 import {ActionTypes} from '../action-types'
@@ -14,5 +15,6 @@ export const getOrdersSuccessAction = createAction(
 )
 
 export const getOrdersFailureAction = createAction(
-  ActionTypes.GET_ORDERS_FAILURE
+  ActionTypes.GET_ORDERS_FAILURE,
+  props<{backendErrors: BackendErrorsInterface}>()
 )

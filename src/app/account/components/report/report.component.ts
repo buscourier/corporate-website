@@ -17,12 +17,17 @@ import {tap} from 'rxjs/operators'
 import {utils, write, writeFile} from 'xlsx'
 import {currentUserSelector} from '../../../auth/store/selectors'
 import settings from '../../../settings'
+import {BackendErrorsInterface} from '../../../shared/types/backend-errors.interface'
 import {CurrentUserInterface} from '../../../shared/types/current-user.interface'
 import {xsScreenSelector} from '../../../store/global/selectors'
 import {PrintOrderComponent} from './components/print-order/print-order.component'
 import {ViewOrderComponent} from './components/view-order/view-order.component'
 import {getOrdersAction} from './store/actions/get-orders.action'
-import {isLoadingSelector, ordersSelector} from './store/selectors'
+import {
+  backendErrorsSelector,
+  isLoadingSelector,
+  ordersSelector,
+} from './store/selectors'
 import {FilterInterface} from './types/filter.interface'
 import {OrderInterface} from './types/order.interface'
 import {ReportResponseInterface} from './types/report-response.interface'
@@ -40,6 +45,7 @@ export class ReportComponent implements OnInit {
 
   isOrdersLoading$: Observable<boolean>
   orders$: Observable<OrderInterface[]>
+  backendErrors$: Observable<BackendErrorsInterface>
   xs$: Observable<boolean>
 
   columns = [
@@ -118,6 +124,11 @@ export class ReportComponent implements OnInit {
 
   initializeValues() {
     this.isOrdersLoading$ = this.store.select(isLoadingSelector)
+    this.backendErrors$ = this.store.select(backendErrorsSelector).pipe(
+      map((errors: BackendErrorsInterface) => {
+        return errors ? errors.toString().split(': ')[1] : null
+      })
+    )
     this.orders$ = this.store.select(ordersSelector).pipe(
       filter(Boolean),
       map((response: ReportResponseInterface) => {

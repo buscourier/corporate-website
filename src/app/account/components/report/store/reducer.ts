@@ -24,13 +24,16 @@ const reportReducer = createReducer(
       ...state,
       isLoading: false,
       orders: action.orders,
+      backendErrors: null,
     })
   ),
   on(
     getOrdersFailureAction,
-    (state): ReportStateInterface => ({
+    (state, {backendErrors}): ReportStateInterface => ({
       ...state,
       isLoading: false,
+      orders: null,
+      backendErrors,
     })
   ),
   on(

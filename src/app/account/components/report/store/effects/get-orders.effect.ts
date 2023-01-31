@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core'
 import {Actions, createEffect, ofType} from '@ngrx/effects'
 import {catchError, delay, map, of, switchMap} from 'rxjs'
+import {BackendErrorsInterface} from '../../../../../shared/types/backend-errors.interface'
 import {ReportService} from '../../services/report.service'
 import {ReportResponseInterface} from '../../types/report-response.interface'
 import {
@@ -16,18 +17,20 @@ export class GetOrdersEffect {
     private reportService: ReportService
   ) {}
 
-  getOrders$ = createEffect(() =>
-    this.actions$.pipe(
+  getOrders$ = createEffect(() => {
+    return this.actions$.pipe(
       ofType(getOrdersAction),
       delay(600),
-      switchMap(({ordersInput}) =>
-        this.reportService.getOrders(ordersInput).pipe(
-          map((orders: ReportResponseInterface) =>
-            getOrdersSuccessAction({orders})
-          ),
-          catchError(() => of(getOrdersFailureAction()))
+      switchMap(({ordersInput}) => {
+        return this.reportService.getOrders(ordersInput).pipe(
+          map((orders: ReportResponseInterface) => {
+            return getOrdersSuccessAction({orders})
+          }),
+          catchError((backendErrors: BackendErrorsInterface) => {
+            return of(getOrdersFailureAction({backendErrors}))
+          })
         )
-      )
+      })
     )
-  )
+  })
 }
