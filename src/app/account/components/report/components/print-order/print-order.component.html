@@ -6,7 +6,10 @@
 <!--  <tui-svg src="icons::close-2" class="!h-[22px] !w-[22px]"></tui-svg>-->
 <!--</button>-->
 
-<tui-loader [showLoader]="isOrderLoading$ | async" class="w-[783px]">
+<tui-loader
+  [showLoader]="isOrderLoading$ | async"
+  class="min-h-[460px] w-[783px] print:min-h-min print:w-auto"
+>
   <ng-container *ngIf="order$ | async as order">
     <table style="height: 18mm">
       <tr>
