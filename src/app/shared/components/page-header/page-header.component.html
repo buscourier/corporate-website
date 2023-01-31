@@ -74,7 +74,7 @@
   <header
     #header
     *tuiLet="isCurrentUserLoading$ | async as isCurrentUserLoading"
-    class="sticky top-0 z-10 bg-white font-base shadow-sm"
+    class="sticky top-0 z-10 bg-white font-base shadow-sm print:hidden"
     [class.sticky-header]="isSticky"
   >
     <div
@@ -422,7 +422,7 @@
                   [routerLink]="['/new-order']"
                   class="text-right leading-7 text-gray-800 hover:text-black lg:text-left"
                   (click)="closeDropdown()"
-                  >Заказать доставку!</a
+                  >Заказать доставку</a
                 >
                 <a
                   [routerLink]="['/account', 'report']"

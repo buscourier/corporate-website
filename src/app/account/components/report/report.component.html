@@ -4,7 +4,7 @@
 >
   <a
     [routerLink]="['/account']"
-    class="mt-16 mb-10 flex items-center hover:opacity-70"
+    class="mt-16 mb-10 flex items-center hover:opacity-70 print:hidden"
   >
     <tui-svg
       src="icons::account-back"
@@ -12,7 +12,9 @@
     ></tui-svg>
     <span class="text-sm">Назад к личному кабинету</span>
   </a>
-  <h1 class="mb-8 font-heading text-2xl font-bold lg:text-3xl">Мои заказы</h1>
+  <h1 class="mb-8 font-heading text-2xl font-bold print:hidden lg:text-3xl">
+    Мои заказы
+  </h1>
   <div #filter>
     <app-filter
       (filterChanged)="fetchDataWithFilterParams($event)"
@@ -29,6 +31,7 @@
       <tui-loader
         *ngIf="xs$ | async; else tableTemplate"
         [showLoader]="isOrdersLoading"
+        class="print:hidden"
         [class.h-10]="isOrdersLoading"
       >
         <ng-container *ngIf="orders && !isOrdersLoading">
@@ -82,7 +85,7 @@
         </ng-container>
       </tui-loader>
       <ng-template #tableTemplate>
-        <div class="mb-7 flex flex-col">
+        <div class="mb-7 flex flex-col print:hidden">
           <div class="mb-4 overflow-x-auto">
             <div class="inline-block min-w-full align-middle">
               <div
@@ -198,7 +201,7 @@
       </ng-template>
       <div
         *ngIf="orders && !isOrdersLoading"
-        class="flex flex-col items-center space-y-8 md:flex-row md:space-y-0"
+        class="flex flex-col items-center space-y-8 print:hidden md:flex-row md:space-y-0"
       >
         <tui-pagination
           *ngIf="pages > 1"

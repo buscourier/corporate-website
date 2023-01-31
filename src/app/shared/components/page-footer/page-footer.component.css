@@ -1,5 +1,5 @@
 :host {
-  @apply mt-16 block bg-gray;
+  @apply mt-16 block bg-gray print:hidden;
 }
 
 .contacts + :host {

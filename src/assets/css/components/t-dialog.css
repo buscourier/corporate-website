@@ -1,7 +1,5 @@
 .t-dialog {
-  display: flex;
-  justify-content: center;
-  align-items: center !important;
+  @apply flex justify-center items-center print:bg-white;
 }
 
 tui-dialog {
