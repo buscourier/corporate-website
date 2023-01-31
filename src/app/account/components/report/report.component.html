@@ -27,7 +27,7 @@
   <ng-template #ordersData>
     <ng-container *tuiLet="orders$ | async as orders">
       <tui-loader
-        *ngIf="xs$ | async; else table"
+        *ngIf="xs$ | async; else tableTemplate"
         [showLoader]="isOrdersLoading"
         [class.h-10]="isOrdersLoading"
       >
@@ -81,7 +81,7 @@
           </div>
         </ng-container>
       </tui-loader>
-      <ng-template #table>
+      <ng-template #tableTemplate>
         <div class="mb-7 flex flex-col">
           <div class="mb-4 overflow-x-auto">
             <div class="inline-block min-w-full align-middle">
