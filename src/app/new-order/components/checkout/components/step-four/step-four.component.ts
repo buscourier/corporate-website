@@ -10,6 +10,8 @@ import {Store} from '@ngrx/store'
 import {TuiDestroyService} from '@taiga-ui/cdk'
 import {ReCaptchaV3Service} from 'ng-recaptcha'
 import {filter, Observable, switchMap, takeUntil, tap} from 'rxjs'
+import {currentUserSelector} from '../../../../../auth/store/selectors'
+import {CurrentUserInterface} from '../../../../../shared/types/current-user.interface'
 import {EndCityInterface} from '../../../../../shared/types/end-city.interface'
 import {OfficeInterface} from '../../../../../shared/types/office.interface'
 import {StartCityInterface} from '../../../../../shared/types/start-city.interface'
@@ -35,8 +37,6 @@ import {RecipientStateInterface} from '../step-three/components/recipient/types/
 import {senderSelector} from '../step-two/components/sender/store/selectors'
 import {SenderStateInterface} from '../step-two/components/sender/types/sender-state.interface'
 import {isSubmittingSelector} from './store/selectors'
-import {currentUserSelector} from '../../../../../auth/store/selectors'
-import {CurrentUserInterface} from '../../../../../shared/types/current-user.interface'
 
 interface TotalServicesInterface {
   id: string
@@ -129,8 +129,8 @@ export class StepFourComponent implements OnInit {
 
         this.orderData.start_city = city.id
         //TODO: sending date
-        // this.orderData.sending_date = point.date
-        this.orderData.sending_date = '28.11.2022'
+        // console.log('point.date', point.date)
+        this.orderData.sending_date = point.date.toString()
       })
     )
 

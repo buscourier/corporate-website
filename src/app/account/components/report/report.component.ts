@@ -98,6 +98,7 @@ export class ReportComponent implements OnInit {
             ...this.filterParams,
           }
 
+          this.pageIndex = 0
           return this.store.dispatch(getOrdersAction({ordersInput}))
         }),
         take(1)
@@ -107,8 +108,8 @@ export class ReportComponent implements OnInit {
 
   fetchDataWithFilterParams({range, startCity, endCity}: FilterInterface) {
     this.filterParams = {
-      'start-date': range ? range[0] : null,
-      'end-date': range ? range[1] : null,
+      'start-date': range ? range.from.toString('YMD') : null,
+      'end-date': range ? range.to.toString('YMD') : null,
       'start-city': startCity ? startCity.id : null,
       'end-city': endCity ? endCity.id : null,
     }

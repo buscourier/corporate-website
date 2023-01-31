@@ -28,6 +28,8 @@ export class ReportService {
       ...reportInput,
     }
 
+    console.log('payload', payload)
+
     return this.http
       .post<ReportResponseInterface>(
         `${url}/getorders`,
@@ -35,6 +37,7 @@ export class ReportService {
       )
       .pipe(
         map((response: ReportResponseInterface) => {
+          console.log('response', response)
           const orders = response.orders.map((order: OrderInterface) => {
             return {
               ...order,

@@ -7,7 +7,7 @@ import {
   Output,
   Self,
 } from '@angular/core'
-import {FormBuilder, Validators} from '@angular/forms'
+import {FormBuilder} from '@angular/forms'
 import {Store} from '@ngrx/store'
 import {TuiDestroyService} from '@taiga-ui/cdk'
 import {tuiLoaderOptionsProvider} from '@taiga-ui/core'
@@ -62,8 +62,8 @@ export class FilterComponent implements OnInit {
 
   form = this.fb.group({
     range: [],
-    startCity: [{value: null, disabled: true}, [Validators.required]],
-    endCity: [{value: null, disabled: true}, [Validators.required]],
+    startCity: [{value: null, disabled: true}],
+    endCity: [{value: null, disabled: true}],
   })
 
   constructor(
