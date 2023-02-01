@@ -1,5 +1,5 @@
 .t-dialog {
-  @apply flex justify-center items-center print:bg-white;
+  @apply flex items-center justify-center print:bg-white;
 }
 
 tui-dialog {

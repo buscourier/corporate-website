@@ -8,7 +8,12 @@ import {
 } from '@angular/forms'
 import {TuiDestroyService} from '@taiga-ui/cdk'
 import {TUI_VALIDATION_ERRORS} from '@taiga-ui/kit'
-import {takeUntil} from 'rxjs'
+import {debounceTime, distinctUntilChanged, takeUntil} from 'rxjs'
+import {tap} from 'rxjs/operators'
+import {PersonStateInterface} from '../../../components/checkout/components/step-one/components/person/types/person-state.interface'
+import {CourierInterface} from '../../types/courier.interface'
+import {UtilsService} from '../../../../shared/services/utils.service'
+import {dueTime} from '../../../../settings'
 
 @Component({
   selector: 'app-courier',
@@ -54,7 +59,8 @@ export class CourierComponent {
 
   constructor(
     private fb: FormBuilder,
-    @Self() @Inject(TuiDestroyService) private destroy$: TuiDestroyService
+    @Self() @Inject(TuiDestroyService) private destroy$: TuiDestroyService,
+    private utils: UtilsService
   ) {}
 
   requiredError(): ValidationErrors | null {
@@ -81,7 +87,18 @@ export class CourierComponent {
   }
 
   registerOnChange(onChange: any) {
-    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(onChange)
+    this.form.valueChanges
+      .pipe(takeUntil(this.destroy$))
+      .pipe(
+        debounceTime(dueTime),
+        distinctUntilChanged((a: CourierInterface, b: CourierInterface) => {
+          return this.utils.isObjectsEqual(a, b)
+        }),
+        tap((data) => {
+          console.log('courier', data)
+        })
+      )
+      .subscribe(onChange)
   }
 
   setDisabledState(disabled: boolean) {
