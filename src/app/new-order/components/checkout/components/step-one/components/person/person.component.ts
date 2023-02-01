@@ -10,13 +10,15 @@ import {FormBuilder, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
 import {TuiDestroyService} from '@taiga-ui/cdk'
 import {TUI_VALIDATION_ERRORS} from '@taiga-ui/kit'
-import {takeUntil, using} from 'rxjs'
+import {debounceTime, distinctUntilChanged, takeUntil, using} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {Pattern} from '../../../../../../../shared/pattern/pattern'
 import {changeValidityAction} from './store/actions/change-validity.action'
 import {changeValuesAction} from './store/actions/change-values.action'
 import {isPersonPristineSelector, personSelector} from './store/selectors'
 import {PersonStateInterface} from './types/person-state.interface'
+import {UtilsService} from '../../../../../../../shared/services/utils.service'
+import {dueTime} from '../../../../../../../settings'
 
 @Component({
   selector: 'app-person',
@@ -79,7 +81,14 @@ export class PersonComponent implements OnInit, AfterViewInit {
     () =>
       this.form.valueChanges
         .pipe(
+          debounceTime(dueTime),
+          distinctUntilChanged(
+            (a: PersonStateInterface, b: PersonStateInterface) => {
+              return this.utils.isObjectsEqual(a, b)
+            }
+          ),
           tap((values: PersonStateInterface) => {
+            console.log('debounce')
             this.store.dispatch(changeValuesAction(values))
           }),
           tap(() => {
@@ -96,7 +105,8 @@ export class PersonComponent implements OnInit, AfterViewInit {
   constructor(
     private fb: FormBuilder,
     private store: Store,
-    @Self() @Inject(TuiDestroyService) private destroy$: TuiDestroyService
+    @Self() @Inject(TuiDestroyService) private destroy$: TuiDestroyService,
+    private utils: UtilsService
   ) {}
 
   ngOnInit(): void {
