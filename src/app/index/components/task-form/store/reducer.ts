@@ -1,5 +1,6 @@
 import {Action, createReducer, on} from '@ngrx/store'
 import {TaskFormStateInterface} from '../types/task-form-state.interface'
+import {clearFormAction} from './actions/clear-form'
 import {
   sendMessageAction,
   sendMessageFailureAction,
@@ -21,6 +22,7 @@ const sendMessageReducer = createReducer(
     (state, {response}): TaskFormStateInterface => ({
       ...state,
       isSubmitting: false,
+      isPristine: false,
       response,
     })
   ),
@@ -29,9 +31,13 @@ const sendMessageReducer = createReducer(
     (state, {backendErrors}): TaskFormStateInterface => ({
       ...state,
       isSubmitting: false,
+      isPristine: false,
       backendErrors,
     })
-  )
+  ),
+  on(clearFormAction, () => ({
+    ...initialState,
+  }))
 )
 
 export function reducer(state: TaskFormStateInterface, action: Action) {

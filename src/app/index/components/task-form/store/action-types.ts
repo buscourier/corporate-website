@@ -5,4 +5,5 @@ export enum ActionTypes {
   SEND_WEBHOOK = '[Task form] Send webhook',
   SEND_WEBHOOK_SUCCESS = '[Task form] Send webhook success',
   SEND_WEBHOOK_FAILURE = '[Task form] Send webhook failure',
+  CLEAR_FORM = '[Task form] is cleaned',
 }

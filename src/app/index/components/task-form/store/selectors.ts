@@ -10,6 +10,11 @@ export const isSubmittingSelector = createSelector(
   (state: TaskFormStateInterface) => state.isSubmitting
 )
 
+export const isPristineSelector = createSelector(
+  taskFormFeatureSelector,
+  (state: TaskFormStateInterface) => state.isPristine
+)
+
 export const responseSelector = createSelector(
   taskFormFeatureSelector,
   (state: TaskFormStateInterface) => state.response

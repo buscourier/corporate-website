@@ -1,5 +1,6 @@
 import {Inject, Injectable, Injector} from '@angular/core'
 import {Actions, createEffect, ofType} from '@ngrx/effects'
+import {Store} from '@ngrx/store'
 import {TuiDialogService} from '@taiga-ui/core'
 import {PolymorpheusComponent} from '@tinkoff/ng-polymorpheus'
 import {catchError, map, of, switchMap} from 'rxjs'
@@ -8,6 +9,7 @@ import {AlertComponent} from '../../../../../shared/components/alert/alert.compo
 import {SiteService} from '../../../../../shared/services/site.service'
 import {BackendErrorsInterface} from '../../../../../shared/types/backend-errors.interface'
 import {WebhookInterface} from '../../../../../shared/types/webhook.interface'
+import {clearFormAction} from '../actions/clear-form'
 import {
   sendWebhookAction,
   sendWebhookFailureAction,
@@ -19,6 +21,7 @@ export class SendWebhookEffect {
   constructor(
     private actions$: Actions,
     private siteService: SiteService,
+    private store: Store,
     @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
     @Inject(Injector) private readonly injector: Injector
   ) {}
@@ -27,7 +30,6 @@ export class SendWebhookEffect {
     return this.actions$.pipe(
       ofType(sendWebhookAction),
       switchMap(({payload}) => {
-        console.log('sendWebhookAction', sendWebhookAction)
         return this.siteService.sendToBitrix(payload).pipe(
           map((response: WebhookInterface) => {
             return sendWebhookSuccessAction({response})
@@ -60,6 +62,10 @@ export class SendWebhookEffect {
               }
             )
             .subscribe() //TODO: unsubscribe?
+        }),
+        switchMap(() => {
+          this.store.dispatch(clearFormAction())
+          return of(null)
         })
       ),
     {dispatch: false}

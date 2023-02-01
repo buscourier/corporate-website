@@ -17,6 +17,7 @@ import {sendMessageAction} from './store/actions/send-message.action'
 import {sendWebhookAction} from './store/actions/send-webhook.action'
 import {
   backendErrorsSelector,
+  isPristineSelector,
   isSubmittingSelector,
   responseSelector,
 } from './store/selectors'
@@ -35,7 +36,7 @@ import {
           return `Минимум ${error.requiredLength} символа`
         },
         pattern: (error) => {
-          return `Только буквы`
+          return `Некорректные данные`
         },
       },
     },
@@ -57,7 +58,14 @@ export class TaskFormComponent implements OnInit {
       ],
     ],
     phone: ['', [Validators.required]],
-    email: ['', [Validators.required, Validators.email]],
+    email: [
+      '',
+      [
+        Validators.required,
+        Validators.email,
+        Validators.pattern(Pattern.email),
+      ],
+    ],
     message: [
       '',
       [
@@ -66,7 +74,7 @@ export class TaskFormComponent implements OnInit {
         Validators.minLength(2),
       ],
     ],
-    agree: [false, [Validators.required]],
+    agree: [null, [Validators.required]],
     trace: [''],
   })
 
@@ -88,7 +96,18 @@ export class TaskFormComponent implements OnInit {
         switchMap(() => {
           this.store.dispatch(sendWebhookAction({payload: this.form.value}))
           return of(null)
-          // this.form.reset()
+        }),
+        takeUntil(this.destroy$)
+      )
+      .subscribe()
+
+    this.store
+      .select(isPristineSelector)
+      .pipe(
+        tap((isPristine: boolean) => {
+          if (isPristine) {
+            this.form.reset()
+          }
         }),
         takeUntil(this.destroy$)
       )
@@ -96,7 +115,6 @@ export class TaskFormComponent implements OnInit {
 
     //@ts-ignore
     this.form.get('trace').setValue(window.b24Tracker.guest.getTrace())
-    console.log('tracker', this.form.get('trace').value)
   }
 
   onSubmit() {
@@ -105,7 +123,6 @@ export class TaskFormComponent implements OnInit {
     }
 
     const payload = this.form.value
-    console.log('this.form.value', this.form.value)
     this.store.dispatch(sendMessageAction({payload}))
   }
 }
