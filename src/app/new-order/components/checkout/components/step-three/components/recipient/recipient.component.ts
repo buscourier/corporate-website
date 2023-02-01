@@ -10,7 +10,7 @@ import {FormBuilder, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
 import {TuiDestroyService} from '@taiga-ui/cdk'
 import {TUI_VALIDATION_ERRORS} from '@taiga-ui/kit'
-import {takeUntil, tap, using} from 'rxjs'
+import {debounceTime, distinctUntilChanged, takeUntil, tap, using} from 'rxjs'
 import {Pattern} from '../../../../../../../shared/pattern/pattern'
 import {personSelector} from '../../../step-one/components/person/store/selectors'
 import {PersonStateInterface} from '../../../step-one/components/person/types/person-state.interface'
@@ -18,6 +18,9 @@ import {changeValidityAction} from './store/actions/change-validity.action'
 import {changeValuesAction} from './store/actions/change-values.action'
 import {isRecipientPristineSelector, recipientSelector} from './store/selectors'
 import {RecipientStateInterface} from './types/recipient-state.interface'
+import {SenderStateInterface} from '../../../step-two/components/sender/types/sender-state.interface'
+import {dueTime} from '../../../../../../../settings'
+import {UtilsService} from '../../../../../../../shared/services/utils.service'
 
 @Component({
   selector: 'app-recipient',
@@ -57,6 +60,12 @@ export class RecipientComponent implements OnInit, AfterViewInit {
     () =>
       this.form.valueChanges
         .pipe(
+          debounceTime(dueTime),
+          distinctUntilChanged(
+            (a: RecipientStateInterface, b: RecipientStateInterface) => {
+              return this.utils.isObjectsEqual(a, b)
+            }
+          ),
           tap((values: RecipientStateInterface) => {
             this.store.dispatch(changeValuesAction(values))
           }),
@@ -74,7 +83,8 @@ export class RecipientComponent implements OnInit, AfterViewInit {
   constructor(
     private fb: FormBuilder,
     private store: Store,
-    @Self() @Inject(TuiDestroyService) private destroy$: TuiDestroyService
+    @Self() @Inject(TuiDestroyService) private destroy$: TuiDestroyService,
+    private utils: UtilsService
   ) {}
 
   ngOnInit(): void {
