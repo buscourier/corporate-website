@@ -20,6 +20,8 @@ import {TuiDestroyService} from '@taiga-ui/cdk'
 import {TUI_VALIDATION_ERRORS} from '@taiga-ui/kit'
 import {
   concatAll,
+  debounceTime,
+  distinctUntilChanged,
   filter,
   map,
   of,
@@ -32,6 +34,9 @@ import {
 import {tap} from 'rxjs/operators'
 import {ServiceInterface} from '../../../../../types/service.interface'
 import {allServicesSelector} from '../../../../orders/store/selectors'
+import {dueTime} from '../../../../../../../settings'
+import {ParcelInterface} from '../../../types/parcel.interface'
+import {UtilsService} from '../../../../../../../shared/services/utils.service'
 
 const SMS = '66'
 const EXT_SMS = '65'
@@ -197,7 +202,9 @@ export class ServicesComponent implements OnInit {
   }
 
   registerOnChange(onChange: any) {
-    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(onChange)
+    this.form.valueChanges
+      .pipe(debounceTime(dueTime), takeUntil(this.destroy$))
+      .subscribe(onChange)
   }
 
   setDisabledState(disabled: boolean) {

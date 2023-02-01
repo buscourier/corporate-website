@@ -259,11 +259,11 @@ export class ParcelComponent implements OnInit, AfterViewInit {
   registerOnChange(onChange: any) {
     this.form.valueChanges
       .pipe(
-        takeUntil(this.destroy$),
         debounceTime(dueTime),
         distinctUntilChanged((a: ParcelInterface, b: ParcelInterface) => {
           return this.utils.isObjectsEqual(a, b)
-        })
+        }),
+        takeUntil(this.destroy$)
         // tap((parcel) => {
         //   console.log('parcel', parcel)
         // })
