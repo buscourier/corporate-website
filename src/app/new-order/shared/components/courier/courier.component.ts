@@ -88,14 +88,11 @@ export class CourierComponent {
 
   registerOnChange(onChange: any) {
     this.form.valueChanges
-      .pipe(takeUntil(this.destroy$))
       .pipe(
+        takeUntil(this.destroy$),
         debounceTime(dueTime),
         distinctUntilChanged((a: CourierInterface, b: CourierInterface) => {
           return this.utils.isObjectsEqual(a, b)
-        }),
-        tap((data) => {
-          console.log('courier', data)
         })
       )
       .subscribe(onChange)

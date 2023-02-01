@@ -16,7 +16,13 @@ import {
 import {Store} from '@ngrx/store'
 import {TuiDestroyService} from '@taiga-ui/cdk'
 import {TUI_VALIDATION_ERRORS} from '@taiga-ui/kit'
-import {combineLatest, Observable, takeUntil} from 'rxjs'
+import {
+  combineLatest,
+  debounceTime,
+  distinctUntilChanged,
+  Observable,
+  takeUntil,
+} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {EndCityInterface} from 'src/app/shared/types/end-city.interface'
 import {OfficeInterface} from '../../../../../../../../shared/types/office.interface'
@@ -32,6 +38,9 @@ import {
 } from '../../../../../start-point/store/selectors'
 import {VladivostokOffice} from '../../../../enums/vladivostokOffice'
 import {ParcelFormInterface} from '../../types/parcel-form.interface'
+import {dueTime} from '../../../../../../../../settings'
+import {ParcelInterface} from '../../../../types/parcel.interface'
+import {UtilsService} from '../../../../../../../../shared/services/utils.service'
 
 interface CityLimitInterface {
   name: string
@@ -113,7 +122,8 @@ export class ParcelComponent implements OnInit, AfterViewInit {
   constructor(
     private fb: FormBuilder,
     private store: Store,
-    @Self() @Inject(TuiDestroyService) private destroy$: TuiDestroyService
+    @Self() @Inject(TuiDestroyService) private destroy$: TuiDestroyService,
+    private utils: UtilsService
   ) {}
 
   ngOnInit(): void {
@@ -247,7 +257,18 @@ export class ParcelComponent implements OnInit, AfterViewInit {
   }
 
   registerOnChange(onChange: any) {
-    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(onChange)
+    this.form.valueChanges
+      .pipe(
+        takeUntil(this.destroy$),
+        debounceTime(dueTime),
+        distinctUntilChanged((a: ParcelInterface, b: ParcelInterface) => {
+          return this.utils.isObjectsEqual(a, b)
+        })
+        // tap((parcel) => {
+        //   console.log('parcel', parcel)
+        // })
+      )
+      .subscribe(onChange)
   }
 
   setDisabledState(disabled: boolean) {
