@@ -25,9 +25,15 @@ export class SiteService {
     return this.http.get<T>(`${this.url}/page/${api}`)
   }
 
-  sendToBitrix(payload) {
+  sendTaskFormToBitrix(payload) {
     return this.http.get(
       `https://bitrix.busbox.guru/rest/1/xk0350plspumy30m/crm.lead.add?fields[TITLE]=Форма описания нестандартной задачи&fields[NAME]=${payload.name}&fields[PHONE][0][VALUE_TYPE]=WORK&fields[PHONE][0][VALUE]=${payload.phone}&fields[EMAIL][0][VALUE_TYPE]=WORK&fields[EMAIL][0][VALUE]=${payload.email}&fields[SOURCE_ID]=UC_90HLMC&fields[COMMENTS]=${payload.message}&fields[TRACE]=${payload.trace}`
+    )
+  }
+
+  sendSupportFormToBitrix(payload) {
+    return this.http.get(
+      `https://bitrix.busbox.guru/rest/1/xk0350plspumy30m/crm.lead.add?fields[TITLE]=Support form&fields[NAME]=${payload.name}&fields[PHONE][0][VALUE_TYPE]=WORK&fields[PHONE][0][VALUE]=${payload.phone}&fields[EMAIL][0][VALUE_TYPE]=WORK&fields[EMAIL][0][VALUE]=${payload.email}&fields[SOURCE_ID]=UC_90HLMC&fields[COMMENTS]=${payload.message}&fields[TRACE]=${payload.trace}`
     )
   }
 }

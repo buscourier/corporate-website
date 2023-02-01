@@ -9,14 +9,16 @@ import {FormBuilder, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
 import {TuiDestroyService} from '@taiga-ui/cdk'
 import {TUI_VALIDATION_ERRORS} from '@taiga-ui/kit'
-import {Observable, takeUntil} from 'rxjs'
+import {filter, Observable, of, switchMap, takeUntil} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {Pattern} from '../../pattern/pattern'
 import {sendMessageAction} from './store/actions/send-message.action'
+import {sendWebhookAction} from './store/actions/send-webhook.action'
 import {
+  backendErrorsSelector,
+  isPristineSelector,
   isSubmittingSelector,
   responseSelector,
-  validationErrorsSelector,
 } from './store/selectors'
 import {ResponseInterface} from './types/response.interface'
 
@@ -34,7 +36,7 @@ import {ResponseInterface} from './types/response.interface'
           return `Минимум ${error.requiredLength} символа`
         },
         pattern: (error) => {
-          return `Только буквы`
+          return `Некорректные данные`
         },
       },
     },
@@ -45,10 +47,10 @@ import {ResponseInterface} from './types/response.interface'
 export class SupportFormComponent implements OnInit {
   isSubmitting$: Observable<boolean>
   response$: Observable<ResponseInterface>
-  validationErrors$: Observable<string>
+  backendErrors$: Observable<string>
 
   form = this.fb.group({
-    sender: [
+    name: [
       '',
       [
         Validators.required,
@@ -57,7 +59,14 @@ export class SupportFormComponent implements OnInit {
       ],
     ],
     phone: ['', [Validators.required]],
-    email: ['', [Validators.required, Validators.email]],
+    email: [
+      '',
+      [
+        Validators.required,
+        Validators.email,
+        Validators.pattern(Pattern.email),
+      ],
+    ],
     message: [
       '',
       [
@@ -67,6 +76,7 @@ export class SupportFormComponent implements OnInit {
       ],
     ],
     agree: [false, [Validators.required]],
+    trace: [''],
   })
 
   constructor(
@@ -77,17 +87,34 @@ export class SupportFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.isSubmitting$ = this.store.select(isSubmittingSelector)
-    this.validationErrors$ = this.store.select(validationErrorsSelector)
+    this.backendErrors$ = this.store.select(backendErrorsSelector)
 
     this.store
       .select(responseSelector)
       .pipe(
-        tap(() => {
-          this.form.reset()
+        filter(Boolean),
+        switchMap(() => {
+          this.store.dispatch(sendWebhookAction({payload: this.form.value}))
+          return of(null)
         }),
         takeUntil(this.destroy$)
       )
       .subscribe()
+
+    this.store
+      .select(isPristineSelector)
+      .pipe(
+        tap((isPristine: boolean) => {
+          if (isPristine) {
+            this.form.reset()
+          }
+        }),
+        takeUntil(this.destroy$)
+      )
+      .subscribe()
+
+    //@ts-ignore
+    this.form.get('trace').setValue(window.b24Tracker.guest.getTrace())
   }
 
   onSubmit() {

@@ -5,11 +5,11 @@ import {TuiDialogService} from '@taiga-ui/core'
 import {PolymorpheusComponent} from '@tinkoff/ng-polymorpheus'
 import {catchError, map, of, switchMap} from 'rxjs'
 import {tap} from 'rxjs/operators'
-import {AlertComponent} from '../../../../../shared/components/alert/alert.component'
-import {SiteService} from '../../../../../shared/services/site.service'
-import {BackendErrorsInterface} from '../../../../../shared/types/backend-errors.interface'
-import {WebhookInterface} from '../../../../../shared/types/webhook.interface'
-import {clearFormAction} from '../actions/clear-form'
+import {SiteService} from '../../../../services/site.service'
+import {BackendErrorsInterface} from '../../../../types/backend-errors.interface'
+import {WebhookInterface} from '../../../../types/webhook.interface'
+import {AlertComponent} from '../../../alert/alert.component'
+import {clearFormAction} from '../actions/clear-form.action'
 import {
   sendWebhookAction,
   sendWebhookFailureAction,
@@ -30,7 +30,7 @@ export class SendWebhookEffect {
     return this.actions$.pipe(
       ofType(sendWebhookAction),
       switchMap(({payload}) => {
-        return this.siteService.sendTaskFormToBitrix(payload).pipe(
+        return this.siteService.sendSupportFormToBitrix(payload).pipe(
           map((response: WebhookInterface) => {
             return sendWebhookSuccessAction({response})
           }),

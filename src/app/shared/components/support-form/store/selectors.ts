@@ -10,12 +10,17 @@ export const isSubmittingSelector = createSelector(
   (state: SupportFormStateInterface) => state.isSubmitting
 )
 
+export const isPristineSelector = createSelector(
+  supportFormFeatureSelector,
+  (state: SupportFormStateInterface) => state.isPristine
+)
+
 export const responseSelector = createSelector(
   supportFormFeatureSelector,
   (state: SupportFormStateInterface) => state.response
 )
 
-export const validationErrorsSelector = createSelector(
+export const backendErrorsSelector = createSelector(
   supportFormFeatureSelector,
-  (state: SupportFormStateInterface) => state.validationErrors
+  (state: SupportFormStateInterface) => state.backendErrors
 )

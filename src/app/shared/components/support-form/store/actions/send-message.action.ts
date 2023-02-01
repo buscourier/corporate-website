@@ -1,4 +1,5 @@
 import {createAction, props} from '@ngrx/store'
+import {BackendErrorsInterface} from '../../../../types/backend-errors.interface'
 import {ActionTypes} from '../action-types'
 import {SupportFormInterface} from '../../types/support-form.interface'
 import {ResponseInterface} from '../../types/response.interface'
@@ -15,5 +16,5 @@ export const sendMessageSuccessAction = createAction(
 
 export const sendMessageFailureAction = createAction(
   ActionTypes.SEND_MESSAGE_FAILURE,
-  props<{errors: string}>()
+  props<{backendErrors: BackendErrorsInterface}>()
 )

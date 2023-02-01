@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core'
 import {CommonModule} from '@angular/common'
+import {SendWebhookEffect} from './store/effects/send-webhook.effect'
 import {SupportFormComponent} from './support-form.component'
 import {ReactiveFormsModule} from '@angular/forms'
 import {Store, StoreModule} from '@ngrx/store'
@@ -27,7 +28,7 @@ import {
     CommonModule,
     ReactiveFormsModule,
     StoreModule.forFeature(SUPPORT_FORM_FEATURE, reducer),
-    EffectsModule.forFeature([SendMessageEffect]),
+    EffectsModule.forFeature([SendMessageEffect, SendWebhookEffect]),
     TuiInputModule,
     TuiTextfieldControllerModule,
     TuiErrorModule,

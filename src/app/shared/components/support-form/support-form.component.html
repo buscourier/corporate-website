@@ -6,20 +6,20 @@
         <sup
           class="text-red"
           *ngIf="
-            form.get('sender').errors && form.get('sender').hasError('required')
+            form.get('name').errors && form.get('name').hasError('required')
           "
           >*</sup
         >
       </span>
       <tui-input
         tuiTextfieldSize="m"
-        formControlName="sender"
+        formControlName="name"
         [tuiTextfieldLabelOutside]="true"
       >
         <input tuiTextfield type="text" />
       </tui-input>
       <tui-error
-        formControlName="sender"
+        formControlName="name"
         [error]="[] | tuiFieldError | async"
       ></tui-error>
     </label>

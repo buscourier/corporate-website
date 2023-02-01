@@ -4,6 +4,7 @@ export const SUPPORT_FORM_FEATURE = 'supportForm'
 
 export const initialState: SupportFormStateInterface = {
   isSubmitting: false,
+  isPristine: true,
   response: null,
-  validationErrors: null,
+  backendErrors: null,
 }

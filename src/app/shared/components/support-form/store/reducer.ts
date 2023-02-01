@@ -1,4 +1,5 @@
 import {Action, createReducer, on} from '@ngrx/store'
+import {clearFormAction} from './actions/clear-form.action'
 import {
   sendMessageAction,
   sendMessageFailureAction,
@@ -21,17 +22,22 @@ const sendMessageReducer = createReducer(
     (state, {response}): SupportFormStateInterface => ({
       ...state,
       isSubmitting: false,
+      isPristine: false,
       response,
     })
   ),
   on(
     sendMessageFailureAction,
-    (state, {errors}): SupportFormStateInterface => ({
+    (state, {backendErrors}): SupportFormStateInterface => ({
       ...state,
       isSubmitting: false,
-      validationErrors: errors,
+      isPristine: false,
+      backendErrors,
     })
-  )
+  ),
+  on(clearFormAction, () => ({
+    ...initialState,
+  }))
 )
 
 export function reducer(state: SupportFormStateInterface, action: Action) {
