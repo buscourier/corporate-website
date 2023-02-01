@@ -264,9 +264,6 @@ export class ParcelComponent implements OnInit, AfterViewInit {
           return this.utils.isObjectsEqual(a, b)
         }),
         takeUntil(this.destroy$)
-        // tap((parcel) => {
-        //   console.log('parcel', parcel)
-        // })
       )
       .subscribe(onChange)
   }

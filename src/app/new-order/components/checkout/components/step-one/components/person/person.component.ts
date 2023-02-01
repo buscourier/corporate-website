@@ -88,7 +88,6 @@ export class PersonComponent implements OnInit, AfterViewInit {
             }
           ),
           tap((values: PersonStateInterface) => {
-            console.log('debounce')
             this.store.dispatch(changeValuesAction(values))
           }),
           tap(() => {

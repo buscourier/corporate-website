@@ -11,7 +11,16 @@ import {Store} from '@ngrx/store'
 import {TuiDestroyService} from '@taiga-ui/cdk'
 import {TuiTextMaskOptions} from '@taiga-ui/core'
 import {TUI_VALIDATION_ERRORS, tuiItemsHandlersProvider} from '@taiga-ui/kit'
-import {combineLatest, filter, Observable, takeUntil, tap, using} from 'rxjs'
+import {
+  combineLatest,
+  debounceTime,
+  distinctUntilChanged,
+  filter,
+  Observable,
+  takeUntil,
+  tap,
+  using,
+} from 'rxjs'
 import {currentUserSelector} from 'src/app/auth/store/selectors'
 import {
   STRINGIFY_CONFIDANT,
@@ -32,6 +41,9 @@ import {
   senderSelector,
 } from './store/selectors'
 import {SenderStateInterface} from './types/sender-state.interface'
+import {dueTime} from '../../../../../../../settings'
+import {PersonStateInterface} from '../../../step-one/components/person/types/person-state.interface'
+import {UtilsService} from '../../../../../../../shared/services/utils.service'
 
 @Component({
   selector: 'app-sender',
@@ -95,6 +107,12 @@ export class SenderComponent implements OnInit, AfterViewInit {
     () =>
       this.form.valueChanges
         .pipe(
+          // debounceTime(dueTime),
+          distinctUntilChanged(
+            (a: SenderStateInterface, b: SenderStateInterface) => {
+              return this.utils.isObjectsEqual(a, b)
+            }
+          ),
           tap((values: SenderStateInterface) => {
             this.store.dispatch(changeValuesAction(values))
           }),
@@ -114,6 +132,7 @@ export class SenderComponent implements OnInit, AfterViewInit {
   constructor(
     private fb: FormBuilder,
     private store: Store,
+    private utils: UtilsService,
     @Self() @Inject(TuiDestroyService) private destroy$: TuiDestroyService
   ) {}
 
