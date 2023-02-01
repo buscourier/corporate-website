@@ -62,6 +62,8 @@ import {
   officesSelector,
   tabsSelector,
 } from '../../store/selectors'
+import {resetOrdersAction} from '../../../orders/store/actions/reset-orders.action'
+import {calculateTotalSumAction} from '../../../../../components/sidebar/store/actions/calculate-total-sum.action'
 
 @Component({
   selector: 'app-end-point',
@@ -127,9 +129,9 @@ export class EndPointComponent implements OnInit {
       this.get.valueChanges
         .pipe(
           tap((get: OfficeInterface) => {
-            if (this.resetProps && !this.form.pristine) {
-              this.reset()
-            }
+            // if (this.resetProps && !this.form.pristine) {
+            //   this.reset()
+            // }
 
             this.store.dispatch(changeOfficeAction({get}))
           })
@@ -234,11 +236,11 @@ export class EndPointComponent implements OnInit {
     )
 
     this.activeTab$ = this.store.select(activeTabSelector).pipe(
-      tap(() => {
-        if (this.resetProps && !this.form.pristine) {
-          this.reset()
-        }
-      }),
+      // tap(() => {
+      //   if (this.resetProps && !this.form.pristine) {
+      //     this.reset()
+      //   }
+      // }),
       delay(0),
       tap((tab: any) => {
         switch (tab) {
@@ -357,7 +359,7 @@ export class EndPointComponent implements OnInit {
       .pipe(
         tap((isPristine: boolean) => {
           if (isPristine) {
-            // this.form.reset()
+            this.form.reset()
           }
         }),
         takeUntil(this.destroy$)
@@ -406,7 +408,8 @@ export class EndPointComponent implements OnInit {
   }
 
   reset() {
-    // this.store.dispatch(resetOrdersAction())
+    this.store.dispatch(resetOrdersAction())
+    this.store.dispatch(calculateTotalSumAction({isTotalSumCalculated: false}))
   }
 
   onSearchChange(searchQuery: string | null): void {

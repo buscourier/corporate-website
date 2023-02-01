@@ -29,6 +29,7 @@ import {
   using,
 } from 'rxjs'
 import {tap} from 'rxjs/operators'
+import {calculateTotalSumAction} from 'src/app/new-order/components/sidebar/store/actions/calculate-total-sum.action'
 import {ModalMapComponent} from '../../../../../../shared/components/modal-map/modal-map.component'
 import {STRINGIFY_CITIES} from '../../../../../../shared/handlers/string-handlers'
 import {UtilsService} from '../../../../../../shared/services/utils.service'
@@ -57,6 +58,8 @@ import {
   tabsSelector,
 } from '../../store/selectors'
 import {initialState} from '../../store/state'
+import {resetOrdersAction} from '../../../orders/store/actions/reset-orders.action'
+import {resetEndPointAction} from '../../../end-point/store/actions/reset-end-point.action'
 
 @Component({
   selector: 'app-start-point',
@@ -128,9 +131,9 @@ export class StartPointComponent implements OnInit {
       this.give.valueChanges
         .pipe(
           tap((give: OfficeInterface) => {
-            if (this.resetProps && !this.form.pristine) {
-              this.reset()
-            }
+            // if (this.resetProps && !this.form.pristine) {
+            //   this.reset()
+            // }
 
             this.store.dispatch(changeOfficeAction({give}))
           })
@@ -235,11 +238,11 @@ export class StartPointComponent implements OnInit {
     )
 
     this.activeTab$ = this.store.select(activeTabSelector).pipe(
-      tap(() => {
-        if (this.resetProps && !this.form.pristine) {
-          this.reset()
-        }
-      }),
+      // tap(() => {
+      //   if (this.resetProps && !this.form.pristine) {
+      //     this.reset()
+      //   }
+      // }),
       tap((tab: string) => {
         switch (tab) {
           case 'give':
@@ -324,8 +327,8 @@ export class StartPointComponent implements OnInit {
       .pipe(
         tap((isPristine: boolean) => {
           if (isPristine) {
-            // this.form.reset()
-            // this.date.setValue(this.setCurrentDate())
+            this.form.reset()
+            this.date.setValue(this.setCurrentDate())
           }
         }),
         takeUntil(this.destroy$)
@@ -379,9 +382,9 @@ export class StartPointComponent implements OnInit {
   }
 
   reset() {
-    // this.store.dispatch(resetEndPointAction())
-    // this.store.dispatch(resetOrdersAction())
-    // this.store.dispatch(calculateTotalSumAction({isTotalSumCalculated: false}))
+    this.store.dispatch(resetEndPointAction())
+    this.store.dispatch(resetOrdersAction())
+    this.store.dispatch(calculateTotalSumAction({isTotalSumCalculated: false}))
   }
 
   getMinDate() {

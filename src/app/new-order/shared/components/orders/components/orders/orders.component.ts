@@ -168,7 +168,7 @@ export class OrdersComponent implements OnInit {
       .pipe(
         tap((isPristine: boolean) => {
           if (isPristine) {
-            // this.form.reset()
+            this.form.reset()
           }
         }),
         takeUntil(this.destroy$)
