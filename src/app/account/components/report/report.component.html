@@ -208,17 +208,18 @@
           [length]="pages"
           [index]="pageIndex"
           (indexChange)="goToPage($event)"
-          class="md:ml-auto"
+          class="md:ml-auto md:mr-auto lg:mr-0"
         ></tui-pagination>
-        <button
-          type="button"
-          tuiButton
-          class="md:ml-auto"
-          size="m"
-          (click)="exportToExcel('xlsx')"
-        >
-          Экпорт в Exel
-        </button>
+        <div class="md:ml-auto hidden lg:block">
+          <button
+            type="button"
+            tuiButton
+            size="m"
+            (click)="exportToExcel('xlsx')"
+          >
+            Экпорт в Exel
+          </button>
+        </div>
       </div>
       <p
         *ngIf="!isOrdersLoading && !orders"
