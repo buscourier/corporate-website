@@ -20,6 +20,7 @@ import {SiteService} from '../shared/services/site.service'
 import {FeedbackRoutingModule} from './feedback-routing.module'
 import {FeedbackComponent} from './feedback.component'
 import {SendMessageEffect} from './store/effects/send-message.effect'
+import {SendWebhookEffect} from './store/effects/send-webhook.effect'
 import {reducer} from './store/reducer'
 import {FEEDBACK_FEATURE} from './store/state'
 
@@ -29,7 +30,7 @@ import {FEEDBACK_FEATURE} from './store/state'
     CommonModule,
     FeedbackRoutingModule,
     StoreModule.forFeature(FEEDBACK_FEATURE, reducer),
-    EffectsModule.forFeature([SendMessageEffect]),
+    EffectsModule.forFeature([SendMessageEffect, SendWebhookEffect]),
     ReactiveFormsModule,
     TuiInputModule,
     TuiTextfieldControllerModule,

@@ -2,15 +2,16 @@ import {ChangeDetectionStrategy, Component, Inject, Self} from '@angular/core'
 import {FormBuilder, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
 import {TuiDestroyService} from '@taiga-ui/cdk'
-import {Observable, takeUntil} from 'rxjs'
+import {Observable, of, switchMap, takeUntil} from 'rxjs'
 import {tap} from 'rxjs/operators'
-
 import {Pattern} from '../shared/pattern/pattern'
 import {sendMessageAction} from './store/actions/send-message.action'
+import {sendWebhookAction} from './store/actions/send-webhook.action'
 import {
   isSubmittingSelector,
   responseSelector,
-  validationErrorsSelector,
+  backendErrorsSelector,
+  isPristineSelector,
 } from './store/selectors'
 import {ResponseInterface} from './types/response.interface'
 
@@ -24,7 +25,7 @@ import {ResponseInterface} from './types/response.interface'
 export class FeedbackComponent {
   isSubmitting$: Observable<boolean>
   response$: Observable<ResponseInterface>
-  validationErrors$: Observable<string>
+  backendErrors$: Observable<string>
 
   types = [
     {id: 1, name: 'Вопрос'},
@@ -36,7 +37,7 @@ export class FeedbackComponent {
   type = this.fb.control('')
 
   form = this.fb.group({
-    sender: [
+    name: [
       '',
       [
         Validators.required,
@@ -45,7 +46,14 @@ export class FeedbackComponent {
       ],
     ],
     phone: ['', [Validators.required]],
-    email: ['', [Validators.required, Validators.email]],
+    email: [
+      '',
+      [
+        Validators.required,
+        Validators.email,
+        Validators.pattern(Pattern.email),
+      ],
+    ],
     message: [
       '',
       [
@@ -55,6 +63,7 @@ export class FeedbackComponent {
       ],
     ],
     agree: [false, [Validators.required]],
+    trace: [''],
   })
 
   constructor(
@@ -65,17 +74,33 @@ export class FeedbackComponent {
 
   ngOnInit(): void {
     this.isSubmitting$ = this.store.select(isSubmittingSelector)
-    this.validationErrors$ = this.store.select(validationErrorsSelector)
+    this.backendErrors$ = this.store.select(backendErrorsSelector)
 
     this.store
       .select(responseSelector)
       .pipe(
-        tap(() => {
-          this.form.reset()
+        switchMap(() => {
+          this.store.dispatch(sendWebhookAction({payload: this.form.value}))
+          return of(null)
         }),
         takeUntil(this.destroy$)
       )
       .subscribe()
+
+    this.store
+      .select(isPristineSelector)
+      .pipe(
+        tap((isPristine: boolean) => {
+          if (isPristine) {
+            this.form.reset()
+          }
+        }),
+        takeUntil(this.destroy$)
+      )
+      .subscribe()
+
+    //@ts-ignore
+    this.form.get('trace').setValue(window.b24Tracker.guest.getTrace())
   }
 
   onSubmit() {

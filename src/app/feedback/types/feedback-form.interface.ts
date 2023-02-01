@@ -1,5 +1,5 @@
 export interface FeedbackFormInterface {
-  sender?: string
+  name?: string
   phone?: string
   email?: string
   message?: string

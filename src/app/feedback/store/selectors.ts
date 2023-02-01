@@ -10,12 +10,17 @@ export const isSubmittingSelector = createSelector(
   (state: FeedbackStateInterface) => state.isSubmitting
 )
 
+export const isPristineSelector = createSelector(
+  feedbackFeatureSelector,
+  (state: FeedbackStateInterface) => state.isPristine
+)
+
 export const responseSelector = createSelector(
   feedbackFeatureSelector,
   (state: FeedbackStateInterface) => state.response
 )
 
-export const validationErrorsSelector = createSelector(
+export const backendErrorsSelector = createSelector(
   feedbackFeatureSelector,
-  (state: FeedbackStateInterface) => state.validationErrors
+  (state: FeedbackStateInterface) => state.backendErrors
 )

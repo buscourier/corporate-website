@@ -7,6 +7,7 @@ import {catchError, delay, map, of, switchMap} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {AlertComponent} from '../../../shared/components/alert/alert.component'
 import {SiteService} from '../../../shared/services/site.service'
+import {BackendErrorsInterface} from '../../../shared/types/backend-errors.interface'
 import {ResponseInterface} from '../../types/response.interface'
 import {
   sendMessageAction,
@@ -32,60 +33,11 @@ export class SendMessageEffect {
           map((response: ResponseInterface) =>
             sendMessageSuccessAction({response})
           ),
-          catchError((errorResponse: HttpErrorResponse) => {
-            return of(sendMessageFailureAction({errors: ''}))
+          catchError((backendErrors: BackendErrorsInterface) => {
+            return of(sendMessageFailureAction({backendErrors}))
           })
         )
       )
     )
-  )
-
-  success$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(sendMessageSuccessAction),
-        tap(() => {
-          this.dialogService
-            .open<any>(
-              new PolymorpheusComponent(AlertComponent, this.injector),
-              {
-                data: {
-                  heading:
-                    'Ваше сообщение отправлено. <br /> Мы свяжемся с вами в ближайшее время!',
-                  success: true,
-                },
-                dismissible: true,
-                closeable: false,
-                size: 'auto',
-              }
-            )
-            .subscribe() //TODO: unsubscribe?
-        })
-      ),
-    {dispatch: false}
-  )
-
-  failure$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(sendMessageFailureAction),
-        tap(() => {
-          this.dialogService
-            .open<any>(
-              new PolymorpheusComponent(AlertComponent, this.injector),
-              {
-                data: {
-                  heading: 'Ваше сообщение не доставлено',
-                  failure: true,
-                },
-                dismissible: true,
-                closeable: false,
-                size: 'auto',
-              }
-            )
-            .subscribe() //TODO: unsubscribe?
-        })
-      ),
-    {dispatch: false}
   )
 }

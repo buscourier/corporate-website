@@ -4,6 +4,7 @@ export const FEEDBACK_FEATURE = 'feedback'
 
 export const initialState: FeedbackStateInterface = {
   isSubmitting: false,
+  isPristine: true,
   response: null,
-  validationErrors: null,
+  backendErrors: null,
 }

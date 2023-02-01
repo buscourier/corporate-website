@@ -1,5 +1,6 @@
 import {Action, createReducer, on} from '@ngrx/store'
 import {FeedbackStateInterface} from '../types/feedback-state.interface'
+import {clearFormAction} from './actions/clear-form.action'
 import {
   sendMessageAction,
   sendMessageFailureAction,
@@ -14,6 +15,7 @@ const feedbackReducer = createReducer(
     (state): FeedbackStateInterface => ({
       ...state,
       isSubmitting: true,
+      isPristine: false,
     })
   ),
   on(
@@ -26,12 +28,15 @@ const feedbackReducer = createReducer(
   ),
   on(
     sendMessageFailureAction,
-    (state, {errors}): FeedbackStateInterface => ({
+    (state, {backendErrors}): FeedbackStateInterface => ({
       ...state,
       isSubmitting: false,
-      validationErrors: errors,
+      backendErrors,
     })
-  )
+  ),
+  on(clearFormAction, () => ({
+    ...initialState,
+  }))
 )
 
 export function reducer(state: FeedbackStateInterface, action: Action) {
