@@ -5,5 +5,5 @@ export const TASK_FORM_FEATURE = 'taskForm'
 export const initialState: TaskFormStateInterface = {
   isSubmitting: false,
   response: null,
-  validationErrors: null,
+  backendErrors: null,
 }

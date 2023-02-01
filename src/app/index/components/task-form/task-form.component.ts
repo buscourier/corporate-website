@@ -9,15 +9,16 @@ import {FormBuilder, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
 import {TuiDestroyService} from '@taiga-ui/cdk'
 import {TUI_VALIDATION_ERRORS} from '@taiga-ui/kit'
-import {Observable, takeUntil} from 'rxjs'
+import {filter, Observable, of, switchMap, takeUntil} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {Pattern} from '../../../shared/pattern/pattern'
 import {SiteService} from '../../../shared/services/site.service'
 import {sendMessageAction} from './store/actions/send-message.action'
+import {sendWebhookAction} from './store/actions/send-webhook.action'
 import {
+  backendErrorsSelector,
   isSubmittingSelector,
   responseSelector,
-  validationErrorsSelector,
 } from './store/selectors'
 
 @Component({
@@ -44,7 +45,7 @@ import {
 })
 export class TaskFormComponent implements OnInit {
   isSubmitting$: Observable<boolean>
-  validationErrors$: Observable<string>
+  backendErrors$: Observable<string>
 
   form = this.fb.group({
     name: [
@@ -78,17 +79,16 @@ export class TaskFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.isSubmitting$ = this.store.select(isSubmittingSelector)
-    this.validationErrors$ = this.store.select(validationErrorsSelector)
+    this.backendErrors$ = this.store.select(backendErrorsSelector)
 
     this.store
       .select(responseSelector)
       .pipe(
-        tap((response: boolean) => {
-          if (response) {
-            this.siteService.sendToBitrix(this.form.value)
-          }
-
-          this.form.reset()
+        filter(Boolean),
+        switchMap(() => {
+          this.store.dispatch(sendWebhookAction({payload: this.form.value}))
+          return of(null)
+          // this.form.reset()
         }),
         takeUntil(this.destroy$)
       )

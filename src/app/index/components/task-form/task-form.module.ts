@@ -17,6 +17,7 @@ import {
 } from '@taiga-ui/kit'
 import {SiteService} from 'src/app/shared/services/site.service'
 import {SendMessageEffect} from './store/effects/send-message.effect'
+import {SendWebhookEffect} from './store/effects/send-webhook.effect'
 import {reducer} from './store/reducer'
 import {TASK_FORM_FEATURE} from './store/state'
 import {TaskFormComponent} from './task-form.component'
@@ -35,7 +36,7 @@ import {TaskFormComponent} from './task-form.component'
     TuiCheckboxLabeledModule,
     TuiButtonModule,
     StoreModule.forFeature(TASK_FORM_FEATURE, reducer),
-    EffectsModule.forFeature([SendMessageEffect]),
+    EffectsModule.forFeature([SendMessageEffect, SendWebhookEffect]),
   ],
   exports: [TaskFormComponent],
   providers: [SiteService],

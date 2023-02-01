@@ -26,10 +26,10 @@ const sendMessageReducer = createReducer(
   ),
   on(
     sendMessageFailureAction,
-    (state, {errors}): TaskFormStateInterface => ({
+    (state, {backendErrors}): TaskFormStateInterface => ({
       ...state,
       isSubmitting: false,
-      validationErrors: errors,
+      backendErrors,
     })
   )
 )

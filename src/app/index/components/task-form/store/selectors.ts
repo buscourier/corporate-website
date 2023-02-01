@@ -15,7 +15,7 @@ export const responseSelector = createSelector(
   (state: TaskFormStateInterface) => state.response
 )
 
-export const validationErrorsSelector = createSelector(
+export const backendErrorsSelector = createSelector(
   taskFormFeatureSelector,
-  (state: TaskFormStateInterface) => state.validationErrors
+  (state: TaskFormStateInterface) => state.backendErrors
 )
