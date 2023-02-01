@@ -5,9 +5,9 @@ import {
   OnInit,
   Self,
 } from '@angular/core'
-import {FormBuilder} from '@angular/forms'
+import {FormBuilder, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
-import {filter, interval, Observable, switchMap, takeUntil} from 'rxjs'
+import {filter, interval, map, Observable, switchMap, takeUntil} from 'rxjs'
 import {getStatusesAction} from './store/actions/get-statuses.action'
 import {
   backendErrorsSelector,
@@ -18,6 +18,7 @@ import {OrderStatusInterface} from './types/order-status.interface'
 import {ActivatedRoute, Params} from '@angular/router'
 import {tap} from 'rxjs/operators'
 import {TuiDestroyService} from '@taiga-ui/cdk'
+import {BackendErrorsInterface} from '../shared/types/backend-errors.interface'
 
 @Component({
   selector: 'app-find-order',
@@ -31,7 +32,10 @@ export class FindOrderComponent implements OnInit {
   statuses$: Observable<OrderStatusInterface[]>
   backendErrors$: Observable<string>
 
-  orderId = this.fb.control('')
+  orderId = this.fb.control('', [
+    Validators.minLength(7),
+    Validators.maxLength(7),
+  ])
 
   form = this.fb.group({
     orderId: this.orderId,
@@ -61,7 +65,11 @@ export class FindOrderComponent implements OnInit {
   ngOnInit(): void {
     this.isStatusesLoading$ = this.store.select(isStatusesLoadingSelector)
     this.statuses$ = this.store.select(statusesSelector)
-    this.backendErrors$ = this.store.select(backendErrorsSelector)
+    this.backendErrors$ = this.store.select(backendErrorsSelector).pipe(
+      map((errors: BackendErrorsInterface) => {
+        return errors ? errors.toString().split(': ')[1] : null
+      })
+    )
     this.route.queryParams
       .pipe(
         tap(({orderId}: Params) => {

@@ -21,7 +21,13 @@
       >
         <input tuiTextfield type="text" maxlength="7" />
       </tui-input>
-      <button tuiButton type="submit" size="m" [showLoader]="isStatusesLoading">
+      <button
+        tuiButton
+        type="submit"
+        size="m"
+        [showLoader]="isStatusesLoading"
+        [disabled]="orderId.value.length !== 7 || form.invalid"
+      >
         Найти посылку
       </button>
       <div class="text-xs">

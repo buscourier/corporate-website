@@ -3,7 +3,15 @@ import {FormBuilder} from '@angular/forms'
 import {Store} from '@ngrx/store'
 import {TuiDialogContext, tuiLoaderOptionsProvider} from '@taiga-ui/core'
 import {POLYMORPHEUS_CONTEXT} from '@tinkoff/ng-polymorpheus'
-import {combineLatest, filter, map, mergeMap, Observable, startWith} from 'rxjs'
+import {
+  combineLatest,
+  debounceTime,
+  filter,
+  map,
+  mergeMap,
+  Observable,
+  startWith,
+} from 'rxjs'
 import {EndCityInterface} from '../../types/end-city.interface'
 import {StartCityInterface} from '../../types/start-city.interface'
 import {getEndCitiesAction} from './store/actions/get-end-cities.action'
@@ -16,6 +24,7 @@ import {
 } from './store/selectors'
 import {CitiesGroupInterface} from './types/cities-group.interface'
 import {CityNameType} from './types/city-name.type'
+import {dueTime} from '../../../settings'
 
 @Component({
   selector: 'app-cities',
@@ -83,6 +92,7 @@ export class CitiesComponent implements OnInit {
     this.fetchData()
 
     this.searchResult$ = this.search.valueChanges.pipe(
+      debounceTime(dueTime),
       startWith(this.search.value),
       mergeMap((search: string) => {
         return this.cities$.pipe(
