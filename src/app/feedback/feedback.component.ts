@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component, Inject, Self} from '@angular/core'
 import {FormBuilder, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
 import {TuiDestroyService} from '@taiga-ui/cdk'
-import {Observable, of, switchMap, takeUntil} from 'rxjs'
+import {filter, Observable, of, switchMap, takeUntil} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {Pattern} from '../shared/pattern/pattern'
 import {sendMessageAction} from './store/actions/send-message.action'
@@ -79,6 +79,7 @@ export class FeedbackComponent {
     this.store
       .select(responseSelector)
       .pipe(
+        filter(Boolean),
         switchMap(() => {
           this.store.dispatch(sendWebhookAction({payload: this.form.value}))
           return of(null)
