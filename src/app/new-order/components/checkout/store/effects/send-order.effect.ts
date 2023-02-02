@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core'
 import {ActivatedRoute, Router} from '@angular/router'
 import {Actions, createEffect, ofType} from '@ngrx/effects'
-import {catchError, map, of, switchMap} from 'rxjs'
+import {catchError, delay, map, of, switchMap} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {NewOrderService} from '../../../../shared/services/new-order.service'
 import {
@@ -28,6 +28,7 @@ export class SendOrderEffect {
   sendOrder$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(sendOrderAction),
+      delay(1000),
       switchMap(({order}) => {
         return this.newOrderService.sendOrder(order).pipe(
           map((order: NewOrderResponseInterface) => {
