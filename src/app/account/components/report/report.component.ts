@@ -85,7 +85,7 @@ export class ReportComponent implements OnInit {
     this.initializeValues()
   }
 
-  fetchData() {
+  fetchData(index = null) {
     this.store
       .select(currentUserSelector)
       .pipe(
@@ -104,7 +104,10 @@ export class ReportComponent implements OnInit {
             ...this.filterParams,
           }
 
-          this.pageIndex = 0
+          if (!index) {
+            this.pageIndex = 0
+          }
+
           return this.store.dispatch(getOrdersAction({ordersInput}))
         }),
         take(1)
@@ -179,7 +182,7 @@ export class ReportComponent implements OnInit {
 
   goToPage(index: number): void {
     this.pageIndex = index
-    this.fetchData()
+    this.fetchData(index)
   }
 
   getIdValue(id: string) {
