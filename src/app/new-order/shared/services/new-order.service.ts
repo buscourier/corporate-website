@@ -90,8 +90,6 @@ export class NewOrderService {
   }
 
   sendOrderToBitrix(payload) {
-    console.log('payload', payload)
-
     return this.http.get(
       `https://bitrix.busbox.guru/rest/1/xk0350plspumy30m/crm.lead.add?fields[TITLE]=Форма нового заказа&fields[NAME]=${payload.sender_name}&fields[PHONE][0][VALUE_TYPE]=WORK&fields[PHONE][0][VALUE]=${payload.sender_phone}&fields[SOURCE_ID]=UC_90HLMC&fields[COMMENTS]=${payload.note}&fields[TRACE]=${payload.trace}`
     )

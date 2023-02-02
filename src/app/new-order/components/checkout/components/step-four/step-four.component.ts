@@ -90,8 +90,8 @@ export class StepFourComponent implements OnInit {
     recipient_phone: '',
     orders: [],
     note: '',
-    server: 'test',
     trace: '',
+    // server: 'test',
   }
 
   token = ''

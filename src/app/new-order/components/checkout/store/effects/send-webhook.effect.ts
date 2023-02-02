@@ -31,14 +31,11 @@ export class SendWebhookEffect {
     return this.actions$.pipe(
       ofType(sendWebhookAction),
       switchMap(({order}) => {
-        console.log('web hook')
         return this.newOrderService.sendOrderToBitrix(order).pipe(
           map((response: WebhookInterface) => {
             return sendWebhookSuccessAction({response})
           }),
           catchError((backendErrors: HttpErrorResponse) => {
-            console.log('backendErrors', backendErrors)
-
             return of(
               sendWebhookFailureAction({
                 backendErrors,
@@ -67,7 +64,6 @@ export class SendWebhookEffect {
       return this.actions$.pipe(
         ofType(sendWebhookFailureAction),
         tap(() => {
-          console.log('sendWebhookFailure')
           this.router.navigate(['/new-order', 'checkout', 'failure'])
         })
       )
