@@ -14,4 +14,5 @@ export interface NewOrderInputInterface {
   orders: any[]
   note: string
   server?: string
+  trace: string
 }

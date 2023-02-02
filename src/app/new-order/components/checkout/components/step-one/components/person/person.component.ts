@@ -72,7 +72,14 @@ export class PersonComponent implements OnInit, AfterViewInit {
         Validators.minLength(2),
       ],
     ],
-    email: ['', [Validators.required, Validators.email]],
+    email: [
+      '',
+      [
+        Validators.required,
+        Validators.email,
+        Validators.pattern(Pattern.email),
+      ],
+    ],
     phone: ['', Validators.required],
     role: ['', Validators.required],
   })

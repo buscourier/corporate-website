@@ -10,6 +10,7 @@ import {setCurrentStepAction} from './actions/set-current-step.action'
 import {setPreviousStepAction} from './actions/set-previous-step.action'
 import {updateFinishedStepsAction} from './actions/update-finished-steps.action'
 import {initialState} from './state'
+import {sendWebhookFailureAction} from './actions/send-webhook.action'
 
 const checkoutReducer = createReducer(
   initialState,
@@ -61,11 +62,22 @@ const checkoutReducer = createReducer(
     isSubmitting: false,
     orderResponse: order,
   })),
-  on(sendOrderFailureAction, (state: CheckoutStateInterface, {errors}) => ({
-    ...state,
-    isSubmitting: false,
-    backendErrors: errors,
-  })),
+  on(
+    sendOrderFailureAction,
+    (state: CheckoutStateInterface, {backendErrors}) => ({
+      ...state,
+      isSubmitting: false,
+      backendErrors,
+    })
+  ),
+  on(
+    sendWebhookFailureAction,
+    (state: CheckoutStateInterface, {backendErrors}) => ({
+      ...state,
+      isSubmitting: false,
+      backendErrors,
+    })
+  ),
   on(updateFinishedStepsAction, (state: CheckoutStateInterface, {steps}) => ({
     ...state,
     finishedSteps: {...steps},

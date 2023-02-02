@@ -63,10 +63,12 @@ export class StepFourComponent implements OnInit {
 
   message = this.fb.control('')
   policy = this.fb.control(false)
+  trace = this.fb.control('')
 
   form = this.fb.group({
     message: this.message,
     policy: this.policy,
+    trace: this.trace,
   })
 
   //TODO: need interface
@@ -88,7 +90,8 @@ export class StepFourComponent implements OnInit {
     recipient_phone: '',
     orders: [],
     note: '',
-    // server: 'test',
+    server: 'test',
+    trace: '',
   }
 
   token = ''
@@ -259,6 +262,9 @@ export class StepFourComponent implements OnInit {
         takeUntil(this.destroy$)
       )
       .subscribe()
+
+    //@ts-ignore
+    this.trace.setValue(window.b24Tracker.guest.getTrace())
   }
 
   getParcelDimension(parcel: ParcelInterface) {
@@ -328,10 +334,11 @@ export class StepFourComponent implements OnInit {
   }
 
   onSubmit() {
-    const {message} = this.form.value
+    const {message, trace} = this.form.value
     this.note.unshift(message)
 
     this.orderData.note = this.note.join(', ')
+    this.orderData.trace = trace
     this.store.dispatch(sendOrderAction({order: this.orderData}))
   }
 }

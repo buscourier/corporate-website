@@ -1,5 +1,6 @@
 import {NewOrderInputInterface} from './new-order-input.interface'
 import {NewOrderResponseInterface} from './new-order-response.interface'
+import {HttpErrorResponse} from '@angular/common/http'
 
 export interface CheckoutStateInterface {
   currentStep: number
@@ -15,5 +16,5 @@ export interface CheckoutStateInterface {
   isSubmitting: boolean
   orderInput: NewOrderInputInterface
   orderResponse: NewOrderResponseInterface
-  backendErrors: string
+  backendErrors: HttpErrorResponse
 }

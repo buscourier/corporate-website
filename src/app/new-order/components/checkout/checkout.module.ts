@@ -18,6 +18,7 @@ import {SendOrderEffect} from './store/effects/send-order.effect'
 import {reducer} from './store/reducer'
 import {CHECKOUT_FEATURE} from './store/state'
 import {FailureModule} from './components/failure/failure.module'
+import {SendWebhookEffect} from './store/effects/send-webhook.effect'
 
 @NgModule({
   declarations: [CheckoutComponent],
@@ -27,7 +28,7 @@ import {FailureModule} from './components/failure/failure.module'
     ReactiveFormsModule,
     CheckoutRoutingModule,
     StoreModule.forFeature(CHECKOUT_FEATURE, reducer),
-    EffectsModule.forFeature([SendOrderEffect]),
+    EffectsModule.forFeature([SendOrderEffect, SendWebhookEffect]),
     StepOneModule,
     StepTwoModule,
     StepThreeModule,

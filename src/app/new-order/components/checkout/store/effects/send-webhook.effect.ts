@@ -9,34 +9,39 @@ import {
   sendOrderFailureAction,
   sendOrderSuccessAction,
 } from '../actions/send-order.action'
+import {
+  sendWebhookAction,
+  sendWebhookFailureAction,
+  sendWebhookSuccessAction,
+} from '../actions/send-webhook.action'
+import {WebhookInterface} from '../../../../../shared/types/webhook.interface'
 import {BackendErrorsInterface} from '../../../../../shared/types/backend-errors.interface'
-import {Store} from '@ngrx/store'
-import {sendWebhookAction} from '../actions/send-webhook.action'
-import {NewOrderResponseInterface} from '../../types/new-order-response.interface'
 import {HttpErrorResponse} from '@angular/common/http'
 
 @Injectable()
-export class SendOrderEffect {
+export class SendWebhookEffect {
   constructor(
     private actions$: Actions,
     private newOrderService: NewOrderService,
     private route: ActivatedRoute,
-    private router: Router,
-    private store: Store
+    private router: Router
   ) {}
 
-  sendOrder$ = createEffect(() => {
+  sendWebhook$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(sendOrderAction),
+      ofType(sendWebhookAction),
       switchMap(({order}) => {
-        return this.newOrderService.sendOrder(order).pipe(
-          map((order: NewOrderResponseInterface) => {
-            return sendOrderSuccessAction({order})
+        console.log('web hook')
+        return this.newOrderService.sendOrderToBitrix(order).pipe(
+          map((response: WebhookInterface) => {
+            return sendWebhookSuccessAction({response})
           }),
           catchError((backendErrors: HttpErrorResponse) => {
+            console.log('backendErrors', backendErrors)
+
             return of(
-              sendOrderFailureAction({
-                backendErrors: backendErrors,
+              sendWebhookFailureAction({
+                backendErrors,
               })
             )
           })
@@ -45,20 +50,24 @@ export class SendOrderEffect {
     )
   })
 
-  sendOrderSuccess$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(sendOrderSuccessAction),
-      switchMap(({order}) => {
-        return of(sendWebhookAction({order}))
-      })
-    )
-  })
-
-  sendOrderFailure$ = createEffect(
+  sendWebhookSuccess$ = createEffect(
     () => {
       return this.actions$.pipe(
-        ofType(sendOrderFailureAction),
+        ofType(sendWebhookSuccessAction),
         tap(() => {
+          this.router.navigate(['/new-order', 'success'])
+        })
+      )
+    },
+    {dispatch: false}
+  )
+
+  sendWebhookFailure$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(sendWebhookFailureAction),
+        tap(() => {
+          console.log('sendWebhookFailure')
           this.router.navigate(['/new-order', 'checkout', 'failure'])
         })
       )
