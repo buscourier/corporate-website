@@ -39,6 +39,7 @@ const ZoneId = {
   'Зона 4': 4,
   'Зона 5': 5,
   'Зона 6': 6,
+  'Спец Зона': 7,
 }
 
 const ParcelWeight = {
