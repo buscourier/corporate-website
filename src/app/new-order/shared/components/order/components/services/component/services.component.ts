@@ -37,6 +37,7 @@ import {allServicesSelector} from '../../../../orders/store/selectors'
 import {dueTime} from '../../../../../../../settings'
 import {ParcelInterface} from '../../../types/parcel.interface'
 import {UtilsService} from '../../../../../../../shared/services/utils.service'
+import {phoneLengthValidator} from '../../../../../../../shared/validators/phone-length.validator'
 
 const SMS = '66'
 const EXT_SMS = '65'
@@ -69,6 +70,9 @@ const INSURANCE_MAX = 30000
         },
         max: (error) => {
           return `Максимальная сумма страхования ${error.max} руб.`
+        },
+        phoneLength: (error) => {
+          return `Нeкорректный номер`
         },
       },
     },
@@ -143,10 +147,7 @@ export class ServicesComponent implements OnInit {
                         [service.id]: false,
                         phone: [
                           {value: '', disabled: true},
-                          [
-                            Validators.required,
-                            // Validators.pattern(Pattern.Phone),
-                          ],
+                          [Validators.required, phoneLengthValidator],
                         ],
                         data: service,
                       })

@@ -21,6 +21,7 @@ import {RecipientStateInterface} from './types/recipient-state.interface'
 import {SenderStateInterface} from '../../../step-two/components/sender/types/sender-state.interface'
 import {dueTime} from '../../../../../../../settings'
 import {UtilsService} from '../../../../../../../shared/services/utils.service'
+import {phoneLengthValidator} from '../../../../../../../shared/validators/phone-length.validator'
 
 @Component({
   selector: 'app-recipient',
@@ -36,6 +37,9 @@ import {UtilsService} from '../../../../../../../shared/services/utils.service'
         },
         pattern: (error) => {
           return `Только буквы`
+        },
+        phoneLength: (error) => {
+          return `Нeкорректный номер`
         },
       },
     },
@@ -53,7 +57,7 @@ export class RecipientComponent implements OnInit, AfterViewInit {
         Validators.minLength(2),
       ],
     ],
-    phone: ['', Validators.required],
+    phone: ['', [Validators.required, phoneLengthValidator]],
   })
 
   formValues$ = using(

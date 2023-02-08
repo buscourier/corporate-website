@@ -44,6 +44,7 @@ import {SenderStateInterface} from './types/sender-state.interface'
 import {dueTime} from '../../../../../../../settings'
 import {PersonStateInterface} from '../../../step-one/components/person/types/person-state.interface'
 import {UtilsService} from '../../../../../../../shared/services/utils.service'
+import {phoneLengthValidator} from '../../../../../../../shared/validators/phone-length.validator'
 
 @Component({
   selector: 'app-sender',
@@ -62,6 +63,9 @@ import {UtilsService} from '../../../../../../../shared/services/utils.service'
         },
         pattern: (error) => {
           return `Только буквы`
+        },
+        phoneLength: (error) => {
+          return `Нeкорректный номер`
         },
       },
     },
@@ -93,7 +97,7 @@ export class SenderComponent implements OnInit, AfterViewInit {
 
   docType = this.fb.control({}, Validators.required)
   docNumber = this.fb.control('', Validators.required)
-  phone = this.fb.control('', Validators.required)
+  phone = this.fb.control('', [Validators.required, phoneLengthValidator])
 
   form = this.fb.group({
     fio: this.fio,

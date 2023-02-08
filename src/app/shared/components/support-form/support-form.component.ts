@@ -21,6 +21,7 @@ import {
   responseSelector,
 } from './store/selectors'
 import {ResponseInterface} from './types/response.interface'
+import {phoneLengthValidator} from '../../validators/phone-length.validator'
 
 @Component({
   selector: 'app-support-form',
@@ -37,6 +38,9 @@ import {ResponseInterface} from './types/response.interface'
         },
         pattern: (error) => {
           return `Некорректные данные`
+        },
+        phoneLength: (error) => {
+          return `Нeкорректный номер`
         },
       },
     },
@@ -58,7 +62,7 @@ export class SupportFormComponent implements OnInit {
         Validators.minLength(2),
       ],
     ],
-    phone: ['', [Validators.required]],
+    phone: ['', [Validators.required, phoneLengthValidator]],
     email: [
       '',
       [

@@ -14,12 +14,32 @@ import {
   isPristineSelector,
 } from './store/selectors'
 import {ResponseInterface} from './types/response.interface'
+import {TUI_VALIDATION_ERRORS} from '@taiga-ui/kit'
+import {phoneLengthValidator} from '../shared/validators/phone-length.validator'
 
 @Component({
   selector: 'app-feedback',
   templateUrl: './feedback.component.html',
   styleUrls: ['./feedback.component.css'],
-  providers: [TuiDestroyService],
+  providers: [
+    TuiDestroyService,
+    {
+      provide: TUI_VALIDATION_ERRORS,
+      useValue: {
+        required: `Заполните`,
+        email: `Некорректный email`,
+        minlength: (error) => {
+          return `Минимум ${error.requiredLength} символа`
+        },
+        pattern: (error) => {
+          return `Некорректные данные`
+        },
+        phoneLength: (error) => {
+          return `Нeкорректный номер`
+        },
+      },
+    },
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FeedbackComponent {
@@ -45,7 +65,7 @@ export class FeedbackComponent {
         Validators.minLength(2),
       ],
     ],
-    phone: ['', [Validators.required]],
+    phone: ['', [Validators.required, phoneLengthValidator]],
     email: [
       '',
       [

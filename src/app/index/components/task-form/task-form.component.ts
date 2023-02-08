@@ -21,6 +21,7 @@ import {
   isSubmittingSelector,
   responseSelector,
 } from './store/selectors'
+import {phoneLengthValidator} from '../../../shared/validators/phone-length.validator'
 
 @Component({
   selector: 'app-task-form',
@@ -37,6 +38,9 @@ import {
         },
         pattern: (error) => {
           return `Некорректные данные`
+        },
+        phoneLength: (error) => {
+          return `Нeкорректный номер`
         },
       },
     },
@@ -57,7 +61,7 @@ export class TaskFormComponent implements OnInit {
         Validators.minLength(2),
       ],
     ],
-    phone: ['', [Validators.required]],
+    phone: ['', [Validators.required, phoneLengthValidator]],
     email: [
       '',
       [

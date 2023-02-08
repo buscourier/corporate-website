@@ -19,6 +19,7 @@ import {isPersonPristineSelector, personSelector} from './store/selectors'
 import {PersonStateInterface} from './types/person-state.interface'
 import {UtilsService} from '../../../../../../../shared/services/utils.service'
 import {dueTime} from '../../../../../../../settings'
+import {phoneLengthValidator} from '../../../../../../../shared/validators/phone-length.validator'
 
 @Component({
   selector: 'app-person',
@@ -35,6 +36,9 @@ import {dueTime} from '../../../../../../../settings'
         },
         pattern: (error) => {
           return `Только буквы`
+        },
+        phoneLength: (error) => {
+          return `Нeкорректный номер`
         },
       },
     },
@@ -80,7 +84,7 @@ export class PersonComponent implements OnInit, AfterViewInit {
         Validators.pattern(Pattern.email),
       ],
     ],
-    phone: ['', Validators.required],
+    phone: ['', [Validators.required, phoneLengthValidator]],
     role: ['', Validators.required],
   })
 
