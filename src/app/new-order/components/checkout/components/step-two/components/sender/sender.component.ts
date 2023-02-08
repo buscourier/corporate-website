@@ -62,7 +62,7 @@ import {phoneLengthValidator} from '../../../../../../../shared/validators/phone
           return `Минимум ${error.requiredLength} символа`
         },
         pattern: (error) => {
-          return `Только буквы`
+          return `Некорректный номер`
         },
         phoneLength: (error) => {
           return `Нeкорректный номер`
@@ -75,8 +75,12 @@ import {phoneLengthValidator} from '../../../../../../../shared/validators/phone
 })
 export class SenderComponent implements OnInit, AfterViewInit {
   documents = [
-    {id: 'passport', name: 'Паспорт РФ'},
-    {id: 'driver', name: 'Водительское удостоверение'},
+    {id: 'passport', name: 'Паспорт РФ', regex: Pattern.RusPassport},
+    {
+      id: 'driver',
+      name: 'Водительское удостоверение',
+      regex: Pattern.DriverLicense,
+    },
     {id: 'other', name: 'Другое'},
   ]
 
@@ -87,7 +91,6 @@ export class SenderComponent implements OnInit, AfterViewInit {
 
   fio = this.fb.control({value: '', disabled: true}, [
     Validators.required,
-    Validators.pattern(Pattern.Text),
     Validators.minLength(2),
   ])
 
@@ -195,6 +198,7 @@ export class SenderComponent implements OnInit, AfterViewInit {
       .pipe(
         tap((doc: DocTypeInterface) => {
           this.docNumber.setValue('')
+          this.docNumber.setValidators(Validators.pattern(doc.regex))
           this.docNumber.markAsUntouched()
           this.docMask = doc.id
         }),
@@ -245,16 +249,14 @@ export class SenderComponent implements OnInit, AfterViewInit {
         mask = [
           /\d/,
           /\d/,
-          /\d/,
-          `-`,
-          /\d/,
+          ` `,
           /\d/,
           /\d/,
-          `-`,
+          ` `,
           /\d/,
           /\d/,
           /\d/,
-          `-`,
+          /\d/,
           /\d/,
           /\d/,
         ]
