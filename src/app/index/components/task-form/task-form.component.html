@@ -101,7 +101,7 @@
     size="m"
     appearance="accent"
     [showLoader]="isSubmitting$ | async"
-    [disabled]="form.invalid"
+    [disabled]="form.invalid || (isSubmitting$ | async)"
   >
     Отправить заявку
   </button>

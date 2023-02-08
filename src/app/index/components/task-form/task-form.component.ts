@@ -114,7 +114,11 @@ export class TaskFormComponent implements OnInit {
       .subscribe()
 
     //@ts-ignore
-    this.form.get('trace').setValue(window.b24Tracker.guest.getTrace())
+    if (window.b24Tracker) {
+      console.log('tracker')
+      //@ts-ignore
+      this.form.get('trace').setValue(window.b24Tracker.guest.getTrace())
+    }
   }
 
   onSubmit() {

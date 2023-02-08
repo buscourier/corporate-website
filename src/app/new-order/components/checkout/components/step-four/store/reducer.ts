@@ -6,6 +6,10 @@ import {
 } from '../../../store/actions/send-order.action'
 import {StepFourStateInterface} from '../types/step-four-state.interface'
 import {initialState} from './state'
+import {
+  sendWebhookFailureAction,
+  sendWebhookSuccessAction,
+} from '../../../store/actions/send-webhook.action'
 
 const stepFourReducer = createReducer(
   initialState,
@@ -13,11 +17,15 @@ const stepFourReducer = createReducer(
     ...state,
     isSubmitting: true,
   })),
-  on(sendOrderSuccessAction, (state: StepFourStateInterface) => ({
+  on(sendOrderFailureAction, (state: StepFourStateInterface) => ({
     ...state,
     isSubmitting: false,
   })),
-  on(sendOrderFailureAction, (state: StepFourStateInterface) => ({
+  on(sendWebhookSuccessAction, (state: StepFourStateInterface) => ({
+    ...state,
+    isSubmitting: false,
+  })),
+  on(sendWebhookFailureAction, (state: StepFourStateInterface) => ({
     ...state,
     isSubmitting: false,
   }))

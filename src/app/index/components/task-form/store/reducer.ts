@@ -7,6 +7,10 @@ import {
   sendMessageSuccessAction,
 } from './actions/send-message.action'
 import {initialState} from './state'
+import {
+  sendWebhookFailureAction,
+  sendWebhookSuccessAction,
+} from './actions/send-webhook.action'
 
 const sendMessageReducer = createReducer(
   initialState,
@@ -14,6 +18,7 @@ const sendMessageReducer = createReducer(
     sendMessageAction,
     (state): TaskFormStateInterface => ({
       ...state,
+      isPristine: false,
       isSubmitting: true,
     })
   ),
@@ -21,8 +26,6 @@ const sendMessageReducer = createReducer(
     sendMessageSuccessAction,
     (state, {response}): TaskFormStateInterface => ({
       ...state,
-      isSubmitting: false,
-      isPristine: false,
       response,
     })
   ),
@@ -31,8 +34,21 @@ const sendMessageReducer = createReducer(
     (state, {backendErrors}): TaskFormStateInterface => ({
       ...state,
       isSubmitting: false,
-      isPristine: false,
       backendErrors,
+    })
+  ),
+  on(
+    sendWebhookSuccessAction,
+    (state): TaskFormStateInterface => ({
+      ...state,
+      isSubmitting: false,
+    })
+  ),
+  on(
+    sendWebhookFailureAction,
+    (state): TaskFormStateInterface => ({
+      ...state,
+      isSubmitting: false,
     })
   ),
   on(clearFormAction, () => ({

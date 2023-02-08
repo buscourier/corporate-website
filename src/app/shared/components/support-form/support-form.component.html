@@ -103,7 +103,7 @@
     tuiButton
     size="m"
     [showLoader]="isSubmitting$ | async"
-    [disabled]="form.invalid"
+    [disabled]="form.invalid || (isSubmitting$ | async)"
   >
     Отправить вопрос
   </button>

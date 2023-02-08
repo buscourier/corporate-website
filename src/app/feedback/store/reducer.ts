@@ -7,6 +7,10 @@ import {
   sendMessageSuccessAction,
 } from './actions/send-message.action'
 import {initialState} from './state'
+import {
+  sendWebhookFailureAction,
+  sendWebhookSuccessAction,
+} from './actions/send-webhook.action'
 
 const feedbackReducer = createReducer(
   initialState,
@@ -22,8 +26,22 @@ const feedbackReducer = createReducer(
     sendMessageSuccessAction,
     (state, {response}): FeedbackStateInterface => ({
       ...state,
-      isSubmitting: false,
       response,
+    })
+  ),
+  on(
+    sendWebhookSuccessAction,
+    (state): FeedbackStateInterface => ({
+      ...state,
+      isSubmitting: false,
+    })
+  ),
+  on(
+    sendWebhookFailureAction,
+    (state, {backendErrors}): FeedbackStateInterface => ({
+      ...state,
+      isSubmitting: false,
+      backendErrors,
     })
   ),
   on(
