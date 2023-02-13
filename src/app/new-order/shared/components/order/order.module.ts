@@ -10,7 +10,7 @@ import {
   TuiRadioListModule,
 } from '@taiga-ui/kit'
 import {CargoModule} from './components/cargo/cargo.module'
-import {OrderComponent} from './components/order/order.component'
+import {OrderComponent} from './order.component'
 import {PackageModule} from './components/package/package.module'
 import {ServicesModule} from './components/services/services.module'
 

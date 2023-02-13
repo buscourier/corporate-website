@@ -1,6 +1,6 @@
 import {CommonModule} from '@angular/common'
 import {NgModule} from '@angular/core'
-import {MobileDataComponent} from './components/mobile-data/mobile-data.component'
+import {MobileDataComponent} from './mobile-data.component'
 
 @NgModule({
   declarations: [MobileDataComponent],

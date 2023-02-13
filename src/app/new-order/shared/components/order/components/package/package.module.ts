@@ -1,6 +1,6 @@
 import {CommonModule} from '@angular/common'
 import {NgModule} from '@angular/core'
-import {PackageComponent} from './components/package/package.component'
+import {PackageComponent} from './package.component'
 import {
   TuiButtonModule,
   TuiDialogModule,

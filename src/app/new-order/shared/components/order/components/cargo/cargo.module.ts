@@ -20,10 +20,10 @@ import {
 } from '@taiga-ui/kit'
 import {LetModule} from '../../../../../../shared/directives/let/let.module'
 import {AutoPartsComponent} from './components/auto-parts/auto-parts.component'
-import {CargoComponent} from './components/cargo/cargo.component'
+import {CargoComponent} from './cargo.component'
 import {DocsComponent} from './components/docs/docs.component'
 import {OtherCargosComponent} from './components/other-cargos/other-cargos.component'
-import {ParcelComponent} from './components/parcel/parcel.component'
+import {ParcelComponent} from './components/parcels/components/parcel/parcel.component'
 import {ParcelsComponent} from './components/parcels/parcels.component'
 
 @NgModule({

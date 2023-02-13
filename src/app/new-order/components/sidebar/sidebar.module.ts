@@ -9,7 +9,7 @@ import {
   TuiScrollbarModule,
   TuiSvgModule,
 } from '@taiga-ui/core'
-import {SidebarComponent} from './components/sidebar/sidebar.component'
+import {SidebarComponent} from './sidebar.component'
 import {TotalSumService} from './services/total-sum.service'
 import {reducer} from './store/reducer'
 import {SIDEBAR_FEATURE} from './store/state'

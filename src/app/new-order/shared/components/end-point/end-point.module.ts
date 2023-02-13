@@ -21,7 +21,7 @@ import {
 } from '@taiga-ui/kit'
 import {PatchFormGroupValuesModule} from '../../../../shared/directives/patch-form-group-values/patch-form-group-values.module'
 import {SetControlValueModule} from '../../../../shared/directives/set-control-value/set-control-value.module'
-import {EndPointComponent} from './components/end-point/end-point.component'
+import {EndPointComponent} from './end-point.component'
 import {GetCitiesEffect} from './store/effects/get-cities.effect'
 import {GetOfficesEffect} from './store/effects/get-offices.effect'
 import {reducer} from './store/reducer'

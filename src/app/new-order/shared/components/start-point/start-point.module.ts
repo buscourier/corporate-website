@@ -23,7 +23,7 @@ import {
 import {ModalMapModule} from 'src/app/shared/components/modal-map/modal-map.module'
 import {PatchFormGroupValuesModule} from '../../../../shared/directives/patch-form-group-values/patch-form-group-values.module'
 import {SetControlValueModule} from '../../../../shared/directives/set-control-value/set-control-value.module'
-import {StartPointComponent} from './components/start-point/start-point.component'
+import {StartPointComponent} from './start-point.component'
 import {GetCitiesEffect} from './store/effects/get-cities.effect'
 import {GetOfficesEffect} from './store/effects/get-offices.effect'
 import {reducer} from './store/reducer'

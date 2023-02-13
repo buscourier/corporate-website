@@ -12,7 +12,7 @@ import {
   TuiInputNumberModule,
   TuiInputPhoneModule,
 } from '@taiga-ui/kit'
-import {ServicesComponent} from './component/services.component'
+import {ServicesComponent} from './services.component'
 
 @NgModule({
   declarations: [ServicesComponent],
