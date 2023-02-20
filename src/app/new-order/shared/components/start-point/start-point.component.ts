@@ -16,6 +16,7 @@ import {PolymorpheusComponent} from '@tinkoff/ng-polymorpheus'
 import {
   combineLatest,
   debounceTime,
+  delay,
   filter,
   map,
   Observable,
@@ -28,13 +29,15 @@ import {
   takeUntil,
   using,
 } from 'rxjs'
-import {tap} from 'rxjs/operators'
+import {concatAll, tap, toArray} from 'rxjs/operators'
 import {calculateTotalSumAction} from 'src/app/new-order/components/sidebar/store/actions/calculate-total-sum.action'
 import {ModalMapComponent} from '../../../../shared/components/modal-map/modal-map.component'
 import {STRINGIFY_CITIES} from '../../../../shared/handlers/string-handlers'
 import {UtilsService} from '../../../../shared/services/utils.service'
 import {OfficeInterface} from '../../../../shared/types/office.interface'
 import {StartCityInterface} from '../../../../shared/types/start-city.interface'
+import {resetEndPointAction} from '../end-point/store/actions/reset-end-point.action'
+import {resetOrdersAction} from '../orders/store/actions/reset-orders.action'
 import {changeActiveTabAction} from './store/actions/change-active-tab.action'
 import {changeCityAction} from './store/actions/change-city.action'
 import {changeCourierAction} from './store/actions/change-courier.action'
@@ -58,8 +61,6 @@ import {
   tabsSelector,
 } from './store/selectors'
 import {initialState} from './store/state'
-import {resetOrdersAction} from '../orders/store/actions/reset-orders.action'
-import {resetEndPointAction} from '../end-point/store/actions/reset-end-point.action'
 
 @Component({
   selector: 'app-start-point',
@@ -216,6 +217,7 @@ export class StartPointComponent implements OnInit {
       this.store.select(citiesSelector).pipe(
         filter(Boolean),
         tap((cities: StartCityInterface[]) => {
+          console.log('cities 666', cities)
           if (cities && this.city.disabled) {
             this.city.enable()
           }
@@ -260,14 +262,26 @@ export class StartPointComponent implements OnInit {
     )
 
     this.offices$ = combineLatest([
-      this.store.select(officesSelector).pipe(filter(Boolean)), // take(1)
+      this.store.select(officesSelector).pipe(
+        filter(Boolean),
+        switchMap((offices: OfficeInterface[]) => {
+          return of(offices).pipe(
+            concatAll(),
+            map((office: OfficeInterface) => {
+              return {
+                ...office,
+                name: office.address,
+              }
+            }),
+            toArray()
+          )
+        })
+      ),
       this.store.select(startOfficeSelector),
     ]).pipe(
-      // delay(0),
-      debounceTime(300),
+      delay(0),
       switchMap(
         ([offices, activeOffice]: [OfficeInterface[], OfficeInterface]) => {
-          // console.log('offices', offices)
           // console.log('active office', activeOffice)
           const activeOfficeIndex =
             activeOffice &&
