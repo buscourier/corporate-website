@@ -1,5 +1,4 @@
 import {createFeatureSelector, createSelector} from '@ngrx/store'
-import {OfficeInterface} from '../../../../../shared/types/office.interface'
 import {EndPointStateInterface} from '../types/end-point-state.interface'
 import {END_POINT_FEATURE} from './state'
 
@@ -28,14 +27,7 @@ export const isCitiesLoadedSelector = createSelector(
 
 export const officesSelector = createSelector(
   endPointFeatureSelector,
-  (state: EndPointStateInterface) => {
-    return state.offices
-      ? state.offices.map((office: OfficeInterface) => ({
-          ...office,
-          name: office.address,
-        }))
-      : null
-  }
+  (state: EndPointStateInterface) => state.offices
 )
 
 export const tabsSelector = createSelector(

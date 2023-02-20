@@ -29,13 +29,15 @@ import {
   takeUntil,
   using,
 } from 'rxjs'
-import {tap} from 'rxjs/operators'
+import {concatAll, tap, toArray} from 'rxjs/operators'
 import {ModalMapComponent} from '../../../../shared/components/modal-map/modal-map.component'
 import {STRINGIFY_CITIES} from '../../../../shared/handlers/string-handlers'
 import {UtilsService} from '../../../../shared/services/utils.service'
 import {EndCityInterface} from '../../../../shared/types/end-city.interface'
 import {OfficeInterface} from '../../../../shared/types/office.interface'
 import {StartCityInterface} from '../../../../shared/types/start-city.interface'
+import {calculateTotalSumAction} from '../../../components/sidebar/store/actions/calculate-total-sum.action'
+import {resetOrdersAction} from '../orders/store/actions/reset-orders.action'
 import {
   isStartPointValidSelector,
   startCitySelector,
@@ -62,8 +64,6 @@ import {
   officesSelector,
   tabsSelector,
 } from './store/selectors'
-import {resetOrdersAction} from '../orders/store/actions/reset-orders.action'
-import {calculateTotalSumAction} from '../../../components/sidebar/store/actions/calculate-total-sum.action'
 
 @Component({
   selector: 'app-end-point',
@@ -274,32 +274,44 @@ export class EndPointComponent implements OnInit {
     )
 
     this.offices$ = combineLatest([
-      this.store.select(officesSelector).pipe(filter(Boolean)), //take(1)
+      this.store.select(officesSelector).pipe(
+        filter(Boolean),
+        switchMap((offices: OfficeInterface[]) => {
+          return of(offices).pipe(
+            concatAll(),
+            map((office: OfficeInterface) => {
+              return {
+                ...office,
+                name: office.address,
+              }
+            }),
+            toArray()
+          )
+        })
+      ),
       this.store.select(endOfficeSelector),
     ]).pipe(
-      // delay(0),
-      debounceTime(300),
-      tap(([offices, activeOffice]: [OfficeInterface[], OfficeInterface]) => {
-        // console.log('offices', offices)
-        // console.log('activeOffice', activeOffice)
-        const activeOfficeIndex =
-          activeOffice &&
-          offices.findIndex(
-            (office: OfficeInterface) => office.id === activeOffice.id
-          )
+      delay(0),
+      switchMap(
+        ([offices, activeOffice]: [OfficeInterface[], OfficeInterface]) => {
+          console.log('offices', offices)
+          // console.log('activeOffice', activeOffice)
+          const activeOfficeIndex =
+            activeOffice &&
+            offices.findIndex(
+              (office: OfficeInterface) => office.id === activeOffice.id
+            )
 
-        if (
-          (activeOffice === null || activeOfficeIndex === -1) &&
-          this.get.enabled
-        ) {
-          // console.log('set value', offices[0])
-          this.get.setValue(offices[0])
+          if (
+            (activeOffice === null || activeOfficeIndex === -1) &&
+            this.get.enabled
+          ) {
+            this.get.setValue(offices[0])
+          }
+
+          return of(offices)
         }
-      }),
-      map(([offices]: [OfficeInterface[], OfficeInterface]) => {
-        // console.log('return offices')
-        return offices
-      })
+      )
     )
 
     this.tabs$ = combineLatest([
