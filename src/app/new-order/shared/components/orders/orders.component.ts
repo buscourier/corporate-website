@@ -10,23 +10,17 @@ import {Store} from '@ngrx/store'
 import {TuiDestroyService} from '@taiga-ui/cdk'
 import {
   combineLatest,
+  concatMap,
   filter,
   map,
   Observable,
-  switchMap,
   take,
   takeUntil,
 } from 'rxjs'
 import {tap} from 'rxjs/operators'
-import {
-  endCitySelector,
-  isEndPointValidSelector,
-} from '../end-point/store/selectors'
+import {endCitySelector} from '../end-point/store/selectors'
 import {OrderStateInterface} from '../order/types/order-state.interface'
-import {
-  isStartPointValidSelector,
-  startCitySelector,
-} from '../start-point/store/selectors'
+import {startCitySelector} from '../start-point/store/selectors'
 import {changeActiveOrderAction} from './store/actions/change-active-order.action'
 import {changeValidityAction} from './store/actions/change-validity.action'
 import {getAllCargosAction} from './store/actions/get-all-cargos.action'
@@ -131,34 +125,28 @@ export class OrdersComponent implements OnInit {
     this.activeOrderIndex$ = this.store.select(activeOrderSelector)
 
     combineLatest([
-      this.store.select(startCitySelector),
-      this.store.select(endCitySelector),
-      this.store.select(isStartPointValidSelector),
-      this.store.select(isEndPointValidSelector),
+      this.store.select(startCitySelector).pipe(filter(Boolean)),
+      this.store.select(endCitySelector).pipe(filter(Boolean)),
     ])
       .pipe(
-        switchMap(
-          ([startCity, endCity, isStartPointValid, isEndPointValid]) => {
-            //TODO: maybe need to load like a sequence -> switchToMap ->switchToMap
+        concatMap(([startCity, endCity]) => {
+          //TODO: maybe need to load like a sequence -> switchToMap ->switchToMap
 
-            if (startCity && endCity && isStartPointValid && isEndPointValid) {
-              this.store.dispatch(
-                getAllCargosAction({
-                  startCityId: startCity.id,
-                  endCityId: endCity.id,
-                })
-              )
+          this.store.dispatch(
+            getAllCargosAction({
+              startCityId: startCity.id,
+              endCityId: endCity.id,
+            })
+          )
 
-              this.store.dispatch(
-                getAllServicesAction({
-                  startCityId: startCity.id,
-                })
-              )
-            }
+          this.store.dispatch(
+            getAllServicesAction({
+              startCityId: startCity.id,
+            })
+          )
 
-            return [startCity, endCity]
-          }
-        ),
+          return [startCity, endCity]
+        }),
         takeUntil(this.destroy$)
       )
       .subscribe()
