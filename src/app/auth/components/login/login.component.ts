@@ -12,22 +12,16 @@ import {TuiDestroyService} from '@taiga-ui/cdk'
 import {TuiDialogContext} from '@taiga-ui/core'
 import {TUI_VALIDATION_ERRORS} from '@taiga-ui/kit'
 import {POLYMORPHEUS_CONTEXT} from '@tinkoff/ng-polymorpheus'
-import {
-  combineLatest,
-  debounceTime,
-  Observable,
-  Subscription,
-  takeUntil,
-} from 'rxjs'
+import {Observable, Subscription, takeUntil} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {BackendErrorsInterface} from '../../../shared/types/backend-errors.interface'
 import {clearValidationErrorsAction} from '../../store/actions/clear-validation-errors'
 import {loginAction} from '../../store/actions/login.action'
 import {
+  backendErrorsSelector,
   isLoadingSelector,
   isLoggedInSelector,
   isSubmittingSelector,
-  backendErrorsSelector,
 } from '../../store/selectors'
 import {LoginRequestInterface} from '../../types/login-request.interface'
 
@@ -93,8 +87,11 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   initializeForm(): void {
     this.form = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]],
+      email: [
+        'tafibuchgalter@mail.ru',
+        [Validators.required, Validators.email],
+      ],
+      password: ['tafitafi', [Validators.required]],
     })
   }
 
