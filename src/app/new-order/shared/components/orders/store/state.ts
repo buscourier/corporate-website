@@ -1,6 +1,6 @@
 import {OrdersStateInterface} from '../types/orders-state.interface'
 
-export const ORDERS_FEATURE = 'newOrders'
+export const ORDERS_FEATURE = 'orders'
 
 export const initialState: OrdersStateInterface = {
   isAllCargosLoading: false,

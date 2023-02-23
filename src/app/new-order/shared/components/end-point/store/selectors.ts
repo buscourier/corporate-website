@@ -1,78 +1,76 @@
-import {createFeatureSelector, createSelector} from '@ngrx/store'
+import {createSelector} from '@ngrx/store'
+import {newOrderFeatureSelector} from '../../../../store/selectors'
+import {NewOrderStateInterface} from '../../../../types/new-order-state.interface'
 import {EndPointStateInterface} from '../types/end-point-state.interface'
-import {END_POINT_FEATURE} from './state'
 
-export const endPointFeatureSelector =
-  createFeatureSelector<EndPointStateInterface>(END_POINT_FEATURE)
+export const endPointSelector = createSelector(
+  newOrderFeatureSelector,
+  (state: NewOrderStateInterface) => state.endPoint
+)
 
 export const isCitiesLoadingSelector = createSelector(
-  endPointFeatureSelector,
+  endPointSelector,
   (state: EndPointStateInterface) => state.isCitiesLoading
 )
 
 export const isOfficesLoadingSelector = createSelector(
-  endPointFeatureSelector,
+  endPointSelector,
   (state: EndPointStateInterface) => state.isOfficesLoading
 )
 
 export const citiesSelector = createSelector(
-  endPointFeatureSelector,
+  endPointSelector,
   (state: EndPointStateInterface) => state.cities
 )
 
 export const isCitiesLoadedSelector = createSelector(
-  endPointFeatureSelector,
+  endPointSelector,
   (state: EndPointStateInterface) => state.isCitiesLoaded
 )
 
 export const officesSelector = createSelector(
-  endPointFeatureSelector,
+  endPointSelector,
   (state: EndPointStateInterface) => state.offices
 )
 
 export const tabsSelector = createSelector(
-  endPointFeatureSelector,
+  endPointSelector,
   (state: EndPointStateInterface) => {
     return state.offices
   }
 )
 
 export const endCitySelector = createSelector(
-  endPointFeatureSelector,
+  endPointSelector,
   (state: EndPointStateInterface) => state.city
 )
 
 export const endOfficeSelector = createSelector(
-  endPointFeatureSelector,
+  endPointSelector,
   (state: EndPointStateInterface) => state.get
 )
 
 export const endCourierSelector = createSelector(
-  endPointFeatureSelector,
+  endPointSelector,
   (state: EndPointStateInterface) => state.delivery
 )
 
 export const busSelector = createSelector(
-  endPointFeatureSelector,
+  endPointSelector,
   (state: EndPointStateInterface) => state.needToMeet
 )
 
 export const activeTabSelector = createSelector(
-  endPointFeatureSelector,
+  endPointSelector,
   (state: EndPointStateInterface) => state.activeTab
 )
 
 export const isEndPointValidSelector = createSelector(
-  endPointFeatureSelector,
+  endPointSelector,
   (state: EndPointStateInterface) => state.isValid
 )
 
 export const isEndPointPristineSelector = createSelector(
-  endPointFeatureSelector,
+  endPointSelector,
   (state: EndPointStateInterface) => state.isPristine
-)
-
-export const endPointSelector = createSelector(
-  endPointFeatureSelector,
-  (state: EndPointStateInterface) => state
 )

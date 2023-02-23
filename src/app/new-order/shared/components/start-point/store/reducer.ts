@@ -20,7 +20,7 @@ import {
 import {resetStartPointAction} from './actions/reset-start-point.action'
 import {initialState} from './state'
 
-const startPointReducer = createReducer(
+const reducer = createReducer(
   initialState,
   on(getCitiesAction, (state: StartPointStateInterface) => ({
     ...state,
@@ -88,6 +88,9 @@ const startPointReducer = createReducer(
   }))
 )
 
-export function reducer(state: StartPointStateInterface, action: Action) {
-  return startPointReducer(state, action)
+export function startPointReducer(
+  state: StartPointStateInterface,
+  action: Action
+) {
+  return reducer(state, action)
 }

@@ -20,7 +20,7 @@ import {
 import {resetEndPointAction} from './actions/reset-end-point.action'
 import {initialState} from './state'
 
-const endPointReducer = createReducer(
+const reducer = createReducer(
   initialState,
   on(getCitiesAction, (state: EndPointStateInterface) => ({
     ...state,
@@ -85,6 +85,6 @@ const endPointReducer = createReducer(
   }))
 )
 
-export function reducer(state: EndPointStateInterface, action: Action) {
-  return endPointReducer(state, action)
+export function endPointReducer(state: EndPointStateInterface, action: Action) {
+  return reducer(state, action)
 }

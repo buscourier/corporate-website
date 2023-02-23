@@ -1,7 +1,6 @@
 import {CommonModule} from '@angular/common'
 import {NgModule} from '@angular/core'
 import {RouterLink} from '@angular/router'
-import {StoreModule} from '@ngrx/store'
 import {TuiLetModule} from '@taiga-ui/cdk'
 import {
   TuiButtonModule,
@@ -9,10 +8,8 @@ import {
   TuiScrollbarModule,
   TuiSvgModule,
 } from '@taiga-ui/core'
-import {SidebarComponent} from './sidebar.component'
 import {TotalSumService} from './services/total-sum.service'
-import {reducer} from './store/reducer'
-import {SIDEBAR_FEATURE} from './store/state'
+import {SidebarComponent} from './sidebar.component'
 
 @NgModule({
   declarations: [SidebarComponent],
@@ -22,7 +19,6 @@ import {SIDEBAR_FEATURE} from './store/state'
     TuiButtonModule,
     RouterLink,
     TuiLetModule,
-    StoreModule.forFeature(SIDEBAR_FEATURE, reducer),
     TuiSvgModule,
     TuiScrollbarModule,
   ],

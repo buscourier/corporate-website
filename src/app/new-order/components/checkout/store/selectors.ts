@@ -1,9 +1,12 @@
-import {createFeatureSelector, createSelector} from '@ngrx/store'
+import {createSelector} from '@ngrx/store'
+import {newOrderFeatureSelector} from '../../../store/selectors'
+import {NewOrderStateInterface} from '../../../types/new-order-state.interface'
 import {CheckoutStateInterface} from '../types/checkout-state.interface'
-import {CHECKOUT_FEATURE} from './state'
 
-export const checkoutFeatureSelector =
-  createFeatureSelector<CheckoutStateInterface>(CHECKOUT_FEATURE)
+export const checkoutFeatureSelector = createSelector(
+  newOrderFeatureSelector,
+  (state: NewOrderStateInterface) => state.checkout
+)
 
 export const currentStepSelector = createSelector(
   checkoutFeatureSelector,

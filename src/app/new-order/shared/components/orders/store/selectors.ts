@@ -1,9 +1,14 @@
-import {createFeatureSelector, createSelector} from '@ngrx/store'
+import {createSelector} from '@ngrx/store'
+import {newOrderFeatureSelector} from '../../../../store/selectors'
+import {NewOrderStateInterface} from '../../../../types/new-order-state.interface'
 import {OrdersStateInterface} from '../types/orders-state.interface'
-import {ORDERS_FEATURE} from './state'
 
-export const ordersFeatureSelector =
-  createFeatureSelector<OrdersStateInterface>(ORDERS_FEATURE)
+export const ordersFeatureSelector = createSelector(
+  newOrderFeatureSelector,
+  (state: NewOrderStateInterface) => {
+    return state.orders
+  }
+)
 
 export const isAllCargosLoadingSelector = createSelector(
   ordersFeatureSelector,
@@ -59,8 +64,3 @@ export const isOrdersPristineSelector = createSelector(
   ordersFeatureSelector,
   (state: OrdersStateInterface) => state.isPristine
 )
-
-// export const isOrdersInitializedSelector = createSelector(
-//   ordersFeatureSelector,
-//   (state: OrdersStateInterface) => state.isInitialized
-// )

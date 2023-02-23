@@ -1,11 +1,14 @@
-import {createFeatureSelector, createSelector} from '@ngrx/store'
+import {createSelector} from '@ngrx/store'
+import {newOrderFeatureSelector} from '../../../store/selectors'
+import {NewOrderStateInterface} from '../../../types/new-order-state.interface'
 import {SidebarStateInterface} from '../types/sidebar-state.interface'
-import {SIDEBAR_FEATURE} from './state'
 
-export const sidebarFeatureSelector =
-  createFeatureSelector<SidebarStateInterface>(SIDEBAR_FEATURE)
+export const sidebarSelector = createSelector(
+  newOrderFeatureSelector,
+  (state: NewOrderStateInterface) => state.sidebar
+)
 
 export const isTotalSumCalculatedSelector = createSelector(
-  sidebarFeatureSelector,
+  sidebarSelector,
   (state: SidebarStateInterface) => state.isTotalSumCalculated
 )

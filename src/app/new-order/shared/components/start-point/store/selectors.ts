@@ -1,78 +1,76 @@
-import {createFeatureSelector, createSelector} from '@ngrx/store'
+import {createSelector} from '@ngrx/store'
+import {newOrderFeatureSelector} from '../../../../store/selectors'
+import {NewOrderStateInterface} from '../../../../types/new-order-state.interface'
 import {StartPointStateInterface} from '../types/start-point-state.interface'
-import {START_POINT_FEATURE} from './state'
 
-export const startPointFeatureSelector =
-  createFeatureSelector<StartPointStateInterface>(START_POINT_FEATURE)
+export const startPointSelector = createSelector(
+  newOrderFeatureSelector,
+  (state: NewOrderStateInterface) => state.startPoint
+)
 
 export const isCitiesLoadingSelector = createSelector(
-  startPointFeatureSelector,
+  startPointSelector,
   (state: StartPointStateInterface) => state.isCitiesLoading
 )
 
 export const isCitiesLoadedSelector = createSelector(
-  startPointFeatureSelector,
+  startPointSelector,
   (state: StartPointStateInterface) => state.isCitiesLoaded
 )
 
 export const isOfficesLoadingSelector = createSelector(
-  startPointFeatureSelector,
+  startPointSelector,
   (state: StartPointStateInterface) => state.isOfficesLoading
 )
 
 export const citiesSelector = createSelector(
-  startPointFeatureSelector,
+  startPointSelector,
   (state: StartPointStateInterface) => state.cities
 )
 
 export const officesSelector = createSelector(
-  startPointFeatureSelector,
+  startPointSelector,
   (state: StartPointStateInterface) => state.offices
 )
 
 export const tabsSelector = createSelector(
-  startPointFeatureSelector,
+  startPointSelector,
   (state: StartPointStateInterface) => {
     return state.offices
   }
 )
 
 export const startCitySelector = createSelector(
-  startPointFeatureSelector,
+  startPointSelector,
   (state: StartPointStateInterface) => state.city
 )
 
 export const startOfficeSelector = createSelector(
-  startPointFeatureSelector,
+  startPointSelector,
   (state: StartPointStateInterface) => state.give
 )
 
 export const startCourierSelector = createSelector(
-  startPointFeatureSelector,
+  startPointSelector,
   (state: StartPointStateInterface) => state.pickup
 )
 
 export const dateSelector = createSelector(
-  startPointFeatureSelector,
+  startPointSelector,
   (state: StartPointStateInterface) => state.date
 )
 
 export const activeTabSelector = createSelector(
-  startPointFeatureSelector,
+  startPointSelector,
   (state: StartPointStateInterface) => state.activeTab
 )
 
 export const isStartPointValidSelector = createSelector(
-  startPointFeatureSelector,
+  startPointSelector,
   (state: StartPointStateInterface) => state.isValid
 )
 
 export const isStartPointPristineSelector = createSelector(
-  startPointFeatureSelector,
+  startPointSelector,
   (state: StartPointStateInterface) => state.isPristine
-)
-
-export const startPointSelector = createSelector(
-  startPointFeatureSelector,
-  (state: StartPointStateInterface) => state
 )

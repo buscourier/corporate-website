@@ -3,7 +3,7 @@ import {SidebarStateInterface} from '../types/sidebar-state.interface'
 import {calculateTotalSumAction} from './actions/calculate-total-sum.action'
 import {initialState} from './state'
 
-const sidebarReducer = createReducer(
+const reducer = createReducer(
   initialState,
   on(
     calculateTotalSumAction,
@@ -14,6 +14,6 @@ const sidebarReducer = createReducer(
   )
 )
 
-export function reducer(state: SidebarStateInterface, action: Action) {
-  return sidebarReducer(state, action)
+export function sidebarReducer(state: SidebarStateInterface, action: Action) {
+  return reducer(state, action)
 }

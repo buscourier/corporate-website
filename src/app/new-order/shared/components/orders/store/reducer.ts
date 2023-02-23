@@ -18,7 +18,7 @@ import {ordersValueChangesAction} from './actions/orders-value-changes.action'
 import {resetOrdersAction} from './actions/reset-orders.action'
 import {initialState} from './state'
 
-const ordersReducer = createReducer(
+const reducer = createReducer(
   initialState,
   on(getAllCargosAction, (state: OrdersStateInterface) => ({
     ...state,
@@ -85,6 +85,6 @@ const ordersReducer = createReducer(
   // }))
 )
 
-export function reducer(state: OrdersStateInterface, action: Action) {
-  return ordersReducer(state, action)
+export function ordersReducer(state: OrdersStateInterface, action: Action) {
+  return reducer(state, action)
 }

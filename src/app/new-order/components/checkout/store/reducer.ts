@@ -5,17 +5,14 @@ import {
   sendOrderFailureAction,
   sendOrderSuccessAction,
 } from './actions/send-order.action'
+import {sendWebhookFailureAction} from './actions/send-webhook.action'
 import {setCurrentStepStateAction} from './actions/set-current-step-state.action'
 import {setCurrentStepAction} from './actions/set-current-step.action'
 import {setPreviousStepAction} from './actions/set-previous-step.action'
 import {updateFinishedStepsAction} from './actions/update-finished-steps.action'
 import {initialState} from './state'
-import {
-  sendWebhookFailureAction,
-  sendWebhookSuccessAction,
-} from './actions/send-webhook.action'
 
-const checkoutReducer = createReducer(
+const reducer = createReducer(
   initialState,
   on(setCurrentStepAction, (state: CheckoutStateInterface, {step}) => {
     const previousStep = step - 1
@@ -86,6 +83,6 @@ const checkoutReducer = createReducer(
   }))
 )
 
-export function reducer(state: CheckoutStateInterface, action: Action) {
-  return checkoutReducer(state, action)
+export function checkoutReducer(state: CheckoutStateInterface, action: Action) {
+  return reducer(state, action)
 }
