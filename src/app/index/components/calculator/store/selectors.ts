@@ -1,31 +1,34 @@
-import {createFeatureSelector, createSelector} from '@ngrx/store'
+import {createSelector} from '@ngrx/store'
+import {IndexFeatureSelector} from '../../../store/selectors'
+import {IndexStateInterface} from '../../../types/index-state.interface'
 import {CalculatorStateInterface} from '../types/calculator-state.interface'
-import {CALCULATOR_FEATURE} from './state'
 
-export const calculatorFeatureSelector =
-  createFeatureSelector<CalculatorStateInterface>(CALCULATOR_FEATURE)
+export const calculatorSelector = createSelector(
+  IndexFeatureSelector,
+  (state: IndexStateInterface) => state.calculator
+)
 
 export const isStartCitiesLoadingSelector = createSelector(
-  calculatorFeatureSelector,
+  calculatorSelector,
   (state: CalculatorStateInterface) => state.isStartCitiesLoading
 )
 
 export const isEndCitiesLoadingSelector = createSelector(
-  calculatorFeatureSelector,
+  calculatorSelector,
   (state: CalculatorStateInterface) => state.isEndCitiesLoading
 )
 
 export const startCitiesSelector = createSelector(
-  calculatorFeatureSelector,
+  calculatorSelector,
   (state: CalculatorStateInterface) => state.startCities
 )
 
 export const endCitiesSelector = createSelector(
-  calculatorFeatureSelector,
+  calculatorSelector,
   (state: CalculatorStateInterface) => state.endCities
 )
 
 export const backendErrorsSelector = createSelector(
-  calculatorFeatureSelector,
+  calculatorSelector,
   (state: CalculatorStateInterface) => state.backendErrors
 )

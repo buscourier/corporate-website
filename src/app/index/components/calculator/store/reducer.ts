@@ -12,7 +12,7 @@ import {
 } from './actions/get-start-cities.action'
 import {initialState} from './state'
 
-const calculatorReducer = createReducer(
+const reducer = createReducer(
   initialState,
   on(getStartCitiesAction, (state: CalculatorStateInterface) => ({
     ...state,
@@ -45,6 +45,9 @@ const calculatorReducer = createReducer(
   }))
 )
 
-export function reducer(state: CalculatorStateInterface, action: Action) {
-  return calculatorReducer(state, action)
+export function calculatorReducer(
+  state: CalculatorStateInterface,
+  action: Action
+) {
+  return reducer(state, action)
 }

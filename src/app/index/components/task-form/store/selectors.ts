@@ -1,26 +1,29 @@
-import {createFeatureSelector, createSelector} from '@ngrx/store'
+import {createSelector} from '@ngrx/store'
+import {IndexFeatureSelector} from '../../../store/selectors'
+import {IndexStateInterface} from '../../../types/index-state.interface'
 import {TaskFormStateInterface} from '../types/task-form-state.interface'
-import {TASK_FORM_FEATURE} from './state'
 
-export const taskFormFeatureSelector =
-  createFeatureSelector<TaskFormStateInterface>(TASK_FORM_FEATURE)
+export const taskFormSelector = createSelector(
+  IndexFeatureSelector,
+  (state: IndexStateInterface) => state.task
+)
 
 export const isSubmittingSelector = createSelector(
-  taskFormFeatureSelector,
+  taskFormSelector,
   (state: TaskFormStateInterface) => state.isSubmitting
 )
 
 export const isPristineSelector = createSelector(
-  taskFormFeatureSelector,
+  taskFormSelector,
   (state: TaskFormStateInterface) => state.isPristine
 )
 
 export const responseSelector = createSelector(
-  taskFormFeatureSelector,
+  taskFormSelector,
   (state: TaskFormStateInterface) => state.response
 )
 
 export const backendErrorsSelector = createSelector(
-  taskFormFeatureSelector,
+  taskFormSelector,
   (state: TaskFormStateInterface) => state.backendErrors
 )

@@ -6,13 +6,13 @@ import {
   sendMessageFailureAction,
   sendMessageSuccessAction,
 } from './actions/send-message.action'
-import {initialState} from './state'
 import {
   sendWebhookFailureAction,
   sendWebhookSuccessAction,
 } from './actions/send-webhook.action'
+import {initialState} from './state'
 
-const sendMessageReducer = createReducer(
+const reducer = createReducer(
   initialState,
   on(
     sendMessageAction,
@@ -56,6 +56,6 @@ const sendMessageReducer = createReducer(
   }))
 )
 
-export function reducer(state: TaskFormStateInterface, action: Action) {
-  return sendMessageReducer(state, action)
+export function taskReducer(state: TaskFormStateInterface, action: Action) {
+  return reducer(state, action)
 }
