@@ -6,12 +6,14 @@ import {
   Self,
 } from '@angular/core'
 import {FormBuilder, Validators} from '@angular/forms'
+import {Router} from '@angular/router'
 import {Store} from '@ngrx/store'
 import {TuiDestroyService} from '@taiga-ui/cdk'
 import {TUI_VALIDATION_ERRORS} from '@taiga-ui/kit'
 import {filter, Observable, of, switchMap, takeUntil} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {Pattern} from '../../pattern/pattern'
+import {phoneLengthValidator} from '../../validators/phone-length.validator'
 import {sendMessageAction} from './store/actions/send-message.action'
 import {sendWebhookAction} from './store/actions/send-webhook.action'
 import {
@@ -21,7 +23,6 @@ import {
   responseSelector,
 } from './store/selectors'
 import {ResponseInterface} from './types/response.interface'
-import {phoneLengthValidator} from '../../validators/phone-length.validator'
 
 @Component({
   selector: 'app-support-form',
@@ -86,6 +87,7 @@ export class SupportFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private store: Store,
+    private router: Router,
     @Self() @Inject(TuiDestroyService) private destroy$: TuiDestroyService
   ) {}
 
@@ -119,6 +121,11 @@ export class SupportFormComponent implements OnInit {
 
     //@ts-ignore
     this.form.get('trace').setValue(window.b24Tracker.guest.getTrace())
+  }
+
+  redirectToPolicy(event: Event) {
+    event.stopPropagation()
+    this.router.navigate(['/policy'])
   }
 
   onSubmit() {

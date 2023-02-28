@@ -2,3 +2,8 @@
   @apply relative leading-6 text-blue before:absolute before:left-0 before:bottom-0 before:w-full before:border-b
   before:border-dashed before:border-blue hover:cursor-pointer hover:opacity-80 hover:before:hidden;
 }
+
+.link-black {
+  @apply relative border-b border-dashed border-black
+  leading-6 text-black hover:cursor-pointer hover:border-0;
+}

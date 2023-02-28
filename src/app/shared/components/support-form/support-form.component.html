@@ -95,7 +95,9 @@
   >
     <span class="text-2xs">
       Нажимая кнопку «Отправить», я даю свое согласие на
-      <a class="text-black">обработку моих персональных данных</a>
+      <a class="link-black text-black" (click)="redirectToPolicy($event)"
+        >обработку моих персональных данных</a
+      >
     </span>
   </tui-checkbox-labeled>
   <button

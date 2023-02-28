@@ -6,6 +6,7 @@ import {
   Self,
 } from '@angular/core'
 import {FormBuilder, Validators} from '@angular/forms'
+import {Router} from '@angular/router'
 import {Store} from '@ngrx/store'
 import {TuiDestroyService} from '@taiga-ui/cdk'
 import {TUI_VALIDATION_ERRORS} from '@taiga-ui/kit'
@@ -13,6 +14,7 @@ import {filter, Observable, of, switchMap, takeUntil} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {Pattern} from '../../../shared/pattern/pattern'
 import {SiteService} from '../../../shared/services/site.service'
+import {phoneLengthValidator} from '../../../shared/validators/phone-length.validator'
 import {sendMessageAction} from './store/actions/send-message.action'
 import {sendWebhookAction} from './store/actions/send-webhook.action'
 import {
@@ -21,7 +23,6 @@ import {
   isSubmittingSelector,
   responseSelector,
 } from './store/selectors'
-import {phoneLengthValidator} from '../../../shared/validators/phone-length.validator'
 
 @Component({
   selector: 'app-task-form',
@@ -86,7 +87,8 @@ export class TaskFormComponent implements OnInit {
     private fb: FormBuilder,
     private store: Store,
     @Self() @Inject(TuiDestroyService) private destroy$: TuiDestroyService,
-    private siteService: SiteService
+    private siteService: SiteService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -123,6 +125,11 @@ export class TaskFormComponent implements OnInit {
       //@ts-ignore
       this.form.get('trace').setValue(window.b24Tracker.guest.getTrace())
     }
+  }
+
+  redirectToPolicy(event: Event) {
+    event.stopPropagation()
+    this.router.navigate(['/policy'])
   }
 
   onSubmit() {

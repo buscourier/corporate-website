@@ -90,10 +90,15 @@
     </label>
     <input type="hidden" formControlName="trace" />
   </div>
-  <tui-checkbox-labeled formControlName="agree" class="checkbox-white mb-7">
+  <tui-checkbox-labeled
+    formControlName="agree"
+    class="checkbox-white relative mb-7"
+  >
     <span class="text-2xs">
       Нажимая кнопку «Отправить», я даю свое согласие на
-      <a class="text-black">обработку моих персональных данных</a>
+      <a class="link-black relative z-10" (click)="redirectToPolicy($event)"
+        >обработку моих персональных данных</a
+      >
     </span>
   </tui-checkbox-labeled>
   <button

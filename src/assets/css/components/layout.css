@@ -1,0 +1,3 @@
+.t-position-fixed-offset + .t-content {
+  @apply grid grid-rows-[auto_1fr_auto];
+}

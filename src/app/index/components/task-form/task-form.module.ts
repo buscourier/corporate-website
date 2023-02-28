@@ -1,6 +1,7 @@
 import {CommonModule} from '@angular/common'
 import {NgModule} from '@angular/core'
 import {ReactiveFormsModule} from '@angular/forms'
+import {RouterLink} from '@angular/router'
 import {
   TuiButtonModule,
   TuiErrorModule,
@@ -21,6 +22,7 @@ import {TaskFormComponent} from './task-form.component'
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    RouterLink,
     TuiInputModule,
     TuiTextfieldControllerModule,
     TuiErrorModule,
