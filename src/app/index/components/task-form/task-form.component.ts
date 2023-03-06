@@ -23,6 +23,7 @@ import {
   isSubmittingSelector,
   responseSelector,
 } from './store/selectors'
+import {WindowInterface} from '../../../shared/types/window.interface'
 
 @Component({
   selector: 'app-task-form',
@@ -119,11 +120,12 @@ export class TaskFormComponent implements OnInit {
       )
       .subscribe()
 
-    //@ts-ignore
-    if (window.b24Tracker) {
-      console.log('tracker')
-      //@ts-ignore
-      this.form.get('trace').setValue(window.b24Tracker.guest.getTrace())
+    const _window: WindowInterface = window
+
+    if (_window.b24Tracker) {
+      this.form
+        .get('trace')
+        .setValue(JSON.parse(_window.b24Tracker.guest.getTrace()))
     }
   }
 
