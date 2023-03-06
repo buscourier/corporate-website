@@ -8,14 +8,15 @@ import {Pattern} from '../shared/pattern/pattern'
 import {sendMessageAction} from './store/actions/send-message.action'
 import {sendWebhookAction} from './store/actions/send-webhook.action'
 import {
-  isSubmittingSelector,
-  responseSelector,
   backendErrorsSelector,
   isPristineSelector,
+  isSubmittingSelector,
+  responseSelector,
 } from './store/selectors'
 import {ResponseInterface} from './types/response.interface'
 import {TUI_VALIDATION_ERRORS} from '@taiga-ui/kit'
 import {phoneLengthValidator} from '../shared/validators/phone-length.validator'
+import {WindowInterface} from '../shared/types/window.interface'
 
 @Component({
   selector: 'app-feedback',
@@ -120,8 +121,13 @@ export class FeedbackComponent {
       )
       .subscribe()
 
-    //@ts-ignore
-    this.form.get('trace').setValue(window.b24Tracker.guest.getTrace())
+    const _window: WindowInterface = window
+
+    if (_window.b24Tracker) {
+      this.form
+        .get('trace')
+        .setValue(JSON.parse(_window.b24Tracker.guest.getTrace()))
+    }
   }
 
   onSubmit() {

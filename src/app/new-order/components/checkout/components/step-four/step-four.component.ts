@@ -37,6 +37,7 @@ import {RecipientStateInterface} from '../step-three/components/recipient/types/
 import {senderSelector} from '../step-two/components/sender/store/selectors'
 import {SenderStateInterface} from '../step-two/components/sender/types/sender-state.interface'
 import {isSubmittingSelector} from './store/selectors'
+import {WindowInterface} from '../../../../../shared/types/window.interface'
 
 interface TotalServicesInterface {
   id: string
@@ -263,8 +264,13 @@ export class StepFourComponent implements OnInit {
       )
       .subscribe()
 
-    //@ts-ignore
-    this.trace.setValue(window.b24Tracker.guest.getTrace())
+    const _window: WindowInterface = window
+
+    if (_window.b24Tracker) {
+      this.form
+        .get('trace')
+        .setValue(JSON.parse(_window.b24Tracker.guest.getTrace()))
+    }
   }
 
   getParcelDimension(parcel: ParcelInterface) {

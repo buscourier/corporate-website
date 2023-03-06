@@ -23,6 +23,7 @@ import {
   responseSelector,
 } from './store/selectors'
 import {ResponseInterface} from './types/response.interface'
+import {WindowInterface} from '../../types/window.interface'
 
 @Component({
   selector: 'app-support-form',
@@ -119,8 +120,13 @@ export class SupportFormComponent implements OnInit {
       )
       .subscribe()
 
-    //@ts-ignore
-    this.form.get('trace').setValue(window.b24Tracker.guest.getTrace())
+    const _window: WindowInterface = window
+
+    if (_window.b24Tracker) {
+      this.form
+        .get('trace')
+        .setValue(JSON.parse(_window.b24Tracker.guest.getTrace()))
+    }
   }
 
   redirectToPolicy(event: Event) {
