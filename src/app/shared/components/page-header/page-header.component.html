@@ -212,7 +212,13 @@
                   [class.h-5]="isCurrentUserLoading"
                   class="min-w-[100px]"
                 >
-                  <ng-container *ngIf="currentUser && currentUser.user_name && !isCurrentUserLoading">
+                  <ng-container
+                    *ngIf="
+                      currentUser &&
+                      currentUser.user_name &&
+                      !isCurrentUserLoading
+                    "
+                  >
                     {{ getCurrentUserName(currentUser) }}
                     <tui-svg
                       src="icons::chevron-down"
