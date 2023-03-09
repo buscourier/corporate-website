@@ -21,6 +21,7 @@ import {ContactsService} from './services/contacts.service'
 import {GetOfficesEffect} from './store/effects/get-offices.effect'
 import {reducer} from './store/reducer'
 import {CONTACTS_FEATURE} from './store/state'
+import {ContactsResolver} from './services/contacts.resolver'
 
 @NgModule({
   declarations: [ContactsComponent],
@@ -42,6 +43,6 @@ import {CONTACTS_FEATURE} from './store/state'
     StoreModule.forFeature(CONTACTS_FEATURE, reducer),
     EffectsModule.forFeature([GetOfficesEffect]),
   ],
-  providers: [ContactsService],
+  providers: [ContactsService, ContactsResolver],
 })
 export class ContactsModule {}

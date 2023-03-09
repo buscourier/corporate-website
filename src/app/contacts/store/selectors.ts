@@ -10,6 +10,11 @@ export const isOfficesLoadingSelector = createSelector(
   (state: ContactsStateInterface) => state.isOfficesLoading
 )
 
+export const isOfficesLoadedSelector = createSelector(
+  contactsFeatureSelector,
+  (state: ContactsStateInterface) => state.isOfficesLoaded
+)
+
 export const officesSelector = createSelector(
   contactsFeatureSelector,
   (state: ContactsStateInterface) => state.offices

@@ -140,7 +140,6 @@ export class ContactsComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeValues()
-    this.fetchData()
   }
 
   initializeValues() {
@@ -248,10 +247,6 @@ export class ContactsComponent implements OnInit {
         }
       })
     )
-  }
-
-  fetchData() {
-    this.store.dispatch(getOfficesAction())
   }
 
   setActiveTabIndex(index: number) {

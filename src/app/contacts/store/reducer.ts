@@ -22,6 +22,7 @@ const contactsReducer = createReducer(
     (state, {offices}): ContactsStateInterface => ({
       ...state,
       isOfficesLoading: false,
+      isOfficesLoaded: true,
       offices,
     })
   ),
