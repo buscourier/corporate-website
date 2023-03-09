@@ -10,6 +10,11 @@ export const isCitiesLoadingSelector = createSelector(
   (state: TariffsStateInterface) => state.isCitiesLoading
 )
 
+export const isCitiesLoadedSelector = createSelector(
+  tariffsFeatureSelector,
+  (state: TariffsStateInterface) => state.isCitiesLoaded
+)
+
 export const citiesSelector = createSelector(
   tariffsFeatureSelector,
   (state: TariffsStateInterface) => state.cities

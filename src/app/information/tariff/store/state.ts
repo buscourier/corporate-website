@@ -4,6 +4,7 @@ export const TARIFFS_FEATURE = 'tariffs'
 
 export const initialState: TariffsStateInterface = {
   isCitiesLoading: false,
+  isCitiesLoaded: false,
   isZonesLoading: false,
   isZoneTariffsLoading: false,
   cities: null,

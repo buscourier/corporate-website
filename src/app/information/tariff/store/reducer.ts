@@ -31,6 +31,7 @@ const citiesReducer = createReducer(
     (state, {cities}): TariffsStateInterface => ({
       ...state,
       isCitiesLoading: false,
+      isCitiesLoaded: true,
       cities,
     })
   ),

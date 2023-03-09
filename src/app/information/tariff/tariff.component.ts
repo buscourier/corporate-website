@@ -95,7 +95,6 @@ export class TariffComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeValues()
-    this.fetchData()
   }
 
   initializeValues(): void {
@@ -251,10 +250,6 @@ export class TariffComponent implements OnInit {
         return Object.values(reduced)
       })
     )
-  }
-
-  fetchData(): void {
-    this.store.dispatch(getCitiesAction())
   }
 
   showPdf(actions: PolymorpheusContent<TuiPdfViewerOptions>): void {

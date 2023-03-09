@@ -4,6 +4,7 @@ import {ZoneInterface} from './zone.interface'
 
 export interface TariffsStateInterface {
   isCitiesLoading: boolean
+  isCitiesLoaded: boolean
   isZonesLoading: boolean
   isZoneTariffsLoading: boolean
   cities: StartCityInterface[] | null

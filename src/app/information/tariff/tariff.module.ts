@@ -16,6 +16,7 @@ import {reducer} from './store/reducer'
 import {TARIFFS_FEATURE} from './store/state'
 import {TariffRoutingModule} from './tariff-routing.module'
 import {TariffComponent} from './tariff.component'
+import {TariffResolver} from './services/tariff.resolver'
 
 @NgModule({
   declarations: [TariffComponent],
@@ -36,6 +37,6 @@ import {TariffComponent} from './tariff.component'
     TuiSvgModule,
     TuiButtonModule,
   ],
-  providers: [CitiesService, TariffService],
+  providers: [CitiesService, TariffService, TariffResolver],
 })
 export class TariffModule {}
