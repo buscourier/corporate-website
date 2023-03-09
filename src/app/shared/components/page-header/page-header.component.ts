@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  HostBinding,
   HostListener,
   Inject,
   Injector,
@@ -73,9 +74,10 @@ export class PageHeaderComponent implements OnInit {
   @Input() animationSpeed = 300
   @ViewChild('header', {read: ElementRef}) header: ElementRef
 
+  @HostBinding('class.header-is-sticky') isSticky = false
+
   nav = nav
   activeDropdown = null
-  isSticky = false
   isMobileMenuOpen = false
   isBannerClosed = false
 
@@ -141,8 +143,9 @@ export class PageHeaderComponent implements OnInit {
 
   @HostListener('window:scroll')
   scroll() {
-    if (window.scrollY > 0) {
-      this.isSticky = true
+    if (this.header) {
+      const sticky = this.header.nativeElement.offsetTop
+      this.isSticky = window.pageYOffset > sticky
     } else {
       this.isSticky = false
     }

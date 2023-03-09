@@ -7,11 +7,16 @@ import {
   Self,
 } from '@angular/core'
 import {FormBuilder} from '@angular/forms'
-import {NavigationEnd, Router, RouterEvent} from '@angular/router'
+import {
+  NavigationEnd,
+  NavigationStart,
+  Router,
+  RouterEvent,
+} from '@angular/router'
 import {Store} from '@ngrx/store'
 import {TuiDestroyService, TuiScrollService} from '@taiga-ui/cdk'
 import {tuiLoaderOptionsProvider} from '@taiga-ui/core'
-import {filter, switchMap, takeUntil} from 'rxjs'
+import {delay, filter, switchMap, takeUntil} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {resetEndPointAction} from '../../shared/components/end-point/store/actions/reset-end-point.action'
 import {resetOrdersAction} from '../../shared/components/orders/store/actions/reset-orders.action'
@@ -60,17 +65,18 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   initializeValues(): void {
     this.navigate(this.router.url)
-    this.scroll().pipe(takeUntil(this.destroy$)).subscribe()
+    // this.scroll().pipe(takeUntil(this.destroy$)).subscribe()
 
     this.router.events
       .pipe(
-        filter((event: RouterEvent) => event instanceof NavigationEnd),
+        filter((event: RouterEvent) => event instanceof NavigationStart),
         tap((event: RouterEvent) => {
           this.navigate(event.url)
-        }),
-        switchMap(() => {
-          return this.scroll()
         })
+        // delay(500),
+        // // switchMap(() => {
+        // //   return this.scroll()
+        // // })
       )
       .pipe(takeUntil(this.destroy$))
       .subscribe()

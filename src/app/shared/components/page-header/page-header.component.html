@@ -74,7 +74,8 @@
   <header
     #header
     *tuiLet="isCurrentUserLoading$ | async as isCurrentUserLoading"
-    class="sticky top-0 z-10 bg-white font-base shadow-sm print:hidden"
+    class="top-0 left-0 z-10 w-full bg-white font-base shadow-sm transition-all duration-300 ease-out print:hidden"
+    [class.!fixed]="isSticky"
     [class.sticky-header]="isSticky"
   >
     <div

@@ -7,6 +7,10 @@
   img {
     /*width: 100%;*/
   }
+
+  .header-is-sticky + tui-loader {
+    @apply mt-[76px];
+  }
 }
 
 @media print {
