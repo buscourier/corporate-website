@@ -10,6 +10,11 @@ export const isMarkupLoadingSelector = createSelector(
   (state: PolicyStateInterface) => state.isMarkupLoading
 )
 
+export const isMarkupLoadedSelector = createSelector(
+  policyFeatureSelector,
+  (state: PolicyStateInterface) => state.isMarkupLoaded
+)
+
 export const markupSelector = createSelector(
   policyFeatureSelector,
   (state: PolicyStateInterface) => state.markup

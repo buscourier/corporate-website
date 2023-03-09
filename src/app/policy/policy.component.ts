@@ -8,6 +8,7 @@ import {
 } from './store/selectors'
 import {getMarkupAction} from './store/actions/get-markup.action'
 import {tap} from 'rxjs/operators'
+import {ActivatedRoute} from '@angular/router'
 
 @Component({
   selector: 'app-policy',
@@ -20,13 +21,13 @@ export class PolicyComponent implements OnInit {
   markup$: Observable<string>
   backendErrors$: Observable<string>
 
-  constructor(private store: Store) {}
+  constructor(private store: Store, route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.isMarkupLoading$ = this.store.select(isMarkupLoadingSelector)
     this.markup$ = this.store.select(markupSelector)
     this.backendErrors$ = this.store.select(backendErrorsSelector)
-
-    this.store.dispatch(getMarkupAction())
+    //
+    // this.store.dispatch(getMarkupAction())
   }
 }

@@ -71,6 +71,7 @@ export class AppComponent implements OnInit {
         tap((event: RouterEvent) => {
           if (event instanceof NavigationStart) {
             this.isLoading = true
+            window.scrollTo(0, 0)
           } else if (
             event instanceof NavigationEnd ||
             event instanceof NavigationCancel ||

@@ -10,6 +10,7 @@ import {reducer} from './store/reducer'
 import {EffectsModule} from '@ngrx/effects'
 import {GetMarkupEffect} from './store/effects/get-data.effect'
 import {SiteService} from '../shared/services/site.service'
+import {PolicyResolver} from './policy.resolver'
 
 @NgModule({
   declarations: [PolicyComponent],
@@ -21,6 +22,6 @@ import {SiteService} from '../shared/services/site.service'
     StoreModule.forFeature(POLICY_FEATURE, reducer),
     EffectsModule.forFeature([GetMarkupEffect]),
   ],
-  providers: [SiteService],
+  providers: [SiteService, PolicyResolver],
 })
 export class PolicyModule {}

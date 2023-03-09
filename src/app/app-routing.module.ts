@@ -4,7 +4,7 @@ import {AuthGuard} from './auth/services/auth.guard'
 import {NotFoundComponent} from './not-found/not-found.component'
 
 const routerOptions: ExtraOptions = {
-  scrollOffset: [0, 0],
+  // scrollOffset: [0, 0],
   scrollPositionRestoration: 'enabled',
 }
 

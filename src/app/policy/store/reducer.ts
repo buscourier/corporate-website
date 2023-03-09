@@ -21,6 +21,7 @@ const policyReducer = createReducer(
     (state, {markup}): PolicyStateInterface => ({
       ...state,
       isMarkupLoading: false,
+      isMarkupLoaded: true,
       markup,
     })
   ),
