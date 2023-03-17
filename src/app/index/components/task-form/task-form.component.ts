@@ -124,7 +124,6 @@ export class TaskFormComponent implements OnInit {
 
     if (_window.b24Tracker) {
       this.form.get('trace').setValue(_window.b24Tracker.guest.getTrace())
-      // console.log('_window.b24Tracker.guest.getTrace()', _window.b24Tracker.guest.getTrace())
     }
   }
 

@@ -1,8 +1,9 @@
-import {HttpClient} from '@angular/common/http'
+import {HttpClient, HttpParams} from '@angular/common/http'
 import {Injectable} from '@angular/core'
 import {Observable} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {environment} from '../../../environments/environment'
+import {WindowInterface} from '../types/window.interface'
 
 @Injectable()
 export class SiteService {
@@ -25,45 +26,24 @@ export class SiteService {
     return this.http.get<T>(`${this.url}/page/${api}`)
   }
 
-  sendTaskFormToBitrix(payload) {
-    return this.http.get(
-      `https://bitrix.busbox.guru/rest/1/xk0350plspumy30m/crm.lead.add?fields[TITLE]=Форма описания нестандартной задачи&fields[NAME]=${
-        payload.name
-      }&fields[PHONE][0][VALUE_TYPE]=WORK&fields[PHONE][0][VALUE]=${
-        payload.phone
-      }&fields[EMAIL][0][VALUE_TYPE]=WORK&fields[EMAIL][0][VALUE]=${
-        payload.email
-      }&fields[SOURCE_ID]=UC_90HLMC&fields[COMMENTS]=${
-        payload.message
-      }&fields[TRACE]=${JSON.parse(payload.trace)}`
-    )
-  }
+  sendFormToBitrix(formName, payload) {
+    const params = new HttpParams({
+      fromObject: {
+        'fields[TITLE]': formName,
+        'fields[NAME]': payload.name,
+        'fields[PHONE][0][VALUE_TYPE]': 'WORK',
+        'fields[PHONE][0][VALUE]': payload.phone,
+        'fields[EMAIL][0][VALUE_TYPE]': 'WORK',
+        'fields[EMAIL][0][VALUE]': payload.email,
+        'fields[SOURCE_ID]': 'UC_90HLMC',
+        'fields[COMMENTS]': payload.message,
+        'fields[TRACE]': payload.trace,
+      },
+    })
 
-  sendSupportFormToBitrix(payload) {
     return this.http.get(
-      `https://bitrix.busbox.guru/rest/1/xk0350plspumy30m/crm.lead.add?fields[TITLE]=Support form&fields[NAME]=${
-        payload.name
-      }&fields[PHONE][0][VALUE_TYPE]=WORK&fields[PHONE][0][VALUE]=${
-        payload.phone
-      }&fields[EMAIL][0][VALUE_TYPE]=WORK&fields[EMAIL][0][VALUE]=${
-        payload.email
-      }&fields[SOURCE_ID]=UC_90HLMC&fields[COMMENTS]=${
-        payload.message
-      }&fields[TRACE]=${JSON.parse(payload.trace)}`
-    )
-  }
-
-  sendFeedbackFormToBitrix(payload) {
-    return this.http.get(
-      `https://bitrix.busbox.guru/rest/1/xk0350plspumy30m/crm.lead.add?fields[TITLE]=Форма на странице обратной связи&fields[NAME]=${
-        payload.name
-      }&fields[PHONE][0][VALUE_TYPE]=WORK&fields[PHONE][0][VALUE]=${
-        payload.phone
-      }&fields[EMAIL][0][VALUE_TYPE]=WORK&fields[EMAIL][0][VALUE]=${
-        payload.email
-      }&fields[SOURCE_ID]=UC_90HLMC&fields[COMMENTS]=${
-        payload.message
-      }&fields[TRACE]=${JSON.parse(payload.trace)}`
+      `https://bitrix.busbox.guru/rest/1/xk0350plspumy30m/crm.lead.add`,
+      {params}
     )
   }
 }

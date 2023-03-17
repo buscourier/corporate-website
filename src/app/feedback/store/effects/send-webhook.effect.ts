@@ -30,14 +30,16 @@ export class SendWebhookEffect {
     return this.actions$.pipe(
       ofType(sendWebhookAction),
       switchMap(({payload}) => {
-        return this.siteService.sendFeedbackFormToBitrix(payload).pipe(
-          map((response: WebhookInterface) => {
-            return sendWebhookSuccessAction({response})
-          }),
-          catchError((backendErrors: BackendErrorsInterface) => {
-            return of(sendWebhookFailureAction({backendErrors}))
-          })
-        )
+        return this.siteService
+          .sendFormToBitrix('Форма обратной связи', payload)
+          .pipe(
+            map((response: WebhookInterface) => {
+              return sendWebhookSuccessAction({response})
+            }),
+            catchError((backendErrors: BackendErrorsInterface) => {
+              return of(sendWebhookFailureAction({backendErrors}))
+            })
+          )
       })
     )
   })
