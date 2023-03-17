@@ -1,4 +1,4 @@
-import {HttpClient} from '@angular/common/http'
+import {HttpClient, HttpParams} from '@angular/common/http'
 import {Injectable} from '@angular/core'
 import {filter, map, Observable} from 'rxjs'
 import {concatAll, toArray} from 'rxjs/operators'
@@ -90,14 +90,21 @@ export class NewOrderService {
   }
 
   sendOrderToBitrix(payload) {
+    const params = new HttpParams({
+      fromObject: {
+        'fields[TITLE]': 'Форма нового заказа',
+        'fields[NAME]': payload.name,
+        'fields[PHONE][0][VALUE_TYPE]': 'WORK',
+        'fields[PHONE][0][VALUE]': payload.phone,
+        'fields[SOURCE_ID]': 'UC_90HLMC',
+        'fields[COMMENTS]': payload.note,
+        'fields[TRACE]': payload.trace,
+      },
+    })
+
     return this.http.get(
-      `https://bitrix.busbox.guru/rest/1/xk0350plspumy30m/crm.lead.add?fields[TITLE]=Форма нового заказа&fields[NAME]=${
-        payload.sender_name
-      }&fields[PHONE][0][VALUE_TYPE]=WORK&fields[PHONE][0][VALUE]=${
-        payload.sender_phone
-      }&fields[SOURCE_ID]=UC_90HLMC&fields[COMMENTS]=${
-        payload.note
-      }&fields[TRACE]=${JSON.parse(payload.trace)}`
+      `https://bitrix.busbox.guru/rest/1/xk0350plspumy30m/crm.lead.add`,
+      {params}
     )
   }
 }
