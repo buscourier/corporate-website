@@ -2,6 +2,31 @@
   @apply flex items-center justify-center print:bg-white;
 }
 
+@media print {
+  tui-dialog-host {
+    position: static !important;
+  }
+
+  tui-dialog {
+    position: relative !important;
+    display: block !important;
+    font: var(--tui-font-text-m) !important;
+    flex-direction: unset !important;
+    box-sizing: unset !important;
+    margin: auto !important;
+    border-radius: 0 !important;
+    border: none !important;
+  }
+  tui-dialog::after {
+    display: none !important;
+  }
+
+  .t-overlay,
+  .t-dialog {
+    position: static !important;
+  }
+}
+
 tui-dialog {
   @apply print:!rounded-none md:!rounded-md;
 }

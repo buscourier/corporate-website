@@ -67,6 +67,7 @@ export class PrintOrderComponent implements OnInit {
   }
 
   print() {
+    document.execCommand('print', false, null)
     window.print()
   }
 
