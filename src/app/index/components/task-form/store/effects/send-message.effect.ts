@@ -29,14 +29,16 @@ export class SendMessageEffect {
       ofType(sendMessageAction),
       delay(1000),
       switchMap(({payload}) =>
-        this.siteService.sendToSupport(payload).pipe(
-          map((response: ResponseInterface) =>
-            sendMessageSuccessAction({response})
-          ),
-          catchError((backendErrors: BackendErrorsInterface) => {
-            return of(sendMessageFailureAction({backendErrors}))
-          })
-        )
+        this.siteService
+          .sendToSupport('Форма нестандартной задачи', payload)
+          .pipe(
+            map((response: ResponseInterface) =>
+              sendMessageSuccessAction({response})
+            ),
+            catchError((backendErrors: BackendErrorsInterface) => {
+              return of(sendMessageFailureAction({backendErrors}))
+            })
+          )
       )
     )
   )

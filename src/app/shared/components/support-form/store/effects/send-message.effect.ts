@@ -29,7 +29,7 @@ export class SendMessageEffect {
       ofType(sendMessageAction),
       delay(1000),
       switchMap(({payload}) =>
-        this.siteService.sendToSupport(payload).pipe(
+        this.siteService.sendToSupport('Форма поддержки', payload).pipe(
           map((response: ResponseInterface) =>
             sendMessageSuccessAction({response})
           ),

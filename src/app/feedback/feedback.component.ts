@@ -58,7 +58,7 @@ export class FeedbackComponent {
   type = this.fb.control('')
 
   form = this.fb.group({
-    name: [
+    sender: [
       '',
       [
         Validators.required,

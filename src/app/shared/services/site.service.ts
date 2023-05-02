@@ -11,9 +11,10 @@ export class SiteService {
 
   constructor(private http: HttpClient) {}
 
-  sendToSupport(payload): Observable<any> {
+  sendToSupport(subject, payload): Observable<any> {
     const extPayload = {
       'api-key': environment.apiKey,
+      subject,
       ...payload,
     }
 
