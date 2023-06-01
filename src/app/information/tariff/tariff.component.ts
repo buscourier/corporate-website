@@ -31,6 +31,8 @@ import {
 } from './store/selectors'
 import {ZoneTariffInterface} from './types/zone-tariff.interface'
 import {ZoneInterface} from './types/zone.interface'
+import {DocumentInterface} from '../../shared/types/document.interface'
+import {documentByIdSelector} from '../../store/documents/selectors'
 
 const ZoneId = {
   'Зона 1': 1,
@@ -60,6 +62,8 @@ const ParcelWeight = {
 })
 export class TariffComponent implements OnInit {
   @ViewChild('navbar', {read: ElementRef}) navbar: ElementRef
+
+  rulesDoc$: Observable<DocumentInterface>
 
   isCitiesLoading$: Observable<boolean>
   isZonesLoading$: Observable<boolean>
@@ -98,6 +102,7 @@ export class TariffComponent implements OnInit {
   }
 
   initializeValues(): void {
+    this.rulesDoc$ = this.store.select(documentByIdSelector('rules'))
     this.isCitiesLoading$ = this.store.select(isCitiesLoadingSelector)
     this.isZonesLoading$ = this.store.select(isZonesLoadingSelector)
     this.isZoneTariffsLoading$ = this.store.select(isZoneTariffsLoadingSelector)
@@ -252,9 +257,10 @@ export class TariffComponent implements OnInit {
     )
   }
 
-  showPdf(actions: PolymorpheusContent<TuiPdfViewerOptions>): void {
-    const link = `https://busbox.guru/uploads/pages/Правила_приёмки_и_отправки_грузов_Баскурьер.pdf`
-
+  showPdf(
+    {name, link},
+    actions: PolymorpheusContent<TuiPdfViewerOptions>
+  ): void {
     this.pdfService
       .open(
         this.sanitizer.bypassSecurityTrustResourceUrl(
@@ -263,7 +269,7 @@ export class TariffComponent implements OnInit {
             : link
         ),
         {
-          label: `Правила приемки и отправки грузов`,
+          label: name,
           actions,
         }
       )

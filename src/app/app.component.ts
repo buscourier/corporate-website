@@ -17,6 +17,7 @@ import {getCurrentUserAction} from './auth/store/actions/get-current-user.action
 import {isLoggedInSelector} from './auth/store/selectors'
 import {changeScreenSizeAction} from './store/global/actions/change-screen-size.action'
 import {isPageScrollBlockedSelector} from './store/global/selectors'
+import {getDocumentsAction} from './store/documents/actions/get-documents.action'
 
 @Component({
   selector: 'app-root',

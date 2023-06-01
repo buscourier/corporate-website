@@ -22,13 +22,13 @@
               <span class="text-gray-500">б)</span>
               <p>
                 Прийти в филиал.<br class="sm:hidden" />
-                <button
+                <a
+                  routerLink="/contacts"
                   type="button"
                   class="link-blue ml-1 inline-block text-sm"
-                  (click)="showCities()"
                 >
                   Смотреть адреса филиалов
-                </button>
+                </a>
               </p>
             </li>
           </ul>
@@ -72,18 +72,26 @@
         </div>
       </li>
     </ol>
-    <div class="lg:w-[370px] lg:flex-shrink-0">
+    <div
+      *tuiLet="$rulesDoc | async as doc"
+      class="lg:w-[370px] lg:flex-shrink-0"
+    >
       <!--       start media-->
       <div
+        *ngIf="doc"
         class="flex max-w-[370px] items-center rounded-sm pt-6 pr-9 pb-8 pl-7 shadow-xl lg:sticky lg:top-24"
       >
         <tui-svg
-          src="icons::pdf"
+          [src]="'icons::' + doc.type"
           class="mr-5 !h-[42px] !w-[42px] self-start"
         ></tui-svg>
         <div>
-          <p class="mb-2.5 text-sm">Правила приемки и отправки грузов</p>
-          <button type="button" class="link-blue" (click)="showPdf(actions)">
+          <p class="mb-2.5 text-sm">{{ doc.name }}</p>
+          <button
+            type="button"
+            class="link-blue"
+            (click)="showPdf(doc, actions)"
+          >
             <span><b class="font-medium">Открыть файл</b></span>
           </button>
         </div>

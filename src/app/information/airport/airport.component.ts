@@ -3,6 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   Inject,
+  OnInit,
   Self,
 } from '@angular/core'
 import {Store} from '@ngrx/store'
@@ -10,6 +11,8 @@ import {TuiDestroyService} from '@taiga-ui/cdk'
 import {Observable, takeUntil} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {screenSizeSelector} from '../../store/global/selectors'
+import {DocumentInterface} from '../../shared/types/document.interface'
+import {documentByIdSelector} from '../../store/documents/selectors'
 
 @Component({
   selector: 'app-airport',
@@ -18,7 +21,9 @@ import {screenSizeSelector} from '../../store/global/selectors'
   providers: [TuiDestroyService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AirportComponent {
+export class AirportComponent implements OnInit {
+  personalDoc$: Observable<DocumentInterface>
+  entityDoc$: Observable<DocumentInterface>
   screenSize$: Observable<string>
 
   pointsIndex = 0
@@ -49,6 +54,9 @@ export class AirportComponent {
   ) {}
 
   ngOnInit(): void {
+    this.personalDoc$ = this.store.select(documentByIdSelector('rules'))
+    this.entityDoc$ = this.store.select(documentByIdSelector('rules'))
+
     this.store
       .select(screenSizeSelector)
       .pipe(

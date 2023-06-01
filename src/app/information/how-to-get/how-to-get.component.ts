@@ -3,6 +3,7 @@ import {
   Component,
   Inject,
   Injector,
+  OnInit,
 } from '@angular/core'
 import {DomSanitizer} from '@angular/platform-browser'
 import {TUI_IS_MOBILE} from '@taiga-ui/cdk'
@@ -12,8 +13,14 @@ import {
   PolymorpheusComponent,
   PolymorpheusContent,
 } from '@tinkoff/ng-polymorpheus'
-import {take} from 'rxjs'
+import {Observable, take} from 'rxjs'
 import {CitiesComponent} from '../../shared/components/cities/cities.component'
+import {Store} from '@ngrx/store'
+import {DocumentInterface} from '../../shared/types/document.interface'
+import {
+  documentByIdSelector,
+  isDocumentsLoadingSelector,
+} from '../../store/documents/selectors'
 
 @Component({
   selector: 'app-how-to-get',
@@ -21,19 +28,31 @@ import {CitiesComponent} from '../../shared/components/cities/cities.component'
   styleUrls: ['./how-to-get.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HowToGetComponent {
+export class HowToGetComponent implements OnInit {
+  rulesDoc$: Observable<DocumentInterface>
+
   constructor(
     @Inject(DomSanitizer) private readonly sanitizer: DomSanitizer,
     @Inject(TuiPdfViewerService)
     private readonly pdfService: TuiPdfViewerService,
     @Inject(TUI_IS_MOBILE) private readonly isMobile: boolean,
     @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
-    @Inject(Injector) private readonly injector: Injector
+    @Inject(Injector) private readonly injector: Injector,
+    private store: Store
   ) {}
 
-  showPdf(actions: PolymorpheusContent<TuiPdfViewerOptions>): void {
-    const link = `https://busbox.guru/uploads/pages/Правила_приёмки_и_отправки_грузов_Баскурьер.pdf`
+  ngOnInit(): void {
+    this.initValues()
+  }
 
+  initValues(): void {
+    this.rulesDoc$ = this.store.select(documentByIdSelector('rules'))
+  }
+
+  showPdf(
+    {name, type, link},
+    actions: PolymorpheusContent<TuiPdfViewerOptions>
+  ): void {
     this.pdfService
       .open(
         this.sanitizer.bypassSecurityTrustResourceUrl(
@@ -42,24 +61,10 @@ export class HowToGetComponent {
             : link
         ),
         {
-          label: `Правила приемки и отправки грузов`,
+          label: name,
           actions,
         }
       )
-      .subscribe()
-  }
-
-  showCities() {
-    this.dialogService
-      .open<any>(new PolymorpheusComponent(CitiesComponent, this.injector), {
-        data: {
-          type: 'end',
-        },
-        dismissible: true,
-        closeable: false,
-        size: 'l',
-      })
-      .pipe(take(1))
       .subscribe()
   }
 }

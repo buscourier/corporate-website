@@ -1,46 +1,53 @@
 import {NgModule} from '@angular/core'
 import {RouterModule, Routes} from '@angular/router'
 import {InformationComponent} from './information.component'
+import {IndexComponent} from './index/index.component'
+import {PackagingComponent} from './packaging/packaging.component'
+import {AirportComponent} from './airport/airport.component'
+import {HowToGetComponent} from './how-to-get/how-to-get.component'
+import {HowToSendComponent} from './how-to-send/how-to-send.component'
+import {RulesComponent} from './rules/rules.component'
+import {StorageComponent} from './storage/storage.component'
 
 const routes: Routes = [
   {
     path: '',
     component: InformationComponent,
-  },
-  {
-    path: 'tariff',
-    loadChildren: () =>
-      import('./tariff/tariff.module').then((m) => m.TariffModule),
-  },
-  {
-    path: 'packaging',
-    loadChildren: () =>
-      import('./packaging/packaging.module').then((m) => m.PackagingModule),
-  },
-  {
-    path: 'airport',
-    loadChildren: () =>
-      import('./airport/airport.module').then((m) => m.AirportModule),
-  },
-  {
-    path: 'how-to-get',
-    loadChildren: () =>
-      import('./how-to-get/how-to-get.module').then((m) => m.HowToGetModule),
-  },
-  {
-    path: 'how-to-send',
-    loadChildren: () =>
-      import('./how-to-send/how-to-send.module').then((m) => m.HowToSendModule),
-  },
-  {
-    path: 'rules',
-    loadChildren: () =>
-      import('./rules/rules.module').then((m) => m.RulesModule),
-  },
-  {
-    path: 'storage',
-    loadChildren: () =>
-      import('./storage/storage.module').then((m) => m.StorageModule),
+    children: [
+      {
+        path: '',
+        component: IndexComponent,
+      },
+      {
+        path: 'tariff',
+        loadChildren: () =>
+          import('./tariff/tariff.module').then((m) => m.TariffModule),
+      },
+      {
+        path: 'packaging',
+        component: PackagingComponent,
+      },
+      {
+        path: 'airport',
+        component: AirportComponent,
+      },
+      {
+        path: 'how-to-get',
+        component: HowToGetComponent,
+      },
+      {
+        path: 'how-to-send',
+        component: HowToSendComponent,
+      },
+      {
+        path: 'rules',
+        component: RulesComponent,
+      },
+      {
+        path: 'storage',
+        component: StorageComponent,
+      },
+    ],
   },
 ]
 

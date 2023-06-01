@@ -1,4 +1,6 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core'
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
+import {Store} from '@ngrx/store'
+import {getDocumentsAction} from '../store/documents/actions/get-documents.action'
 
 @Component({
   selector: 'app-information',
@@ -6,37 +8,14 @@ import {ChangeDetectionStrategy, Component} from '@angular/core'
   styleUrls: ['./information.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InformationComponent {
-  links = [
-    {
-      name: 'Как отправить посылку',
-      href: 'how-to-send',
-    },
-    {
-      name: 'Как получить посылку',
-      href: 'how-to-get',
-    },
-    {
-      name: 'Правила приемки и отправки грузов',
-      href: 'rules',
-    },
-    {
-      name: 'Тарифы на перевозку',
-      href: 'tariff',
-    },
-    {
-      name: 'Упаковки грузов и виды упаковки',
-      href: 'packaging',
-    },
-    {
-      name: 'Хранение груза',
-      href: 'storage',
-    },
-    {
-      name: 'Доставка грузов и багажа из Аэропорта',
-      href: 'airport',
-    },
-  ]
+export class InformationComponent implements OnInit {
+  constructor(private store: Store) {}
 
-  constructor() {}
+  ngOnInit(): void {
+    this.fetchData()
+  }
+
+  fetchData() {
+    this.store.dispatch(getDocumentsAction())
+  }
 }
