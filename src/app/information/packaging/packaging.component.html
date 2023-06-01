@@ -144,65 +144,76 @@
           повреждения другим грузам.
         </p>
       </div>
-      <!-- item start-->
-      <div
-        class="mt-8 rounded-md bg-yellow px-5 pt-9 pb-7.5 md:mt-11 md:px-18 md:py-10"
-      >
-        <p class="mb-5 font-heading text-lg md:text-xl">
-          Вы можете скачать файл «Правила приемки<br class="hidden md:block" />
-          и отправки грузов» в формате PDF
-        </p>
-        <button
-          type="button"
-          class="flex items-center"
-          (click)="
-            showPdf(
-              {
-                label: 'Правила приемки и отправки грузов',
-                link: 'https://busbox.guru/uploads/pages/Расписание_отправлений_Владивосток.pdf'
-              },
-              actions
-            )
-          "
+      <ng-container *tuiLet="rulesDoc$ | async as doc">
+        <!-- item start-->
+        <div
+          *ngIf="doc"
+          class="mt-8 rounded-md bg-yellow px-5 pt-9 pb-7.5 md:mt-11 md:px-18 md:py-10"
         >
-          <tui-svg src="icons::pdf" class="mr-5 !h-[42px] !w-[42px]"></tui-svg>
-          <span
-            class="relative leading-6 before:absolute before:left-0 before:bottom-0 before:w-full before:border-b before:border-dotted before:border-black hover:cursor-pointer hover:opacity-80 hover:before:hidden"
-            ><b>Скачать в PDF</b> (80 кб)</span
-          >
-        </button>
-      </div>
-      <!-- item end-->
-    </div>
-    <div class="lg:w-[370px] lg:flex-shrink-0">
-      <!--       start media-->
-      <div
-        class="flex max-w-[370px] items-center rounded-sm pt-6 pr-9 pb-8 pl-7 shadow-xl lg:sticky lg:top-24"
-      >
-        <tui-svg
-          src="icons::pdf"
-          class="mr-5 !h-[42px] !w-[42px] self-start"
-        ></tui-svg>
-        <div>
-          <p class="mb-2.5 text-sm">Тарифы на упаковку</p>
+          <p class="mb-5 font-heading text-lg md:text-xl">
+            Вы можете скачать файл «Правила приемки<br
+              class="hidden md:block"
+            />
+            и отправки грузов» в формате PDF
+          </p>
           <button
             type="button"
-            class="link-blue"
+            class="flex items-center"
             (click)="
               showPdf(
                 {
-                  label: 'Тарифы на упаковку',
-                  link: 'https://busbox.guru/uploads/pages/Упаковка_прайс.pdf'
+                  label: doc.name,
+                  link: doc.link
                 },
                 actions
               )
             "
           >
-            <span><b class="font-medium">Открыть файл</b></span>
+            <tui-svg
+              src="icons::pdf"
+              class="mr-5 !h-[42px] !w-[42px]"
+            ></tui-svg>
+            <span
+              class="relative leading-6 before:absolute before:left-0 before:bottom-0 before:w-full before:border-b before:border-dotted before:border-black hover:cursor-pointer hover:opacity-80 hover:before:hidden"
+              ><b>Скачать в PDF</b> (80 кб)</span
+            >
           </button>
         </div>
-      </div>
-      <!--        end media-->
+        <!-- item end-->
+      </ng-container>
+    </div>
+    <div class="lg:w-[370px] lg:flex-shrink-0">
+      <ng-container *tuiLet="tariffsDoc$ | async as doc">
+        <!--       start media-->
+        <div
+          *ngIf="doc"
+          class="flex max-w-[370px] items-center rounded-sm pt-6 pr-9 pb-8 pl-7 shadow-xl lg:sticky lg:top-24"
+        >
+          <tui-svg
+            [src]="'icons::' + doc.type"
+            class="mr-5 !h-[42px] !w-[42px] self-start"
+          ></tui-svg>
+          <div>
+            <p class="mb-2.5 text-sm">{{ doc.name }}</p>
+            <button
+              type="button"
+              class="link-blue"
+              (click)="
+                showPdf(
+                  {
+                    label: doc.name,
+                    link: doc.link
+                  },
+                  actions
+                )
+              "
+            >
+              <span><b class="font-medium">Открыть файл</b></span>
+            </button>
+          </div>
+        </div>
+        <!--        end media-->
+      </ng-container>
     </div>
   </div>
 </div>

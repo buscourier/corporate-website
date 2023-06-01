@@ -4,7 +4,7 @@ import {changeScreenSizeAction} from './actions/change-screen-size.action'
 import {initialState} from './state'
 import {GlobalStateInterface} from './types/global-state.interface'
 
-const reducer = createReducer(
+const reducers = createReducer(
   initialState,
   on(changeScreenSizeAction, (state: GlobalStateInterface, {screenSize}) => ({
     ...initialState,
@@ -20,5 +20,5 @@ const reducer = createReducer(
 )
 
 export function globalReducer(state: GlobalStateInterface, action: Action) {
-  return reducer(state, action)
+  return reducers(state, action)
 }

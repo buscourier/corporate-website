@@ -47,4 +47,10 @@ export class SiteService {
       {params}
     )
   }
+
+  getDocuments<T>(): Observable<T> {
+    const api = '8aab09f6-c5b3-43be-8895-153ea164984e/53'
+
+    return this.http.get<T>(`${this.url}/documents`)
+  }
 }

@@ -31,6 +31,8 @@ import {ImgModule} from './shared/components/img/img.module'
 import {PageFooterModule} from './shared/components/page-footer/page-footer.module'
 import {PageHeaderModule} from './shared/components/page-header/page-header.module'
 import {reducers} from './store/reducers'
+import {GetDocumentsEffect} from './store/documents/effects/get-documents.effect'
+import {SiteService} from './shared/services/site.service'
 
 const mapConfig: YaConfig = {
   apikey: 'be640658-9c20-46d8-ab54-555efd7fc3ee',
@@ -49,7 +51,7 @@ registerLocaleData(ruLocale, 'ru')
     TuiPdfViewerModule,
     AuthModule.forRoot(),
     StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([GetDocumentsEffect]),
     environment.production
       ? []
       : StoreDevtoolsModule.instrument({
@@ -69,6 +71,7 @@ registerLocaleData(ruLocale, 'ru')
     TuiLoaderModule,
   ],
   providers: [
+    SiteService,
     // {
     //   provide: HTTP_INTERCEPTORS,
     //   useClass: AuthInterceptor,
