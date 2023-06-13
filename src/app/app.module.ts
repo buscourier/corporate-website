@@ -33,6 +33,7 @@ import {PageHeaderModule} from './shared/components/page-header/page-header.modu
 import {reducers} from './store/reducers'
 import {GetDocumentsEffect} from './store/documents/effects/get-documents.effect'
 import {SiteService} from './shared/services/site.service'
+import {NewsBannerModule} from './shared/components/news-banner/news-banner.module'
 
 const mapConfig: YaConfig = {
   apikey: 'be640658-9c20-46d8-ab54-555efd7fc3ee',
@@ -69,6 +70,7 @@ registerLocaleData(ruLocale, 'ru')
     AngularYandexMapsModule.forRoot(mapConfig),
     ImgModule,
     TuiLoaderModule,
+    NewsBannerModule,
   ],
   providers: [
     SiteService,

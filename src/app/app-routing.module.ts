@@ -82,6 +82,10 @@ const routes: Routes = [
     loadChildren: () =>
       import('./policy/policy.module').then((m) => m.PolicyModule),
   },
+  {
+    path: 'news',
+    loadChildren: () => import('./news/news.module').then((m) => m.NewsModule),
+  },
   {path: '**', component: NotFoundComponent},
 ]
 

@@ -1,0 +1,19 @@
+<article class="bg-yellow">
+  <div
+    class="relative mx-auto flex max-w-[1170px] items-center justify-center p-4"
+  >
+    <!--    <tui-loader [showLoader]="isLoading$ | async">-->
+    <!--      -->
+    <!--    </tui-loader>-->
+    <swiper [config]="config" class="swiper">
+      <ng-template swiperSlide *ngFor="let article of news$ | async as news">
+        <p class="text-center font-base text-sm text-black sm:text-md">
+          {{ article.title }}
+        </p>
+      </ng-template>
+    </swiper>
+    <button type="button" class="absolute right-4">
+      <tui-svg src="icons::close-2"></tui-svg>
+    </button>
+  </div>
+</article>
