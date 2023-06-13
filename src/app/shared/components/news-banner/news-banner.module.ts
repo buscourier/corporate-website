@@ -10,6 +10,7 @@ import {EffectsModule} from '@ngrx/effects'
 import {GetNewsEffect} from './store/effects/get-news.effect'
 import {TuiLetModule} from '@taiga-ui/cdk'
 import {SwiperModule} from 'swiper/angular'
+import {RouterLinkWithHref} from '@angular/router'
 
 @NgModule({
   declarations: [NewsBannerComponent],
@@ -21,6 +22,7 @@ import {SwiperModule} from 'swiper/angular'
     TuiLetModule,
     TuiLoaderModule,
     SwiperModule,
+    RouterLinkWithHref,
   ],
   exports: [NewsBannerComponent],
   providers: [NewsService],

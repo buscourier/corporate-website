@@ -1,1 +1,33 @@
-<p>news works!</p>
+<div class="mx-auto mt-10 block max-w-[1170px] px-4 lg:mt-16">
+  <h1 class="mb-1 font-heading text-2xl font-bold lg:text-3xl">Новости</h1>
+  <p class="mb-7.5 text-sm md:mb-11 lg:mb-12">
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, cupiditate
+    deleniti dignissimos excepturi ipsa ipsum, laborum laudantium.
+  </p>
+  <div class="grid grid-cols-1 gap-10 lg:grid-cols-3 lg:gap-8">
+    <article
+      *ngFor="let article of news$ | async as news"
+      class="flex max-w-[540px] flex-col sm:max-w-[850px] sm:flex-row sm:space-x-5 md:space-x-9 lg:flex-col lg:space-x-0"
+    >
+      <app-img
+        class="mb-6 block h-48 w-full flex-shrink-0 rounded-sm object-cover sm:w-[270px] md:mb-0 md:w-[345px] lg:mb-6 lg:w-auto"
+        src="/assets/images/complex-tasks/task-1--xl"
+      ></app-img>
+      <div>
+        <h3 class="mb-2.5 text-lg font-medium">
+          {{ article.title }}
+        </h3>
+        <p>
+          {{ article.text }}
+          <a
+            routerLink="/news"
+            [queryParams]="{id: article.id}"
+            class="link-blue inline-block md:block lg:inline-block"
+          >
+            Читать далее
+          </a>
+        </p>
+      </div>
+    </article>
+  </div>
+</div>

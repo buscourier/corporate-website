@@ -217,11 +217,7 @@ export class SenderComponent implements OnInit, AfterViewInit {
     ])
       .pipe(
         tap(([person, currentUser]) => {
-          if (
-            person.role === 'Отправитель' &&
-            currentUser &&
-            currentUser.user_type !== 'ur'
-          ) {
+          if (person.role === 'Отправитель' && !currentUser) {
             this.form.patchValue({
               fio: `${person.lastName} ${person.firstName} ${person.middleName}`,
               phone: person.phone,

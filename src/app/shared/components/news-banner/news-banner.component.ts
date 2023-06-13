@@ -31,7 +31,7 @@ export class NewsBannerComponent implements OnInit {
     spaceBetween: 30,
     loop: true,
     autoplay: {
-      delay: 2000,
+      delay: 4000,
     },
   }
 
@@ -45,11 +45,7 @@ export class NewsBannerComponent implements OnInit {
   private initValues(): void {
     this.isLoading$ = this.store.select(isLoadingSelector)
     this.backendErrors$ = this.store.select(backendErrorsSelector)
-    this.news$ = this.store.select(allNewsSelector).pipe(
-      tap((data) => {
-        console.log('data', data)
-      })
-    )
+    this.news$ = this.store.select(allNewsSelector)
   }
 
   private fetchData(): void {

@@ -7,9 +7,15 @@
     <!--    </tui-loader>-->
     <swiper [config]="config" class="swiper">
       <ng-template swiperSlide *ngFor="let article of news$ | async as news">
-        <p class="text-center font-base text-sm text-black sm:text-md">
-          {{ article.title }}
-        </p>
+        <div class="text-center">
+          <a
+            routerLink="/news"
+            [queryParams]="{id: article.id}"
+            class="text-center font-base text-sm text-black hover:underline hover:underline-offset-2 sm:text-md"
+          >
+            {{ article.title }}
+          </a>
+        </div>
       </ng-template>
     </swiper>
     <button type="button" class="absolute right-4">

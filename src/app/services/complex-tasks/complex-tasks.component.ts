@@ -1,7 +1,11 @@
 import {ChangeDetectionStrategy, Component, Inject} from '@angular/core'
 import {TuiDialogContext, TuiDialogService} from '@taiga-ui/core'
-import {PolymorpheusContent} from '@tinkoff/ng-polymorpheus'
+import {
+  PolymorpheusComponent,
+  PolymorpheusContent,
+} from '@tinkoff/ng-polymorpheus'
 import {take} from 'rxjs'
+import {ModalMapComponent} from '../../shared/components/modal-map/modal-map.component'
 
 @Component({
   selector: 'app-complex-tasks',
