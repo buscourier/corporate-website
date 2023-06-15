@@ -1,1 +1,42 @@
-<p>balance works!</p>
+<ng-container *tuiLet="isLoading$ | async as isLoading">
+  <ng-container *tuiLet="balance$ | async as balance">
+    <div class="mb-7 flex w-full flex-col">
+      <span class="text-sm">Ваш баланс:</span>
+      <div class="flex max-w-[270px] items-center justify-between">
+        <tui-loader [showLoader]="isLoading" class="w-full">
+          <b class="block h-13 w-full text-3xl" [class.opacity-0]="isLoading"
+            >{{ balance && balance.total }} {{ 'RUB' | tuiCurrency }}</b
+          >
+        </tui-loader>
+        <button
+          tuiIconButton
+          type="button"
+          appearance="icon"
+          icon="icons::refresh"
+          [tuiHint]="!isLoading && tooltip"
+          tuiHintAppearance="onDark"
+          class="ml-5"
+          [class.animate-spin]="isLoading"
+          (click)="loadBalance()"
+        ></button>
+      </div>
+    </div>
+    <ng-template #tooltip>
+      <ng-container *ngIf="balance">
+        <div class="text-xs">За период:</div>
+        <b class="text-xs">{{ balance.period }}</b>
+        <br />
+        <span class="text-xs">На счету: </span>
+        <b class="text-xs">{{ balance.debet }} {{ 'RUB' | tuiCurrency }}</b>
+        <br />
+        <span class="text-xs">Заказов на: </span>
+        <b class="text-xs">{{ balance.orderSum }} {{ 'RUB' | tuiCurrency }}</b>
+        <br />
+        <span class="text-xs">Услуг на: </span>
+        <b class="text-xs"
+          >{{ balance.serviceSum }} {{ 'RUB' | tuiCurrency }}</b
+        >
+      </ng-container>
+    </ng-template>
+  </ng-container>
+</ng-container>

@@ -1,13 +1,14 @@
 import {Injectable} from '@angular/core'
 import {Actions, createEffect, ofType} from '@ngrx/effects'
-import {AccountService} from '../../services/account.service'
+import {switchMap} from 'rxjs/operators'
 import {
   getBalanceAction,
   getBalanceFailureAction,
   getBalanceSuccessAction,
 } from '../actions/get-balance.action'
-import {catchError, map, of, switchMap} from 'rxjs'
+import {catchError, map, of} from 'rxjs'
 import {HttpErrorResponse} from '@angular/common/http'
+import {AccountService} from '../../../../services/account.service'
 import {BalanceInterface} from '../../types/balance.interface'
 
 @Injectable()

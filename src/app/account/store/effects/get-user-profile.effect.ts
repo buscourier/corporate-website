@@ -8,7 +8,7 @@ import {
 } from '../actions/get-user-profile.action'
 import {catchError, map, of, switchMap} from 'rxjs'
 import {HttpErrorResponse} from '@angular/common/http'
-import {getBalanceFailureAction} from '../actions/get-balance.action'
+import {getBalanceFailureAction} from '../../components/balance/store/actions/get-balance.action'
 import {UserProfileInterface} from '../../types/user-profile.interface'
 
 @Injectable()

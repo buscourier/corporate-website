@@ -4,7 +4,7 @@ import {
   getBalanceAction,
   getBalanceFailureAction,
   getBalanceSuccessAction,
-} from './actions/get-balance.action'
+} from '../components/balance/store/actions/get-balance.action'
 import {AccountStateInterface} from '../types/account-state.interface'
 import {
   getUserProfileAction,
@@ -14,20 +14,6 @@ import {
 
 const accountReducer = createReducer(
   inititalState,
-  on(getBalanceAction, (state: AccountStateInterface) => ({
-    ...state,
-    isBalanceLoading: true,
-  })),
-  on(getBalanceSuccessAction, (state: AccountStateInterface, {balance}) => ({
-    ...state,
-    isBalanceLoading: false,
-    balance,
-  })),
-  on(getBalanceFailureAction, (state: AccountStateInterface, {errors}) => ({
-    ...state,
-    isBalanceLoading: false,
-    backendErrors: errors,
-  })),
   on(getUserProfileAction, (state: AccountStateInterface) => ({
     ...state,
     isUserProfileLoading: true,

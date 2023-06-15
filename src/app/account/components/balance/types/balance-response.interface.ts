@@ -1,4 +1,4 @@
-export interface BalanceInterface {
+export interface BalanceResponseInterface {
   INN: string
   company_id: string
   debet: string
