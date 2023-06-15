@@ -6,6 +6,7 @@ import {
   getStatusesSuccessAction,
 } from './actions/get-statuses.action'
 import {initialState} from './state'
+import {deleteStatusesAction} from './actions/delete-statuses.action'
 
 const findOrderReducer = createReducer(
   initialState,
@@ -30,6 +31,12 @@ const findOrderReducer = createReducer(
       ...state,
       isStatusesLoading: false,
       backendErrors: errors,
+    })
+  ),
+  on(
+    deleteStatusesAction,
+    (): FindOrderStateInterface => ({
+      ...initialState,
     })
   )
 )

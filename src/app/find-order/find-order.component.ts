@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   Inject,
+  OnDestroy,
   OnInit,
   Self,
 } from '@angular/core'
@@ -15,10 +16,11 @@ import {
   statusesSelector,
 } from './store/selectors'
 import {OrderStatusInterface} from './types/order-status.interface'
-import {ActivatedRoute, Params} from '@angular/router'
+import {ActivatedRoute, Params, Router} from '@angular/router'
 import {tap} from 'rxjs/operators'
 import {TuiDestroyService} from '@taiga-ui/cdk'
 import {BackendErrorsInterface} from '../shared/types/backend-errors.interface'
+import {deleteStatusesAction} from './store/actions/delete-statuses.action'
 
 @Component({
   selector: 'app-find-order',
@@ -27,7 +29,7 @@ import {BackendErrorsInterface} from '../shared/types/backend-errors.interface'
   providers: [TuiDestroyService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FindOrderComponent implements OnInit {
+export class FindOrderComponent implements OnInit, OnDestroy {
   isStatusesLoading$: Observable<boolean>
   statuses$: Observable<OrderStatusInterface[]>
   backendErrors$: Observable<string>
@@ -59,6 +61,7 @@ export class FindOrderComponent implements OnInit {
     private fb: FormBuilder,
     private store: Store,
     public route: ActivatedRoute,
+    private router: Router,
     @Self() @Inject(TuiDestroyService) private destroy$: TuiDestroyService
   ) {}
 
@@ -84,6 +87,25 @@ export class FindOrderComponent implements OnInit {
         takeUntil(this.destroy$)
       )
       .subscribe()
+
+    this.form.valueChanges
+      .pipe(
+        tap((values) => {
+          if (this.form.invalid) {
+            this.deleteStatuses()
+            this.router.navigate(['/find-order'])
+          }
+        })
+      )
+      .subscribe()
+  }
+
+  ngOnDestroy(): void {
+    this.deleteStatuses()
+  }
+
+  deleteStatuses(): void {
+    this.store.dispatch(deleteStatusesAction())
   }
 
   onSubmit() {
