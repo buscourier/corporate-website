@@ -17,6 +17,7 @@ import {ResponseInterface} from './types/response.interface'
 import {TUI_VALIDATION_ERRORS} from '@taiga-ui/kit'
 import {phoneLengthValidator} from '../shared/validators/phone-length.validator'
 import {WindowInterface} from '../shared/types/window.interface'
+import {Router} from '@angular/router'
 
 @Component({
   selector: 'app-feedback',
@@ -90,6 +91,7 @@ export class FeedbackComponent {
   constructor(
     private fb: FormBuilder,
     private store: Store,
+    private router: Router,
     @Self() @Inject(TuiDestroyService) private destroy$: TuiDestroyService
   ) {}
 
@@ -126,6 +128,12 @@ export class FeedbackComponent {
     if (_window.b24Tracker) {
       this.form.get('trace').setValue(_window.b24Tracker.guest.getTrace())
     }
+  }
+
+  redirectToPolicy(event: Event) {
+    event.stopPropagation()
+    const url = this.router.createUrlTree(['/policy'])
+    window.open(url.toString(), '_blank')
   }
 
   onSubmit() {

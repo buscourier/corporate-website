@@ -38,6 +38,7 @@ import {senderSelector} from '../step-two/components/sender/store/selectors'
 import {SenderStateInterface} from '../step-two/components/sender/types/sender-state.interface'
 import {isSubmittingSelector} from './store/selectors'
 import {WindowInterface} from '../../../../../shared/types/window.interface'
+import {Router} from '@angular/router'
 
 interface TotalServicesInterface {
   id: string
@@ -103,6 +104,7 @@ export class StepFourComponent implements OnInit {
     private store: Store,
     private totalSumService: TotalSumService,
     private recaptchaService: ReCaptchaV3Service,
+    private router: Router,
     @Self() @Inject(TuiDestroyService) private destroy$: TuiDestroyService
   ) {}
 
@@ -335,6 +337,12 @@ export class StepFourComponent implements OnInit {
           this.tokenError = {error}
         }
       )
+  }
+
+  redirectToPolicy(event: Event) {
+    event.stopPropagation()
+    const url = this.router.createUrlTree(['/policy'])
+    window.open(url.toString(), '_blank')
   }
 
   onSubmit() {

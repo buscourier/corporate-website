@@ -129,7 +129,8 @@ export class TaskFormComponent implements OnInit {
 
   redirectToPolicy(event: Event) {
     event.stopPropagation()
-    this.router.navigate(['/policy'])
+    const url = this.router.createUrlTree(['/policy'])
+    window.open(url.toString(), '_blank')
   }
 
   onSubmit() {

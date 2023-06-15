@@ -197,7 +197,9 @@
   <tui-checkbox-labeled [formControl]="policy" [readOnly]="policy.value">
     <span class="text-2xs">
       Нажимая кнопку «Отправить», я даю свое согласие на
-      <a class="text-blue">обработку моих персональных данных</a>
+      <a class="link-blue" (click)="redirectToPolicy($event)"
+        >обработку моих персональных данных</a
+      >
     </span>
   </tui-checkbox-labeled>
   <div class="mt-11 flex justify-between">
