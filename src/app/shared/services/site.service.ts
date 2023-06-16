@@ -1,6 +1,6 @@
 import {HttpClient, HttpParams} from '@angular/common/http'
 import {Injectable} from '@angular/core'
-import {Observable} from 'rxjs'
+import {Observable, of} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {environment} from '../../../environments/environment'
 import {WindowInterface} from '../types/window.interface'
@@ -49,8 +49,13 @@ export class SiteService {
   }
 
   getDocuments<T>(): Observable<T> {
-    const api = '8aab09f6-c5b3-43be-8895-153ea164984e/53'
-
     return this.http.get<T>(`${this.url}/documents`)
+  }
+
+  getAchievements<T>(): Observable<any> {
+    // return this.http.get<T>(`${this.url}/achievements`)
+    return of({
+      parcelsCount: '1 062 000',
+    })
   }
 }
