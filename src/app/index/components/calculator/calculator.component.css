@@ -1,8 +1,7 @@
 :host {
-  @apply mx-auto w-auto w-full min-w-[360px] max-w-md rounded-md bg-yellow p-12 pb-14;
-  @apply md:mx-0 md:max-w-full md:basis-1/2 md:p-11 md:pb-12;
-  @apply lg:relative lg:max-w-[375px] lg:before:absolute lg:before:bottom-[-58px] lg:before:right-[-62px]
+  @apply  block xl:absolute xl:top-0 xl:right-4 xl:h-[1190px];
+  @apply lg:max-w-[375px] lg:before:absolute lg:before:top-[140px] lg:before:right-[-62px]
   lg:before:-z-10 lg:before:h-[360px]
   lg:before:w-[600px] lg:before:bg-index-bus lg:before:bg-[length:600px_360px] lg:before:bg-no-repeat
-  xl:before:bottom-[-122px] xl:before:right-[-205px] xl:before:w-[810px] xl:before:bg-[length:810px_360px];
+  xl:before:top-[142px] xl:before:right-[-205px] xl:before:w-[810px] xl:before:bg-[length:810px_360px];
 }
