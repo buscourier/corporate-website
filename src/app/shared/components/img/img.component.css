@@ -4,7 +4,9 @@ picture {
   min-width: inherit;
   height: inherit;
   object-fit: inherit;
+  object-position: inherit;
   max-height: inherit;
+
 }
 
 img {
@@ -14,5 +16,6 @@ img {
   height: inherit;
   max-height: inherit;
   object-fit: inherit;
+  object-position: inherit;
   background-color: #f5f4f4;
 }
