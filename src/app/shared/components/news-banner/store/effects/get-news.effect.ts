@@ -7,8 +7,9 @@ import {
   getNewsSuccessAction,
 } from '../actions/get-news.action'
 import {catchError, map, of, switchMap} from 'rxjs'
-import {ArticleInterface} from '../../../../types/article.interface'
+import {NewsItemInterface} from '../../../../types/news-item.interface'
 import {BackendErrorsInterface} from '../../../../types/backend-errors.interface'
+import {SiteService} from '../../../../services/site.service'
 
 @Injectable()
 export class GetNewsEffect {
@@ -16,8 +17,8 @@ export class GetNewsEffect {
     return this.actions$.pipe(
       ofType(getNewsAction),
       switchMap(() => {
-        return this.newsService.getArticles().pipe(
-          map((news: ArticleInterface[]) => {
+        return this.siteService.getNews().pipe(
+          map((news: NewsItemInterface[]) => {
             return getNewsSuccessAction({news})
           }),
           catchError((backendErrors: BackendErrorsInterface) => {
@@ -28,5 +29,5 @@ export class GetNewsEffect {
     )
   })
 
-  constructor(private actions$: Actions, private newsService: NewsService) {}
+  constructor(private actions$: Actions, private siteService: SiteService) {}
 }

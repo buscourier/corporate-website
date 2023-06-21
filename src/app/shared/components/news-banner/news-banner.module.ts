@@ -11,6 +11,7 @@ import {GetNewsEffect} from './store/effects/get-news.effect'
 import {TuiLetModule} from '@taiga-ui/cdk'
 import {SwiperModule} from 'swiper/angular'
 import {RouterLinkWithHref} from '@angular/router'
+import {SiteService} from '../../services/site.service'
 
 @NgModule({
   declarations: [NewsBannerComponent],
@@ -25,6 +26,6 @@ import {RouterLinkWithHref} from '@angular/router'
     RouterLinkWithHref,
   ],
   exports: [NewsBannerComponent],
-  providers: [NewsService],
+  providers: [SiteService],
 })
 export class NewsBannerModule {}

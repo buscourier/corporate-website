@@ -10,6 +10,8 @@ import {GetNewsEffect} from './store/effects/get-news.effect'
 import {NewsService} from '../shared/services/news.service'
 import {ImgModule} from '../shared/components/img/img.module'
 import {NewsItemModule} from './components/news-item/news-item.module'
+import {SiteService} from '../shared/services/site.service'
+import {GetNewsItemEffect} from './store/effects/get-news-item.effect'
 
 @NgModule({
   declarations: [NewsComponent],
@@ -17,10 +19,10 @@ import {NewsItemModule} from './components/news-item/news-item.module'
     CommonModule,
     NewsRoutingModule,
     StoreModule.forFeature(NEWS_FEATURE, reducers),
-    EffectsModule.forFeature([GetNewsEffect]),
+    EffectsModule.forFeature([GetNewsEffect, GetNewsItemEffect]),
     ImgModule,
     NewsItemModule,
   ],
-  providers: [NewsService],
+  providers: [SiteService],
 })
 export class NewsModule {}

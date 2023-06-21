@@ -25,6 +25,7 @@ import {GetOrderDetailsEffect} from './store/effects/get-order-details.effect'
 import {GetOrdersEffect} from './store/effects/get-orders.effect'
 import {reducer} from './store/reducer'
 import {REPORT_FEATURE} from './store/state'
+import {BalanceModule} from '../balance/balance.module'
 
 @NgModule({
   declarations: [ReportComponent, PrintOrderComponent],
@@ -47,6 +48,7 @@ import {REPORT_FEATURE} from './store/state'
     MobileDataModule,
     ScrollingModule,
     TuiButtonModule,
+    BalanceModule,
   ],
   providers: [ReportService],
 })

@@ -6,7 +6,7 @@ import {
   OnInit,
 } from '@angular/core'
 import {tap} from 'rxjs/operators'
-import {ArticleInterface} from '../shared/types/article.interface'
+import {NewsItemInterface} from '../shared/types/news-item.interface'
 import {Store} from '@ngrx/store'
 import {BackendErrorsInterface} from '../shared/types/backend-errors.interface'
 import {filter, map, Observable, take} from 'rxjs'
@@ -33,7 +33,7 @@ import {ActivatedRoute, ParamMap} from '@angular/router'
 export class NewsComponent implements OnInit {
   isLoading$: Observable<boolean>
   backendErrors$: Observable<BackendErrorsInterface>
-  news$: Observable<ArticleInterface[]>
+  news$: Observable<NewsItemInterface[]>
 
   constructor(
     @Inject(TuiDialogService)

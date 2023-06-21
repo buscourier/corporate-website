@@ -1,9 +1,10 @@
 import {HttpClient, HttpParams} from '@angular/common/http'
 import {Injectable} from '@angular/core'
-import {Observable, of} from 'rxjs'
+import {map, Observable, of} from 'rxjs'
 import {tap} from 'rxjs/operators'
 import {environment} from '../../../environments/environment'
 import {WindowInterface} from '../types/window.interface'
+import {NewsItemInterface} from '../types/news-item.interface'
 
 @Injectable()
 export class SiteService {
@@ -57,5 +58,21 @@ export class SiteService {
     return of({
       parcelsCount: '1 062 000',
     })
+  }
+
+  getNews<T>(): Observable<NewsItemInterface[]> {
+    return this.http.get<NewsItemInterface[]>(`${this.url}/news`).pipe(
+      tap((data) => {
+        console.log('data', data)
+      })
+    )
+  }
+
+  getNewsItem<T>(id: string): Observable<NewsItemInterface> {
+    return this.http.get<NewsItemInterface[]>(`${this.url}/news/${id}`).pipe(
+      map((data: NewsItemInterface[]) => {
+        return data[0]
+      })
+    )
   }
 }

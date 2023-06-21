@@ -1,17 +1,17 @@
 import {createEntityAdapter, EntityState} from '@ngrx/entity'
-import {ArticleInterface} from '../../../types/article.interface'
+import {NewsItemInterface} from '../../../types/news-item.interface'
 import {BackendErrorsInterface} from '../../../types/backend-errors.interface'
 
 export const NEWS_BANNER_FEATURE = 'news-banner'
 
 export interface NewsBannerStateInterface
-  extends EntityState<ArticleInterface> {
+  extends EntityState<NewsItemInterface> {
   isLoading: boolean
   backendErrors: BackendErrorsInterface | null
 }
 
 export const newsBannerAdapter = createEntityAdapter({
-  selectId: ({id}: ArticleInterface) => id,
+  selectId: ({news_id}: NewsItemInterface) => news_id,
 })
 
 export const initialState: NewsBannerStateInterface =

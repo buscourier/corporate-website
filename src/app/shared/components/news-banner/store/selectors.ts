@@ -5,7 +5,7 @@ import {
   NewsBannerStateInterface,
 } from './state'
 import {Dictionary} from '@ngrx/entity'
-import {ArticleInterface} from '../../../types/article.interface'
+import {NewsItemInterface} from '../../../types/news-item.interface'
 
 export const newsBannerFeatureSelector =
   createFeatureSelector<NewsBannerStateInterface>(NEWS_BANNER_FEATURE)
@@ -26,6 +26,6 @@ export const {selectAll: allNewsSelector, selectEntities} =
 export const newsByIdSelector = (id: string) => {
   return createSelector(
     selectEntities,
-    (entities: Dictionary<ArticleInterface>) => entities[id]
+    (entities: Dictionary<NewsItemInterface>) => entities[id]
   )
 }

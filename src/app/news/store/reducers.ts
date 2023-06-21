@@ -9,6 +9,12 @@ import {
   getNewsFailureAction,
   getNewsSuccessAction,
 } from './actions/get-news.action'
+import {
+  getNewsItemAction,
+  getNewsItemFailureAction,
+  getNewsItemSuccessAction,
+} from './actions/get-news-item.action'
+import {clearNewsItemAction} from './actions/clear-news-item.action'
 
 const newsReducer = createReducer(
   initialState,
@@ -33,6 +39,36 @@ const newsReducer = createReducer(
       ...state,
       isLoading: false,
       backendErrors,
+    })
+  ),
+  on(
+    getNewsItemAction,
+    (state): NewsStateInterface => ({
+      ...state,
+      isCurrentItemLoading: true,
+    })
+  ),
+  on(
+    getNewsItemSuccessAction,
+    (state, {currentItem}): NewsStateInterface => ({
+      ...state,
+      isCurrentItemLoading: false,
+      currentItem,
+    })
+  ),
+  on(
+    getNewsItemFailureAction,
+    (state, {backendErrors}): NewsStateInterface => ({
+      ...state,
+      isCurrentItemLoading: false,
+      backendErrors,
+    })
+  ),
+  on(
+    clearNewsItemAction,
+    (state): NewsStateInterface => ({
+      ...state,
+      currentItem: null,
     })
   )
 )

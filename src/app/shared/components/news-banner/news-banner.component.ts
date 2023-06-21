@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core'
 import {Observable} from 'rxjs'
 import {BackendErrorsInterface} from '../../types/backend-errors.interface'
-import {ArticleInterface} from '../../types/article.interface'
+import {NewsItemInterface} from '../../types/news-item.interface'
 import {Store} from '@ngrx/store'
 import {getNewsAction} from './store/actions/get-news.action'
 import {
@@ -24,7 +24,7 @@ SwiperCore.use([Autoplay])
 export class NewsBannerComponent implements OnInit {
   isLoading$: Observable<boolean>
   backendErrors$: Observable<BackendErrorsInterface>
-  news$: Observable<ArticleInterface[]>
+  news$: Observable<NewsItemInterface[]>
 
   config: SwiperOptions = {
     slidesPerView: 1,

@@ -9,24 +9,24 @@
       *ngFor="let article of news$ | async as news"
       class="flex max-w-[540px] flex-col sm:max-w-[850px] sm:flex-row sm:space-x-5 md:space-x-9 lg:flex-col lg:space-x-0"
     >
-      <app-img
+      <img
         class="mb-6 block h-48 w-full flex-shrink-0 rounded-sm object-cover sm:w-[270px] md:mb-0 md:w-[345px] lg:mb-6 lg:w-auto"
-        src="/assets/images/complex-tasks/task-1--xl"
-      ></app-img>
+        [src]="article.image"
+      />
       <div>
         <h3 class="mb-2.5 text-lg font-medium">
           {{ article.title }}
         </h3>
-        <p>
-          {{ article.text }}
+        <div>
+          <!--          {{ article.short }}-->
           <a
             routerLink="/news"
-            [queryParams]="{id: article.id}"
-            class="link-blue inline-block md:block lg:inline-block"
+            [queryParams]="{id: article.news_id}"
+            class="link-blue"
           >
             Читать далее
           </a>
-        </p>
+        </div>
       </div>
     </article>
   </div>
