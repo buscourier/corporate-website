@@ -1,4 +1,6 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core'
+import {Store} from '@ngrx/store'
+import {getDocumentsAction} from '../store/documents/actions/get-documents.action'
 
 @Component({
   selector: 'app-services',
@@ -7,9 +9,13 @@ import {ChangeDetectionStrategy, Component} from '@angular/core'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ServicesComponent {
-  constructor() {}
+  constructor(private store: Store) {}
 
-  imgLoad() {
-    // alert(1)
+  ngOnInit(): void {
+    this.fetchData()
+  }
+
+  fetchData() {
+    this.store.dispatch(getDocumentsAction())
   }
 }

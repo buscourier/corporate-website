@@ -1,9 +1,9 @@
 <div class="mx-auto mt-10 max-w-[1170px] px-4 lg:mt-16">
-  <div class="max-w-[540px]">
-    <h1 class="mb-5 font-heading text-2xl font-bold lg:text-3xl">
-      Вызвать курьера в городах Приморского края
-    </h1>
-    <ol>
+  <h1 class="mb-8 font-heading text-2xl font-bold lg:text-3xl">
+    Вызвать курьера
+  </h1>
+  <div class="flex flex-col lg:flex-row lg:justify-between">
+    <ol class="max-w-[540px]">
       <li>
         <div>
           <p class="mb-3">
@@ -105,5 +105,31 @@
         </div>
       </li>
     </ol>
+    <div *tuiLet="$doc | async as doc" class="lg:w-[370px] lg:flex-shrink-0">
+      <!--       start media-->
+      <div
+        *ngIf="doc"
+        class="flex max-w-[370px] items-center rounded-sm pt-6 pr-9 pb-8 pl-7 shadow-xl lg:sticky lg:top-24"
+      >
+        <tui-svg
+          [src]="'icons::' + doc.type"
+          class="mr-5 !h-[42px] !w-[42px] self-start"
+        ></tui-svg>
+        <div>
+          <p class="mb-2.5 text-sm">{{ doc.name }}</p>
+          <button
+            type="button"
+            class="link-blue"
+            (click)="showPdf(doc, actions)"
+          >
+            <span><b class="font-medium">Открыть файл</b></span>
+          </button>
+        </div>
+      </div>
+      <!--        end media-->
+    </div>
   </div>
 </div>
+<ng-template #actions let-content="content">
+  <a tuiButton size="s" download [href]="content">Загрузить</a>
+</ng-template>
