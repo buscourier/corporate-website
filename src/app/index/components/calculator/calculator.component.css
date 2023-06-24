@@ -1,5 +1,5 @@
 :host {
-  @apply block mx-auto xl:absolute xl:top-0 xl:right-4 xl:h-[1190px];
+  @apply mx-auto block xl:absolute xl:top-0 xl:right-4 xl:h-[1190px];
   @apply lg:max-w-[375px] lg:before:absolute lg:before:top-[140px] lg:before:right-[-62px]
   lg:before:-z-10 lg:before:h-[360px]
   lg:before:w-[600px] lg:before:bg-index-bus lg:before:bg-[length:600px_360px] lg:before:bg-no-repeat

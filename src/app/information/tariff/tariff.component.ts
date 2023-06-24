@@ -253,6 +253,19 @@ export class TariffComponent implements OnInit {
         }, {})
 
         return Object.values(reduced)
+      }),
+      map((arr: any) => {
+        return arr.map(({name, data}) => {
+          const specZone = data.pop()
+
+          return {
+            name,
+            data: [specZone, ...data],
+          }
+        })
+      }),
+      tap((data) => {
+        console.log('data', data)
       })
     )
   }

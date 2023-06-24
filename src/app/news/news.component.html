@@ -1,5 +1,7 @@
 <div class="mx-auto mt-10 block max-w-[1170px] px-4 lg:mt-16">
-  <h1 class="mb-14 lg:mb-22 font-heading text-2xl font-bold lg:text-3xl">Новости Баскурьер</h1>
+  <h1 class="mb-14 font-heading text-2xl font-bold lg:mb-22 lg:text-3xl">
+    Новости Баскурьер
+  </h1>
   <div class="grid grid-cols-1 gap-10 lg:grid-cols-3 lg:gap-8">
     <article
       *ngFor="let article of news$ | async as news"

@@ -1,21 +1,27 @@
 <article class="bg-yellow">
   <div
-    class="relative mx-auto flex max-w-[1170px] items-center justify-center h-13 px-4">
+    class="relative mx-auto flex h-13 max-w-[1170px] items-center justify-center px-4"
+  >
     <!--    <tui-loader [showLoader]="isLoading$ | async">-->
     <!--      -->
     <!--    </tui-loader>-->
     <ng-container *tuiLet="news$ | async as news">
-      <div class="relative contents before:absolute before:top-0 before:right-0 before:max-w-sm before:h-full before:bg-yellow
-        before:opacity-30 before:z-20">
-        <swiper *ngIf="news.length" #swiperRef [config]="config" (slideChange)="onSlideChange($event)" class="swiper">
+      <div
+        class="relative contents before:absolute before:top-0 before:right-0 before:z-20 before:h-full before:max-w-sm before:bg-yellow before:opacity-30"
+      >
+        <swiper
+          *ngIf="news.length"
+          #swiperRef
+          [config]="config"
+          (slideChange)="onSlideChange($event)"
+          class="swiper"
+        >
           <ng-template swiperSlide *ngFor="let article of news">
             <div class="text-center">
               <a
                 routerLink="/news"
                 [queryParams]="{id: article.news_id}"
-                class="text-center font-base text-xs
-               text-black opacity-50 hover:opacity-100
-               transition-all duration-300 line-clamp-1"
+                class="text-center font-base text-xs text-black opacity-50 transition-all duration-300 line-clamp-1 hover:opacity-100"
               >
                 {{ article.title }}
               </a>
@@ -25,13 +31,13 @@
       </div>
       <ng-container *tuiLet="activeSlideIndex$ | async as index">
         <ng-container *ngIf="news.length">
-          <a *ngIf="news[index - 1] as newsItem"
-             routerLink="/news"
-             [queryParams]="{id: newsItem.news_id}"
-             class="block ml-4 shrink-0 font-base text-xs
-               text-black underline underline-offset-2 hover:no-underline
-               transition-all duration-300"
-          >Читать новость</a>
+          <a
+            *ngIf="news[index - 1] as newsItem"
+            routerLink="/news"
+            [queryParams]="{id: newsItem.news_id}"
+            class="ml-4 block shrink-0 font-base text-xs text-black underline underline-offset-2 transition-all duration-300 hover:no-underline"
+            >Читать новость</a
+          >
         </ng-container>
       </ng-container>
     </ng-container>
