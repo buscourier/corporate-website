@@ -61,18 +61,12 @@ export class SiteService {
   }
 
   getNews<T>(): Observable<NewsItemInterface[]> {
-    return this.http.get<NewsItemInterface[]>(`${this.url}/news`).pipe(
-      tap((data) => {
-        console.log('data', data)
-      })
-    )
+    return this.http.get<NewsItemInterface[]>(`${this.url}/news`)
   }
 
   getNewsItem<T>(id: string): Observable<NewsItemInterface> {
-    return this.http.get<NewsItemInterface[]>(`${this.url}/news/${id}`).pipe(
-      map((data: NewsItemInterface[]) => {
-        return data[0]
-      })
-    )
+    return this.http
+      .get<NewsItemInterface[]>(`${this.url}/news/${id}`)
+      .pipe(map((data: NewsItemInterface[]) => data[0]))
   }
 }

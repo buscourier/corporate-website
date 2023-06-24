@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core'
 import {CommonModule} from '@angular/common'
 import {NewsBannerComponent} from './news-banner.component'
-import {TuiLoaderModule, TuiSvgModule} from '@taiga-ui/core'
+import {TuiLinkModule, TuiLoaderModule, TuiSvgModule} from '@taiga-ui/core'
 import {NewsService} from '../../services/news.service'
 import {StoreModule} from '@ngrx/store'
 import {NEWS_BANNER_FEATURE} from './store/state'
@@ -24,6 +24,7 @@ import {SiteService} from '../../services/site.service'
     TuiLoaderModule,
     SwiperModule,
     RouterLinkWithHref,
+    TuiLinkModule,
   ],
   exports: [NewsBannerComponent],
   providers: [SiteService],
