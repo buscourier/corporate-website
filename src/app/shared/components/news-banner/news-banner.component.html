@@ -5,39 +5,40 @@
     <!--    <tui-loader [showLoader]="isLoading$ | async">-->
     <!--      -->
     <!--    </tui-loader>-->
-
-    <div
-      class="relative contents before:absolute before:top-0 before:right-0 before:z-20 before:h-full before:max-w-sm before:bg-yellow before:opacity-30"
-    >
-      <swiper
-        *ngIf="news.length"
-        #swiperRef
-        [config]="config"
-        (slideChange)="onSlideChange($event)"
-        class="swiper"
+    <ng-container *tuiLet="news$ | async as news">
+      <div
+        class="relative contents before:absolute before:top-0 before:right-0 before:z-20 before:h-full before:max-w-sm before:bg-yellow before:opacity-30"
       >
-        <ng-template swiperSlide *ngFor="let article of news">
-          <div class="text-center">
-            <a
-              routerLink="/news"
-              [queryParams]="{id: article.news_id}"
-              class="text-center font-base text-xs text-black opacity-50 transition-all duration-300 line-clamp-1 hover:opacity-100"
-            >
-              {{ article.title }}
-            </a>
-          </div>
-        </ng-template>
-      </swiper>
-    </div>
-    <ng-container *tuiLet="activeSlideIndex$ | async as index">
-      <ng-container *ngIf="news.length">
-        <a
-          *ngIf="news[index - 1] as newsItem"
-          routerLink="/news"
-          [queryParams]="{id: newsItem.news_id}"
-          class="ml-4 block shrink-0 font-base text-xs text-black underline underline-offset-2 transition-all duration-300 hover:no-underline"
-          >Читать новость</a
+        <swiper
+          *ngIf="news.length"
+          #swiperRef
+          [config]="config"
+          (slideChange)="onSlideChange($event)"
+          class="swiper"
         >
+          <ng-template swiperSlide *ngFor="let article of news">
+            <div class="text-center">
+              <a
+                routerLink="/news"
+                [queryParams]="{id: article.news_id}"
+                class="text-center font-base text-xs text-black opacity-50 transition-all duration-300 line-clamp-1 hover:opacity-100"
+              >
+                {{ article.title }}
+              </a>
+            </div>
+          </ng-template>
+        </swiper>
+      </div>
+      <ng-container *tuiLet="activeSlideIndex$ | async as index">
+        <ng-container *ngIf="news.length">
+          <a
+            *ngIf="news[index - 1] as newsItem"
+            routerLink="/news"
+            [queryParams]="{id: newsItem.news_id}"
+            class="ml-4 block shrink-0 font-base text-xs text-black underline underline-offset-2 transition-all duration-300 hover:no-underline"
+            >Читать новость</a
+          >
+        </ng-container>
       </ng-container>
     </ng-container>
   </div>
