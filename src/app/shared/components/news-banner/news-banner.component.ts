@@ -6,14 +6,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core'
-import {
-  BehaviorSubject,
-  filter,
-  interval,
-  map,
-  mergeWith,
-  Observable,
-} from 'rxjs'
+import {BehaviorSubject, Observable} from 'rxjs'
 import {BackendErrorsInterface} from '../../types/backend-errors.interface'
 import {NewsItemInterface} from '../../types/news-item.interface'
 import {Store} from '@ngrx/store'
@@ -25,7 +18,6 @@ import {
 } from './store/selectors'
 import Swiper, {SwiperOptions, Virtual} from 'swiper'
 import SwiperCore, {Autoplay} from 'swiper'
-import {tap} from 'rxjs/operators'
 
 SwiperCore.use([Autoplay, Virtual])
 
@@ -51,7 +43,7 @@ export class NewsBannerComponent implements OnInit {
     spaceBetween: 30,
     loop: true,
     autoplay: {
-      delay: 100000,
+      delay: 3000,
     },
   }
 
@@ -66,11 +58,6 @@ export class NewsBannerComponent implements OnInit {
     this.isLoading$ = this.store.select(isLoadingSelector)
     this.backendErrors$ = this.store.select(backendErrorsSelector)
     this.news$ = this.store.select(allNewsSelector)
-    // .pipe(
-    //   map((arr) => {
-    //     return [arr[0]]
-    //   })
-    // )
   }
 
   private fetchData(): void {
