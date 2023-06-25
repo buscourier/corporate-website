@@ -263,9 +263,6 @@ export class TariffComponent implements OnInit {
             data: [specZone, ...data],
           }
         })
-      }),
-      tap((data) => {
-        console.log('data', data)
       })
     )
   }
