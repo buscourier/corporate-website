@@ -1,3 +1,3 @@
 export interface AchievementsInterface {
-  [key: string]: string
+  orders_sent: string
 }

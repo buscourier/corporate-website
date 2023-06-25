@@ -64,10 +64,7 @@ export class SiteService {
   }
 
   getAchievements<T>(): Observable<any> {
-    // return this.http.get<T>(`${this.url}/achievements`)
-    return of({
-      parcelsCount: '1 062 000',
-    })
+    return this.http.get<T>(`${this.url}/orders_sent`)
   }
 
   getNews<T>(): Observable<NewsItemInterface[]> {

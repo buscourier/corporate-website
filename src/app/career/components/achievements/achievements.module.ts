@@ -8,6 +8,7 @@ import {GetAchievementsEffect} from './store/effects/get-achievements.effect'
 import {SiteService} from '../../../shared/services/site.service'
 import {TuiLetModule} from '@taiga-ui/cdk'
 import {reducers} from './store/reducers'
+import {TuiLoaderModule} from '@taiga-ui/core'
 
 @NgModule({
   declarations: [AchievementsComponent],
@@ -16,6 +17,7 @@ import {reducers} from './store/reducers'
     StoreModule.forFeature(ACHIEVEMENTS_STATE, reducers),
     EffectsModule.forFeature([GetAchievementsEffect]),
     TuiLetModule,
+    TuiLoaderModule,
   ],
   exports: [AchievementsComponent],
   providers: [SiteService],
