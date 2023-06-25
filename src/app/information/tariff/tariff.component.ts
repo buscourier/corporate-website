@@ -299,4 +299,9 @@ export class TariffComponent implements OnInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe()
   }
+
+  print() {
+    document.execCommand('print', false, null)
+    window.print()
+  }
 }

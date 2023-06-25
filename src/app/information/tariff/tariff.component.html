@@ -2,18 +2,18 @@
   <h1 class="mb-1 font-heading text-2xl font-bold lg:text-3xl">
     Тарифы на перевозку
   </h1>
-  <p class="mb-10 text-sm">
+  <p class="mb-10 text-sm print:hidden">
     Для получения тарифов, выберите регион и город, из которого планируется
     отправление.
   </p>
   <div
     #navbar
-    class="grid grid-cols-1 gap-16 xl:grid-cols-[1fr_370px] xl:gap-7.5"
+    class="grid grid-cols-1 gap-16 print:block print:gap-0 xl:grid-cols-[1fr_370px] xl:gap-7.5"
   >
     <div *tuiLet="isCitiesLoading$ | async as isCitiesLoading" class="w-full">
       <div
         *tuiLet="filteredCities$ | async as cities"
-        class="mb-10 flex flex-col space-y-10 border-b border-t border-gray-300 py-10 md:flex-row md:space-x-28 md:space-y-0 lg:space-x-28"
+        class="mb-10 flex flex-col space-y-10 border-b border-t border-gray-300 py-10 print:hidden md:flex-row md:space-x-28 md:space-y-0 lg:space-x-28"
       >
         <div>
           <b class="mb-4 block text-lg font-medium">Регион:</b>
@@ -64,14 +64,14 @@
             >
               <div
                 *ngFor="let zone of zones$ | async"
-                class="mb-2.5 rounded-sm bg-yellow p-7"
+                class="mb-2.5 rounded-sm bg-yellow p-7 print:mt-6 print:bg-white print:p-0"
               >
                 <b class="mb-3 block text-xl font-medium">{{ zone.zone }}</b>
                 <p class="text-xs">{{ zone.cities }}</p>
               </div>
               <ng-container *ngIf="docsAndParcelsZoneTariffs$ | async as zones">
                 <h2
-                  class="mt-22 mb-10 font-heading text-xl font-bold lg:text-2xl"
+                  class="mt-22 mb-10 font-heading text-xl font-bold print:break-before-all print:break-after-all lg:text-2xl"
                 >
                   Документы и грузы
                 </h2>
@@ -93,7 +93,7 @@
                         <tr>
                           <td [rowSpan]="zone.data.length">
                             <b
-                              class="block rounded-sm bg-yellow p-4 text-center text-sm"
+                              class="block rounded-sm bg-yellow p-4 text-center text-sm print:bg-white print:p-0"
                               >{{ zone.name }}</b
                             >
                           </td>
@@ -152,13 +152,13 @@
                         <thead>
                           <tr>
                             <th></th>
-                            <th>Спец. зона</th>
-                            <th>Зона 1</th>
-                            <th>Зона 2</th>
-                            <th>Зона 3</th>
-                            <th>Зона 4</th>
-                            <th>Зона 5</th>
-                            <th>Зона 6</th>
+                            <th class="whitespace-nowrap">Спец. зона</th>
+                            <th class="whitespace-nowrap">Зона 1</th>
+                            <th class="whitespace-nowrap">Зона 2</th>
+                            <th class="whitespace-nowrap">Зона 3</th>
+                            <th class="whitespace-nowrap">Зона 4</th>
+                            <th class="whitespace-nowrap">Зона 5</th>
+                            <th class="whitespace-nowrap">Зона 6</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -190,19 +190,19 @@
                   <h2 class="mb-10 font-heading text-xl font-bold lg:text-2xl">
                     Другое
                   </h2>
-                  <div class="relative mb-22">
+                  <div class="relative mb-22 print:mb-12">
                     <div class="overflow-x-auto">
                       <table class="other">
                         <thead>
                           <tr>
                             <th></th>
-                            <th>Спец. зона</th>
-                            <th>Зона 1</th>
-                            <th>Зона 2</th>
-                            <th>Зона 3</th>
-                            <th>Зона 4</th>
-                            <th>Зона 5</th>
-                            <th>Зона 6</th>
+                            <th class="whitespace-nowrap">Спец. зона</th>
+                            <th class="whitespace-nowrap">Зона 1</th>
+                            <th class="whitespace-nowrap">Зона 2</th>
+                            <th class="whitespace-nowrap">Зона 3</th>
+                            <th class="whitespace-nowrap">Зона 4</th>
+                            <th class="whitespace-nowrap">Зона 5</th>
+                            <th class="whitespace-nowrap">Зона 6</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -237,29 +237,34 @@
     </div>
     <div
       *tuiLet="rulesDoc$ | async as doc"
-      class="lg:w-[370px] lg:flex-shrink-0"
+      class="print:hidden lg:w-[370px] lg:flex-shrink-0"
     >
-      <!--       start media-->
-      <div
-        *ngIf="doc"
-        class="flex max-w-[370px] items-center rounded-sm pt-6 pr-9 pb-8 pl-7 shadow-xl xl:sticky xl:top-24"
-      >
-        <tui-svg
-          [src]="'icons::' + doc.type"
-          class="mr-5 !h-[42px] !w-[42px] self-start"
-        ></tui-svg>
-        <div>
-          <p class="mb-2.5 text-sm">{{ doc.name }}</p>
-          <button
-            type="button"
-            class="link-blue"
-            (click)="showPdf(doc, actions)"
-          >
-            <span><b class="font-medium">Открыть файл</b></span>
-          </button>
+      <div class="xl:sticky xl:top-24">
+        <!--       start media-->
+        <div
+          *ngIf="doc"
+          class="flex max-w-[370px] items-center rounded-sm pt-6 pr-9 pb-8 pl-7 shadow-xl"
+        >
+          <tui-svg
+            [src]="'icons::' + doc.type"
+            class="mr-5 !h-[42px] !w-[42px] self-start"
+          ></tui-svg>
+          <div>
+            <p class="mb-2.5 text-sm">{{ doc.name }}</p>
+            <button
+              type="button"
+              class="link-blue"
+              (click)="showPdf(doc, actions)"
+            >
+              <span><b class="font-medium">Открыть файл</b></span>
+            </button>
+          </div>
         </div>
+        <!--        end media-->
+        <button type="button" tuiButton (click)="print()" class="mt-12">
+          Распечатать тарифы
+        </button>
       </div>
-      <!--        end media-->
     </div>
   </div>
 </div>

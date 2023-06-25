@@ -1,5 +1,18 @@
+html {
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+html::-webkit-scrollbar {
+  @apply print:w-0;
+}
+
+html::-webkit-scrollbar-thumb {
+  @apply print:bg-white;
+}
+
 table {
-  @apply w-full border-collapse whitespace-normal whitespace-nowrap xl:min-w-full;
+  @apply w-full border-collapse whitespace-nowrap print:whitespace-normal xl:min-w-full;
   /*@apply min-w-[650px];*/
 }
 
@@ -27,7 +40,7 @@ th:not(:first-child) {
 }
 
 tr:nth-child(even) {
-  @apply bg-gray-100;
+  @apply bg-gray-100 print:border-t print:border-b print:border-gray-100;
 }
 
 td[colspan='7'] {
@@ -55,7 +68,7 @@ table.other th:first-child {
 }
 
 table.other th:not(:first-child) {
-  @apply border-0 bg-yellow;
+  @apply border-0 bg-yellow print:border-b-2 print:border-yellow print:bg-white;
 }
 
 table.other th:nth-of-type(2) {
