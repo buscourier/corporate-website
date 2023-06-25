@@ -7,5 +7,105 @@
     <tui-svg src="icons::close-2" class="!h-[22px] !w-[22px]"></tui-svg>
   </button>
 
-  Resume
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="mb-3 grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+      <label class="block">
+        <span class="mb-1 inline-block text-xs">
+          Имя
+          <sup
+            class="text-red"
+            *ngIf="
+              form.get('sender').errors &&
+              form.get('sender').hasError('required')
+            "
+            >*</sup
+          >
+        </span>
+        <tui-input
+          tuiTextfieldSize="m"
+          formControlName="sender"
+          [tuiTextfieldLabelOutside]="true"
+        >
+          <input tuiTextfield type="text" />
+        </tui-input>
+        <tui-error
+          formControlName="sender"
+          [error]="[] | tuiFieldError | async"
+        ></tui-error>
+      </label>
+      <label class="block">
+        <span class="mb-1 inline-block text-xs">
+          Телефон
+          <sup
+            class="text-red"
+            *ngIf="
+              form.get('phone').errors && form.get('phone').hasError('required')
+            "
+            >*</sup
+          >
+        </span>
+        <tui-input-phone
+          formControlName="phone"
+          tuiTextfieldSize="m"
+          [tuiTextfieldLabelOutside]="true"
+        >
+          <input tuiTextfield autocomplete="tel" />
+        </tui-input-phone>
+        <tui-error
+          formControlName="phone"
+          [error]="[] | tuiFieldError | async"
+        ></tui-error>
+      </label>
+      <label class="block sm:col-span-2 sm:col-span-full md:col-span-1">
+        <span class="mb-1 inline-block text-xs">
+          Email
+          <sup
+            class="text-red"
+            *ngIf="
+              form.get('email').errors && form.get('email').hasError('required')
+            "
+            >*</sup
+          >
+        </span>
+        <tui-input
+          tuiTextfieldSize="m"
+          formControlName="email"
+          [tuiTextfieldLabelOutside]="true"
+        >
+          <input tuiTextfield type="email" />
+        </tui-input>
+        <tui-error
+          formControlName="email"
+          [error]="[] | tuiFieldError | async"
+        ></tui-error>
+      </label>
+      <label class="block sm:col-span-2 sm:col-span-full">
+        <span class="mb-1 inline-block text-xs">
+          Расскажите о себе
+          <sup
+            class="text-red"
+            *ngIf="
+              form.get('message').errors &&
+              form.get('message').hasError('required')
+            "
+            >*</sup
+          >
+        </span>
+        <tui-text-area formControlName="message"></tui-text-area>
+        <tui-error
+          formControlName="message"
+          [error]="[] | tuiFieldError | async"
+        ></tui-error>
+      </label>
+    </div>
+    <button
+      type="submit"
+      tuiButton
+      size="m"
+      [showLoader]="isSubmitting$ | async"
+      [disabled]="form.invalid || (isSubmitting$ | async)"
+    >
+      Отправить вопрос
+    </button>
+  </form>
 </article>

@@ -22,6 +22,16 @@ export class SiteService {
     return this.http.post<any>(`${this.url}/mailer`, JSON.stringify(extPayload))
   }
 
+  sendResume(subject, payload): Observable<any> {
+    const extPayload = {
+      'api-key': environment.apiKey,
+      subject,
+      ...payload,
+    }
+
+    return this.http.post<any>(`${this.url}/mailer`, JSON.stringify(extPayload))
+  }
+
   getPolicy<T>(): Observable<T> {
     const api = '8aab09f6-c5b3-43be-8895-153ea164984e/53'
 
