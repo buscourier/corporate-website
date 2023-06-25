@@ -23,4 +23,4 @@
   'mango-js',
   'mgo'
 )
-mgo({calltracking: {id: 13954, elements: [{selector: '.mgo-number-13954'}]}})
+mgo({calltracking: {id: 30374, elements: [{numberText: '74232026532'}]}})
