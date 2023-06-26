@@ -8,7 +8,7 @@ import {
 import {POLYMORPHEUS_CONTEXT} from '@tinkoff/ng-polymorpheus'
 import {TuiDialogContext} from '@taiga-ui/core'
 import {NewsItemInterface} from '../../../shared/types/news-item.interface'
-import {Observable} from 'rxjs'
+import {map, Observable} from 'rxjs'
 import {Store} from '@ngrx/store'
 import {
   currentItemSelector,
@@ -38,11 +38,7 @@ export class NewsItemComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isLoading$ = this.store.select(isCurrentItemLoadingSelector)
-    this.data$ = this.store.select(currentItemSelector).pipe(
-      tap((data: NewsItemInterface) => {
-        console.log('data', data)
-      })
-    )
+    this.data$ = this.store.select(currentItemSelector)
     this.store.dispatch(getNewsItemAction({id: this.id}))
   }
 

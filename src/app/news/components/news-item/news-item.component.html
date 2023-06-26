@@ -1,7 +1,7 @@
 <tui-loader [showLoader]="isLoading$ | async" class="min-h-min">
   <article
     *ngIf="data$ | async as data"
-    class="relative flex flex-col rounded-sm bg-white p-4 md:p-8"
+    class="relative flex min-h-min flex-col rounded-sm bg-white p-4 md:p-8"
   >
     <button
       type="button"
