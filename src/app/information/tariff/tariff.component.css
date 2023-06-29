@@ -16,6 +16,18 @@ table {
   /*@apply min-w-[650px];*/
 }
 
+thead {
+  @apply print:table-header-group;
+}
+
+tbody {
+  @apply print:table-row-group;
+}
+
+tfoot {
+  @apply print:table-footer-group;
+}
+
 th,
 td {
   @apply min-w-[60px] p-2.5 text-xs;
