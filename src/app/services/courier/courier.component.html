@@ -10,44 +10,22 @@
             Убедитесь, что в нужном вам городе действует услуга «Вызов курьера».
           </p>
           <b>Список городов, где есть услуга «Вызов курьера»:</b>
-          <ul class="mb-12 mt-4 max-w-[570px] text-sm">
-            <li class="mb-3 flex space-x-3">
-              <tui-svg src="icons::check" class="text-gray-500"></tui-svg>
-              <span>Владивосток (забор и доставка груза)</span>
-            </li>
-            <li class="mb-3 flex space-x-3">
-              <tui-svg src="icons::check" class="text-gray-500"></tui-svg>
-              <span>Артем (забор и доставка груза)</span>
-            </li>
-            <li class="mb-3 flex space-x-3">
-              <tui-svg src="icons::check" class="text-gray-500"></tui-svg>
-              <span>Уссурийск (забор и доставка груза)</span>
-            </li>
-            <li class="mb-3 flex space-x-3">
-              <tui-svg src="icons::check" class="text-gray-500"></tui-svg>
-              <span>Находка (забор и доставка груза)</span>
-            </li>
-            <li class="mb-3 flex space-x-3">
-              <tui-svg src="icons::check" class="text-gray-500"></tui-svg>
-              <span>Дальнегорск (только доставка по будням)</span>
-            </li>
-            <li class="mb-3 flex space-x-3">
-              <tui-svg src="icons::check" class="text-gray-500"></tui-svg>
-              <span>Спасск-Дальний (забор и доставка)</span>
-            </li>
-            <li class="mb-3 flex space-x-3">
-              <tui-svg src="icons::check" class="text-gray-500"></tui-svg>
-              <span>Арсеньев (только доставка)</span>
-            </li>
-            <li class="mb-3 flex space-x-3">
-              <tui-svg src="icons::check" class="text-gray-500"></tui-svg>
-              <span>Дальнереченск (только доставка)</span>
-            </li>
-            <li class="mb-3 flex space-x-3">
-              <tui-svg src="icons::check" class="text-gray-500"></tui-svg>
-              <span>Хабаровск (забор и доставка)</span>
-            </li>
-          </ul>
+          <tui-loader
+            [showLoader]="isServicesLoading$ | async"
+            class="mb-12 mt-4 max-w-[570px] text-sm"
+          >
+            <ng-container *ngIf="services$ | async as services">
+              <ul *ngIf="services.length">
+                <li
+                  *ngFor="let service of services"
+                  class="mb-3 flex space-x-3"
+                >
+                  <tui-svg src="icons::check" class="text-gray-500"></tui-svg>
+                  <span>{{ service.name }} ({{ service.descr }})</span>
+                </li>
+              </ul>
+            </ng-container>
+          </tui-loader>
         </div>
       </li>
       <li>
@@ -110,6 +88,7 @@
         </div>
       </li>
     </ol>
+
     <div *tuiLet="$doc | async as doc" class="lg:w-[370px] lg:flex-shrink-0">
       <!--       start media-->
       <div

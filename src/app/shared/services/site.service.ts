@@ -5,6 +5,7 @@ import {tap} from 'rxjs/operators'
 import {environment} from '../../../environments/environment'
 import {WindowInterface} from '../types/window.interface'
 import {NewsItemInterface} from '../types/news-item.interface'
+import {CourierServiceInterface} from '../../services/courier/types/courier-service.interface'
 
 @Injectable()
 export class SiteService {
@@ -71,9 +72,15 @@ export class SiteService {
     return this.http.get<NewsItemInterface[]>(`${this.url}/news`)
   }
 
-  getNewsItem<T>(id: string): Observable<NewsItemInterface> {
+  getNewsItem(id: string): Observable<NewsItemInterface> {
     return this.http
       .get<NewsItemInterface[]>(`${this.url}/news/${id}`)
       .pipe(map((data: NewsItemInterface[]) => data[0]))
+  }
+
+  getCourierServices(): Observable<CourierServiceInterface[]> {
+    return this.http.get<CourierServiceInterface[]>(
+      `${this.url}/kuriertariffs/list`
+    )
   }
 }
