@@ -22,13 +22,14 @@ interface DepartmentInterface {
 }
 
 interface PickupPointsInterface {
-  IML: DepartmentInterface[]
-  HERMES: DepartmentInterface[]
-  CSE: DepartmentInterface[]
-  Boxberry: DepartmentInterface[]
+  IML?: DepartmentInterface[]
+  HERMES?: DepartmentInterface[]
+  CSE?: DepartmentInterface[]
+  Boxberry?: DepartmentInterface[]
+  Винлаб?: DepartmentInterface[]
 }
 
-const pickupPointNames = ['IML', 'HERMES', 'CSE', 'Boxberry']
+const pickupPointNames = ['IML', 'HERMES', 'CSE', 'Boxberry', 'Винлаб']
 
 @Component({
   selector: 'app-pickup-points',
@@ -121,15 +122,28 @@ export class PickupPointsComponent implements OnInit {
               ),
             }
           },
-          {IML: [], HERMES: [], CSE: [], Boxberry: []}
+          {IML: [], HERMES: [], CSE: [], Boxberry: [], Винлаб: []}
         )
       }),
 
-      tap((pickupPoints: PickupPointsInterface) => {
-        //TODO: do that because accordion not emits events when item opened
-        this.setCurrentTab('IML', pickupPoints['IML'])
+      map((points: PickupPointsInterface) => {
+        const filteredPoints = Object.entries(points).filter(
+          (point: [string, Array<any>]) => {
+            return point[1].length
+          }
+        )
+
+        this.setCurrentTab(filteredPoints[0][0], filteredPoints[0][1])
+
+        return filteredPoints.reduce((obj, point: [string, Array<any>]) => {
+          return {
+            ...obj,
+            [point[0]]: point[1],
+          }
+        }, {})
       })
     )
+
     this.backendErrors$ = this.store.select(backendErrorsSelector)
   }
 

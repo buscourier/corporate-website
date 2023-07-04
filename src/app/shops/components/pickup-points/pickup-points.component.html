@@ -5,19 +5,18 @@
         <div class="grid grid-cols-2">
           <ng-container *ngFor="let key of getPointsKeys(points)">
             <button
-              *ngIf="points[key].length"
               type="button"
               class="relative flex flex-col items-center justify-center border-b-2 border-transparent pt-4 pb-4 text-center transition-colors before:absolute before:top-0 before:-bottom-0.5 before:right-0 before:w-1 before:bg-white last:before:hidden lg:h-16 lg:flex-row lg:space-x-1"
               [class]="
-              key === currentTab
-                ? 'bg-white border-b-yellow hover:bg-white before:hidden'
-                : 'bg-gray-100 border-transparent hover:bg-gray-50'
-            "
+                key === currentTab
+                  ? 'bg-white border-b-yellow hover:bg-white before:hidden'
+                  : 'bg-gray-100 border-transparent hover:bg-gray-50'
+              "
               (click)="setCurrentTab(key, points[key])"
             >
               <b class="text-lg font-medium text-black">{{ key }} </b>
               <small class="text-xs text-black"
-              >({{ points[key].length }} отделения)</small
+                >({{ points[key].length }} отделения)</small
               >
             </button>
           </ng-container>
